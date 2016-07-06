@@ -1,0 +1,13 @@
+Siacme\Dominio\Usuarios\UsuarioTipo:
+  type: entity
+  table: usuario_tipo
+  id:
+    id:
+      type: int
+      column: idUsuarioTipo
+  fields:
+    usuarioTipo:
+      type: string
+      length: 80
+      nullable: false
+      column: UsuarioTipo

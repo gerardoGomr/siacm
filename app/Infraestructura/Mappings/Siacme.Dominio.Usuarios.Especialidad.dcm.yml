@@ -1,0 +1,13 @@
+Siacme\Dominio\Usuarios\Especialidad:
+  type: entity
+  table: especialidad
+  id:
+    id:
+      type: int
+      column: idEspecialidad
+  fields:
+    especialidad:
+      type: string
+      length: 80
+      nullable: false
+      column: Especialidad

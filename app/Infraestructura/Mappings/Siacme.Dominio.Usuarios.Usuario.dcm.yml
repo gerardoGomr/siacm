@@ -1,0 +1,46 @@
+Siacme\Dominio\Usuarios\Usuario:
+  type: entity
+  table: usuario
+  id:
+    username:
+      type: string
+      length: 80
+      column: Username
+  fields:
+    passwd:
+      type: string
+      length: 100
+      nullable: false
+      column: Passwd
+    nombre:
+      type: string
+      length: 80
+      nullable: false
+      column: Nombre
+    paterno:
+      type: string
+      length: 80
+      nullable: false
+      column: Paterno
+    materno:
+      type: string
+      length: 80
+      nullable: false
+      column: Materno
+    activo:
+      type: boolean
+      nullable: false
+      column: Activo
+  oneToOne:
+    usuarioTipo:
+      targetEntity: UsuarioTipo
+      joinColumn:
+        name: idUsuarioTipo
+        referencedColumnName: idUsuarioTipo
+      cascade: ["persist"]
+    especialidad:
+      targetEntity: Especialidad
+      joinColumn:
+        name: idEspecialidad
+        referencedColumnName: idEspecialidad
+      cascade: ["persist"]
