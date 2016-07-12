@@ -87,7 +87,8 @@ $(function() {
 				});
           	} else {
           		// curso normal
-          		window.open($('#rutaCitas').val() + '/agregar/' + btoa(date.getFullYear()+"-"+(date.getMonth() + 1)+"-"+date.getDate()) + '/' + btoa(date.getHours()+":"+date.getMinutes()) + '/' + btoa(med), '_blank', 'scrollbars=yes, width=700, height=500');
+				$('#modalAgendarCita').modal('show');
+
           	}
        	},
         eventClick: function(calEvent, jsEvent, view){

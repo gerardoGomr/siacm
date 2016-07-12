@@ -2,8 +2,10 @@
 namespace Siacme\Dominio\Citas;
 
 /**
- * @package Siacme\Citas
- * @author  Gerardo Adrián Gómez Ruiz
+ * Class CitaEstatus
+ * @package Siacme\Dominio\Citas
+ * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class CitaEstatus
 {
@@ -37,21 +39,5 @@ class CitaEstatus
 	public function getEstatus()
 	{
 		return $this->estatus;
-	}
-
-	/**
-	 * @param int $id
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	/**
-	 * @param string $estatus
-	 */
-	public function setEstatus($estatus)
-	{
-		$this->estatus = $estatus;
 	}
 }

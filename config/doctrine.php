@@ -26,7 +26,8 @@ return [
             'meta'       => env('DOCTRINE_METADATA', 'yaml'),
             'connection' => env('DB_CONNECTION', 'mysql'),
             'namespaces' => [
-                'Dominio' => 'Siacme\Dominio'
+                'Dominio' => 'Siacme\Dominio',
+                'Usuarios' => 'Siacme\Dominio\Usuarios',
             ],
             'paths'      => [
                 base_path('app/Dominio'),

@@ -2,12 +2,13 @@
 namespace Siacme\Dominio\Citas;
 
 use Siacme\Dominio\Usuarios\Usuario;
-use Siacme\Expedientes\Expediente;
 use Siacme\Dominio\Pacientes\Paciente;
 
 /**
- * @package Siacme\Citas
- * @author  Gerardo Adrián Gómez Ruiz
+ * Class Cita
+ * @package Siacme\Dominio\Citas
+ * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class Cita
 {
@@ -29,7 +30,7 @@ class Cita
 	private $hora;
 
 	/**
-	 * @var Medico
+	 * @var Usuario
 	 */
 	private $medico;
 
@@ -39,17 +40,26 @@ class Cita
 	private $estatus;
 
 	/**
-	 * var Paciente
+	 * @var Paciente
 	 */
 	private $paciente;
 
 	/**
+	 * @var string
+	 */
+	private $comentario;
+
+	/**
 	 * Cita constructor.
+	 * @param string $comentario
+	 * @param Paciente $paciente
 	 * @param null $id
 	 */
-	public function __construct($id = null)
+	public function __construct($comentario, Paciente $paciente = null, $id = null)
 	{
-		$this->id = $id;
+		$this->comentario = $comentario;
+		$this->paciente   = $paciente;
+		$this->id         = $id;
 	}
 
 	/**
@@ -77,7 +87,7 @@ class Cita
 	}
 
 	/**
-	 * @return Medico
+	 * @return Usuario
 	 */
 	public function getMedico()
 	{
@@ -93,51 +103,19 @@ class Cita
 	}
 
 	/**
-	 * @return Expediente
+	 * @return Paciente
 	 */
-	public function getExpediente()
+	public function getPaciente()
 	{
-		return $this->expediente;
+		return $this->paciente;
 	}
 
 	/**
-	 * @param int $id
+	 * @return string
 	 */
-	public function setId($id)
+	public function getComentario()
 	{
-		$this->id = $id;
-	}
-
-	/**
-	 * @param string
-	 */
-	public function setFecha($fecha)
-	{
-		$this->fecha = $fecha;
-	}
-
-	/**
-	 * @param string
-	 */
-	public function setHora($hora)
-	{
-		$this->hora = $hora;
-	}
-
-	/**
-	 * @param Usuario $medico
-	 */
-	public function setMedico(Usuario $medico)
-	{
-		$this->medico = $medico;
-	}
-
-	/**
-	 * @param CitaEstatus
-	 */
-	public function setEstatus(CitaEstatus $citaEstatus)
-	{
-		$this->estatus = $citaEstatus;
+		return $this->comentario;
 	}
 
 	/**
@@ -153,25 +131,6 @@ class Cita
 		return $this->fecha." ".date("H", $finCita).":".date("i",$finCita).":".date("s",$finCita);
 	}
 
-    /**
-     * Gets the value of paciente.
-     *
-     * @return Paciente $paciente
-     */
-    public function getPaciente()
-    {
-        return $this->paciente;
-    }
-
-    /**
-     * Sets the value of paciente.
-     *
-     * @param mixed $paciente the paciente
-     */
-    public function setPaciente(Paciente $paciente)
-    {
-        $this->paciente = $paciente;
-    }
 
     /**
      * verficiar fecha de cita
@@ -192,7 +151,7 @@ class Cita
 	 * verificar si una cita está o no atendida
 	 * @return bool
 	 */
-	public function estaAtendida()
+	public function atendida()
 	{
 		if ($this->estatus->getId() === 4) {
 			return true;

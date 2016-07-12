@@ -1,0 +1,42 @@
+Siacme\Dominio\Citas\Cita:
+  type: entity
+  table: cita
+  id:
+    id:
+      type: integer
+      length: 11
+      column: id
+  fields:
+    fecha:
+      type: string
+      length: 10
+      nullable: false
+      column: FechaCita
+    hora:
+      type: string
+      length: 5
+      nullable: false
+      column: HoraCita
+    comentario:
+      type: string
+      nullable: true
+      column: Comentario
+  oneToOne:
+    estatus:
+      targetEntity: CitaEstatus
+      joinColumn:
+        name: CitaEstatusId
+        referencedColumnName: id
+      cascade: ["persist"]
+    medico:
+      targetEntity: Usuario
+      joinColumn:
+        name: UserMedico
+        referencedColumnName: Username
+      cascade: ["persist"]
+    paciente:
+      targetEntity: Paciente
+      joinColumn:
+        name: PacienteId
+        referencedColumnName: id
+      cascade: ["persist"]

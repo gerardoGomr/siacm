@@ -3,8 +3,8 @@ Siacme\Dominio\Usuarios\UsuarioTipo:
   table: usuario_tipo
   id:
     id:
-      type: int
-      column: idUsuarioTipo
+      type: integer
+      column: id
   fields:
     usuarioTipo:
       type: string

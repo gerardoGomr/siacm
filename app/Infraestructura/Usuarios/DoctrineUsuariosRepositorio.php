@@ -2,17 +2,17 @@
 namespace Siacme\Infraestructura\Usuarios;
 
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
-use Siacme\Dominio\Usuarios\Usuario;
-use Siacme\Dominio\Usuarios\Especialidad;
-use Siacme\Dominio\Usuarios\UsuarioTipo;
 use Doctrine\ORM\EntityManager;
+use Siacme\Exceptions\PDO\PDOLogger;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 /**
  * Class UsuariosRepositorioMySQL
  * @package Siacme\Infraestructura\Usuarios
  * @author  Gerardo Adrián Gómez Ruiz
  */
-class UsuariosRepositorioLaravelMySQL implements UsuariosRepositorio
+class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 {
 	/**
 	 * @var EntityManager
@@ -28,7 +28,7 @@ class UsuariosRepositorioLaravelMySQL implements UsuariosRepositorio
 		$this->entityManager = $em;
 	}
 
-	public function obtenerUsuarios($datos = '')
+	/*public function obtenerUsuarios($datos = '')
 	{
 		$usuarios = [];
 		$datos    = str_replace(' ', '', $datos);
@@ -75,7 +75,7 @@ class UsuariosRepositorioLaravelMySQL implements UsuariosRepositorio
 			echo $e->getMessage();
 			return null;
 		}
-	}
+	}*/
 
 	/**
 	 * obtener un usuario por su username
@@ -85,6 +85,22 @@ class UsuariosRepositorioLaravelMySQL implements UsuariosRepositorio
 	public function obtenerPorUsername($username)
 	{
 		// TODO: Implement obtenerPorUsername() method.
-		$this->entityManager->createQuery('SELECT u, us, e FROM ');
+		try {
+			$query = $this->entityManager->createQuery('SELECT u, us, e FROM Usuarios:Usuario u JOIN u.usuarioTipo us JOIN u.especialidad e WHERE u.username = :username')
+				->setParameter('username', $username);
+
+			$usuario = $query->getResult();
+
+			if (count($usuario) > 0) {
+				return $usuario[0];
+			}
+
+			return null;
+
+		} catch (\PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
 	}
 }

@@ -158,7 +158,7 @@ return [
         Siacme\Providers\AuthServiceProvider::class,
         Siacme\Providers\EventServiceProvider::class,
         Siacme\Providers\RouteServiceProvider::class,
-
+        Siacme\Providers\UsuariosRepositorioServiceProvider::class,
     ],
 
     /*

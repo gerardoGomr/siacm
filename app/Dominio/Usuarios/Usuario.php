@@ -35,99 +35,18 @@ class Usuario extends Persona
 	protected $usuarioTipo;
 
 	/**
-	 * ve si el usuario está o no registrado
-	 * @var bool
+	 * @var Especialidad
 	 */
-	protected $registrado;
+	protected $especialidad;
 
 	/**
-	 * @var string
+	 * Constructor Usuario
+	 * @param string $username
 	 */
-	protected $fechaCreacion;
-
 	public function __construct($username = '')
 	{
 		$this->username = $username;
 	}
-
-	//////////////////////////////getters/////////////////////////////
-	public function getUsername()
-	{
-		return $this->username;
-	}
-
-	public function getPasswd()
-	{
-		return $this->passwd;
-	}
-
-	public function getActivo()
-	{
-		return $this->activo;
-	}
-
-	public function getUsuarioTipo()
-	{
-		return $this->usuarioTipo;
-	}
-
-	//////////////////////////////SETTERS/////////////////////////////////////
-	public function setUsername($username)
-	{
-		$this->username = $username;
-	}
-
-	public function setPasswd($passwd)
-	{
-		$this->passwd = $passwd;
-	}
-
-
-	public function setActivo($activo)
-	{
-		$this->activo = $activo;
-	}
-
-	public function setUsuarioTipo(UsuarioTipo $usuarioTipo)
-	{
-		$this->usuarioTipo = $usuarioTipo;
-	}
-
-    /**
-     * Gets the ve si el usuario está o no registrado.
-     *
-     * @return bool
-     */
-    public function registrado()
-    {
-        return $this->registrado;
-    }
-
-    /**
-     * Sets the ve si el usuario está o no registrado.
-     *
-     * @param bool $registrado the registrado
-     */
-    public function setRegistrado($registrado)
-    {
-        $this->registrado = $registrado;
-    }
-
-    /**
-     * @param string
-     */
-    public function setFechaCreacion($fechaCreacion)
-    {
-    	$this->fechaCreacion = $fechaCreacion;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFechaCreacion()
-    {
-    	return $this->fechaCreacion;
-    }
 
     /**
      * verifica la contraseña proporcionada
@@ -145,6 +64,25 @@ class Usuario extends Persona
     }
 
 	/**
+	 * realizar el login del usuario
+	 * @param string $passwd
+	 * @return bool
+	 */
+	public function login($passwd)
+	{
+		if(!$this->compruebaPassword($passwd)) {
+			return false;
+		}
+
+		if(!$this->activo) {
+			// usuario inactivo
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * encriptar la contraseña proporcionada
 	 * @param  string $passwordSinHash
 	 * @return string
@@ -153,4 +91,54 @@ class Usuario extends Persona
 	{
 		return password_hash($passwordSinHash, PASSWORD_DEFAULT);
 	}
+
+    /**
+     * Gets the nombre de usuario.
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Gets the contraseña.
+     *
+     * @return string
+     */
+    public function getPasswd()
+    {
+        return $this->passwd;
+    }
+
+    /**
+     * Gets the activo el usuario.
+     *
+     * @return bool
+     */
+    public function getActivo()
+    {
+        return $this->activo;
+    }
+
+    /**
+     * Gets the tipo de usuario.
+     *
+     * @return UsuarioTipo
+     */
+    public function getUsuarioTipo()
+    {
+        return $this->usuarioTipo;
+    }
+
+    /**
+     * Gets the value of especialidad.
+     *
+     * @return Especialidad
+     */
+    public function getEspecialidad()
+    {
+        return $this->especialidad;
+    }
 }

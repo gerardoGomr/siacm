@@ -31,16 +31,26 @@ Siacme\Dominio\Usuarios\Usuario:
       type: boolean
       nullable: false
       column: Activo
+    telefono:
+      type: string
+      length: 20
+      nullable: true
+      column: Telefono
+    celular:
+      type: string
+      length: 20
+      nullable: true
+      column: celular
   oneToOne:
     usuarioTipo:
       targetEntity: UsuarioTipo
       joinColumn:
-        name: idUsuarioTipo
-        referencedColumnName: idUsuarioTipo
+        name: UsuarioTipoId
+        referencedColumnName: id
       cascade: ["persist"]
     especialidad:
       targetEntity: Especialidad
       joinColumn:
-        name: idEspecialidad
-        referencedColumnName: idEspecialidad
+        name: EspecialidadId
+        referencedColumnName: id
       cascade: ["persist"]

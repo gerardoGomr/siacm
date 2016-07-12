@@ -123,7 +123,7 @@ abstract class Persona
      * obtener el nombre completo del funcionario
      * @return string
      */
-    public function getNombreCompleto()
+    public function nombreCompleto()
     {
         $nombre = $this->nombre;
 

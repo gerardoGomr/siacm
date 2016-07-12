@@ -1,9 +1,5 @@
 @extends('app')
 
-@section('titulo')
-	<i class="fa fa-list"></i> Sistema Integral para la Administración del Consultorio Médico
-@stop
-
 @section('contenido')
 	<div class="widget">
 		<div class="widget-body padding-none">

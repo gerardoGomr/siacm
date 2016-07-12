@@ -3,8 +3,8 @@ Siacme\Dominio\Usuarios\Especialidad:
   table: especialidad
   id:
     id:
-      type: int
-      column: idEspecialidad
+      type: integer
+      column: id
   fields:
     especialidad:
       type: string

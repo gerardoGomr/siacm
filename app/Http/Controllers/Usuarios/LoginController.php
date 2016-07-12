@@ -3,14 +3,15 @@
 namespace Siacme\Http\Controllers\Usuarios;
 
 use Illuminate\Http\Request;
+use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Http\Requests;
 use Siacme\Http\Controllers\Controller;
-use Siacme\Infraestructura\Usuarios\UsuariosRepositorioInterface;
+use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 
 class LoginController extends Controller
 {
     /**
-     * mostrar pagina login
+     * mostrar vista para login
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -20,29 +21,24 @@ class LoginController extends Controller
 
     /**
      * loguear usuario
-     * @param  Request                      $request
-     * @param  UsuariosRepositorioInterface $usuariosRepositorio
-     * @return View
+     * @param  Request $request
+     * @param  UsuariosRepositorio $usuariosRepositorio
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|View
      */
-    public function logueo(Request $request, UsuariosRepositorioInterface $usuariosRepositorio)
+    public function logueo(Request $request, UsuariosRepositorio $usuariosRepositorio)
     {
         // crear la logica del logueado
-        $username = $request->get('txtUsername');
-        $passwd   = $request->get('txtPassword');
+        $username = $request->get('username');
+        $passwd   = $request->get('password'); //dd(Usuario::encryptaPassword($passwd));
 
-        $usuario = $usuariosRepositorio->obtenerUsuarioPorUsername($username);
+        $usuario = $usuariosRepositorio->obtenerPorUsername($username);
 
         if(is_null($usuario)) {
             // no existe
             return $this->generaVistaConError();
         }
 
-        if($usuario->compruebaPassword($passwd) === false) {
-            return $this->generaVistaConError();
-        }
-
-        if($usuario->getActivo() === 0) {
-            // usuario inactivo
+        if(!$usuario->login($passwd)) {
             return $this->generaVistaConError();
         }
 
@@ -68,7 +64,6 @@ class LoginController extends Controller
      */
     public function generaVistaConError()
     {
-        return view('login')
-            ->with('error', 'Usuario y/o contraseña incorrectos');
+        return view('login')->with('error', 'Usuario y/o contraseña incorrectos');
     }
 }
