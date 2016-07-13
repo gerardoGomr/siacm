@@ -243,11 +243,20 @@ class Paciente extends Persona
 
     /**
      * Paciente constructor.
-     * @param int $id
+     * @param string $nombre
+     * @param string $paterno
+     * @param string $materno
+     * @param string $telefono
+     * @param string $celular
+     * @param string $email
      */
-    public function __construct($id = null)
+    public function __construct($nombre, $paterno, $materno, $telefono, $celular, $email)
     {
-        $this->id = $id;
+        $this->telefono = $telefono;
+        $this->celular  = $celular;
+        $this->email    = $email;
+
+        parent::__construct($nombre, $paterno, $materno);
     }
 
     /**
@@ -256,6 +265,14 @@ class Paciente extends Persona
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return Domicilio
+     */
+    public function getDomicilio()
+    {
+        return $this->domicilio;
     }
 
     /**

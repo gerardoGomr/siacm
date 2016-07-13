@@ -2,17 +2,12 @@
 namespace Siacme\Http\Controllers\Citas;
 
 use Illuminate\Http\Request;
+use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
+use Siacme\Dominio\Pacientes\Paciente;
+use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
 use Siacme\Http\Controllers\Controller;
 use Siacme\Dominio\Citas\Cita;
-use Siacme\Dominio\Citas\CitaEstatus;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
-//use Siacme\Infraestructura\Citas\CitasRepositorioInterface;
-//use Siacme\Infraestructura\Expedientes\ExpedientesRepositorioInterface;
-//use Siacme\Reportes\Citas\ListaCitasPdf;
-//use Siacme\Reportes\ReporteJohannaPdf;
-//use Siacme\Servicios\Pacientes\PacientesFactory;
-//use Siacme\Servicios\Pacientes\PacientesRepositorioFactory;
-//use View;
 
 /**
  * Class Citas
@@ -27,14 +22,14 @@ class CitasController extends Controller
 //     */
 //    protected $citasRepositorio;
 //
-//    /**
-//     * constructor
-//     * @param CitasRepositorioInterface $citasRepositorio
-//     */
-//    public function __construct(CitasRepositorioInterface $citasRepositorio)
-//    {
-//        $this->citasRepositorio = $citasRepositorio;
-//    }
+    /**
+     * constructor
+     * @param CitasRepositorio $citasRepositorio
+     */
+    public function __construct(CitasRepositorio $citasRepositorio)
+    {
+        $this->citasRepositorio = $citasRepositorio;
+    }
 
     /**
      * @param $username
@@ -77,139 +72,118 @@ class CitasController extends Controller
     /**
      * comprobar la existencia de un paciente
      * @param Request $request
-     * @param UsuariosRepositorioInterface $usuariosRepositorio
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param PacientesRepositorio $pacientesRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     * @throws \Throwable
      */
-    public function buscarPacientes(Request $request, UsuariosRepositorioInterface $usuariosRepositorio)
+    public function buscarPacientes(Request $request, PacientesRepositorio $pacientesRepositorio)
     {
         // recibir parámetros
         $dato = $request->get('dato');
-        $username          = base64_decode($request->get('medico'));
-        $medico            = $usuariosRepositorio->obtenerUsuarioPorUsername($username);
-
-        // obtener el repositorio a utilizar
-        $pacientesRepositorio = PacientesRepositorioFactory::crear($medico);
+        $respuesta = [];
 
         // delegar busqueda de pacientes
-        $listaPacientes = $pacientesRepositorio->obtenerPacientesPorNombre($txtNombreBusqueda);
+        $pacientes = $pacientesRepositorio->obtenerPorNombre($dato);
 
-        // variable para construir vista
-        $html = '';
-
-        if(is_null($listaPacientes)) {
+        if(is_null($pacientes)) {
             // no hay coincidencias, devolver mensaje de no encontrados
-            $html = View::make('citas.citas_expedientes_no_encontrados');
-            return response($html);
+            $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = 'No se encontraron resultados';
+        } else {
+            // devolver vista de encontrados
+            $respuesta['estatus'] = 'OK';
+            $respuesta['html']    = view('citas.citas_expedientes_encontrados', compact('pacientes'))->render();
         }
 
-        // devolver vista de encontrados
-        $html = View::make('citas.citas_expedientes_encontrados', compact('listaPacientes'));
-
         // respuesta
-        return response($html);
+        return response()->json($respuesta);
     }
-//
-//    /**
-//     * @param Request                      $request
-//     * @param UsuariosRepositorioInterface $medicosRepositorio
-//     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-//     */
-//    public function guardar(Request $request, UsuariosRepositorioInterface $medicosRepositorio)
-//    {
-//        $txtNombre    = $request->get('txtNombre');
-//        $txtPaterno   = $request->get('txtPaterno');
-//        $txtMaterno   = $request->get('txtMaterno');
-//        $txtTelefono  = $request->get('txtTelefono');
-//        $txtCelular   = $request->get('txtCelular');
-//        $txtEmail     = $request->get('txtEmail');
-//        $fecha        = $request->get('fecha');
-//        $hora         = $request->get('hora');
-//        $userMedico   = base64_decode($request->get('medico')); // username del médico
-//        $opcion       = $request->get('opcion');  //insert or update
-//        $nuevoPaciente= $request->get('nuevoPaciente');
-//
-//        $cita                 = new Cita();
-//        $medico               = $medicosRepositorio->obtenerUsuarioPorUsername($userMedico);
-//        $paciente             = PacientesFactory::crear($medico);
-//        $pacientesRepositorio = PacientesRepositorioFactory::crear($medico);
-//        $citaEstatus          = new CitaEstatus(1);
-//
-//        // setear valores al paciente
-//        $paciente->setNombre($txtNombre);
-//        $paciente->setPaterno($txtPaterno);
-//        $paciente->setMaterno($txtMaterno);
-//        $paciente->setTelefono($txtTelefono);
-//        $paciente->setCelular($txtCelular);
-//        $paciente->setEmail($txtEmail);
-//        $paciente->setNuevoPaciente(false);
-//
-//        // si es nuevo paciente en sistema
-//        if($nuevoPaciente === '1') {
-//            $paciente->setNuevoPaciente(true);
-//
-//            // guardar paciente
-//            $pacientesRepositorio->persistir($paciente);
-//        } else {
-//            $paciente->setId(base64_decode($request->get('idPaciente')));
-//        }
-//
-//        // setear valores de cita
-//        $cita->setFecha($fecha);
-//        $cita->setHora($hora);
-//        $cita->setMedico($medico);
-//        $cita->setEstatus($citaEstatus);
-//        $cita->setPaciente($paciente);
-//
-//        // echo $opcion;exit;
-//        if($opcion === '1') {
-//            // persistir cita
-//            if(!$this->citasRepositorio->persistir($cita)) {
-//                // error
-//                return response(0);
-//            }
-//
-//            // exito!!
-//            return response(1);
-//        }
-//    }
-//
-//    /**
-//     * obtener un arreglo de citas
-//     * @param  Request $request
-//     * @param  string  $med
-//     * @param  string  $fecha
-//     * @return Response
-//     */
-//    public function verCitas(Request $request, $med, $fecha)
-//    {
-//        $medico         = base64_decode($med);
-//        $fecha          = !is_null($fecha) ? base64_decode($fecha) : null;
-//        $listaCitas     = null;
-//        $listaCitasJson = null;
-//
-//        $listaCitas = $this->citasRepositorio->obtenerCitasPorMedico($medico, $fecha);
-//
-//        // hay citas
-//        if($listaCitas !== null) {
-//
-//            $listaCitasJson = array();
-//
-//            foreach ($listaCitas as $cita) {
-//                $citaActual           = array();
-//
-//                $citaActual['id']     = $cita->getId();
-//                $citaActual["title"]  = "Cita de ".$cita->getPaciente()->getNombreCompleto();
-//                $citaActual["start"]  = $cita->getFecha()." ".$cita->getHora();
-//                $citaActual["end"]    = $cita->getFinCita();
-//                $citaActual["allDay"] = false;
-//
-//                $listaCitasJson[] = $citaActual;
-//            }
-//
-//            // respuesta en formato json
-//            return response()->json($listaCitasJson);
-//        }
-//    }
+
+    /**
+     * agendar una nueva cita en una fecha, hora y para un paciente
+     * @param Request $request
+     * @param UsuariosRepositorio $medicosRepositorio
+     * @param PacientesRepositorio $pacientesRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     * @internal param CitasRepositorio $citasRepositorio
+     */
+    public function agendar(Request $request, UsuariosRepositorio $medicosRepositorio, PacientesRepositorio $pacientesRepositorio)
+    {
+        // post variables
+        $nombre     = $request->get('nombre');
+        $paterno    = $request->get('paterno');
+        $materno    = $request->get('materno');
+        $telefono   = $request->get('telefono');
+        $celular    = $request->get('celular');
+        $email      = $request->get('email');
+        $fecha      = $request->get('fecha');
+        $hora       = $request->get('hora');
+        $userMedico = $request->get('userMedico');
+        $respuesta  = [];
+
+        if ($request->has('pacienteId') && $request->get('pacienteId') !== '0') {
+            $pacienteId = (int)$request->get('pacienteId');
+            // obtener paciente por id
+            $paciente = $pacientesRepositorio->obtenerPorId($pacienteId);
+
+        } else {
+            // nuevo paciente
+            $paciente = new Paciente($nombre, $paterno, $materno, $telefono, $celular, $email);
+        }
+
+        $medico = $medicosRepositorio->obtenerPorUsername($userMedico);
+
+        $cita = new Cita();
+        $cita->agendar($fecha, $hora, $paciente, $medico);
+
+        if (!$citasRepositorio->persistir($cita)) {
+            $respuesta['estatus'] = 'fail';
+        }
+
+        $respuesta['estatus'] = 'OK';
+
+        return response()->json($respuesta);
+    }
+
+    /**
+     * obtener un arreglo de citas
+     * @param  Request $request
+     * @param  string  $med
+     * @param  string  $fecha
+     * @return Response
+     */
+    public function verCitas(Request $request, $med, $fecha, UsuariosRepositorio $medicosRepositorio)
+    {
+        $medico         = base64_decode($med);
+        $fecha          = !is_null($fecha) ? base64_decode($fecha) : null;
+        $listaCitas     = null;
+        $listaCitasJson = null;
+        $medico = $medicosRepositorio->obtenerPorUsername($medico);
+
+        $listaCitas = $this->citasRepositorio->obtenerPorMedico($medico, $fecha);
+
+        // hay citas
+        if(!is_null($listaCitas)) {
+
+            $listaCitasJson = [];
+
+            foreach ($listaCitas as $cita) {
+                $citaActual           = [];
+
+                $citaActual['id']     = $cita->getId();
+                $citaActual["title"]  = "Cita de ".$cita->getPaciente()->nombreCompleto();
+                $citaActual["start"]  = $cita->getFecha()." ".$cita->getHora();
+                $citaActual["end"]    = $cita->getFinCita();
+                $citaActual["allDay"] = false;
+
+                $listaCitasJson[] = $citaActual;
+            }
+
+            // respuesta en formato json
+            return response()->json($listaCitasJson);
+        }
+    }
 //
 //    /**
 //     * @param Request                         $request

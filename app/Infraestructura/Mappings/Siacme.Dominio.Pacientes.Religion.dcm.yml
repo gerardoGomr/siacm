@@ -1,0 +1,14 @@
+Siacme\Dominio\Pacientes\Religion:
+  type: entity
+  table: religion
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    religion:
+      type: string
+      length: 50
+      nullable: false
+      column: Religion

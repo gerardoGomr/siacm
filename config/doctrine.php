@@ -28,6 +28,8 @@ return [
             'namespaces' => [
                 'Dominio' => 'Siacme\Dominio',
                 'Usuarios' => 'Siacme\Dominio\Usuarios',
+                'Pacientes' => 'Siacme\Dominio\Pacientes',
+                'Citas' => 'Siacme\Dominio\Citas',
             ],
             'paths'      => [
                 base_path('app/Dominio'),

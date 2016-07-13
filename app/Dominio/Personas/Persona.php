@@ -50,13 +50,11 @@ abstract class Persona
      */
     protected $email;
 
-    const MASCULINO = 'M';
-
-    const FEMENINO  = 'F';
-
-	public function __construct()
+	public function __construct($nombre, $paterno, $materno)
 	{
-		# code...
+        $this->nombre   = $nombre;
+        $this->paterno  = $paterno;
+        $this->materno  = $materno;
 	}
 
 	/**
@@ -70,16 +68,6 @@ abstract class Persona
     }
 
     /**
-     * Sets the nombre del funcionario.
-     *
-     * @param string $nombre the nombre
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-    }
-
-    /**
      * Gets the apellido paterno del funcionario.
      *
      * @return string
@@ -90,16 +78,6 @@ abstract class Persona
     }
 
     /**
-     * Sets the apellido paterno del funcionario.
-     *
-     * @param string $paterno the paterno
-     */
-    public function setPaterno($paterno)
-    {
-        $this->paterno = $paterno;
-    }
-
-    /**
      * Gets the apellido materno del funcionario.
      *
      * @return string
@@ -107,16 +85,6 @@ abstract class Persona
     public function getMaterno()
     {
         return $this->materno;
-    }
-
-    /**
-     * Sets the apellido materno del funcionario.
-     *
-     * @param string $materno the materno
-     */
-    public function setMaterno($materno)
-    {
-        $this->materno = $materno;
     }
 
     /**
@@ -136,8 +104,6 @@ abstract class Persona
         }
 
         return $nombre;
-
-
     }
 
     /**
@@ -151,32 +117,6 @@ abstract class Persona
     }
 
     /**
-     * Sets the el sexo de la persona.
-     *
-     * @param string $sexo the sexo
-     */
-    public function setSexo($sexo)
-    {
-        if(is_integer($sexo)) {
-            $sexo = (string)$sexo;
-        }
-
-        switch ($sexo) {
-            case '1':
-                $this->sexo = self::MASCULINO;
-                break;
-
-            case '0':
-                $this->sexo = self::FEMENINO;
-                break;
-
-            default:
-                $this->sexo = $sexo;
-                break;
-        }
-    }
-
-    /**
      * Gets the telefono de la persona.
      *
      * @return string
@@ -184,16 +124,6 @@ abstract class Persona
     public function getTelefono()
     {
         return $this->telefono;
-    }
-
-    /**
-     * Sets the telefono de la persona.
-     *
-     * @param string $telefono the telefono
-     */
-    public function setTelefono($telefono)
-    {
-        $this->telefono = $telefono;
     }
 
     /**
@@ -207,16 +137,6 @@ abstract class Persona
     }
 
     /**
-     * Sets the celular de la persona.
-     *
-     * @param string $celular the celular
-     */
-    public function setCelular($celular)
-    {
-        $this->celular = $celular;
-    }
-
-    /**
      * Gets the correo de la persona.
      *
      * @return string
@@ -224,15 +144,5 @@ abstract class Persona
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * Sets the correo de la persona.
-     *
-     * @param string $email the email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
     }
 }

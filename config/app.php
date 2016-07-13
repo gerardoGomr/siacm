@@ -159,6 +159,8 @@ return [
         Siacme\Providers\EventServiceProvider::class,
         Siacme\Providers\RouteServiceProvider::class,
         Siacme\Providers\UsuariosRepositorioServiceProvider::class,
+        Siacme\Providers\PacientesRepositorioServiceProvider::class,
+        Siacme\Providers\CitasRepositorioServiceProvider::class,
     ],
 
     /*

@@ -17,25 +17,19 @@ Siacme\Dominio\Citas\Cita:
       length: 5
       nullable: false
       column: HoraCita
-    comentario:
-      type: string
-      nullable: true
-      column: Comentario
-  oneToOne:
     estatus:
-      targetEntity: CitaEstatus
-      joinColumn:
-        name: CitaEstatusId
-        referencedColumnName: id
-      cascade: ["persist"]
+      type: integer
+      nullable: false
+      column: CitaEstatusId
+  oneToOne:
     medico:
-      targetEntity: Usuario
+      targetEntity: Siacme\Dominio\Usuarios\Usuario
       joinColumn:
         name: UserMedico
         referencedColumnName: Username
       cascade: ["persist"]
     paciente:
-      targetEntity: Paciente
+      targetEntity: Siacme\Dominio\Pacientes\Paciente
       joinColumn:
         name: PacienteId
         referencedColumnName: id

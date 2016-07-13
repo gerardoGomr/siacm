@@ -6,7 +6,7 @@ $(function() {
         y           = date.getFullYear(),
         med         = $('#medico').val(),
         fecha       = y + '-' + m + '-' + d,
-        rutaCitas   = $('#rutaCitas').val() + '/citas/' + btoa(med) + '/' + btoa(fecha);
+        rutaCitas   = $('#rutaCitas').val() + '/ver/' + btoa(med) + '/' + btoa(fecha);
 
     // configuración del calendario
 	$calendario.fullCalendar({
@@ -100,8 +100,10 @@ $(function() {
 				$('.fecha').text(fecha);
 				$('.hora').val(hora);
 				$('.hora').text(hora);
-				$('#nombreBusqueda').focus();
 				$('#modalAgendarCita').modal('show');
+				setTimeout(function() {
+					$('#nombreBusqueda').focus();
+				}, 500);
           	}
        	},
         eventClick: function(calEvent, jsEvent, view){
@@ -113,7 +115,7 @@ $(function() {
 		verificarFechas();
 		$calendario.fullCalendar('removeEventSource', rutaCitas);
 		fecha = $.fullCalendar.formatDate($('#calendario').fullCalendar('getDate'), 'yyyy-MM-dd');		
-		rutaCitas = $('#rutaCitas').val() + '/citas/' + btoa(med) + '/' + btoa(fecha);
+		rutaCitas = $('#rutaCitas').val() + '/ver/' + btoa(med) + '/' + btoa(fecha);
 		$calendario.fullCalendar('addEventSource', rutaCitas);
 
 		setTimeout(verificarEventos, 500);
@@ -123,7 +125,7 @@ $(function() {
 		verificarFechas();
 		$calendario.fullCalendar('removeEventSource', rutaCitas);
 		fecha = $.fullCalendar.formatDate($('#calendario').fullCalendar('getDate'), 'yyyy-MM-dd');
-		rutaCitas = $('#rutaCitas').val() + '/citas/' + btoa(med) + '/' + btoa(fecha);
+		rutaCitas = $('#rutaCitas').val() + '/ver/' + btoa(med) + '/' + btoa(fecha);
 		$calendario.fullCalendar('addEventSource', rutaCitas);
 		setTimeout(verificarEventos, 500);
 	});

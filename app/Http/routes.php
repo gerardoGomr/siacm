@@ -24,9 +24,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// pagina principal
 	Route::get('citas/{med}', 'Citas\CitasController@index');
 	// ver eventos
-	Route::get('citas/citas/{med}/{fecha?}', 'Citas\CitasController@verCitas');
+	Route::get('citas/ver/{med}/{fecha?}', 'Citas\CitasController@verCitas');
 	// guardar cita
-	Route::post('citas/agregar', 'Citas\CitasController@guardar');
+	Route::post('citas/agendar', 'Citas\CitasController@agendar');
 	// verificar que exista un expediente
 	Route::post('citas/pacientes/buscar', 'Citas\CitasController@buscarPacientes');
 	// ver detalles de una cita

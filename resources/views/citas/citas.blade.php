@@ -57,9 +57,12 @@
 						</table>
 					</div>
 					<div class="separator"></div>
-					<form id="formNuevaCita" action="{{ url('citas/agregar') }}" class="form-horizontal">
+					<form id="formNuevaCita" action="{{ url('citas/agendar') }}" class="form-horizontal">
 						{!! csrf_field() !!}
-						<div class="form-group">
+						<button type="button" id="seguirCapturando" class="btn btn-default hide pull-right"><i class="fa fa-arrow-right"></i> Cancelar búsqueda</button>
+						<div class="clearfix"></div>
+						<div class="separator"></div>
+						<div class="form-group" id="buscadorPacientes">
 							<label for="nombreBusqueda" class="control-label col-md-2">Paciente:</label>
 							<div class="col-md-9">
 								<div class="input-group">
@@ -72,14 +75,18 @@
 						</div>
 						<div id="dvResultados"></div>
 						<div id="datos" class="hide">
+							<button type="button" id="buscarDeNuevo" class="btn btn-default pull-right"><i class="fa fa-arrow-left"></i> Buscar de nuevo</button>
+							<div class="clearfix"></div>
+							<div class="separator"></div>
+							<p class="text-primary text-small">Los campos marcados con un asterisco son obligatorios</p>
 							<div class="form-group">
-								<label for="nombre" class="control-label col-md-2">Nombre:</label>
+								<label for="nombre" class="control-label col-md-2">*Nombre:</label>
 								<div class="col-md-6">
 									<input type="text" name="nombre" id="nombre" class="form-control required">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="paterno" class="control-label col-md-2">Paterno:</label>
+								<label for="paterno" class="control-label col-md-2">*Paterno:</label>
 								<div class="col-md-5">
 									<input type="text" name="paterno" id="paterno" class="form-control required">
 								</div>
@@ -97,7 +104,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="celular" class="control-label col-md-2">Celular:</label>
+								<label for="celular" class="control-label col-md-2">*Celular:</label>
 								<div class="col-md-4">
 									<input type="text" name="celular" id="celular" class="form-control required numerosEnteros" placeholder="Sin espacios ni guiones">
 								</div>
@@ -114,6 +121,7 @@
 							<input type="hidden" name="fecha" id="fecha" class="fecha" value="">
 							<input type="hidden" name="hora" id="hora" class="hora" value="">
 							<input type="hidden" name="userMedico" id="userMedico" value="{{ $medico->getUsername() }}">
+							<input type="hidden" name="pacienteId" id="pacienteId" value="0">
 						</div>
 					</form>
 				</div>

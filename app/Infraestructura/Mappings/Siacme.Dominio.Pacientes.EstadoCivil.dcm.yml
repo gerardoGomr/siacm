@@ -1,0 +1,14 @@
+Siacme\Dominio\Pacientes\EstadoCivil:
+  type: entity
+  table: estado_civil
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    estadoCivil:
+      type: string
+      length: 50
+      nullable: false
+      column: EstadoCivil

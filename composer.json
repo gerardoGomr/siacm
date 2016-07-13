@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "laravel-doctrine/orm": "1.1.*",
         "elibyy/tcpdf-laravel": "5.2.*",
-        "laravelcollective/html": "5.2.*"
+        "laravelcollective/html": "5.2.*",
+        "gedmo/doctrine-extensions": "v2.4.15"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

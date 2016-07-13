@@ -31,12 +31,19 @@ class DoctrinePacientesRepositorio implements PacientesRepositorio
 	 */
 	public function obtenerPorNombre($nombre)
 	{
+		$nombre = str_replace(' ', '', $nombre);
 		// TODO: Implement obtenerPorNombre() method.
 		try {
-			$query = $this->entityManager->createQuery('SELECT u, us, e FROM Usuarios:Usuario u JOIN u.usuarioTipo us JOIN u.especialidad e WHERE u.username = :username')
-					->setParameter('username', $username);
+			$query = $this->entityManager->createQuery("SELECT p, es, ec, im, r, d FROM Pacientes:Paciente p LEFT JOIN p.escolaridad es LEFT JOIN p.estadoCivil ec LEFT JOIN p.institucionMedica im LEFT JOIN p.religion r LEFT JOIN p.domicilio d WHERE CONCAT(p.nombre, p.paterno, p.materno) LIKE :nombre OR CONCAT(p.paterno, p.materno, p.nombre) LIKE :nombre")
+					->setParameter('nombre', "%$nombre%");
 
-			return null;
+			$pacientes = $query->getResult();
+
+			if (count($pacientes) === 0) {
+				return null;
+			}
+
+			return $pacientes;
 
 		} catch (\PDOException $e) {
 			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
@@ -52,5 +59,22 @@ class DoctrinePacientesRepositorio implements PacientesRepositorio
 	public function obtenerPorId($id)
 	{
 		// TODO: Implement obtenerPorId() method.
+		try {
+			$query = $this->entityManager->createQuery("SELECT p, es, ec, im, r, d FROM Pacientes:Paciente p LEFT JOIN p.escolaridad es LEFT JOIN p.estadoCivil ec LEFT JOIN p.institucionMedica im LEFT JOIN p.religion r LEFT JOIN p.domicilio d WHERE p.id = :id")
+					->setParameter('id', $id);
+
+			$pacientes = $query->getResult();
+
+			if (count($pacientes) === 0) {
+				return null;
+			}
+
+			return $pacientes[0];
+
+		} catch (\PDOException $e) {
+			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+			$pdoLogger->log($e);
+			return null;
+		}
 	}
 }

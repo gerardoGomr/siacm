@@ -7,18 +7,48 @@ Siacme\Dominio\Pacientes\Paciente:
       generator:
         strategy: AUTO
   fields:
+    nombre:
+      type: string
+      length: 80
+      nullable: false
+      column: Nombre
+    paterno:
+      type: string
+      length: 80
+      nullable: false
+      column: Paterno
+    materno:
+      type: string
+      length: 80
+      nullable: false
+      column: Materno
+    telefono:
+      type: string
+      length: 20
+      nullable: true
+      column: Telefono
+    celular:
+      type: string
+      length: 20
+      nullable: false
+      column: Celular
+    email:
+      type: string
+      length: 80
+      nullable: true
+      column: Email
     fechaNacimiento:
       type: string
       length: 10
       nullable: false
       column: FechaNacimiento
     edadAnios:
-      type: int
+      type: integer
       length: 3
       nullable: false
       column: EdadAnios
     edadMeses:
-      type: int
+      type: integer
       length: 2
       nullable: false
       column: EdadMeses
@@ -36,22 +66,178 @@ Siacme\Dominio\Pacientes\Paciente:
       type: string
       length: 100
       nullable: false
-      column: NombreRecomienda
-    celular:
-      type: string
-      length: 20
+      column: NombreQuienRecomienda
+    seHaAutomedicado:
+      type: boolean
       nullable: true
-      column: celular
+      column: SeHaAutomedicado
+    conQueSeHaAutomedicado:
+      type: string
+      length: 100
+      nullable: true
+      column: ConQue
+    esAlergico:
+      type: boolean
+      nullable: true
+      column: EsAlergico
+    aQueMedicamentoEsAlergico:
+      type: string
+      length: 100
+      nullable: true
+      column: AQue
+    viveMadre:
+      type: boolean
+      nullable: true
+      column: EstaVivaMadre
+    causaMuerteMadre:
+      type: string
+      length: 150
+      nullable: true
+      column: CausaMuerteMadre
+    enfermedadesMadre:
+      type: string
+      nullable: true
+      column: EnfermedadesPadeceMadre
+    vivePadre:
+      type: boolean
+      nullable: true
+      column: EstaVivoPadre
+    causaMuertePadre:
+      type: string
+      length: 150
+      nullable: true
+      column: CausaMuertePadre
+    enfermedadesPadre:
+      type: string
+      nullable: true
+      column: EnfermedadesPadecePadre
+    numHermanos:
+      type: integer
+      nullable: true
+      column: NumHermanos
+    numHermanosVivos:
+      type: integer
+      nullable: true
+      column: NumHermanosVivos
+    numHermanosFinados:
+      type: integer
+      nullable: true
+      column: NumHermanosFinados
+    causaMuerteHermanos:
+      type: string
+      nullable: true
+      column: CausaMuerteHermanos
+    enfermedadesHermanos:
+      type: string
+      nullable: true
+      column: EnfermedadesHermanos
+    enfermedadesAbuelosPaternos:
+      type: string
+      nullable: true
+      column: EnfermedadesAbuelosPaternos
+    enfermedadesAbuelosMaternos:
+      type: string
+      nullable: true
+      column: EnfermedadesAbuelosMaternos
+    seLeHacenMoretones:
+      type: boolean
+      nullable: true
+      column: SeLeHacenMoretones
+    haRequeridoTransfusion:
+      type: boolean
+      nullable: true
+      column: HaRequeridoTransfusion
+    haTenidoFracturas:
+      type: boolean
+      nullable: true
+      column: HaTenidoFracturas
+    especifiqueFracturas:
+      type: string
+      length: 120
+      nullable: true
+      column: EspecifiqueFracturas
+    haSidoIntervenido:
+      type: boolean
+      nullable: true
+      column: HaSidoIntervenido
+    especifiqueIntervencion:
+      type: string
+      length: 120
+      nullable: true
+      column: especifiqueIntervencion
+    haSidoHospitalizado:
+      type: boolean
+      nullable: true
+      column: HaSidoHospitalizado
+    especifiqueHospitalizacion:
+      type: string
+      length: 120
+      nullable: true
+      column: EspecifiqueHospitalizacion
+    exFumador:
+      type: boolean
+      nullable: true
+      column: ExFumador
+    exAlcoholico:
+      type: boolean
+      nullable: true
+      column: ExAlcoholico
+    exAdicto:
+      type: boolean
+      nullable: true
+      column: ExAdicto
+    estaBajoTratamiento:
+      type: boolean
+      nullable: true
+      column: EstaBajoTratamiento
+    especifiqueTratamiento:
+      type: string
+      length: 120
+      nullable: true
+      column: EspecifiqueTratamiento
+    nombreRepresentante:
+      type: string
+      length: 120
+      nullable: true
+      column: NombreRepresentante
+    nombreTutor:
+      type: string
+      length: 120
+      nullable: true
+      column: NombreTutor
+    ocupacionTutor:
+      type: string
+      length: 100
+      nullable: true
+      column: OcupacionTutor
   oneToOne:
-    usuarioTipo:
-      targetEntity: UsuarioTipo
+    escolaridad:
+      targetEntity: Escolaridad
       joinColumn:
-        name: UsuarioTipoId
+        name: EscolaridadId
         referencedColumnName: id
       cascade: ["persist"]
-    especialidad:
-      targetEntity: Especialidad
+    estadoCivil:
+      targetEntity: EstadoCivil
       joinColumn:
-        name: EspecialidadId
+        name: EstadoCivilId
+        referencedColumnName: id
+      cascade: ["persist"]
+    institucionMedica:
+      targetEntity: InstitucionMedica
+      joinColumn:
+        name: InstitucionMedicaId
+        referencedColumnName: id
+      cascade: ["persist"]
+    religion:
+      targetEntity: Religion
+      joinColumn:
+        name: ReligionId
+        referencedColumnName: id
+      cascade: ["persist"]
+    domicilio:
+      targetEntity: Domicilio
+      joinColumn:
+        name: DomicilioId
         referencedColumnName: id
       cascade: ["persist"]

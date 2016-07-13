@@ -1,0 +1,14 @@
+Siacme\Dominio\Pacientes\InstitucionMedica:
+  type: entity
+  table: institucion_medica
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    institucionMedica:
+      type: string
+      length: 50
+      nullable: false
+      column: InstitucionMedica

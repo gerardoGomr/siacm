@@ -55,7 +55,7 @@ class Cita
 	 * @param Paciente $paciente
 	 * @param null $id
 	 */
-	public function __construct($comentario, Paciente $paciente = null, $id = null)
+	public function __construct($comentario = null, Paciente $paciente = null, $id = null)
 	{
 		$this->comentario = $comentario;
 		$this->paciente   = $paciente;
@@ -157,5 +157,20 @@ class Cita
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @param string $fecha
+	 * @param string $hora
+	 * @param Paciente $paciente
+	 * @param Usuario $medico
+	 */
+	public function agendar($fecha, $hora, Paciente $paciente, Usuario $medico)
+	{
+		$this->fecha    = $fecha;
+		$this->hora     = $hora;
+		$this->paciente = $paciente;
+		$this->medico   = $medico;
+		$this->estatus  = CitaEstatus::AGENDADA;
 	}
 }
