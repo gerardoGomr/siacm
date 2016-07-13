@@ -37,6 +37,14 @@ $(function() {
         editable:        true,
         events:          rutaCitas,
 		dayClick: function(date, allDay, jsEvent, view) {
+			var month = (date.getMonth() + 1);
+
+			if (month < 10) {
+				month = '0' + month;
+			}
+
+			var fecha = date.getFullYear() + "-" + month + "-" + date.getDate(),
+				hora  = date.getHours() + ":" + date.getMinutes();
 			//verificarEventos();
             //prevenir la seleccion en el horario de comida
             if(date.getHours() >= "14:0" && date.getHours() < "17:0") {
@@ -87,8 +95,13 @@ $(function() {
 				});
           	} else {
           		// curso normal
+				// fecha y hora
+				$('.fecha').val(fecha);
+				$('.fecha').text(fecha);
+				$('.hora').val(hora);
+				$('.hora').text(hora);
+				$('#nombreBusqueda').focus();
 				$('#modalAgendarCita').modal('show');
-
           	}
        	},
         eventClick: function(calEvent, jsEvent, view){

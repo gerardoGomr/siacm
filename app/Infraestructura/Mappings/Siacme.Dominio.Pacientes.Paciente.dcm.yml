@@ -1,0 +1,57 @@
+Siacme\Dominio\Pacientes\Paciente:
+  type: entity
+  table: paciente
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    fechaNacimiento:
+      type: string
+      length: 10
+      nullable: false
+      column: FechaNacimiento
+    edadAnios:
+      type: int
+      length: 3
+      nullable: false
+      column: EdadAnios
+    edadMeses:
+      type: int
+      length: 2
+      nullable: false
+      column: EdadMeses
+    lugarNacimiento:
+      type: string
+      length: 120
+      nullable: false
+      column: LugarNacimiento
+    nombrePediatra:
+      type: string
+      length: 100
+      nullable: true
+      column: NombrePediatra
+    nombreRecomienda:
+      type: string
+      length: 100
+      nullable: false
+      column: NombreRecomienda
+    celular:
+      type: string
+      length: 20
+      nullable: true
+      column: celular
+  oneToOne:
+    usuarioTipo:
+      targetEntity: UsuarioTipo
+      joinColumn:
+        name: UsuarioTipoId
+        referencedColumnName: id
+      cascade: ["persist"]
+    especialidad:
+      targetEntity: Especialidad
+      joinColumn:
+        name: EspecialidadId
+        referencedColumnName: id
+      cascade: ["persist"]

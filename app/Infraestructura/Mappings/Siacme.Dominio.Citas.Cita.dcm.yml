@@ -4,8 +4,8 @@ Siacme\Dominio\Citas\Cita:
   id:
     id:
       type: integer
-      length: 11
-      column: id
+      generator:
+        strategy: AUTO
   fields:
     fecha:
       type: string

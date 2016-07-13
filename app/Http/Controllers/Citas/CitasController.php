@@ -74,40 +74,40 @@ class CitasController extends Controller
 //        ]);
 //    }
 //
-//    /**
-//     * comprobar la existencia de un paciente
-//     * @param Request                      $request
-//     * @param UsuariosRepositorioInterface $usuariosRepositorio
-//     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-//     */
-//    public function comprobarPaciente(Request $request, UsuariosRepositorioInterface $usuariosRepositorio)
-//    {
-//        // recibir parámetros
-//        $txtNombreBusqueda = $request->get('txtNombreBusqueda');
-//        $username          = base64_decode($request->get('medico'));
-//        $medico            = $usuariosRepositorio->obtenerUsuarioPorUsername($username);
-//
-//        // obtener el repositorio a utilizar
-//        $pacientesRepositorio = PacientesRepositorioFactory::crear($medico);
-//
-//        // delegar busqueda de pacientes
-//        $listaPacientes = $pacientesRepositorio->obtenerPacientesPorNombre($txtNombreBusqueda);
-//
-//        // variable para construir vista
-//        $html = '';
-//
-//        if(is_null($listaPacientes)) {
-//            // no hay coincidencias, devolver mensaje de no encontrados
-//            $html = View::make('citas.citas_expedientes_no_encontrados');
-//            return response($html);
-//        }
-//
-//        // devolver vista de encontrados
-//        $html = View::make('citas.citas_expedientes_encontrados', compact('listaPacientes'));
-//
-//        // respuesta
-//        return response($html);
-//    }
+    /**
+     * comprobar la existencia de un paciente
+     * @param Request $request
+     * @param UsuariosRepositorioInterface $usuariosRepositorio
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function buscarPacientes(Request $request, UsuariosRepositorioInterface $usuariosRepositorio)
+    {
+        // recibir parámetros
+        $dato = $request->get('dato');
+        $username          = base64_decode($request->get('medico'));
+        $medico            = $usuariosRepositorio->obtenerUsuarioPorUsername($username);
+
+        // obtener el repositorio a utilizar
+        $pacientesRepositorio = PacientesRepositorioFactory::crear($medico);
+
+        // delegar busqueda de pacientes
+        $listaPacientes = $pacientesRepositorio->obtenerPacientesPorNombre($txtNombreBusqueda);
+
+        // variable para construir vista
+        $html = '';
+
+        if(is_null($listaPacientes)) {
+            // no hay coincidencias, devolver mensaje de no encontrados
+            $html = View::make('citas.citas_expedientes_no_encontrados');
+            return response($html);
+        }
+
+        // devolver vista de encontrados
+        $html = View::make('citas.citas_expedientes_encontrados', compact('listaPacientes'));
+
+        // respuesta
+        return response($html);
+    }
 //
 //    /**
 //     * @param Request                      $request
