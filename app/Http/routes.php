@@ -30,13 +30,13 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// verificar que exista un expediente
 	Route::post('citas/pacientes/buscar', 'Citas\CitasController@buscarPacientes');
 	// ver detalles de una cita
-	Route::get('citas/detalle/{id}/{medico}', 'Citas\CitasController@verDetalle');
+	Route::post('citas/detalle', 'Citas\CitasController@verDetalle');
 	// ver formulario de editar
 	Route::get('citas/editar/{id}', 'Citas\CitasController@editar');
 	// actualizar cita
 	Route::post('citas/actualizar', 'Citas\CitasController@actualizar');
 	// modificar estatus de cita
-	Route::post('citas/estatus', 'Citas\CitasController@estatus');
+	Route::post('citas/estatus', 'Citas\CitasController@cambiarEstatus');
 	// seleccion de reprogramar
 	Route::post('citas/guardaEnSesion', 'Citas\CitasController@guardaEnSesion');
 	// acción de reprogramar

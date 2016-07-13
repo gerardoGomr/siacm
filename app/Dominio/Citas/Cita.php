@@ -35,7 +35,7 @@ class Cita
 	private $medico;
 
 	/**
-	 * @var CitaEstatus
+	 * @var int
 	 */
 	private $estatus;
 
@@ -160,6 +160,31 @@ class Cita
 	}
 
 	/**
+	 * el estatus de la cita
+	 * @return string
+	 */
+	public function estatus()
+	{
+		$estatus = '';
+
+		switch ($this->estatus) {
+			case CitaEstatus::AGENDADA:
+				$estatus = 'Agendada';
+				break;
+
+			case CitaEstatus::CONFIRMADA:
+				$estatus = 'Confirmada';
+				break;
+
+			case CitaEstatus::CANCELADA:
+				$estatus = 'Cancelada';
+				break;
+		}
+
+		return $estatus;
+	}
+
+	/**
 	 * @param string $fecha
 	 * @param string $hora
 	 * @param Paciente $paciente
@@ -172,5 +197,21 @@ class Cita
 		$this->paciente = $paciente;
 		$this->medico   = $medico;
 		$this->estatus  = CitaEstatus::AGENDADA;
+	}
+
+	/**
+	 * pasar cita a estatus confirmada
+	 */
+	public function confirmar()
+	{
+		$this->estatus = CitaEstatus::CONFIRMADA;
+	}
+
+	/**
+	 * pasar cita a estatus cancelada
+	 */
+	public function cancelar()
+	{
+		$this->estatus = CitaEstatus::CANCELADA;
 	}
 }

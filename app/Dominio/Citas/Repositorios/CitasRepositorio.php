@@ -14,6 +14,7 @@ use Siacme\Dominio\Usuarios\Usuario;
 interface CitasRepositorio extends Repositorio
 {
     /**
+     * persistir cita
      * @param Cita $cita
      * @return bool
      */
@@ -26,4 +27,11 @@ interface CitasRepositorio extends Repositorio
      * @return array|null
      */
     public function obtenerPorMedico(Usuario $medico, $fecha = null);
+
+    /**
+     * actualizar cita
+     * @param Cita $cita
+     * @return bool
+     */
+    public function actualizar(Cita $cita);
 }

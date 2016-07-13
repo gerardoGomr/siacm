@@ -32,6 +32,23 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 	public function obtenerPorId($id)
 	{
 		// TODO: Implement obtenerPorId() method.
+		try {
+
+			$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE c.id = :id")->setParameter('id', $id);
+
+			$citas = $query->getResult();
+
+			if (count($citas) === 0) {
+				return null;
+			}
+
+			return $citas[0];
+
+		} catch (\PDOException $e) {
+			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+			$pdoLogger->log($e);
+			return null;
+		}
 	}
 
 
@@ -85,6 +102,25 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return null;
+		}
+	}
+
+	/**
+	 * actualizar cita
+	 * @param Cita $cita
+	 * @return bool
+	 */
+	public function actualizar(Cita $cita)
+	{
+		// TODO: Implement actualizar() method.
+		try {
+			$this->entityManager->flush();
+			return true;
+
+		} catch (\PDOException $e) {
+			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+			$pdoLogger->log($e);
+			return false;
 		}
 	}
 }

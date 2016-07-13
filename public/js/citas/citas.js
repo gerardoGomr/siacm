@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function($) {
 	var $calendario = $('#calendario'),
         date        = new Date(),
         d           = date.getDate(),
@@ -33,7 +33,6 @@ $(function() {
         maxTime:         21,
         slotMinutes:     15,
         selectable:      true,
-        allDaySlot:      false,
         editable:        true,
         events:          rutaCitas,
 		dayClick: function(date, allDay, jsEvent, view) {
@@ -107,7 +106,36 @@ $(function() {
           	}
        	},
         eventClick: function(calEvent, jsEvent, view){
-        	window.open($('#rutaCitas').val() + '/detalle/' + btoa(calEvent.id) + '/' + btoa(med), '_blank', 'scrollbars=yes, width=700, height=500');
+			$.ajax({
+				url:      $('#rutaCitas').val() + '/detalle',
+				type:     'post',
+				dataType: 'json',
+				data:	  { citaId: btoa(calEvent.id), _token: $('#_token').val() },
+				beforeSend: function () {
+					$('#modalLoading').modal('show');
+				}
+
+			}).done(function(resultado) {
+				$('#modalLoading').modal('hide');
+				console.log(resultado.estatus);
+
+				if(resultado.estatus === 'fail') {
+					console.log(resultado.mensaje);
+					bootbox.alert('Ocurrió un error al visualizar la cita');
+				}
+
+				if (resultado.estatus === 'OK') {
+					// mostrar modal de detalle
+					$('#citaDetalle').html(resultado.html);
+					$('#modalDetalleCita').modal('show');
+				}
+
+			}) .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log(textStatus + ': ' + errorThrown);
+				$('#modalLoading').modal('hide');
+				bootbox.alert('Error al visualizar la cita. Intente de nuevo');
+			});
+        	//window.open($('#rutaCitas').val() + '/detalle/' + btoa(calEvent.id) + '/' + btoa(med), '_blank', 'scrollbars=yes, width=700, height=500');
         }
 	});
 
@@ -134,14 +162,12 @@ $(function() {
 });
 
 // recargar eventos del calendario
-function recargarCitas()
-{
+function recargarCitas() {
     $('#calendario').fullCalendar('refetchEvents');
     verificarEventos();
 }
 
-function verificarEventos()
-{
+function verificarEventos() {
 	var eventos = $('#calendario').fullCalendar('clientEvents');
 
     if (eventos.length > 0) {
@@ -154,8 +180,7 @@ function verificarEventos()
 /**
  * verificar si se puede o no generar el reporte
  */
-function verificarFechas()
-{
+function verificarFechas() {
 	var fecha = $.fullCalendar.formatDate($('#calendario').fullCalendar('getDate'), 'yyyy-MM-dd');
 
 	// por default no se puede
