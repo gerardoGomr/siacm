@@ -1,0 +1,38 @@
+Siacme\Dominio\Expedientes\Expediente:
+  type: entity
+  table: expediente
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    numero:
+      type: int
+      nullable: false
+      column: Numero
+    firma:
+      type: string
+      nullable: false
+      column: Firma
+    primeraVez:
+      type: boolean
+      nullable: false
+      column: PrimeraVez
+    fechaCreacion:
+      type: string
+      nullable: true
+      column: FechaCreacion
+  oneToOne:
+    paciente:
+      targetEntity: Siacme\Dominio\Pacientes\Paciente
+      joinColumn:
+        name: PacienteId
+        referencedColumnName: id
+      cascade: [persist]
+    medico:
+      targetEntity: Siacme\Dominio\Usuarios\Usuario
+      joinColumn:
+        name: UserMedico
+        referencedColumnName: Username
+      cascade: [persist]

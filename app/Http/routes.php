@@ -38,9 +38,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// modificar estatus de cita
 	Route::post('citas/estatus', 'Citas\CitasController@cambiarEstatus');
 	// seleccion de reprogramar
-	Route::post('citas/guardaEnSesion', 'Citas\CitasController@guardaEnSesion');
+	Route::post('citas/reprogramar/asignar', 'Citas\CitasController@asignarReprogramacion');
 	// acción de reprogramar
-	Route::post('citas/reprogramar', 'Citas\CitasController@reprogramar');
+	Route::post('citas/reprogramar/confirmar', 'Citas\CitasController@reprogramar');
 	// generar el reporte de las citas del dia
 	Route::get('citas/lista/pdf/{medico}/{fecha}', 'Citas\CitasController@pdf');
 	///////////////////////////////////////////////////////////////////////////////////////////////////////

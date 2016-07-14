@@ -41,7 +41,7 @@
             <input type="hidden" id="idPaciente" value="{{ base64_encode($cita->getPaciente()->getId()) }}" />
             <input type="hidden" id="userMedico" value="{{ base64_encode($cita->getMedico()->getUsername()) }}" />
             <input type="hidden" id="urlVerExpediente" value="{{ url('expedientes/ver/') }}" />
-            <input type="hidden" id="urlReprogramar" value="{{ url('citas/reprogramar') }}" />
+            <input type="hidden" id="urlReprogramar" value="{{ url('citas/reprogramar/asignar') }}" />
             <input type="hidden" id="urlExpediente" value="{{ url('expedientes/agregar/') }}" />
             <input type="hidden" id="_token" value="{{ csrf_token() }}" />
             <input type="hidden" id="idConfirmar" value="2" />

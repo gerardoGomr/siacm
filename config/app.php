@@ -161,6 +161,7 @@ return [
         Siacme\Providers\UsuariosRepositorioServiceProvider::class,
         Siacme\Providers\PacientesRepositorioServiceProvider::class,
         Siacme\Providers\CitasRepositorioServiceProvider::class,
+        Siacme\Providers\ExpedientesRepositorioServiceProvider::class,
     ],
 
     /*

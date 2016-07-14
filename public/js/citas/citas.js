@@ -35,6 +35,7 @@ $(document).ready(function($) {
         selectable:      true,
         editable:        true,
         events:          rutaCitas,
+		allDaySlot:      false,
 		dayClick: function(date, allDay, jsEvent, view) {
 			var month = (date.getMonth() + 1);
 
@@ -51,8 +52,8 @@ $(document).ready(function($) {
                 return false;
             }
 
-			var check = $.fullCalendar.formatDate(date,'yyyy-MM-dd');
-			var today = $.fullCalendar.formatDate(new Date(),'yyyy-MM-dd');
+			var check = $.fullCalendar.formatDate(date, 'yyyy-MM-dd'),
+				today = $.fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');
 
 			if(check < today) {
 				// Previous Day. show message if you want otherwise do nothing.
@@ -63,32 +64,39 @@ $(document).ready(function($) {
 
             if($('#reprogramar').val() === '1') {
 				// reprogramar
-				bootbox.confirm('¿Desea reprogramar la cita a esta fecha?', function(resp) {
-					if(resp === true) {
+				bootbox.confirm('¿Desea reprogramar la cita a la fecha ' + check + ' y hora ' + hora + '?', function(resp) {
+					if(resp) {
 						//reprogramar
 						$.ajax({
-							url:        $('#rutaCitas').val() + '/reprogramar',
-							type:       'post',
-							data:		{date: date.getFullYear()+"-"+(date.getMonth() + 1)+"-"+date.getDate(), time: date.getHours()+":"+date.getMinutes(), _token: $('#_token').val()}
-						})
-						.done(function(resultado) {
-							console.log(resultado);
-
-							if(resultado !== '1') {
-								bootbox.alert('Ocurrió un error al reprogramar la cita. Intente de nuevo');
-								return false;
+							url:      $('#rutaCitas').val() + '/reprogramar/confirmar',
+							type:     'post',
+							data:	  {date: date.getFullYear()+"-"+(date.getMonth() + 1)+"-"+date.getDate(), time: date.getHours()+":"+date.getMinutes(), _token: $('#_token').val()},
+							dataType: 'json',
+							beforeSend: function() {
+								$('#modalLoading').modal('show');
 							}
 
-							// resetear variable reprogramar y recargar eventos
-							$('#reprogramar').val('0');
-							recargarCitas();
+						}).done(function(resultado) {
+							$('#modalLoading').modal('hide');
 
-							bootbox.alert('Cita reprogramada con éxito.');
-						})
-						.fail(function(XMLHttpRequest, textStatus, errorThrown) {
-							console.log(errorThrown);
+							console.log(resultado.estatus);
+
+							if(resultado.estatus === 'fail') {
+								bootbox.alert('Ocurrió un error al reprogramar la cita. Intente de nuevo');
+							}
+
+							if(resultado.estatus === 'OK') {
+								// resetear variable reprogramar y recargar eventos
+								$('#reprogramar').val('0');
+								recargarCitas();
+
+								bootbox.alert('Cita reprogramada con éxito.');
+							}
+
+						}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+							console.log(textStatus + ': ' + errorThrown);
 							$('#reprogramar').val('0');
-							bootbox.alert('Error al realizar la operación solicitada');
+							bootbox.alert('Ocurrió un error al reprogramar la cita. Intente de nuevo');
 						});
 					}
 				});

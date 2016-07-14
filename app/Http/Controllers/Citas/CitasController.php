@@ -4,6 +4,7 @@ namespace Siacme\Http\Controllers\Citas;
 use Illuminate\Http\Request;
 use Siacme\Dominio\Citas\CitaEstatus;
 use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
+use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Pacientes\Paciente;
 use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
 use Siacme\Http\Controllers\Controller;
@@ -14,6 +15,7 @@ use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
  * Class Citas
  * @package Siacme\Http\Controllers\Citas
  * @author  Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class CitasController extends Controller
 {
@@ -45,31 +47,7 @@ class CitasController extends Controller
 
         return view('citas.citas', compact('medico'));
     }
-//
-//    /**
-//     * mostrar vista para agregar nueva cita
-//     * @param  Request $request
-//     * @param  string  $fecha
-//     * @param  string  $hora
-//     * @param  string  $medico
-//     * @return View
-//     */
-//    public function agregar(Request $request, $fecha, $hora, $medico)
-//    {
-//        list($anio, $mes, $dia) = explode('-', base64_decode($fecha));
-//
-//        if ((int)$mes < 10) {
-//            $mes = '0' . $mes;
-//        }
-//
-//        return view('citas.citas_agregar')->with([
-//            'modo'   => 'agregar',
-//            'fecha'  => $anio . '-' . $mes . '-' . $dia,
-//            'hora'   => base64_decode($hora),
-//            'medico' => $medico
-//        ]);
-//    }
-//
+
     /**
      * comprobar la existencia de un paciente
      * @param Request $request
@@ -187,10 +165,14 @@ class CitasController extends Controller
     }
 
     /**
+     * ver el detalle de una cita en base a la cita seleccionada
      * @param Request $request
-     * @return View
+     * @param ExpedientesRepositorio $expedientesRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     * @throws \Throwable
      */
-    public function verDetalle(Request $request)
+    public function verDetalle(Request $request, ExpedientesRepositorio $expedientesRepositorio)
     {
         //$medico = base64_decode();
         $citaId    = (int)base64_decode($request->get('citaId'));
@@ -199,8 +181,8 @@ class CitasController extends Controller
         $cita = $this->citasRepositorio->obtenerPorId($citaId);
 
         // obtener el expediente
-        //$expediente = $expedientesRepositorio->obtenerExpedientePorPacienteMedico($cita->getPaciente(), $cita->getMedico());
-        $respuesta['html']    = view('citas.citas_detalle_contenido', compact('cita'))->render();
+        $expediente = $expedientesRepositorio->obtenerPorPacienteMedico($cita->getPaciente(), $cita->getMedico());
+        $respuesta['html']    = view('citas.citas_detalle_contenido', compact('cita', 'expediente'))->render();
         $respuesta['estatus'] = 'OK';
 
         return response()->json($respuesta);
@@ -291,57 +273,55 @@ class CitasController extends Controller
 
         return response()->json($respuesta);
     }
-//
-//    /**
-//     * guardar en sesion el id de la cita a reprogramar
-//     * @param  Request $request
-//     * @return json string
-//     */
-//	public function guardaEnSesion(Request $request)
-//    {
-//        // obtener parametros
-//        $respuesta   = array();
-//        $idCita      = base64_decode($request->get('idCita'));
-//
-//		// colocar en sesión a la cita seleccionada
-//		$request->session()->put('idCita', $idCita);
-//
-//        // exito
-//        $respuesta['respuesta'] = 1;
-//
-//        return response()->json($respuesta);
-//    }
-//
-//    /**
-//     * realizar update a fecha y hora para reprogramar
-//     * la cita. Se debe modificar el estatus para que tenga estatus
-//     * de agendada. Id == 2
-//     * @param  Request $request
-//     * @return bool
-//     */
-//    public function reprogramar(Request $request)
-//    {
-//        $cita        = new Cita();
-//        $citaEstatus = new CitaEstatus();
-//        $idCita      = $request->session()->get('idCita');
-//        $fecha       = $request->get('date');
-//        $hora        = $request->get('time');
-//
-//        $cita->setId($idCita);
-//        $cita->setFecha($fecha);
-//        $cita->setHora($hora);
-//        $cita->setEstatus($citaEstatus);
-//
-//        // update
-//        if(!($this->citasRepositorio->persistir($cita))) {
-//            return response(0);
-//        }
-//
-//        // eliminar de sesion
-//        $request->session()->forget('idCita');
-//
-//        return response(1);
-//    }
+
+    /**
+     * guardar referencia a la cita que será reprogramada
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+	public function asignarReprogramacion(Request $request)
+    {
+        // obtener parametros
+        $respuesta = [];
+        $citaId    = (int)base64_decode($request->get('citaId'));
+
+        // colocar en sesión a la cita seleccionada
+		$request->session()->put('citaId', $citaId);
+
+        // exito
+        $respuesta['estatus'] = 'OK';
+
+        return response()->json($respuesta);
+    }
+
+    /**
+     * reprogramar la cita a la fecha y hora seleccionados
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reprogramar(Request $request)
+    {
+        $citaId    = $request->session()->get('citaId');
+        $fecha     = $request->get('date');
+        $hora      = $request->get('time');
+        $respuesta = [];
+
+        $cita = $this->citasRepositorio->obtenerPorId($citaId);
+        $cita->reprogramar($fecha, $hora);
+
+        // update
+        $respuesta['estatus'] = 'OK';
+
+        if(!$this->citasRepositorio->actualizar($cita)) {
+            // error
+            $respuesta['estatus'] = 'fail';
+        }
+
+        // eliminar de sesion
+        $request->session()->forget('citaId');
+
+        return response()->json($respuesta);
+    }
 //
 //    /**
 //     * generar lista citas PDF

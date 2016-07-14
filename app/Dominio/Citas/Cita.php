@@ -214,4 +214,15 @@ class Cita
 	{
 		$this->estatus = CitaEstatus::CANCELADA;
 	}
+
+	/**
+	 * reprogramar la fecha y hora de cita
+	 * @param string $fecha
+	 * @param string $hora
+	 */
+	public function reprogramar($fecha, $hora)
+	{
+		$this->fecha = $fecha;
+		$this->hora  = $hora;
+	}
 }

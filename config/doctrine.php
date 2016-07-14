@@ -26,10 +26,11 @@ return [
             'meta'       => env('DOCTRINE_METADATA', 'yaml'),
             'connection' => env('DB_CONNECTION', 'mysql'),
             'namespaces' => [
-                'Dominio' => 'Siacme\Dominio',
-                'Usuarios' => 'Siacme\Dominio\Usuarios',
-                'Pacientes' => 'Siacme\Dominio\Pacientes',
-                'Citas' => 'Siacme\Dominio\Citas',
+                'Dominio'     => 'Siacme\Dominio',
+                'Usuarios'    => 'Siacme\Dominio\Usuarios',
+                'Pacientes'   => 'Siacme\Dominio\Pacientes',
+                'Citas'       => 'Siacme\Dominio\Citas',
+                'Expedientes' => 'Siacme\Dominio\Expedientes',
             ],
             'paths'      => [
                 base_path('app/Dominio'),
