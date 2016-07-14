@@ -1,6 +1,6 @@
 <div class="innerAll">
     <div class="row">
-        <div class="col-xs-8 col-md-9 col-lg-8">
+        <div class="col-xs-8 col-md-9 col-lg-7">
             <table class="table table-striped">
                 <tr>
                     <td><strong>Fecha:</strong></td>
@@ -29,7 +29,7 @@
             </table>
         </div>
 
-        <div class="col-xs-4 col-md-3 col-lg-4">
+        <div class="col-xs-4 col-md-3 col-lg-5">
 
             <div class="separator bottom"></div>
             <div id="dvOpciones">
@@ -39,15 +39,11 @@
             <input type="hidden" id="citaId" value="{{ base64_encode($cita->getId()) }}" />
             <input type="hidden" id="urlEstatus" value="{{ url('citas/estatus') }}">
             <input type="hidden" id="idPaciente" value="{{ base64_encode($cita->getPaciente()->getId()) }}" />
-            <input type="hidden" id="userMedico" value="{{ base64_encode($cita->getMedico()->getUsername()) }}" />
+            <input type="hidden" id="medicoId" value="{{ base64_encode($cita->getMedico()->getId()) }}" />
             <input type="hidden" id="urlVerExpediente" value="{{ url('expedientes/ver/') }}" />
             <input type="hidden" id="urlReprogramar" value="{{ url('citas/reprogramar/asignar') }}" />
             <input type="hidden" id="urlExpediente" value="{{ url('expedientes/agregar/') }}" />
             <input type="hidden" id="_token" value="{{ csrf_token() }}" />
-            <input type="hidden" id="idConfirmar" value="2" />
-            <input type="hidden" id="idCancelar" value="5" />
-            <input type="hidden" id="idReprogramar" value="6" />
-            <input type="hidden" id="especialidad" value="{{ $cita->getMedico()->getEspecialidad()->getId() }}" />
         </div>
     </div>
 </div>

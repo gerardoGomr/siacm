@@ -22,9 +22,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
 	/////////////////////////////////////////// CITAS /////////////////////////////////////////////////////
 	// pagina principal
-	Route::get('citas/{med}', 'Citas\CitasController@index');
+	Route::get('citas/{medicoId}', 'Citas\CitasController@index');
 	// ver eventos
-	Route::get('citas/ver/{med}/{fecha?}', 'Citas\CitasController@verCitas');
+	Route::get('citas/ver/{medicoId}/{fecha?}', 'Citas\CitasController@verCitas');
 	// guardar cita
 	Route::post('citas/agendar', 'Citas\CitasController@agendar');
 	// verificar que exista un expediente
@@ -47,7 +47,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
 	/////////////////////////////////////////// EXPEDIENTES //////////////////////////////////////////////
 	// abrir formulario de captura
-	Route::get('expedientes/agregar/odont/{id}/{med}', 'Expedientes\ExpedienteController@index');
+	Route::get('expedientes/registrar/{pacienteId}/{medicoId}', 'Expedientes\ExpedienteController@registrar');
 	// abrir pantalla de vista previa
 	Route::get('expedientes/ver/odont/{id}/{med}', 'Expedientes\ExpedienteController@ver');
 	// guardar / editar expediente

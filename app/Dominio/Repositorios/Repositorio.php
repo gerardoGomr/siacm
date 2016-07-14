@@ -14,4 +14,9 @@ interface Repositorio
      * @return mixed
      */
     public function obtenerPorId($id);
+
+    /**
+     * @return array
+     */
+    public function obtenerTodos();
 }

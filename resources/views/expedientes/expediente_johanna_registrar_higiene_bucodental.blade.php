@@ -1,4 +1,7 @@
 <!-- antecedentes higieneBucodental -->
+<?php
+	use Siacme\Dominio\Expedientes\MarcaPasta;
+?>
 <div class="tab-pane" id="higieneBucodental">
 	<div class="row">
 		<div class="col-md-12 col-lg-6">
@@ -26,9 +29,8 @@
 							{!! Form::label('marcaPasta', 'Marca de pasta dental:', ['class' => 'control-label']) !!}
 							<select name="marcaPasta" id="marcaPasta" class="required form-control">
 								<option value="">Seleccione</option>
-								@foreach ($listaMarcas as $marcaPasta)
-									<option value="{{ $marcaPasta->getId() }}">{{ $marcaPasta->getMarcaPasta() }}</option>
-								@endforeach
+								<option value="{{ MarcaPasta::INFANTIL }}">Infantil</option>
+								<option value="{{ MarcaPasta::ADULTO }}">Adultos</option>
 							</select>
 						</div>
 					</div>

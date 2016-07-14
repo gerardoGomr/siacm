@@ -1,5 +1,6 @@
 <?php
 namespace Siacme\Dominio\Usuarios\Repositorios;
+use Siacme\Dominio\Repositorios\Repositorio;
 
 /**
  * Interface UsuariosRepositorio
@@ -7,7 +8,7 @@ namespace Siacme\Dominio\Usuarios\Repositorios;
  * @author Gerardo Adrián Gómez Ruiz
  * @version 1.0
  */
-interface UsuariosRepositorio
+interface UsuariosRepositorio extends Repositorio
 {
     /**
      * obtener un usuario por su username

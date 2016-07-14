@@ -10,7 +10,7 @@
 					<?php $i = 1; ?>
 					<div class="col-xs-6">
 						<div class="form-group">
-							@foreach($listaPadecimientos as $padecimiento)
+							@foreach($padecimientos as $padecimiento)
 								<div class="checkbox">
 									<label>
 										{!! Form::checkbox('padecimiento[]', $padecimiento->getId(), null, []) !!} {{ $padecimiento->getPadecimiento() }}
