@@ -33,6 +33,6 @@ Siacme\Dominio\Expedientes\Expediente:
     medico:
       targetEntity: Siacme\Dominio\Usuarios\Usuario
       joinColumn:
-        name: UserMedico
-        referencedColumnName: Username
+        name: MedicoId
+        referencedColumnName: id
       cascade: [persist]

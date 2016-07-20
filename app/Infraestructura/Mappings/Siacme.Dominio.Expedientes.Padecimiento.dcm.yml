@@ -1,0 +1,13 @@
+Siacme\Dominio\Expedientes\Padecimiento:
+  type: entity
+  table: padecimiento
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    padecimiento:
+      type: string
+      length: 80
+      nullable: false
+      column: Padecimiento

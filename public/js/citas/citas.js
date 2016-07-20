@@ -4,9 +4,9 @@ $(document).ready(function($) {
         d           = date.getDate(),
         m           = date.getMonth() + 1,
         y           = date.getFullYear(),
-        med         = $('#medico').val(),
+        medicoId    = $('#medico').val(),
         fecha       = y + '-' + m + '-' + d,
-        rutaCitas   = $('#rutaCitas').val() + '/ver/' + btoa(med) + '/' + btoa(fecha);
+        rutaCitas   = $('#rutaCitas').val() + '/ver/' + btoa(medicoId) + '/' + btoa(fecha);
 
     // configuración del calendario
 	$calendario.fullCalendar({
@@ -151,7 +151,7 @@ $(document).ready(function($) {
 		verificarFechas();
 		$calendario.fullCalendar('removeEventSource', rutaCitas);
 		fecha = $.fullCalendar.formatDate($('#calendario').fullCalendar('getDate'), 'yyyy-MM-dd');		
-		rutaCitas = $('#rutaCitas').val() + '/ver/' + btoa(med) + '/' + btoa(fecha);
+		rutaCitas = $('#rutaCitas').val() + '/ver/' + btoa(medicoId) + '/' + btoa(fecha);
 		$calendario.fullCalendar('addEventSource', rutaCitas);
 
 		setTimeout(verificarEventos, 500);
@@ -161,7 +161,7 @@ $(document).ready(function($) {
 		verificarFechas();
 		$calendario.fullCalendar('removeEventSource', rutaCitas);
 		fecha = $.fullCalendar.formatDate($('#calendario').fullCalendar('getDate'), 'yyyy-MM-dd');
-		rutaCitas = $('#rutaCitas').val() + '/ver/' + btoa(med) + '/' + btoa(fecha);
+		rutaCitas = $('#rutaCitas').val() + '/ver/' + btoa(medicoId) + '/' + btoa(fecha);
 		$calendario.fullCalendar('addEventSource', rutaCitas);
 		setTimeout(verificarEventos, 500);
 	});

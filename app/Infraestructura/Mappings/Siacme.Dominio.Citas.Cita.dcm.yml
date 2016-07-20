@@ -25,12 +25,12 @@ Siacme\Dominio\Citas\Cita:
     medico:
       targetEntity: Siacme\Dominio\Usuarios\Usuario
       joinColumn:
-        name: UserMedico
-        referencedColumnName: Username
-      cascade: ["persist"]
+        name: MedicoId
+        referencedColumnName: id
+      cascade: [persist]
     paciente:
       targetEntity: Siacme\Dominio\Pacientes\Paciente
       joinColumn:
         name: PacienteId
         referencedColumnName: id
-      cascade: ["persist"]
+      cascade: [persist]

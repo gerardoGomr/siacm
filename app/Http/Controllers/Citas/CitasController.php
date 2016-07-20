@@ -35,13 +35,14 @@ class CitasController extends Controller
     }
 
     /**
-     * @param $username
+     * @param string $medicoId
      * @param UsuariosRepositorio $usuariosRepositorio
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($username, UsuariosRepositorio $usuariosRepositorio)
+    public function index($medicoId, UsuariosRepositorio $usuariosRepositorio)
     {
-        if(is_null($medico = $usuariosRepositorio->obtenerPorUsername($username))) {
+        $medicoId = (int)$medicoId;
+        if(is_null($medico = $usuariosRepositorio->obtenerPorId($medicoId))) {
             return view('error');
         }
 
@@ -98,7 +99,7 @@ class CitasController extends Controller
         $email      = $request->get('email');
         $fecha      = $request->get('fecha');
         $hora       = $request->get('hora');
-        $userMedico = $request->get('userMedico');
+        $medicoId   = (int)$request->get('medicoId');
         $respuesta  = [];
 
         if ($request->has('pacienteId') && $request->get('pacienteId') !== '0') {
@@ -111,7 +112,7 @@ class CitasController extends Controller
             $paciente = new Paciente($nombre, $paterno, $materno, $telefono, $celular, $email);
         }
 
-        $medico = $medicosRepositorio->obtenerPorUsername($userMedico);
+        $medico = $medicosRepositorio->obtenerPorId($medicoId);
 
         $cita = new Cita();
         $cita->agendar($fecha, $hora, $paciente, $medico);
@@ -127,18 +128,18 @@ class CitasController extends Controller
 
     /**
      * obtener un arreglo de citas
-     * @param  string $med
-     * @param  string $fecha
+     * @param string $medicoId
+     * @param string $fecha
      * @param UsuariosRepositorio $medicosRepositorio
      * @return Response
      */
-    public function verCitas($med, $fecha, UsuariosRepositorio $medicosRepositorio)
+    public function verCitas($medicoId, $fecha, UsuariosRepositorio $medicosRepositorio)
     {
-        $medico         = base64_decode($med);
+        $medicoId       = (int)base64_decode($medicoId);
         $fecha          = !is_null($fecha) ? base64_decode($fecha) : null;
         $listaCitas     = null;
         $listaCitasJson = null;
-        $medico         = $medicosRepositorio->obtenerPorUsername($medico);
+        $medico         = $medicosRepositorio->obtenerPorId($medicoId);
 
         $listaCitas = $this->citasRepositorio->obtenerPorMedico($medico, $fecha);
 
@@ -187,63 +188,16 @@ class CitasController extends Controller
 
         return response()->json($respuesta);
     }
-//
-//    /**
-//     * cargar datos de la cita y construir vista
-//     * @param  Request $request
-//     * @param  int  $idCita
-//     * @return view
-//     */
-//    public function editar(Request $request, $idCita)
-//    {
-//        $idCita = base64_decode($idCita);
-//
-//        $cita = new Cita();
-//        $cita->setId($idCita);
-//
-//        $this->citasRepositorio->cargarDatos($cita);
-//
-//        return view('citas.citas_editar', compact('cita'));
-//    }
-//
-//    public function actualizar(Request $request)
-//    {
-//        // recuperar datos de form
-//        $txtNombre   = $request->get('txtNombre');
-//        $txtPaterno  = $request->get('txtPaterno');
-//        $txtMaterno  = $request->get('txtMaterno');
-//        $txtTelefono = $request->get('txtTelefono');
-//        $txtCelular  = $request->get('txtCelular');
-//        $txtEmail    = $request->get('txtEmail');
-//        $idCita      = $request->get('idCita');
-//
-//        // objetos
-//        $cita        = new Cita();
-//
-//        // setear valores
-//        $cita->setId($idCita);
-//        $cita->setNombre($txtNombre);
-//        $cita->setPaterno($txtPaterno);
-//        $cita->setMaterno($txtMaterno);
-//        $cita->setTelefono($txtTelefono);
-//        $cita->setCelular($txtCelular);
-//        $cita->setEmail($txtEmail);
-//
-//        if(!$this->citasRepositorio->persistir($cita)) {
-//            // error al editar
-//            return response(0);
-//        }
-//
-//        // exito!
-//        return response(1);
-//    }
-//
+
     /**
      * cambiar el estatus de la cita en base a la acción
      * @param Request $request
+     * @param ExpedientesRepositorio $expedientesRepositorio
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     * @throws \Throwable
      */
-    public function cambiarEstatus(Request $request)
+    public function cambiarEstatus(Request $request, ExpedientesRepositorio $expedientesRepositorio)
     {
         // obtener parametros
         $respuesta   = [];
@@ -267,9 +221,12 @@ class CitasController extends Controller
             return response()->json($respuesta);
         }
 
+        // obtener el expediente
+        $expediente = $expedientesRepositorio->obtenerPorPacienteMedico($cita->getPaciente(), $cita->getMedico());
+
         // exito
         $respuesta['estatus'] = 'OK';
-        $respuesta['html']    = view('citas.citas_detalle_contenido', compact('cita'))->render();
+        $respuesta['html']    = view('citas.citas_detalle_contenido', compact('cita', 'expediente'))->render();
 
         return response()->json($respuesta);
     }

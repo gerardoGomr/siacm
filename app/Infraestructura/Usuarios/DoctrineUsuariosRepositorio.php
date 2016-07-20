@@ -20,7 +20,7 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 	protected $entityManager;
 
 	/**
-	 * UsuariosRepositorioLaravelMySQL constructor.
+	 * DoctrineUsuariosRepositorio constructor.
 	 * @param EntityManager $em
 	 */
 	public function __construct(EntityManager $em)
@@ -53,5 +53,39 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
             $pdoLogger->log($e);
             return null;
         }
+	}
+
+	/**
+	 * @param int $id
+	 * @return mixed
+	 */
+	public function obtenerPorId($id)
+	{
+		// TODO: Implement obtenerPorId() method.
+		try {
+			$query = $this->entityManager->createQuery('SELECT u, us, e FROM Usuarios:Usuario u JOIN u.usuarioTipo us JOIN u.especialidad e WHERE u.id = :id')
+					->setParameter('id', $id);
+
+			$usuario = $query->getResult();
+
+			if (count($usuario) > 0) {
+				return $usuario[0];
+			}
+
+			return null;
+
+		} catch (\PDOException $e) {
+			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+			$pdoLogger->log($e);
+			return null;
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function obtenerTodos()
+	{
+		// TODO: Implement obtenerTodos() method.
 	}
 }

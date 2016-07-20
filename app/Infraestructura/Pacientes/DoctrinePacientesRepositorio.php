@@ -77,4 +77,12 @@ class DoctrinePacientesRepositorio implements PacientesRepositorio
 			return null;
 		}
 	}
+
+	/**
+	 * @return array
+	 */
+	public function obtenerTodos()
+	{
+		// TODO: Implement obtenerTodos() method.
+	}
 }

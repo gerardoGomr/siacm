@@ -17,9 +17,8 @@ use Monolog\Logger;
  */
 class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 {
-
 	/**
-	 * DoctrinePacientesRepositorio constructor.
+	 * DoctrineExpedientesRepositorio constructor.
 	 * @param EntityManager $em
 	 */
 	public function __construct(EntityManager $em)
@@ -64,5 +63,13 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	public function obtenerPorId($id)
 	{
 		// TODO: Implement obtenerPorId() method.
+	}
+
+	/**
+	 * @return array
+	 */
+	public function obtenerTodos()
+	{
+		// TODO: Implement obtenerTodos() method.
 	}
 }

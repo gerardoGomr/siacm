@@ -71,32 +71,15 @@ $(document).ready(function($) {
         });
     });
 
-    // registrar llegada a consultorio
-    //$dvOpciones.on('click', 'a.registrarLlegada', function(event) {
-    //    // evaluar si es nuevo paciente o subsecuente
-    //    if($('#nuevoPaciente').val() === '1') {
-    //        bootbox.alert('Debe registrar algunos datos del paciente para generar el expediente correspondiente', function() {
-    //            var especialidad = '';
-    //            // 2 = odontopediatria
-    //            if($especialidad.val() === '3') {
-    //                especialidad = '/odont/';
-    //            }
-    //            // 3 = otorrinolaringología
-    //            if($especialidad.val() === '4') {
-    //                especialidad = '/otorr/';
-    //            }
-    //
-    //            //window.location.href = $('#urlExpediente').val() + especialidad + $('#idPaciente').val() + '/' + $('#userMedico').val();
-    //            window.open($('#urlExpediente').val() + especialidad + $('#idPaciente').val() + '/' + $('#userMedico').val(), '_blank', 'scrollbars=yes')
-    //        });
-    //    } else {
-    //        bootbox.confirm('Se registrará la llegada del paciente al consultorio, ¿Desea continuar?', function(event) {
-    //            if(event === true) {
-    //                actualizarCitas($urlEstatus.val(), $idCita.val(), 3, _token);
-    //            }
-    //        });
-    //    }
-    //});
+    // registrar llegada a consultorio - enviar a la generación de expedientes
+    $('#citaDetalle').on('click', 'a.registrarExpediente', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+
+        bootbox.alert('Por favor, registre los datos del paciente para generarle un nuevo expediente.', function() {
+            window.location.href = url;
+        });
+    });
     //
     //// ver expediente una vez capturado
     //$dvOpciones.on('click', 'a.verExpediente', function(event) {

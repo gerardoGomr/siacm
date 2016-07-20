@@ -7,7 +7,7 @@
 @section('contenido')
 		<div class="wizard">
 			<div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row row-merge">
-				@include('expedientes.expediente_odontopediatria_pestanias')
+				@include('expedientes.expediente_johanna_pestanias')
 
 				<div class="widget-body col-md-9 col-lg-9">
 					<div class="innerAll">

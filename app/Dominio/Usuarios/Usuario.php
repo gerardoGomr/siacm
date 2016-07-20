@@ -11,6 +11,11 @@ use Siacme\Dominio\Personas\Persona;
 class Usuario extends Persona
 {
 	/**
+	 * @var int
+	 */
+	protected $id;
+
+	/**
 	 * nombre de usuario
 	 * @var string
 	 */
@@ -90,6 +95,14 @@ class Usuario extends Persona
 	public static function encryptaPassword($passwordSinHash)
 	{
 		return password_hash($passwordSinHash, PASSWORD_DEFAULT);
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getId()
+	{
+		return $this->id;
 	}
 
     /**

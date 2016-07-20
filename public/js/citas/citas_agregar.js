@@ -117,6 +117,9 @@ $(document).ready(function($) {
 		});
 	}
 
+	/**
+	 * agendar nueva cita
+	 */
 	function agendarCita() {
 		// agendar cita
 		$.ajax({

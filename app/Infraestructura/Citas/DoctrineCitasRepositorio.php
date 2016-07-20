@@ -17,7 +17,7 @@ use Monolog\Handler\StreamHandler;
 class DoctrineCitasRepositorio implements CitasRepositorio
 {
 	/**
-	 * DoctrinePacientesRepositorio constructor.
+	 * DoctrineCitasRepositorio constructor.
 	 * @param EntityManager $em
 	 */
 	public function __construct(EntityManager $em)
@@ -83,11 +83,11 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 		try {
 
 			if (!is_null($fecha)) {
-				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.username = :username AND c.fecha = :fecha")
-						->setParameter('username', $medico)->setParameter('fecha', $fecha);
+				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id AND c.fecha = :fecha")
+						->setParameter('id', $medico->getId())->setParameter('fecha', $fecha);
 			} else {
-				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.username = :username")
-						->setParameter('username', $medico);
+				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id")
+						->setParameter('id', $medico->getId());
 			}
 
 			$citas = $query->getResult();
@@ -122,5 +122,13 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 			$pdoLogger->log($e);
 			return false;
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function obtenerTodos()
+	{
+		// TODO: Implement obtenerTodos() method.
 	}
 }

@@ -84,7 +84,7 @@
 						<input type="hidden" id="busquedaPacienteRealizada" value="0">
 						<input type="hidden" name="fecha" id="fecha" class="fecha" value="">
 						<input type="hidden" name="hora" id="hora" class="hora" value="">
-						<input type="hidden" name="userMedico" id="userMedico" value="{{ $medico->getUsername() }}">
+						<input type="hidden" name="medicoId" id="medicoId" value="{{ $medico->getId() }}">
 						<input type="hidden" name="pacienteId" id="pacienteId" value="0">
 					</div>
 				</form>

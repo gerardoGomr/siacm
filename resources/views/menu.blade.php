@@ -15,9 +15,9 @@
 			<li class="hasSubmenu">
 				<a href="#ulJohanna" data-toggle="collapse" class="glyphicons girl"><i></i><span>Dra. Johanna Vázquez</span></a>
 				<ul class="collapse" id="ulJohanna">
-					<li><a href="{{ url('citas/johanna.vazquez/') }}" class="glyphicons calendar"><i></i><span> Citas</span></a></li>
-					<li><a href="{{ url('consultas/johanna.vazquez/') }}" class="glyphicons hospital_h"><i></i><span> Consultas</span></a></li>
-					<li><a href="{{ url('pacientes/johanna.vazquez') }}" class="glyphicons nameplate_alt"><i></i><span>Expedientes</span></a></li>
+					<li><a href="{{ url('citas/2') }}" class="glyphicons calendar"><i></i><span> Citas</span></a></li>
+					<li><a href="{{ url('consultas/2') }}" class="glyphicons hospital_h"><i></i><span> Consultas</span></a></li>
+					<li><a href="{{ url('pacientes/2') }}" class="glyphicons nameplate_alt"><i></i><span>Expedientes</span></a></li>
 				</ul>
 			</li>
 			<li>
