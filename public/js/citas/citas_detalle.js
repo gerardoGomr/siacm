@@ -116,7 +116,13 @@ $(document).ready(function($) {
     //});
     //
 
-    // enviar cambio de estatus
+    /**
+     * actualizar estatus de cita
+     * @param url
+     * @param citaId
+     * @param _token
+     * @param accion
+     */
     function actualizarCitas(url, citaId, _token, accion) {
         $.ajax({
             url:      url,

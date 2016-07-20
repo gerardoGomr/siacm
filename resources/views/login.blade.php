@@ -30,7 +30,7 @@
 												<div class="form-group">
 													<input type="password" class="form-control" name="password" id="password" autocomplete="off" placeholder="Contraseña">
 												</div>
-												<input type="submit" class="btn btn-primary btn-block" value="Ingresar a sistema" />
+												<input type="submit" class="btn btn-primary btn-block strong" value="Ingresar a sistema" />
 											</form>
 										</div>
 									</div>

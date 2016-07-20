@@ -19,7 +19,7 @@ use Siacme\Dominio\Citas\CitaEstatus;
 			<button type="button" class="btn btn-danger btn-block registrarLlegada" data-accion="{{ CitaEstatus::EN_ESPERA_CONSULTA  }}"><i class="fa fa-male"></i> Marcar llegada de paciente</button>
 		@endif
 	@else
-		<a href="" class="btn btn-success btn-block"><i class="fa fa-edit"></i> Registrar expediente</a>
+		<a href="{{ url('expedientes/nuevo/' . base64_encode($cita->getPaciente()->getId()) . '/' . base64_encode($cita->getMedico()->getId())) }}" class="btn btn-success btn-block"><i class="fa fa-edit"></i> Registrar expediente</a>
 	@endif
 		<button type="button" class="btn btn-danger btn-block cancelar" data-accion="{{ CitaEstatus::CANCELADA  }}"><i class="fa fa-times-circle"></i> Cancelar Cita</button>
 		<button type="button" class="btn btn-warning btn-block reprogramar"><i class="fa fa-calendar"></i> Reprogramar Cita</button>
