@@ -49,19 +49,17 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// abrir formulario de captura
 	Route::get('expedientes/registrar/{pacienteId}/{medicoId}', 'Expedientes\ExpedienteController@registrar');
 	// abrir pantalla de vista previa
-	Route::get('expedientes/ver/odont/{id}/{med}', 'Expedientes\ExpedienteController@ver');
+	Route::get('expedientes/ver/{pacienteId}/{medicoId}', 'Expedientes\ExpedienteController@ver');
 	// guardar / editar expediente
-	Route::post('expedientes/agregarEditar', 'Expedientes\ExpedienteController@agregarEditarExpediente');
+	Route::post('expedientes/registrar', 'Expedientes\ExpedienteController@registrarExpediente');
 	// firmar expediente
 	Route::post('expedientes/firmar', 'Expedientes\ExpedienteController@firmar');
 	// subir foto
-	Route::post('expedientes/subir/foto', 'Expedientes\ExpedienteController@subirFoto');
+	Route::post('expedientes/foto/anexar', 'Expedientes\ExpedienteController@anexarFoto');
 	//recortar foto
-	Route::post('expedientes/recortar/foto', 'Expedientes\ExpedienteController@recortarFoto');
-	//abrir camara
-	Route::get('expedientes/foto/camara/{id}/{med}', 'Expedientes\ExpedienteController@camara');
+	Route::post('expedientes/foto/recortar', 'Expedientes\ExpedienteController@recortarFoto');
 	// guardar foto capturada por camara
-	Route::post('expedientes/foto/camara/{id}/{med}', 'Expedientes\ExpedienteController@capturarFoto');
+	Route::post('expedientes/foto/guardar/{pacienteId}', 'Expedientes\ExpedienteController@capturarFoto');
 
 	/////////////////////////////////////////// CONSULTAS //////////////////////////////////////////////
 	// principal consultas

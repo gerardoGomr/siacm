@@ -4,15 +4,15 @@ $(function() {
 		$cancelar = $('#cancelar'),
 		$guardar  = $('#guardar');
 
-	// inicializar la cámara
-	Webcam.set({
-		image_format: 'jpeg',
-		jpeg_quality: 90,
-		fps: 45
-	});
-
-	// attach
-	Webcam.attach('#camara');
+	//// inicializar la cámara
+	//Webcam.set({
+	//	image_format: 'jpeg',
+	//	jpeg_quality: 90,
+	//	fps: 45
+	//});
+    //
+	//// attach
+	//Webcam.attach('#camara');
 
 	// capturar foto
 	$capturar.on('click', function(event) {
@@ -35,10 +35,11 @@ $(function() {
 		Webcam.snap( function(data_uri) {
 			// snap complete, image data is in 'data_uri'
 			Webcam.upload( data_uri, $('#urlCaptura').val(), function(code, text) {
-				window.opener.$('#fotografiaAgregada').html(text);
-				window.opener.$('#capturada').val('1');
-				window.opener.$('#foto').val(window.opener.$('#urlFoto').val())
-				window.close();
+				$('#fotografiaAgregada').html(text);
+				$('#capturada').val('1');
+				$('#foto').val($('#urlFoto').val())
+				$('#modalCapturarFoto').modal('hide');
+				Webcam.unset();
 			});
 		});
 	});

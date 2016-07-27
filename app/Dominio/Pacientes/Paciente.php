@@ -640,6 +640,11 @@ class Paciente extends Persona
         return true;
     }
 
+    public function asignarFoto(Fotografia $fotografia)
+    {
+        $this->fotografia = $fotografia;
+    }
+
     /**
      * obtiene la foto del paciente
      */

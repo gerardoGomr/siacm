@@ -240,11 +240,7 @@ input,
 button,
 select,
 textarea {
-<<<<<<< HEAD
   font-family: 'Lato', sans-serif;
-=======
-  font-family: 'Roboto', sans-serif;
->>>>>>> 45b1403808a892e694392f0af378db0abf6b36a8
 }
 pre.prettyprint {
   word-break: normal;
@@ -2670,7 +2666,7 @@ input[type="color"],
 .uneditable-input {
   font-size: 13px;
   border-radius: 0 0 0 0;
-  border-color: #efefef;
+  border-color: #ccccce;
 }
 .uniformjs .radio .disabled input[type="radio"],
 .uniformjs .checkbox .disabled input[type="checkbox"] {
@@ -2730,7 +2726,7 @@ input[type=text],
 input[type=password],
 select,
 textarea {
-  border-color: #efefef;
+  border-color: #ccccce;
   color: #A7A7A7;
 }
 .control-label.center {
@@ -2777,10 +2773,10 @@ textarea {
 }
 .input-group .input-group-addon {
   background: #fff;
-  border-color: #efefef;
+  border-color: #ccccce;
 }
 .form-control {
-  border-color: #efefef;
+  border-color: #ccccce;
   box-shadow: none;
 }
 .friends-search {

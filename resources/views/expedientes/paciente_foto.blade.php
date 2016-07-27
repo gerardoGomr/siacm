@@ -1,5 +1,5 @@
 @if(isset($paciente) && $paciente->tieneFoto())
-	<img src="{{ url($paciente->getFotografia()->getRuta()) }}?{{ rand() }}" id="fotoCapturada" class="text-center" />
+	<img src="{{ url($paciente->getFotografia()->getRuta()) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
 	<input type="hidden" name="x" id="x" value="" />
 	<input type="hidden" name="y" id="y" value="" />
 	<input type="hidden" name="w" id="w" value="{{ $paciente->getFotografia()->getAncho() }}" />
@@ -12,6 +12,7 @@
 	<a href="javascript:;" id="btnCancelarRecorte" class="btn btn-info cancelarRecorte" style="display:none"><i class="fa fa-times"></i> Cancelar recorte</a>
 @else
 	<img src="{{ asset('public/img/avatar5.png') }}" id="fotoCapturada" class="text-center" />
+	<p class="strong">Sin fotografía</p>
 	<input type="hidden" name="x" id="x" value="" />
 	<input type="hidden" name="y" id="y" value="" />
 	<input type="hidden" name="w" id="w" value="" />

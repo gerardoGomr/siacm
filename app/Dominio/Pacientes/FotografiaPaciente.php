@@ -2,8 +2,10 @@
 namespace Siacme\Dominio\Pacientes;
 
 /**
+ * Class FotografiaPaciente
+ * @package Siacme\Dominio\Pacientes
  * @author Gerardo Adrián Gómez Ruiz
- * se espera que sea JPG
+ * @version 1.0
  */
 class FotografiaPaciente extends Fotografia
 {
@@ -15,8 +17,8 @@ class FotografiaPaciente extends Fotografia
 
 	public function __construct($ruta)
 	{
-		$this->rutaTemporal = ('public/pacientesFotografiasTemp/');
-		$this->rutaAGuardar = ('public/pacientesFotografias/');
+		$this->rutaTemporal = 'storage/pacientesFotografiasTemp/';
+		$this->rutaAGuardar = 'storage/pacientesFotografias/';
 
 		parent::__construct($ruta);
 
