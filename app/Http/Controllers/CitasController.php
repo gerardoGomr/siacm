@@ -18,24 +18,7 @@ class CitasController
             return false;
         }
 
-        // $listaCitas = $citasRepositorio->obtenerCitasPorMedico($username);
-        // var_dump($listaCitas);exit;
-        // $listas = array(
-        //     'usuario'    => $usuario,
-        //     'listaCitas' => $listaCitas
-        // );
-
         return $usuario;
-    }
-
-    public function agregar(Request $request, $fecha, $hora, $med)
-    {
-        return view('citas.citas_agregar')->with([
-            'modo'   => 'agregar',
-            'fecha'  => base64_decode($fecha),
-            'hora'   => base64_decode($hora),
-            'medico' => $med
-        ]);
     }
 
     /**

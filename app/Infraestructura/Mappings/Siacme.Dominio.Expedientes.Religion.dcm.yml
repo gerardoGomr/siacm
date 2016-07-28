@@ -1,4 +1,4 @@
-Siacme\Dominio\Pacientes\Religion:
+Siacme\Dominio\Expedientes\Religion:
   type: entity
   table: religion
   id:

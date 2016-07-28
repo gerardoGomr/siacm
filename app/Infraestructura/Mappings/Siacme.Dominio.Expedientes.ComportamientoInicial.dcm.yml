@@ -1,0 +1,12 @@
+Siacme\Dominio\Expedientes\ComportamientoInicial:
+  type: entity
+  table: comportamiento_inicial
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    comportamientoInicial:
+      type: string
+      nullable: false
+      column: ComportamientoInicial

@@ -1,5 +1,5 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
  * @author Gerardo Adrián Gómez Ruiz

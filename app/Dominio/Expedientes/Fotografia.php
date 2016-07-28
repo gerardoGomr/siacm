@@ -1,9 +1,12 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
-* @author Gerardo Adrián Gómez Ruiz
-*/
+ * Class Fotografia
+ * @package Siacme\Dominio\Expedientes
+ * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
+ */
 abstract class Fotografia
 {
 	/**
@@ -100,20 +103,6 @@ abstract class Fotografia
     }
 
     /**
-     * Sets the ancho.
-     *
-     * @param double $ancho the ancho
-     *
-     * @return self
-     */
-    public function setAncho($ancho)
-    {
-        $this->ancho = $ancho;
-
-        return $this;
-    }
-
-    /**
      * Gets the alto.
      *
      * @return double
@@ -121,20 +110,6 @@ abstract class Fotografia
     public function getAlto()
     {
         return $this->alto;
-    }
-
-    /**
-     * Sets the alto.
-     *
-     * @param double $alto the alto
-     *
-     * @return self
-     */
-    public function setAlto($alto)
-    {
-        $this->alto = $alto;
-
-        return $this;
     }
 
     /**
@@ -148,18 +123,6 @@ abstract class Fotografia
     }
 
     /**
-     * Sets the peso en megabytes.
-     *
-     * @param double $peso the peso
-     *
-     * @return self
-     */
-    public function setPeso()
-    {
-        $this->peso = filesize($this->ruta);
-    }
-
-    /**
      * Gets the nombre de la foto.
      *
      * @return string
@@ -170,20 +133,6 @@ abstract class Fotografia
     }
 
     /**
-     * Sets the nombre de la foto.
-     *
-     * @param string $nombre the nombre
-     *
-     * @return self
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
      * Gets the tipo de foto (mime-type).
      *
      * @return string
@@ -191,20 +140,6 @@ abstract class Fotografia
     public function getTipo()
     {
         return $this->tipo;
-    }
-
-    /**
-     * Sets the tipo de foto (mime-type).
-     *
-     * @param string $tipo the tipo
-     *
-     * @return self
-     */
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
     }
 
     /**
@@ -248,15 +183,5 @@ abstract class Fotografia
     public function getRuta()
     {
         return $this->ruta;
-    }
-
-    /**
-     * Sets the la ruta de la foto.
-     *
-     * @param string $ruta the ruta
-     */
-    public function setRuta($ruta)
-    {
-        $this->ruta = $ruta;
     }
 }

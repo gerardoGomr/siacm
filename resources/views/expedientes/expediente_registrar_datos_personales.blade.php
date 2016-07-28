@@ -82,16 +82,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			{!! Form::label('automedicado', '*¿Ha automedicado a su hijo?:', ['class' => 'control-label col-md-3']) !!}
-			<div class="col-md-4">
-				<div class="radio">
+			<div class="col-md-4 col-md-3">
+				<div class="checkbox">
 					<label>
-						{!! Form::radio('automedicado', 1, null, ['class' => 'required automedicado']) !!} Sí
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						{!! Form::radio('automedicado', 2, null, ['class' => 'required automedicado']) !!} No
+						{!! Form::checkbox('automedicado', null, null, ['class' => 'automedicado']) !!} Ha automedicado a su hijo(a)
 					</label>
 				</div>
 			</div>
@@ -103,17 +97,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			{!! Form::label('alergico', '*¿Es alérgico a algún medicamento?:', ['class' => 'control-label col-md-3']) !!}
-			<div class="col-md-4">
-				<div class="radio">
+			<div class="col-md-4 col-md-3">
+				<div class="checkbox">
 					<label>
-						{!! Form::radio('alergico', 1, null, ['class' => 'required alergico']) !!} Sí
-					</label>
-				</div>
-
-				<div class="radio">
-					<label>
-						{!! Form::radio('alergico', 2, null, ['class' => 'required alergico']) !!} No
+						{!! Form::radio('alergico', null, null, ['class' => 'alergico']) !!} Es alérgico a algún medicamento
 					</label>
 				</div>
 			</div>

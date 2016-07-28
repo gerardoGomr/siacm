@@ -1,0 +1,3 @@
+Siacme\Dominio\Expedientes\AbstractExpediente:
+  type: mappedSuperclass
+  table: abstract_expediente

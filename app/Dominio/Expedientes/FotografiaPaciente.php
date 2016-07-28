@@ -1,5 +1,5 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
  * Class FotografiaPaciente
@@ -15,6 +15,11 @@ class FotografiaPaciente extends Fotografia
 	 */
 	private $haSidoRecortada;
 
+	/**
+	 * FotografiaPaciente constructor.
+	 * @param string $ruta
+	 * @throws \Exception
+	 */
 	public function __construct($ruta)
 	{
 		$this->rutaTemporal = 'storage/pacientesFotografiasTemp/';

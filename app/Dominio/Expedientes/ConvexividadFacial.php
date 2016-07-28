@@ -1,20 +1,28 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
+ * Class ConvexividadFacial
+ * @package Siacme\Dominio\Expedientes
  * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class ConvexividadFacial
 {
-	//int
+	/**
+	 * @var int
+	 */
 	private $id;
-	//string
+
+	/**
+	 * @var string
+	 */
 	private $convexividadFacial;
 
 	/**
 	 * ConvexividadFacial constructor.
-	 * @param $id
-	 * @param $convexividadFacial
+	 * @param int $id
+	 * @param string $convexividadFacial
 	 */
 	public function __construct($id = null, $convexividadFacial = null)
 	{
@@ -22,23 +30,19 @@ class ConvexividadFacial
 		$this->convexividadFacial = $convexividadFacial;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getConvexividadFacial()
 	{
 		return $this->convexividadFacial;
-	}
-
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	public function setConvexividadFacial($convexividadFacial)
-	{
-		$this->convexividadFacial = $convexividadFacial;
 	}
 }

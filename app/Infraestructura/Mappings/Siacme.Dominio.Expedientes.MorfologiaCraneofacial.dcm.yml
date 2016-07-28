@@ -1,0 +1,12 @@
+Siacme\Dominio\Expedientes\MorfologiaCraneofacial:
+  type: entity
+  table: morfolofia_craneofacial
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    morfologiaCraneofacial:
+      type: string
+      nullable: false
+      column: MorfologiaCraneofacial

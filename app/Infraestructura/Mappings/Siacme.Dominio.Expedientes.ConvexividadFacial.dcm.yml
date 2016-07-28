@@ -1,0 +1,12 @@
+Siacme\Dominio\Expedientes\ConvexividadFacial:
+  type: entity
+  table: convexividad_facial
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    convexividadFacial:
+      type: string
+      nullable: false
+      column: ConvexividadFacial

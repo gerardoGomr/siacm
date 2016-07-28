@@ -1,14 +1,14 @@
-Siacme\Dominio\Pacientes\Escolaridad:
+Siacme\Dominio\Expedientes\EstadoCivil:
   type: entity
-  table: escolaridad
+  table: estado_civil
   id:
     id:
       type: integer
       generator:
         strategy: AUTO
   fields:
-    escolaridad:
+    estadoCivil:
       type: string
       length: 50
       nullable: false
-      column: Escolaridad
+      column: EstadoCivil

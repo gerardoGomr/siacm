@@ -1,0 +1,12 @@
+Siacme\Dominio\Expedientes\MorfologiaFacial:
+  type: entity
+  table: morfologia_facial
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    morfologiaFacial:
+      type: string
+      nullable: false
+      column: MorfologiaFacial

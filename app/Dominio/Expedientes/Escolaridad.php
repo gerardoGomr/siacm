@@ -1,14 +1,22 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
+ * Class Escolaridad
+ * @package Siacme\Dominio\Expedientes
  * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class Escolaridad
 {
-	//int
+	/**
+	 * @var int
+	 */
 	private $id;
-	//string
+
+	/**
+	 * @var string
+	 */
 	private $escolaridad;
 
 	/**
@@ -22,24 +30,19 @@ class Escolaridad
 		$this->escolaridad = $escolaridad;
 	}
 
-
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getEscolaridad()
 	{
 		return $this->escolaridad;
-	}
-
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	public function setEscolaridad($escolaridad)
-	{
-		$this->escolaridad = $escolaridad;
 	}
 }

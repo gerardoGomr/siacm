@@ -3,12 +3,12 @@ namespace Siacme\Http\Controllers\Expedientes;
 
 use Illuminate\Http\Request;
 use Siacme\Aplicacion\Factories\VistasExpedientesGenerarFactory;
-use Siacme\Dominio\Pacientes\FotografiaPaciente;
 use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
 use Siacme\Http\Controllers\Controller;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
+use Siacme\Http\Requests\RegistrarExpedienteRequest;
 
 /**
  * Class ExpedienteController
@@ -164,7 +164,7 @@ class ExpedienteController extends Controller
 		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
 
 		$medicoId = (int)base64_decode($request->get('medicoId'));
-		$medico   = $this->medicosRepositorio->obtenerPorId($medicoId);
+		$medico   = $this->usuariosRepositorio->obtenerPorId($medicoId);
 		
 		// collect request variables and perform business rules
 		

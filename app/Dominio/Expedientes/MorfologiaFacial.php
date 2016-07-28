@@ -1,14 +1,22 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
+ * Class MorfologiaFacial
+ * @package Siacme\Dominio\Expedientes
  * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class MorfologiaFacial
 {
-	//int
+	/**
+	 * @var int
+	 */
 	private $id;
-	//string
+
+	/**
+	 * @var string
+	 */
 	private $morfologiaFacial;
 
 	/**
@@ -22,23 +30,19 @@ class MorfologiaFacial
 		$this->morfologiaFacial = $morfologiaFacial;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getMorfologiaFacial()
 	{
 		return $this->morfologiaFacial;
-	}
-
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	public function setMorfologiaFacial($morfologiaFacial)
-	{
-		$this->morfologiaFacial = $morfologiaFacial;
 	}
 }

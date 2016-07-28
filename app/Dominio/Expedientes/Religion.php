@@ -1,14 +1,22 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
+ * Class Religion
+ * @package Siacme\Dominio\Pacientes
  * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class Religion
 {
-	//int
+	/**
+	 * @var int
+	 */
 	private $id;
-	//string
+
+	/**
+	 * @var string
+	 */
 	private $religion;
 
 	/**
@@ -22,24 +30,19 @@ class Religion
 		$this->religion = $religion;
 	}
 
-
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getReligion()
 	{
 		return $this->religion;
-	}
-
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	public function setReligion($religion)
-	{
-		$this->religion = $religion;
 	}
 }

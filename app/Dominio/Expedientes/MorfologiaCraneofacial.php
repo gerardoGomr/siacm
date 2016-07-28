@@ -1,20 +1,28 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
+ * Class MorfologiaCraneofacial
+ * @package Siacme\Dominio\Expedientes
  * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class MorfologiaCraneofacial
 {
-	//int
+	/**
+	 * @var int
+	 */
 	private $id;
-	//string
+
+	/**
+	 * @var string
+	 */
 	private $morfologiaCraneofacial;
 
 	/**
 	 * MorfologiaCraneofacial constructor.
-	 * @param $id
-	 * @param $morfologiaCraneofacial
+	 * @param int $id
+	 * @param string $morfologiaCraneofacial
 	 */
 	public function __construct($id = null, $morfologiaCraneofacial = null)
 	{
@@ -22,23 +30,19 @@ class MorfologiaCraneofacial
 		$this->morfologiaCraneofacial = $morfologiaCraneofacial;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getMorfologiaCraneofacial()
 	{
 		return $this->morfologiaCraneofacial;
-	}
-
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	public function setMorfologiaCraneofacial($morfologiaCraneofacial)
-	{
-		$this->morfologiaCraneofacial = $morfologiaCraneofacial;
 	}
 }

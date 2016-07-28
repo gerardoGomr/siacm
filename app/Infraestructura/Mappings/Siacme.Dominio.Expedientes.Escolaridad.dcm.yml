@@ -1,14 +1,14 @@
-Siacme\Dominio\Pacientes\InstitucionMedica:
+Siacme\Dominio\Expedientes\Escolaridad:
   type: entity
-  table: institucion_medica
+  table: escolaridad
   id:
     id:
       type: integer
       generator:
         strategy: AUTO
   fields:
-    institucionMedica:
+    escolaridad:
       type: string
       length: 50
       nullable: false
-      column: InstitucionMedica
+      column: Escolaridad

@@ -1,14 +1,22 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
+ * Class ComportamientoInicial
+ * @package Siacme\Dominio\Expedientes
  * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class ComportamientoInicial
 {
-	//int
+	/**
+	 * @var int
+	 */
 	private $id;
-	//string
+
+	/**
+	 * @var string
+	 */
 	private $comportamientoInicial;
 
 	/**
@@ -22,23 +30,19 @@ class ComportamientoInicial
 		$this->comportamientoInicial = $comportamientoInicial;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getComportamientoInicial()
 	{
 		return $this->comportamientoInicial;
-	}
-
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	public function setComportamientoInicial($comportamientoInicial)
-	{
-		$this->comportamientoInicial = $comportamientoInicial;
 	}
 }

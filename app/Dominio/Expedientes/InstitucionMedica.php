@@ -2,31 +2,22 @@
 namespace Siacme\Dominio\Expedientes;
 
 /**
- * Class Padecimiento
+ * Class InstitucionMedica
  * @package Siacme\Dominio\Expedientes
  * @author Gerardo Adrián Gómez Ruiz
  * @version 1.0
  */
-class Padecimiento
+class InstitucionMedica
 {
 	/**
 	 * @var int
 	 */
-	protected $id;
+	private $id;
 
 	/**
 	 * @var string
 	 */
-	protected $padecimiento;
-
-	/**
-	 * Padecimiento constructor.
-	 * @param int|null $id
-	 */
-	public function __construct($id = null)
-	{
-		$this->id = $id;
-	}
+	private $institucionMedica;
 
 	/**
 	 * @return int
@@ -39,8 +30,8 @@ class Padecimiento
 	/**
 	 * @return string
 	 */
-	public function getPadecimiento()
+	public function getInstitucionMedica()
 	{
-		return $this->padecimiento;
+		return $this->institucionMedica;
 	}
 }

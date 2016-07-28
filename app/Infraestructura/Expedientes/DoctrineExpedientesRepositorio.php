@@ -37,9 +37,8 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 		// TODO: Implement obtenerPorPacienteMedico() method.
 		try {
 
-			$query = $this->entityManager->createQuery("SELECT e, p, m FROM Expedientes:Expediente e JOIN e.paciente p JOIN e.medico m WHERE p.id = :pacienteId AND m.username = :username")
-				->setParameter('pacienteId', $paciente->getId())
-				->setParameter('username', $medico->getUsername());
+			$query = $this->entityManager->createQuery("SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.expedienteEspecialidad ee WHERE p.id = :pacienteId")
+				->setParameter('pacienteId', $paciente->getId());
 
 			$expediente = $query->getResult();
 

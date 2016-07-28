@@ -1,14 +1,14 @@
-Siacme\Dominio\Pacientes\EstadoCivil:
+Siacme\Dominio\Expedientes\InstitucionMedica:
   type: entity
-  table: estado_civil
+  table: institucion_medica
   id:
     id:
       type: integer
       generator:
         strategy: AUTO
   fields:
-    estadoCivil:
+    institucionMedica:
       type: string
       length: 50
       nullable: false
-      column: EstadoCivil
+      column: InstitucionMedica

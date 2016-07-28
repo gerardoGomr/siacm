@@ -1,0 +1,12 @@
+Siacme\Dominio\Expedientes\ATM:
+  type: entity
+  table: atm
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    atm:
+      type: string
+      nullable: false
+      column: ATM

@@ -9,14 +9,14 @@ use Siacme\Dominio\Citas\CitaEstatus;
 
 @if($cita->getEstatus() === CitaEstatus::CONFIRMADA)
 	@if(!is_null($expediente))
-		@if($expediente->primeraVez())
+		@if($expediente->getExpedienteEspecialidad()->primeraVez())
 			@if(!$expediente->firmado())
 				<a href="{{ url('expedientes/registrar/' . base64_encode($cita->getPaciente()->getId())) . '/' . base64_encode($cita->getMedico()->getId()) }}" class="btn btn-success btn-block registrarExpediente"><i class="fa fa-edit"></i> Registrar llegada de paciente</a>
 			@else
-				<button type="button" class="btn btn-danger btn-block registrarLlegada" data-accion="{{ CitaEstatus::EN_ESPERA_CONSULTA  }}"><i class="fa fa-male"></i> Registrar llegada de paciente</button>
+				<button type="button" class="btn btn-success btn-block registrarLlegada" data-accion="{{ CitaEstatus::EN_ESPERA_CONSULTA  }}"><i class="fa fa-male"></i> Registrar llegada de paciente</button>
 			@endif
 		@else
-			<button type="button" class="btn btn-danger btn-block registrarLlegada" data-accion="{{ CitaEstatus::EN_ESPERA_CONSULTA  }}"><i class="fa fa-male"></i> Registrar llegada de paciente</button>
+			<button type="button" class="btn btn-success btn-block registrarLlegada" data-accion="{{ CitaEstatus::EN_ESPERA_CONSULTA  }}"><i class="fa fa-male"></i> Registrar llegada de paciente</button>
 		@endif
 	@else
 		<a href="{{ url('expedientes/registrar/' . base64_encode($cita->getPaciente()->getId())) . '/' . base64_encode($cita->getMedico()->getId()) }}" class="btn btn-success btn-block registrarExpediente"><i class="fa fa-edit"></i> Registrar llegada de paciente</a>

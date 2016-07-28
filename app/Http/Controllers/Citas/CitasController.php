@@ -19,12 +19,12 @@ use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
  */
 class CitasController extends Controller
 {
-//    /**
-//     * repositorio de Citas
-//     * @var CitasRepositorioInterface
-//     */
-//    protected $citasRepositorio;
-//
+    /**
+     * repositorio de Citas
+     * @var CitasRepositorio
+     */
+    protected $citasRepositorio;
+
     /**
      * constructor
      * @param CitasRepositorio $citasRepositorio
@@ -127,11 +127,11 @@ class CitasController extends Controller
     }
 
     /**
-     * obtener un arreglo de citas
-     * @param string $medicoId
-     * @param string $fecha
+     * obtener una lista de citas
+     * @param $medicoId
+     * @param $fecha
      * @param UsuariosRepositorio $medicosRepositorio
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function verCitas($medicoId, $fecha, UsuariosRepositorio $medicosRepositorio)
     {

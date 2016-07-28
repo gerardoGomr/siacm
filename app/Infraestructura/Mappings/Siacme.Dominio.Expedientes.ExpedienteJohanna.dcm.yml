@@ -1,0 +1,227 @@
+Siacme\Dominio\Expedientes\ExpedienteJohanna:
+  type: entity
+  table: expediente_johanna
+  id:
+    id:
+      column: ExpedienteId
+      type: integer
+  fields:
+    nombrePadre:
+      type: string
+      nullable: true
+      column: NombrePadre
+    nombreMadre:
+      type: string
+      nullable: true
+      column: NombreMadre
+    ocupacionPadre:
+      type: string
+      nullable: true
+      column: OcupacionPadre
+    ocupacionMadre:
+      type: string
+      nullable: true
+      column: OcupacionMadre
+    nombresEdadesHermanos:
+      type: string
+      nullable: true
+      column: NombresEdadesHermanos
+    fechaUltimoExamenBucal:
+      type: string
+      nullable: true
+      column: FechaUltimoExamenBucal
+    motivoVisitaDentista:
+      type: string
+      nullable: true
+      column: MotivoVisitaDentista
+    reaccionAnestesico:
+      type: string
+      nullable: true
+      column: ReaccionAnestesico
+    descripcionHabito:
+      type: string
+      nullable: true
+      column: DescripcionHabito
+    especifiqueAuxiliar:
+      type: string
+      nullable: true
+      column: EspecifiqueAuxiliar
+    notas:
+      type: string
+      nullable: true
+      column: Notas
+    labios:
+      type: string
+      nullable: true
+      column: Labios
+    carrillos:
+      type: string
+      nullable: true
+      column: Carrillos
+    frenillos:
+      type: string
+      nullable: true
+      column: Frenillos
+    paladar:
+      type: string
+      nullable: true
+      column: Paladar
+    lengua:
+      type: string
+      nullable: true
+      column: Lengua
+    pisoDeBoca:
+      type: string
+      nullable: true
+      column: PisoDeBoca
+    parodonto:
+      type: string
+      nullable: true
+      column: Parodonto
+    uvula:
+      type: string
+      nullable: true
+      column: Uvula
+    amigdalas:
+      type: string
+      nullable: true
+      column: Amigdalas
+    orofaringe:
+      type: string
+      nullable: true
+      column: Orofaringe
+    edadErupcionoPrimerDiente:
+      type: integer
+      nullable: true
+      column: EdadErupcionoPrimerDiente
+    haPresentadoDolorBoca:
+      type: boolean
+      nullable: true
+      column: HaPresentadoDolorBoca
+    presentaMalOlorBoca:
+      type: boolean
+      nullable: true
+      column: PresentaMalOlorBoca
+    haNotadoSangradoEncias:
+      type: boolean
+      nullable: true
+      column: HaNotadoSangradoEncias
+    sienteDienteFlojo:
+      type: boolean
+      nullable: true
+      column: SienteDienteFlojo
+    primeraVisitaDentista:
+      type: boolean
+      nullable: true
+      column: PrimeraVisitaDentista
+    leHanColocadoAnestesico:
+      type: boolean
+      nullable: true
+      column: LeHanColocadoAnestesico
+    tuvoMalaReaccionAnestesico:
+      type: boolean
+      nullable: true
+      column: TuvoMalaReaccionAnestesico
+    tipoCepillo:
+      type: integer
+      nullable: true
+      column: TipoCepillo
+    vecesCepillaDiente:
+      type: integer
+      nullable: true
+      column: VecesCepillaDiente
+    alguienAyudaACepillarse:
+      type: boolean
+      nullable: true
+      column: AlguienAyudaACepillarse
+    vecesComeDia:
+      type: integer
+      nullable: true
+      column: VecesComeDia
+    hiloDental:
+      type: boolean
+      nullable: true
+      column: HiloDental
+    enjuagueBucal:
+      type: boolean
+      nullable: true
+      column: EnjuagueBucal
+    limpiadorLingual:
+      type: boolean
+      nullable: true
+      column: LimpiadorLingual
+    tabletasReveladoras:
+      type: boolean
+      nullable: true
+      column: TabletasReveladoras
+    otroAuxiliar:
+      type: boolean
+      nullable: true
+      column: OtroAuxiliar
+    succionDigital:
+      type: boolean
+      nullable: true
+      column: SuccionDigital
+    succionLingual:
+      type: boolean
+      nullable: true
+      column: SuccionLingual
+    biberon:
+      type: boolean
+      nullable: true
+      column: Biberon
+    bruxismo:
+      type: boolean
+      nullable: true
+      column: Bruxismo
+    succionLabial:
+      type: boolean
+      nullable: true
+      column: SuccionLabial
+    respiracionBucal:
+      type: boolean
+      nullable: true
+      column: RespiracionBucal
+    onicofagia:
+      type: boolean
+      nullable: true
+      column: Onicofagia
+    chupon:
+      type: boolean
+      nullable: true
+      column: Chupon
+    otroHabito:
+      type: boolean
+      nullable: true
+      column: OtroHabito
+  oneToOne:
+    atm:
+      targetEntity: ATM
+      joinColumn:
+        name: AtmId
+        referencedColumnName: id
+      cascade: [persist]
+    comportamientoInicial:
+      targetEntity: ComportamientoInicial
+      joinColumn:
+        name: ComportamientoInicialId
+        referencedColumnName: id
+      cascade: [persist]
+    convexividadFacial:
+      targetEntity: ConvexividadFacial
+      joinColumn:
+        name: ConvexividadFacialId
+        referencedColumnName: id
+      cascade: [persist]
+    morfologiaCraneofacial:
+      targetEntity: MorfologiaCraneofacial
+      joinColumn:
+        name: MorfologiaCraneofacialId
+        referencedColumnName: id
+      cascade: [persist]
+    morfologiaFacial:
+      targetEntity: MorfologiaFacial
+      joinColumn:
+        name: MorfologiaFacialId
+        referencedColumnName: id
+      cascade: [persist]

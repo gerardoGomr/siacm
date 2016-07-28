@@ -1,5 +1,5 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
  * @package Siacme\Expedientes
@@ -42,21 +42,5 @@ class ATM
 	public function getATM()
 	{
 		return $this->atm;
-	}
-
-	/**
-	 * @param int $id
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	/**
-	 * @param string $atm
-	 */
-	public function setATM($atm)
-	{
-		$this->atm = $atm;
 	}
 }
