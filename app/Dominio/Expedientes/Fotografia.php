@@ -81,6 +81,11 @@ abstract class Fotografia
 	 */
 	protected $imgDestino;
 
+	/**
+	 * Fotografia constructor.
+	 * @param string $ruta
+	 * @throws \Exception
+	 */
 	public function __construct($ruta)
 	{
 		if(!file_exists($ruta)) {
@@ -89,7 +94,12 @@ abstract class Fotografia
 		}
 
 		$this->ruta = $ruta;
-		$this->setPeso();
+		$this->obtenerPesoDeFoto();
+	}
+
+	public function obtenerPesoDeFoto()
+	{
+		$this->peso = filesize($this->ruta);
 	}
 
     /**

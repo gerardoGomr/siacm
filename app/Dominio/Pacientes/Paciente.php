@@ -1,6 +1,7 @@
 <?php
 namespace Siacme\Dominio\Pacientes;
 
+use DateTime;
 use Siacme\Dominio\Personas\Persona;
 
 /**
@@ -22,7 +23,7 @@ class Paciente extends Persona
     protected $domicilio;
 
     /**
-     * @var string
+     * @var DateTime
      */
     protected $fechaNacimiento;
 
@@ -76,11 +77,11 @@ class Paciente extends Persona
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getFechaNacimiento()
     {
-        return $this->fechaNacimiento;
+        return !is_null($this->fechaNacimiento) ? $this->fechaNacimiento->format('Y-m-d') : null;
     }
 
     /**
@@ -107,8 +108,60 @@ class Paciente extends Persona
         return $this->lugarNacimiento;
     }
 
+    /**
+     * edad completa del paciente
+     * @return string
+     */
     public function edadCompleta()
     {
+        $this->calcularEdad();
+        return (string)$this->edadAnios . ' años, ' . (string)$this->edadMeses;
+    }
 
+    /**
+     * actualizar los datos personales del paciente
+     * @param string $nombre
+     * @param string $paterno
+     * @param string $materno
+     * @param DateTime $fechaNacimiento
+     * @param string $lugarNacimiento
+     * @param string $telefono
+     * @param string $celular
+     * @param string $email
+     * @param Domicilio $domicilio
+     */
+    public function agregarDatosPersonales($nombre, $paterno, $materno, DateTime $fechaNacimiento, $lugarNacimiento, $telefono, $celular, $email, Domicilio $domicilio)
+    {
+        if ($this->nombre !== $nombre) {
+            $this->nombre = $nombre;
+        }
+
+        if ($this->paterno !== $paterno) {
+            $this->paterno = $paterno;
+        }
+
+        $this->materno         = $materno;
+        $this->fechaNacimiento = $fechaNacimiento;
+        $this->lugarNacimiento = $lugarNacimiento;
+        $this->telefono        = $telefono;
+        $this->celular         = $celular;
+        $this->email           = $email;
+        $this->domicilio       = $domicilio;
+
+        // obtener la edad del paciente
+        $this->calcularEdad();
+    }
+
+    /**
+     * calcula la edad del paciente en base a su fecha de nacimiento
+     * obtiene la diferencia en años y meses
+     */
+    private function calcularEdad()
+    {
+        $fechaActual = new DateTime();
+        $interval    = $fechaActual->diff($fechaActual);
+
+        $this->edadAnios = $interval->y;
+        $this->edadMeses = $interval->m;
     }
 }

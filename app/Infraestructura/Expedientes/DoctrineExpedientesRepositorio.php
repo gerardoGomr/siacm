@@ -71,4 +71,25 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	{
 		// TODO: Implement obtenerTodos() method.
 	}
+
+	/**
+	 * persistir un nuevo expediente
+	 * @param Expediente $expediente
+	 * @return bool
+	 */
+	public function persistir(Expediente $expediente)
+	{
+		// TODO: Implement persistir() method.
+		try {
+			$this->entityManager->persist($expediente);
+			$this->entityManager->flush();
+
+			return true;
+
+		} catch (\PDOException $e) {
+			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+			$pdoLogger->log($e);
+			return false;
+		}
+	}
 }

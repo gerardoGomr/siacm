@@ -52,6 +52,11 @@ class FotografiaPaciente extends Fotografia
 		// en pixeles
 		try {
 
+			if ($this->ancho < $this->alto ) {
+				$anchoNuevo = 200;
+				$altoNuevo  = 250;
+			}
+
 			// img destino
 			$this->imgDestino = imagecreatetruecolor($anchoNuevo, $altoNuevo);
 
@@ -106,7 +111,7 @@ class FotografiaPaciente extends Fotografia
 	    	$this->ancho = $nuevoAncho;
 	    	$this->alto  = $nuevoAlto;
 
-	    	$this->setPeso();
+	    	$this->obtenerPesoDeFoto();
 
 	    	imagejpeg($this->imgDestino, $this->ruta, 100);
 

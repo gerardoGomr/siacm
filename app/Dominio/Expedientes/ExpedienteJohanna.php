@@ -1,5 +1,6 @@
 <?php
 namespace Siacme\Dominio\Expedientes;
+use DateTime;
 
 /**
  * Class PacienteJohanna
@@ -30,12 +31,7 @@ class ExpedienteJohanna extends AbstractExpediente
     protected $ocupacionMadre;
 
     /**
-     * @var string
-     */
-    protected $nombresEdadesHermanos;
-
-    /**
-     * @var string
+     * @var DateTime
      */
     protected $fechaUltimoExamenBucal;
 
@@ -525,7 +521,7 @@ class ExpedienteJohanna extends AbstractExpediente
     protected $traumatismoBucal;
 
     /**
-     * @var MarcaPasta
+     * @var int
      */
     protected $marcaPasta;
 
@@ -599,17 +595,9 @@ class ExpedienteJohanna extends AbstractExpediente
     /**
      * @return string
      */
-    public function getNombreEdadesHermanos()
-    {
-        return $this->nombresEdadesHermanos;
-    }
-
-    /**
-     * @return string
-     */
     public function getFechaUltimoExamenBucal()
     {
-        return $this->fechaUltimoExamenBucal;
+        return $this->fechaUltimoExamenBucal->format('Y-m-d');
     }
 
     /**
@@ -1389,7 +1377,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return MarcaPasta
+     * @return int
      */
     public function getMarcaPasta()
     {
@@ -1450,5 +1438,129 @@ class ExpedienteJohanna extends AbstractExpediente
     public function getAtm()
     {
         return $this->atm;
+    }
+
+    /**
+     * completar los datos personales
+     * @param string $nombrePadre
+     * @param string $ocupacionPadre
+     * @param string $nombreMadre
+     * @param string $ocupacionMadre
+     */
+    public function agregarDatosPersonales($nombrePadre, $ocupacionPadre, $nombreMadre, $ocupacionMadre)
+    {
+        $this->nombrePadre    = $nombrePadre;
+        $this->ocupacionPadre = $ocupacionPadre;
+        $this->nombreMadre    = $nombreMadre;
+        $this->ocupacionMadre = $ocupacionMadre;
+    }
+
+    /**
+     * completar los datos de antecedentes odontopatológicos
+     * @param bool $dolorBoca
+     * @param bool $sangradoEncias
+     * @param bool $malOlor
+     * @param bool $dienteFlojo
+     */
+    public function agregarAntecedentesOdontopatologicos($dolorBoca, $sangradoEncias, $malOlor, $dienteFlojo)
+    {
+        $this->haPresentadoDolorBoca  = $dolorBoca;
+        $this->haNotadoSangradoEncias = $sangradoEncias;
+        $this->presentaMalOlorBoca    = $malOlor;
+        $this->sienteDienteFlojo      = $dienteFlojo;
+    }
+
+    /**
+     * completar los datos de antecedentes no patológicos
+     * @param bool $primeraVisita
+     * @param $fechaUltimoExamen
+     * @param string $motivoUltimoExamen
+     * @param bool $anestesico
+     * @param bool $malaReaccion
+     * @param string $queReaccion
+     * @param string $traumatismo
+     */
+    public function agregarAntecedentesNoPatologicos($primeraVisita, DateTime $fechaUltimoExamen, $motivoUltimoExamen, $anestesico, $malaReaccion, $queReaccion, $traumatismo)
+    {
+        $this->primeraVisitaDentista   = $primeraVisita;
+        $this->leHanColocadoAnestesico = $anestesico;
+        $this->traumatismoBucal        = $traumatismo;
+
+        if ($this->primeraVisitaDentista) {
+            $this->fechaUltimoExamenBucal = $fechaUltimoExamen;
+            $this->motivoVisitaDentista   = $motivoUltimoExamen;
+        }
+
+        if ($this->leHanColocadoAnestesico) {
+            $this->tuvoMalaReaccionAnestesico = $malaReaccion;
+
+            if ($this->tuvoMalaReaccionAnestesico) {
+                $this->reaccionAnestesico = $queReaccion;
+            }
+        }
+    }
+
+    /**
+     * agregar datos de higiene bucodental
+     * @param int $tipoCepillo
+     * @param int $marcaPasta
+     * @param int $vecesCepilla
+     * @param int $edadErupcionaPrimerDiente
+     * @param bool $ayudaAlCepillarse
+     * @param int $vecesCome
+     * @param bool $hiloDental
+     * @param bool $enjuagueBucal
+     * @param bool $limpiadorLingual
+     * @param bool $tabletasReveladoras
+     * @param bool $otroAuxiliar
+     * @param string $especifiqueAuxiliar
+     */
+    public function agregarHigieneBucodental($tipoCepillo, $marcaPasta, $vecesCepilla, $edadErupcionaPrimerDiente, $ayudaAlCepillarse, $vecesCome, $hiloDental, $enjuagueBucal, $limpiadorLingual, $tabletasReveladoras, $otroAuxiliar, $especifiqueAuxiliar)
+    {
+        $this->tipoCepillo               = $tipoCepillo;
+        $this->marcaPasta                = $marcaPasta;
+        $this->vecesCepillaDiente        = $vecesCepilla;
+        $this->edadErupcionoPrimerDiente = $edadErupcionaPrimerDiente;
+        $this->alguienAyudaACepillarse   = $ayudaAlCepillarse;
+        $this->vecesComeDia              = $vecesCome;
+        $this->hiloDental                = $hiloDental;
+        $this->enjuagueBucal             = $enjuagueBucal;
+        $this->limpiadorLingual          = $limpiadorLingual;
+        $this->tabletasReveladoras       = $tabletasReveladoras;
+        $this->otroAuxiliar              = $otroAuxiliar;
+
+        if ($this->otroAuxiliar) {
+            $this->especifiqueAuxiliar = $especifiqueAuxiliar;
+        }
+    }
+
+    /**
+     * completar datos de hábitos orales
+     * @param bool $succionDigital
+     * @param bool $succionLingual
+     * @param bool $biberon
+     * @param bool $bruxismo
+     * @param bool $succionLabial
+     * @param bool $respiracionBucal
+     * @param bool $onicofagia
+     * @param bool $chupon
+     * @param bool $otroHabito
+     * @param string $especifiqueHabito
+     */
+    public function agregarHabitosOrales($succionDigital, $succionLingual, $biberon, $bruxismo, $succionLabial, $respiracionBucal, $onicofagia, $chupon, $otroHabito, $especifiqueHabito)
+    {
+        $this->succionDigital   = $succionDigital;
+        $this->succionLingual   = $succionLingual;
+        $this->biberon          = $biberon;
+        $this->bruxismo         = $bruxismo;
+        $this->succionLabial    = $succionLabial;
+        $this->respiracionBucal = $respiracionBucal;
+        $this->onicofagia       = $onicofagia;
+        $this->chupon           = $chupon;
+        $this->otroHabito       = $otroHabito;
+
+        if ($this->otroHabito) {
+            $this->descripcionHabito = $especifiqueHabito;
+        }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Siacme\Aplicacion\Factories;
 
+use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Pacientes\Paciente;
 use Siacme\Dominio\Usuarios\Usuario;
 use App;
@@ -18,9 +19,10 @@ class VistasExpedientesGenerarFactory
      * generar la vista para el registro de nuevo expediente
      * @param Paciente $paciente
      * @param Usuario $medico
+     * @param Expediente $expediente
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
      */
-    public static function make(Paciente $paciente, Usuario $medico)
+    public static function make(Paciente $paciente, Usuario $medico, Expediente $expediente = null)
     {
         $vista = null;
 
@@ -34,7 +36,7 @@ class VistasExpedientesGenerarFactory
                 // catálogos
                 $padecimientos = $padecimientoRepositorio->obtenerTodos();
 
-                $vista = view('expedientes.expediente_johanna_registrar', compact('paciente', 'medico', 'padecimientos'));
+                $vista = view('expedientes.expediente_johanna_registrar', compact('paciente', 'medico', 'padecimientos', 'expediente'));
                 break;
         }
 

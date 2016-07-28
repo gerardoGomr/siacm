@@ -22,10 +22,6 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       type: string
       nullable: true
       column: OcupacionMadre
-    nombresEdadesHermanos:
-      type: string
-      nullable: true
-      column: NombresEdadesHermanos
     fechaUltimoExamenBucal:
       type: string
       nullable: true

@@ -93,6 +93,10 @@ Siacme\Dominio\Expedientes\Expediente:
       type: string
       nullable: true
       column: EnfermedadesHermanos
+    nombresEdadesHermanos:
+      type: string
+      nullable: true
+      column: NombresEdadesHermanos
     enfermedadesAbuelosPaternos:
       type: string
       nullable: true

@@ -21,20 +21,20 @@
 		<div class="form-group">
 			{!! Form::label('fechaNacimiento', '*Fecha de nacimiento:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-2">
-				{!! Form::text('fechaNacimiento', null, ['class' => 'required fecha form-control', 'readonly' => 'readonly']) !!}
+				{!! Form::text('fechaNacimiento', $paciente->getFechaNacimiento(), ['class' => 'required fecha form-control', 'readonly' => 'readonly']) !!}
 			</div>
 		</div>
 		<div class="form-group">
 			{!! Form::label('edad', '*Edad:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-2">
 				<div class="input-group">
-					{!! Form::text('edadAnios', null, ['id' => 'edadAnios', 'class' => 'required numeros form-control', 'placeholder' => 'Años']) !!}
+					{!! Form::text('edadAnios', $paciente->getEdadAnios() or '', ['id' => 'edadAnios', 'class' => 'required numeros form-control', 'placeholder' => 'Años']) !!}
 					<span class="input-group-addon">Años</span>
 				</div>
 			</div>
 			<div class="col-md-2">
 				<div class="input-group">
-					{!! Form::text('edadMeses', null, ['id' => 'edadMeses', 'class' => 'required numeros form-control', 'placeholder' => 'Meses']) !!}
+					{!! Form::text('edadMeses', $paciente->getEdadMeses() or '', ['id' => 'edadMeses', 'class' => 'required numeros form-control', 'placeholder' => 'Meses']) !!}
 					<span class="input-group-addon">Meses</span>
 				</div>
 			</div>
@@ -42,25 +42,25 @@
 		<div class="form-group">
 			{!! Form::label('lugarNacimiento', '*Lugar de nacimiento:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
-				{!! Form::text('lugarNacimiento', null, ['class' => 'required form-control']) !!}
+				{!! Form::text('lugarNacimiento', $paciente->getLugarNacimiento() or '', ['class' => 'required form-control']) !!}
 			</div>
 		</div>
 		<div class="form-group">
 			{!! Form::label('direccion', '*Dirección:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
-				{!! Form::text('direccion', null, ['class' => 'required form-control']) !!}
+				{!! Form::text('direccion', !is_null($paciente->getDomicilio()) ? $paciente->getDomicilio()->getDireccion() : '', ['class' => 'required form-control']) !!}
 			</div>
 		</div>
 		<div class="form-group">
 			{!! Form::label('cp', '*C. P.:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-2">
-				{!! Form::text('cp', null, ['class' => 'required form-control']) !!}
+				{!! Form::text('cp', !is_null($paciente->getDomicilio()) ? $paciente->getDomicilio()->getCp() : '', ['class' => 'required form-control']) !!}
 			</div>
 		</div>
 		<div class="form-group">
 			{!! Form::label('municipio', '*Municipio:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
-				{!! Form::text('municipio', null, ['class' => 'required form-control']) !!}
+				{!! Form::text('municipio', !is_null($paciente->getDomicilio()) ? $paciente->getDomicilio()->getMunicipio() : '', ['class' => 'required form-control']) !!}
 			</div>
 		</div>
 		<div class="form-group">
@@ -81,8 +81,10 @@
 				{!! Form::text('email', $paciente->getEmail(), ['class' => 'email form-control']) !!}
 			</div>
 		</div>
+	</div>
+	<div class="box-generic">
 		<div class="form-group">
-			<div class="col-md-4 col-md-3">
+			<div class="col-md-4 col-md-offset-3">
 				<div class="checkbox">
 					<label>
 						{!! Form::checkbox('automedicado', null, null, ['class' => 'automedicado']) !!} Ha automedicado a su hijo(a)
@@ -97,10 +99,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="col-md-4 col-md-3">
+			<div class="col-md-4 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::radio('alergico', null, null, ['class' => 'alergico']) !!} Es alérgico a algún medicamento
+						{!! Form::checkbox('alergico', null, null, ['class' => 'alergico']) !!} Es alérgico a algún medicamento
 					</label>
 				</div>
 			</div>

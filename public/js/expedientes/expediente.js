@@ -199,24 +199,34 @@ $(document).ready(function() {
 	// activar / desctivar input de automedicado
 	$formExpediente.find('input.automedicado').on('click', function(event) {
 
-		if($(this).val() === '1') {
-			$('#conQueHaAutomedicado').attr('readonly', false);
-		}
+		if($(this).is(':checked')) {
+			$('#conQueHaAutomedicado').attr('readonly', false).rules('add', {
+				required: true,
+				messages: {
+					required: 'Especifique con qué lo ha automedicado'
+				}
+			});
 
-		if($(this).val() === '2') {
-			$('#conQueHaAutomedicado').attr('readonly', 'readonly');
+		} else {
+			$('#conQueHaAutomedicado').attr('readonly', 'readonly').rules('remove');
+			$("label.error").hide();
+			$(".error").removeClass("error");
 		}
 	});
 
 	// activar / desctivar input de alergico
 	$formExpediente.find('input.alergico').on('click', function(event) {
 
-		if($(this).val() === '1') {
-			$('#aCualEsAlergico').attr('readonly', false);
-		}
+		if($(this).is(':checked')) {
+			$('#aCualEsAlergico').attr('readonly', false).rules('add', {
+				required: true,
+				messages: {
+					required: 'Especifique a qué es alérgico'
+				}
+			});
 
-		if($(this).val() === '2') {
-			$('#aCualEsAlergico').attr('readonly', 'readonly');
+		} else {
+			$('#aCualEsAlergico').attr('readonly', 'readonly').rules('remove');
 		}
 	});
 

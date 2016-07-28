@@ -34,7 +34,7 @@ class DoctrinePacientesRepositorio implements PacientesRepositorio
 		$nombre = str_replace(' ', '', $nombre);
 		// TODO: Implement obtenerPorNombre() method.
 		try {
-			$query = $this->entityManager->createQuery("SELECT p, es, ec, im, r, d FROM Pacientes:Paciente p LEFT JOIN p.escolaridad es LEFT JOIN p.estadoCivil ec LEFT JOIN p.institucionMedica im LEFT JOIN p.religion r LEFT JOIN p.domicilio d WHERE CONCAT(p.nombre, p.paterno, p.materno) LIKE :nombre OR CONCAT(p.paterno, p.materno, p.nombre) LIKE :nombre")
+			$query = $this->entityManager->createQuery("SELECT p, d FROM Pacientes:Paciente p LEFT JOIN p.domicilio d WHERE CONCAT(p.nombre, p.paterno, p.materno) LIKE :nombre OR CONCAT(p.paterno, p.materno, p.nombre) LIKE :nombre")
 					->setParameter('nombre', "%$nombre%");
 
 			$pacientes = $query->getResult();
@@ -60,7 +60,7 @@ class DoctrinePacientesRepositorio implements PacientesRepositorio
 	{
 		// TODO: Implement obtenerPorId() method.
 		try {
-			$query = $this->entityManager->createQuery("SELECT p, es, ec, im, r, d FROM Pacientes:Paciente p LEFT JOIN p.escolaridad es LEFT JOIN p.estadoCivil ec LEFT JOIN p.institucionMedica im LEFT JOIN p.religion r LEFT JOIN p.domicilio d WHERE p.id = :id")
+			$query = $this->entityManager->createQuery("SELECT p, d FROM Pacientes:Paciente p LEFT JOIN p.domicilio d WHERE p.id = :id")
 					->setParameter('id', $id);
 
 			$pacientes = $query->getResult();

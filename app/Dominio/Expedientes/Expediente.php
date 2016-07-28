@@ -93,6 +93,11 @@ class Expediente
     protected $numHermanosFinados;
 
     /**
+     * @var string
+     */
+    protected $nombresEdadesHermanos;
+
+    /**
      * @var bool
      */
     protected $seLeHacenMoretones;
@@ -223,6 +228,16 @@ class Expediente
     protected $ocupacionTutor;
 
     /**
+     * @var string
+     */
+    protected $motivoConsulta;
+
+    /**
+     * @var string
+     */
+    protected $historiaEnfermedad;
+
+    /**
      * @var EstadoCivil
      */
     protected $estadoCivil;
@@ -244,10 +259,12 @@ class Expediente
 
     /**
      * Expediente constructor.
+     * @param Paciente $paciente
      * @param AbstractExpediente $expedienteEspecialidad
      */
-	public function __construct(AbstractExpediente $expedienteEspecialidad)
+	public function __construct(Paciente $paciente = null, AbstractExpediente $expedienteEspecialidad = null)
 	{
+        $this->paciente               = $paciente;
         $this->expedienteEspecialidad = $expedienteEspecialidad;
 	}
 
@@ -588,6 +605,30 @@ class Expediente
     }
 
     /**
+     * @return string
+     */
+    public function getMotivoConsulta()
+    {
+        return $this->motivoConsulta;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHistoriaEnfermedad()
+    {
+        return $this->historiaEnfermedad;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNombreEdadesHermanos()
+    {
+        return $this->nombresEdadesHermanos;
+    }
+
+    /**
      * @return EstadoCivil
      */
     public function getEstadoCivil()
@@ -651,8 +692,111 @@ class Expediente
     public function revisaFoto()
     {
         $id = $this->id;
-        if(file_exists("public/pacientesFotografias/$id.jpg")) {
+        if(file_exists("storage/pacientesFotografias/$id.jpg")) {
             $this->fotografia = new FotografiaPaciente("public/pacientesFotografias/$id.jpg");
         }
+    }
+
+    /**
+     * completar los datos personales
+     * @param string $pediatra
+     * @param string $quienRecomienda
+     * @param string $motivoConsulta
+     * @param string $historiaEnfermedad
+     * @param string $automedicado
+     * @param string $conQueHaAutomedicado
+     * @param string $alergico
+     * @param string $aCualEsAlergico
+     */
+    public function agregarDatosPersonales($pediatra, $quienRecomienda, $motivoConsulta, $historiaEnfermedad, $automedicado, $conQueHaAutomedicado, $alergico, $aCualEsAlergico)
+    {
+        $this->nombrePediatra            = $pediatra;
+        $this->nombreRecomienda          = $quienRecomienda;
+        $this->motivoConsulta            = $motivoConsulta;
+        $this->historiaEnfermedad        = $historiaEnfermedad;
+        $this->seHaAutomedicado          = $automedicado;
+        $this->conQueSeHaAutomedicado    = $conQueHaAutomedicado;
+        $this->esAlergico                = $alergico;
+        $this->aQueMedicamentoEsAlergico = $aCualEsAlergico;
+    }
+
+    /**
+     * completar los datos de antecedentes heredofamiliares
+     * @param bool $viveMadre
+     * @param string $causaMuerteMadre
+     * @param string $enfermedadesMadre
+     * @param bool $vivePadre
+     * @param string $causaMuertePadre
+     * @param string $enfermedadesPadre
+     * @param string $enfermedadesAbuelosPaternos
+     * @param string $enfermedadesAbuelosMaternos
+     * @param int $numHermanos
+     * @param int $numHermanosVivos
+     * @param string $enfermedadesHermanos
+     * @param string $nombresEdades
+     */
+    public function agregarAntecedentesHeredofamiliares($viveMadre, $causaMuerteMadre, $enfermedadesMadre, $vivePadre, $causaMuertePadre, $enfermedadesPadre, $enfermedadesAbuelosPaternos, $enfermedadesAbuelosMaternos, $numHermanos, $numHermanosVivos, $enfermedadesHermanos, $nombresEdades)
+    {
+        $this->viveMadre                   = $viveMadre;
+        $this->causaMuerteMadre            = $causaMuerteMadre;
+        $this->enfermedadesMadre           = $enfermedadesMadre;
+        $this->vivePadre                   = $vivePadre;
+        $this->causaMuertePadre            = $causaMuertePadre;
+        $this->enfermedadesPadre           = $enfermedadesPadre;
+        $this->enfermedadesAbuelosPaternos = $enfermedadesAbuelosPaternos;
+        $this->enfermedadesAbuelosMaternos = $enfermedadesAbuelosMaternos;
+        $this->numHermanos                 = $numHermanos;
+        $this->numHermanosVivos            = $numHermanosVivos;
+        $this->numHermanosFinados          = $this->numHermanos - $this->numHermanosVivos;
+        $this->enfermedadesHermanos        = $enfermedadesHermanos;
+        $this->nombresEdadesHermanos       = $nombresEdades;
+    }
+
+    /**
+     * completar los datos de antecedentes patológicos
+     * @param bool $moretones
+     * @param bool $transfusion
+     * @param bool $fracturas
+     * @param bool $cirugia
+     * @param bool $hospitalizado
+     * @param bool $tratamiento
+     * @param string $especifiqueFractura
+     * @param string $especifiqueCirugia
+     * @param string $especifiqueHospitalizado
+     * @param string $especifiqueTratamiento
+     */
+    public function agregarAntecedentesPatologicos($moretones, $transfusion, $fracturas, $cirugia, $hospitalizado, $tratamiento, $especifiqueFractura, $especifiqueCirugia, $especifiqueHospitalizado, $especifiqueTratamiento)
+    {
+        $this->seLeHacenMoretones     = $moretones;
+        $this->haRequeridoTransfusion = $transfusion;
+        $this->haTenidoFracturas      = $fracturas;
+        $this->haSidoIntervenido      = $cirugia;
+        $this->haSidoHospitalizado    = $hospitalizado;
+        $this->estaBajoTratamiento    = $tratamiento;
+
+        if ($this->haTenidoFracturas) {
+            $this->especifiqueFracturas = $especifiqueFractura;
+        }
+
+        if ($this->haSidoIntervenido) {
+            $this->especifiqueIntervencion = $especifiqueCirugia;
+        }
+
+        if ($this->haSidoHospitalizado) {
+            $this->especifiqueHospitalizacion = $especifiqueHospitalizado;
+        }
+
+        if ($this->estaBajoTratamiento) {
+            $this->especifiqueTratamiento = $especifiqueTratamiento;
+        }
+    }
+
+    /**
+     * especificar especialidad
+     * @param AbstractExpediente $expediente
+     */
+    public function generarPara(AbstractExpediente $expediente)
+    {
+        $this->expedienteEspecialidad = $expediente;
     }
 }
