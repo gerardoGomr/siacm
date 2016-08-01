@@ -34,8 +34,8 @@ class ExpedientesFactory
                 $malOlor                   = !is_null($request->get('malOlor')) ? true : false;
                 $dienteFlojo               = !is_null($request->get('dienteFlojo')) ? true : false;
                 $primeraVisita             = $request->has('primeraVisita') && $request->get('primeraVisita') === 'on' ? true : false;
-                $fechaUltimoExamen         = DateTime::createFromFormat('Y-m-d', $request->get('fechaUltimoExamen'));
-                $motivoUltimoExamen        = $request->get('motivoUltimoExamen');
+                $fechaUltimoExamen         = $request->has('primeraVisita') && $request->get('primeraVisita') === 'on' ? DateTime::createFromFormat('Y-m-d', $request->get('fechaUltimoExamen')) : null;
+                $motivoUltimoExamen        = $request->has('primeraVisita') && $request->get('primeraVisita') === 'on' ? $request->get('motivoUltimoExamen') : '';
                 $anestesico                = $request->has('anestesico') && $request->get('anestesico') === 'on' ? true : false;
                 $malaReaccion              = $request->get('malaReaccion') === '1' ? true : false;
                 $queReaccion               = $request->get('queReaccion');

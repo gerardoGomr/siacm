@@ -1480,7 +1480,7 @@ class ExpedienteJohanna extends AbstractExpediente
      * @param string $queReaccion
      * @param string $traumatismo
      */
-    public function agregarAntecedentesNoPatologicos($primeraVisita, DateTime $fechaUltimoExamen, $motivoUltimoExamen, $anestesico, $malaReaccion, $queReaccion, $traumatismo)
+    public function agregarAntecedentesNoPatologicos($primeraVisita, DateTime $fechaUltimoExamen = null, $motivoUltimoExamen, $anestesico, $malaReaccion, $queReaccion, $traumatismo)
     {
         $this->primeraVisitaDentista   = $primeraVisita;
         $this->leHanColocadoAnestesico = $anestesico;

@@ -4,6 +4,7 @@ namespace Siacme\Http\Controllers\Expedientes;
 use Illuminate\Http\Request;
 use Siacme\Aplicacion\Factories\ExpedientesFactory;
 use Siacme\Aplicacion\Factories\VistasExpedientesGenerarFactory;
+use Siacme\Aplicacion\Factories\VistasExpedientesMostrarFactory;
 use Siacme\Dominio\Expedientes\FotografiaPaciente;
 use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
 use Siacme\Http\Controllers\Controller;
@@ -52,10 +53,9 @@ class ExpedienteController extends Controller
 	 * generar la vista para el registro de expedientes
 	 * @param $pacienteId
 	 * @param $medicoId
-	 * @param ExpedientesRepositorio $expedientesRepositorio
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
 	 */
-	public function registrar($pacienteId, $medicoId, ExpedientesRepositorio $expedientesRepositorio)
+	public function registrar($pacienteId, $medicoId)
 	{
 		if (request()->session()->has('expediente')) {
 			request()->session()->forget('expediente');
@@ -66,7 +66,7 @@ class ExpedienteController extends Controller
 
 		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
 		$medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
-		$expediente = $expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
 
 		return VistasExpedientesGenerarFactory::make($paciente, $medico, $expediente);
 	}
@@ -210,5 +210,23 @@ class ExpedienteController extends Controller
 
 		$respuesta['estatus'] = 'OK';
 		return response()->json($respuesta);
+	}
+
+	/**
+	 * mostrar la vista de detalle del expediente
+	 * @param string $pacienteId
+	 * @param string $medicoId
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
+	 */
+	public function ver($pacienteId, $medicoId)
+	{
+		$pacienteId = base64_decode($pacienteId);
+		$medicoId   = base64_decode($medicoId);
+
+		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
+		$medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
+		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+
+		return VistasExpedientesMostrarFactory::make($medico, $expediente);
 	}
 }

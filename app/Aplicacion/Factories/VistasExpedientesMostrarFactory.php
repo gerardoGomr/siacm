@@ -8,35 +8,27 @@ use App;
 use Siacme\Infraestructura\Expedientes\DoctrinePadecimientosRepositorio;
 
 /**
- * Class VistasExpedientesGenerarFactory
+ * Class VistasExpedientesMostrarFactory
  * @package Siacme\Aplicacion\Factories
  * @author Gerardo Adrián Gómez Ruiz
  * @version 1.0
  */
-class VistasExpedientesGenerarFactory
+class VistasExpedientesMostrarFactory
 {
     /**
      * generar la vista para el registro de nuevo expediente
-     * @param Paciente $paciente
      * @param Usuario $medico
      * @param Expediente $expediente
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
      */
-    public static function make(Paciente $paciente, Usuario $medico, Expediente $expediente = null)
+    public static function make(Usuario $medico, Expediente $expediente)
     {
         $vista = null;
 
         switch($medico->getId()) {
             // johanna
             case Usuario::JOHANNA:
-                // repositorios
-                $padecimientoRepositorio = new DoctrinePadecimientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                //$trastornosRepositorio   = new DoctrineTrastornosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-
-                // catálogos
-                $padecimientos = $padecimientoRepositorio->obtenerTodos();
-
-                $vista = view('expedientes.expediente_johanna_registrar', compact('paciente', 'medico', 'padecimientos', 'expediente'));
+                $vista = view('expedientes.expediente_johanna_ver', compact('expediente', 'medico'));
                 break;
         }
 

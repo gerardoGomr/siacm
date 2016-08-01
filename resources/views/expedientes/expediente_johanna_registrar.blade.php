@@ -72,7 +72,7 @@
 																		{!! Form::hidden('medicoId', base64_encode($medico->getId()), ['id' => 'medicoId']) !!}
 																		{!! Form::hidden('capturada', '0', ['id' => 'capturada']) !!}
 																		{!! Form::hidden('foto', '0', ['id' => 'foto']) !!}
-																		{!! Form::hidden('urlSiguiente', url('expedientes/ver/' . base64_encode($paciente->getId()) . '/' . base64_encode($medico->getId())), ['id' => 'urlSiguente']) !!}
+																		{!! Form::hidden('urlSiguiente', url('expedientes/ver/' . base64_encode($paciente->getId()) . '/' . base64_encode($medico->getId())), ['id' => 'urlSiguiente']) !!}
 
 																		@if(isset($expediente) && !is_null($expediente))
 																			{!! Form::hidden('expedienteId', base64_encode($expediente->getId()), ['id' => 'expedienteId']) !!}

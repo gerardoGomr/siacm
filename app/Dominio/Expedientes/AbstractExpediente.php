@@ -20,10 +20,28 @@ abstract class AbstractExpediente
     protected $primeraVez;
 
     /**
+     * @var Expediente
+     */
+    protected $expediente;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return boolean
      */
     public function primeraVez()
     {
         return $this->primeraVez;
+    }
+
+    public function expediente(Expediente $expediente)
+    {
+        $this->expediente = $expediente;
     }
 }

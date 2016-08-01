@@ -16,7 +16,7 @@ Siacme\Dominio\Expedientes\Expediente:
       nullable: false
       column: Firma
     fechaCreacion:
-      type: string
+      type: datetime
       nullable: true
       column: FechaCreacion
     nombrePediatra:
@@ -176,6 +176,14 @@ Siacme\Dominio\Expedientes\Expediente:
       length: 100
       nullable: true
       column: OcupacionTutor
+    motivoConsulta:
+      type: string
+      nullable: true
+      column: MotivoConsulta
+    historiaEnfermedad:
+      type: string
+      nullable: true
+      column: HistoriaEnfermedad
   oneToOne:
     paciente:
       targetEntity: Siacme\Dominio\Pacientes\Paciente
@@ -209,7 +217,5 @@ Siacme\Dominio\Expedientes\Expediente:
       cascade: [persist]
     expedienteEspecialidad:
       targetEntity: ExpedienteJohanna
-      joinColumn:
-        name: id
-        referencedColumnName: ExpedienteId
+      mappedBy: expediente
       cascade: [persist]

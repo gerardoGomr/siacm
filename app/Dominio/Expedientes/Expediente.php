@@ -798,5 +798,6 @@ class Expediente
     public function generarPara(AbstractExpediente $expediente)
     {
         $this->expedienteEspecialidad = $expediente;
+        $expediente->expediente($this);
     }
 }

@@ -38,8 +38,7 @@ Siacme\Dominio\Pacientes\Paciente:
       nullable: true
       column: Email
     fechaNacimiento:
-      type: string
-      length: 10
+      type: datetime
       nullable: false
       column: FechaNacimiento
     edadAnios:

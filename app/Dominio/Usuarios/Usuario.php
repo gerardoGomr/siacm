@@ -44,8 +44,8 @@ class Usuario extends Persona
 	 */
 	protected $especialidad;
 
-	const JOHANNA   = 1;
-	const RIGOBERTO = 2;
+	const JOHANNA   = 2;
+	const RIGOBERTO = 3;
 
 	/**
 	 * Constructor Usuario

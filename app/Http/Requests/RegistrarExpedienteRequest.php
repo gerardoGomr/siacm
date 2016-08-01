@@ -14,15 +14,13 @@ class RegistrarExpedienteRequest extends Request
     protected $rules = [
         'nombre'                      => 'required',
         'paterno'                     => 'required',
-        'fechaNacimiento'             => 'date_format:d/m/Y',
-        'edadAnios'                   => 'required|number',
-        'edadMeses'                   => 'required|number',
+        'fechaNacimiento'             => 'date_format:Y-m-d',
+        'edadAnios'                   => 'required|numeric',
+        'edadMeses'                   => 'required|numeric',
         'lugarNacimiento'             => 'required',
         'direccion'                   => 'required',
         'cp'                          => 'required',
         'municipio'                   => 'required',
-        'automedicado'                => 'required',
-        'alergico'                    => 'required',
         'nombrePadre'                 => 'required',
         'ocupacionPadre'              => 'required',
         'nombreMadre'                 => 'required',
@@ -35,16 +33,16 @@ class RegistrarExpedienteRequest extends Request
         'enfermedadesPadre'           => 'required',
         'enfermedadesAbuelosPaternos' => 'required',
         'enfermedadesAbuelosMaternos' => 'required',
-        'numHermanos'                 => 'required|number',
-        'numHermanosVivos'            => 'required|number',
-        'numHermanosFinados'          => 'required|number',
+        'numHermanos'                 => 'required|numeric',
+        'numHermanosVivos'            => 'required|numeric',
+        'numHermanosFinados'          => 'required|numeric',
         'nombresEdades'               => 'required',
         'enfermedadesHermanos'        => 'required',
         'tipoCepillo'                 => 'required',
         'marcaPasta'                  => 'required',
-        'vecesCepilla'                => 'required|number',
+        'vecesCepilla'                => 'required|numeric',
         'edadErupcionaPrimerDiente'   => 'required',
-        'vecesCome'                   => 'required|number'
+        'vecesCome'                   => 'required|numeric'
     ];
     /**
      * Determine if the user is authorized to make this request.
