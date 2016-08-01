@@ -1,3 +1,6 @@
+<?php
+use Siacme\Aplicacion\Fecha;
+?>
 <div class="tab-pane active" id="datosPersonales">
 	<div class="row">
 		<div class="col-md-6">
@@ -22,8 +25,8 @@
 				</div>
 				<div class="form-group">
 					{!! Form::label('fechaNacimiento', 'Fecha de nacimiento:', ['class' => 'control-label col-md-3']) !!}
-					<div class="col-md-2">
-						<p class="form-control-static">{{ $expediente->getPaciente()->getFechaNacimiento() }}</p>
+					<div class="col-md-4">
+						<p class="form-control-static">{{ Fecha::convertir($expediente->getPaciente()->getFechaNacimiento()) }}</p>
 					</div>
 				</div>
 				<div class="form-group">

@@ -293,14 +293,6 @@ class Expediente
 	}
 
 	/**
-	 * @return boolean
-	 */
-	public function primeraVez()
-	{
-		return $this->primeraVez;
-	}
-
-	/**
 	 * @return Paciente
 	 */
 	public function getPaciente()
@@ -623,7 +615,7 @@ class Expediente
     /**
      * @return string
      */
-    public function getNombreEdadesHermanos()
+    public function getNombresEdadesHermanos()
     {
         return $this->nombresEdadesHermanos;
     }
@@ -695,6 +687,14 @@ class Expediente
         if(file_exists("storage/pacientesFotografias/$id.jpg")) {
             $this->fotografia = new FotografiaPaciente("public/pacientesFotografias/$id.jpg");
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function firmado()
+    {
+        return !empty($this->firma);
     }
 
     /**

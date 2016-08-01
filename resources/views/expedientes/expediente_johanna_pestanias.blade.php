@@ -1,6 +1,6 @@
 <div class="widget-head col-md-3 col-lg-3">
 	<ul>
-		<li class="innerAll bg-primary">
+		<li class="innerAll bg-primary active">
 			<a href="#datosPersonales" data-toggle="tab"><i class="fa fa-user"></i> Datos personales</a>
 		</li>
 		<li class="innerAll">

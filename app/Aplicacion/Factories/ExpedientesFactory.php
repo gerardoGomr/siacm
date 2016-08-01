@@ -104,7 +104,7 @@ class ExpedientesFactory
         $viveMadre                   = $request->get('viveMadre') === '2' ? false : true;
         $causaMuerteMadre            = $request->get('causaMuerteMadre');
         $enfermedadesMadre           = $request->get('enfermedadesMadre');
-        $vivePadre                   = $request->get('vivePadre') === '2' ? true : false;
+        $vivePadre                   = $request->get('vivePadre') === '2' ? false : true;
         $causaMuertePadre            = $request->get('causaMuertePadre');
         $enfermedadesPadre           = $request->get('enfermedadesPadre');
         $enfermedadesAbuelosPaternos = $request->get('enfermedadesAbuelosPaternos');

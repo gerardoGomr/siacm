@@ -1,4 +1,9 @@
 $(function() {
+	$('#widgetForm').on('click', 'a', function() {
+		$(this).parents('li').addClass('bg-primary');
+		$(this).parents('li').siblings('li').removeClass('bg-primary');
+	});
+	
 	$('#firmar').on('click', function() {
 		bootbox.confirm('Se guardarán los datos del expediente, ¿desea continuar?', function(r) {
 			if(r === true) {

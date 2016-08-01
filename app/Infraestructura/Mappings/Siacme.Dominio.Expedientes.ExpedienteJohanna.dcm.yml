@@ -7,6 +7,10 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       generator:
         strategy: AUTO
   fields:
+    primeraVez:
+      type: boolean
+      column: PrimeraVez
+      nullable: false
     nombrePadre:
       type: string
       nullable: true

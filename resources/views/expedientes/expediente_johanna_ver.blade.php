@@ -40,8 +40,12 @@
 													<input type="hidden" id="urlFirmar" value="{{ url('expedientes/firmar') }}">
 												</div>
 												<div class="tab-content">
-													@include('expedientes.expediente_registrar_datos_personales_ver')
-
+													@include('expedientes.expediente_ver_datos_personales')
+													@include('expedientes.expediente_ver_antecedentes_heredofamiliares')
+													@include('expedientes.expediente_ver_antecedentes_patologicos')
+													@include('expedientes.expediente_johanna_ver_antecedentes_odontopatologicos')
+													@include('expedientes.expediente_johanna_ver_antecedentes_odontalgicos')
+													@include('expedientes.expediente_johanna_ver_higiene_bucodental')
 												</div>
 											{!! Form::close() !!}
 										</div>
