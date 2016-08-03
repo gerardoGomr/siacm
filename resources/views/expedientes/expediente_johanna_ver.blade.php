@@ -33,7 +33,7 @@
 											!!}
 												<div class="innerAll">
 													<button type="button" id="firmar" class="btn btn-primary"><i class="fa fa-check"></i> Los datos del expediente están correctos</button>
-													<a href="{{ url('expedientes/agregar/odont/'.base64_encode($expediente->getPaciente()->getId()).'/'.base64_encode($medico->getId())) }}" class="btn btn-danger"><i class="fa fa-edit"></i> Editar expediente</a>
+													<a href="{{ url('expedientes/registrar/'.base64_encode($expediente->getPaciente()->getId()).'/'.base64_encode($medico->getId())) }}" class="btn btn-danger"><i class="fa fa-edit"></i> Editar expediente</a>
 													{!! csrf_field() !!}
 													{!! Form::hidden('pacienteId', base64_encode($expediente->getPaciente()->getId()), ['id' => 'pacienteId']) !!}
 													{!! Form::hidden('medicoId', base64_encode($medico->getId()), ['id' => 'medicoId']) !!}
@@ -46,6 +46,7 @@
 													@include('expedientes.expediente_johanna_ver_antecedentes_odontopatologicos')
 													@include('expedientes.expediente_johanna_ver_antecedentes_odontalgicos')
 													@include('expedientes.expediente_johanna_ver_higiene_bucodental')
+													@include('expedientes.expediente_johanna_ver_habitos_orales')
 												</div>
 											{!! Form::close() !!}
 										</div>

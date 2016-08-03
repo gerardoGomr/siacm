@@ -58,13 +58,8 @@
 																		@include('expedientes.expediente_johanna_registrar_higiene_bucodental')
 																		@include('expedientes.expediente_johanna_registrar_habitos_orales')
 																	@else
-																		@include('expedientes.expediente_odonto_datos_personales_editar')
-																		@include('expedientes.expediente_odonto_antecedentes_heredofamiliares_editar')
-																		@include('expedientes.expediente_odonto_antecedentes_patologicos_editar')
-																		@include('expedientes.expediente_odonto_antecedentes_odontopatologicos_editar')
-																		@include('expedientes.expediente_odonto_antecedentes_odontalgicos_editar')
-																		@include('expedientes.expediente_odonto_higiene_bucodental_editar')
-																		@include('expedientes.expediente_odonto_habitos_orales_editar')
+																		@include('expedientes.expediente_editar_datos_personales')
+
 																	@endif
 
 																	<div class="form-group">
