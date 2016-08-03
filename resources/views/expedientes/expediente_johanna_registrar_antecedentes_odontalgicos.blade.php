@@ -4,7 +4,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('primeraVisita', 1, null, ['checked', 'id' => 'primeraVisita']) !!} Primera visita al dentista
+						{!! Form::checkbox('primeraVisita', null, null, ['checked', 'id' => 'primeraVisita']) !!} Primera visita al dentista
 					</label>
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('anestesico', 1, null, ['id' => 'anestesico']) !!} Le han colocado algún tipo de anestésico
+						{!! Form::checkbox('anestesico', null, null, ['id' => 'anestesico']) !!} Le han colocado algún tipo de anestésico
 					</label>
 				</div>
 			</div>

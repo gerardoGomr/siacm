@@ -4,7 +4,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('succionDigital', 1, null, []) !!} Succión digital (se chupa el dedo)
+						{!! Form::checkbox('succionDigital', null, null, []) !!} Succión digital (se chupa el dedo)
 					</label>
 				</div>
 			</div>
@@ -13,7 +13,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('succionLingual', 1, null, []) !!} Succión lingual (se chupa la lengua)
+						{!! Form::checkbox('succionLingual', null, null, []) !!} Succión lingual (se chupa la lengua)
 					</label>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('biberon', 1, null, []) !!} Biberón
+						{!! Form::checkbox('biberon', null, null, []) !!} Biberón
 					</label>
 				</div>
 			</div>
@@ -31,7 +31,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('bruxismo', 1, null, []) !!} Bruxismo (rechina los dientes)
+						{!! Form::checkbox('bruxismo', null, null, []) !!} Bruxismo (rechina los dientes)
 					</label>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('succionLabial', 1, null, []) !!} Succión labial (se chupa el labio)
+						{!! Form::checkbox('succionLabial', null, null, []) !!} Succión labial (se chupa el labio)
 					</label>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('respiracionBucal', 1, null, []) !!} Respiración Bucal
+						{!! Form::checkbox('respiracionBucal', null, null, []) !!} Respiración Bucal
 					</label>
 				</div>
 			</div>
@@ -58,7 +58,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('onicofagia', 1, null, []) !!} Onicofagia
+						{!! Form::checkbox('onicofagia', null, null, []) !!} Onicofagia
 					</label>
 				</div>
 			</div>
@@ -67,7 +67,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('chupon', 1, null, []) !!} Chupón
+						{!! Form::checkbox('chupon', null, null, []) !!} Chupón
 					</label>
 				</div>
 			</div>
@@ -76,7 +76,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('otroHabito', 1, null, []) !!} Otro hábito
+						{!! Form::checkbox('otroHabito', null, null, []) !!} Otro hábito
 					</label>
 				</div>
 			</div>

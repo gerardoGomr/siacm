@@ -59,7 +59,12 @@
 																		@include('expedientes.expediente_johanna_registrar_habitos_orales')
 																	@else
 																		@include('expedientes.expediente_editar_datos_personales')
-
+																		@include('expedientes.expediente_editar_antecedentes_heredofamiliares')
+																		@include('expedientes.expediente_editar_antecedentes_patologicos')
+																		@include('expedientes.expediente_johanna_editar_antecedentes_odontopatologicos')
+																		@include('expedientes.expediente_johanna_editar_antecedentes_odontalgicos')
+																		@include('expedientes.expediente_johanna_editar_higiene_bucodental')
+																		@include('expedientes.expediente_johanna_editar_habitos_orales')
 																	@endif
 
 																	<div class="form-group">

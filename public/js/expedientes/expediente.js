@@ -306,6 +306,55 @@ $(document).ready(function() {
 		}
 	});
 
+	// anestésico
+	$('#anestesico').on('click', function() {
+		if ($(this).is(':checked')) {
+			$formExpediente.find('input.malaReaccion').attr('disabled', false);
+		} else {
+			$formExpediente.find('input.malaReaccion').attr('disabled', true);
+			$('#queReaccion').attr('readonly', true);
+			$('#queReaccion').rules('remove');
+		}
+	});
+
+	// mala reacción
+	$formExpediente.on('click', 'input.malaReaccion', function(event) {
+		// si tuvo
+		if ($(this).val() === '1') {
+			$('#queReaccion').attr('readonly', false);
+			agregaValidacionAElemento('queReaccion', 'required');
+		}
+		// no tuvo
+		if ($(this).val() === '2') {
+			$('#queReaccion').attr('readonly', true);
+			$('#queReaccion').rules('remove');
+		}
+	});
+
+	// otro auxiliar bucodental
+	$('#otroAuxiliar').on('click',function(event) {
+		if ($(this).is(':checked')) {
+			$('#especifiqueAuxiliar').attr('readonly', false);
+			agregaValidacionAElemento('especifiqueAuxiliar', 'required');
+
+		} else {
+			$('#especifiqueAuxiliar').attr('readonly', true);
+			$('#especifiqueAuxiliar').rules('remove');
+		}
+	});
+
+	// otro habito oral
+	$('#otroHabito').on('click',function(event) {
+		if ($(this).is(':checked')) {
+			$('#especifiqueHabito').attr('readonly', false);
+			agregaValidacionAElemento('especifiqueHabito', 'required');
+
+		} else {
+			$('#especifiqueHabito').attr('readonly', true);
+			$('#especifiqueHabito').rules('remove');
+		}
+	});
+
 	// guardar formulario
 	$formExpediente.find('button.guardar').on('click', function(event) {
 		// si es un correo valido

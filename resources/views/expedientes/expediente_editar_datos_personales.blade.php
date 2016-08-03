@@ -87,7 +87,7 @@
 			<div class="col-md-4 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('automedicado', null, $expediente->seHaAutomedicado() ? true : false, ['class' => 'automedicado']) !!} Ha automedicado a su hijo(a)
+						{!! Form::checkbox('automedicado', null, $expediente->seHaAutomedicado(), ['class' => 'automedicado']) !!} Ha automedicado a su hijo(a)
 					</label>
 				</div>
 			</div>
@@ -106,7 +106,7 @@
 			<div class="col-md-4 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('alergico', null, $expediente->esAlergico() ? true : false, ['class' => 'alergico']) !!} Es alérgico a algún medicamento
+						{!! Form::checkbox('alergico', null, $expediente->esAlergico(), ['class' => 'alergico']) !!} Es alérgico a algún medicamento
 					</label>
 				</div>
 			</div>

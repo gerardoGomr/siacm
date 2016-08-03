@@ -4,7 +4,7 @@
 			<div class="col-md-8 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('dolorBoca', null, null, []) !!} ¿Ha presentado dolor en la boca?
+						{!! Form::checkbox('dolorBoca', null, $expediente->getExpedienteEspecialidad()->haPresentadoDolorBoca(), []) !!} ¿Ha presentado dolor en la boca?
 					</label>
 				</div>
 			</div>
@@ -13,7 +13,7 @@
 			<div class="col-md-8 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('sangradoEncias', null, null, []) !!} ¿Ha notado sangrado en las encías?
+						{!! Form::checkbox('sangradoEncias', null, $expediente->getExpedienteEspecialidad()->haNotadoSangradoEncias(), []) !!} ¿Ha notado sangrado en las encías?
 					</label>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 			<div class="col-md-8 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('malOlor', null, null, []) !!} ¿Presenta mal olor o mal sabor en la boca?
+						{!! Form::checkbox('malOlor', null, $expediente->getExpedienteEspecialidad()->presentaMalOlorBoca(), []) !!} ¿Presenta mal olor o mal sabor en la boca?
 					</label>
 				</div>
 			</div>
@@ -31,7 +31,7 @@
 			<div class="col-md-8 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('dienteFlojo', null, null, []) !!} ¿Siente que algún diente está flojo?
+						{!! Form::checkbox('dienteFlojo', null, $expediente->getExpedienteEspecialidad()->sienteDienteFlojo(), []) !!} ¿Siente que algún diente está flojo?
 					</label>
 				</div>
 			</div>

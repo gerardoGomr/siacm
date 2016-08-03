@@ -39,6 +39,9 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       type: string
       nullable: true
       column: ReaccionAnestesico
+    marcaPasta:
+      type: integer
+      column: MarcaPasta
     descripcionHabito:
       type: string
       nullable: true
