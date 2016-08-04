@@ -42,7 +42,7 @@
 		<div class="form-group">
 			{!! Form::label('lugarNacimiento', '*Lugar de nacimiento:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
-				{!! Form::text('lugarNacimiento', $expediente->getPaciente()->getLugarNacimiento() or '', ['class' => 'required form-control']) !!}
+				{!! Form::text('lugarNacimiento', $expediente->getPaciente()->getLugarNacimiento(), ['class' => 'required form-control']) !!}
 			</div>
 		</div>
 		<div class="form-group">

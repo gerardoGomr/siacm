@@ -81,8 +81,13 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	{
 		// TODO: Implement persistir() method.
 		try {
-			$this->entityManager->persist($expediente);
-			$this->entityManager->persist($expediente->getExpedienteEspecialidad());
+
+			if (is_null($expediente->getId())) {
+				// insertar
+				$this->entityManager->persist($expediente);
+				$this->entityManager->persist($expediente->getExpedienteEspecialidad());
+			}
+			
 			$this->entityManager->flush();
 			return true;
 

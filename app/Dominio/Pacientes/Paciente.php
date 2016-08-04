@@ -159,7 +159,7 @@ class Paciente extends Persona
     private function calcularEdad()
     {
         $fechaActual = new DateTime();
-        $interval    = $fechaActual->diff($fechaActual);
+        $interval    = $fechaActual->diff($this->fechaNacimiento);
 
         $this->edadAnios = $interval->y;
         $this->edadMeses = $interval->m;

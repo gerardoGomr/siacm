@@ -93,7 +93,7 @@ use Siacme\Aplicacion\Fecha;
 				<div class="form-group">
 					{!! Form::label('conQueHaAutomedicado', '¿Con qué?:', ['class' => 'control-label col-md-4']) !!}
 					<div class="col-md-8">
-						<p class="form-control-static">{{ $expediente->seHaAutomedicado() ? $expediente->getConQueSeHaAutomedicado() : '' }}</p>
+						<p class="form-control-static">{{ $expediente->seHaAutomedicado() ? $expediente->getConQueSeHaAutomedicado() : '-' }}</p>
 					</div>
 				</div>
 				<div class="form-group">
@@ -105,7 +105,7 @@ use Siacme\Aplicacion\Fecha;
 				<div class="form-group">
 					{!! Form::label('aCualEsAlergico', '¿A cuál?:', ['class' => 'control-label col-md-4']) !!}
 					<div class="col-md-7">
-						<p class="form-control-static">{{ $expediente->esAlergico() ? $expediente->getAQueMedicamentoEsAlergico() : '' }}</p>
+						<p class="form-control-static">{{ $expediente->esAlergico() ? $expediente->getAQueMedicamentoEsAlergico() : '-' }}</p>
 					</div>
 				</div>
 				<div class="form-group">

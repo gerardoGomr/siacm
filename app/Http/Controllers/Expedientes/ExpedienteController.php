@@ -3,6 +3,7 @@ namespace Siacme\Http\Controllers\Expedientes;
 
 use Illuminate\Http\Request;
 use Siacme\Aplicacion\Factories\ExpedientesFactory;
+use Siacme\Aplicacion\Factories\ExpedientesEditarFactory;
 use Siacme\Aplicacion\Factories\VistasExpedientesGenerarFactory;
 use Siacme\Aplicacion\Factories\VistasExpedientesMostrarFactory;
 use Siacme\Dominio\Expedientes\FotografiaPaciente;
@@ -102,10 +103,10 @@ class ExpedienteController extends Controller
 
 		request()->session()->put('expediente', $expediente);
 
-		$respuesta['estatus'] = 'OK';
-		$respuesta['html']    = view('expedientes.paciente_foto', compact('expediente'))->render();
+		/*$respuesta['estatus'] = 'OK';
+		$respuesta['html']    = view('expedientes.paciente_foto', compact('expediente'))->render();*/
 
-		return response()->json($respuesta);
+		return response(view('expedientes.paciente_foto', compact('expediente')));
 	}
 
 	/**
@@ -193,15 +194,35 @@ class ExpedienteController extends Controller
 
 		$medicoId = (int)base64_decode($request->get('medicoId'));
 		$medico   = $this->usuariosRepositorio->obtenerPorId($medicoId);
-		
-		// collect request variables and perform business rules
-		$expediente = ExpedientesFactory::create($medico, $paciente, $request);
+
+		// intentar obtener el expediente
+		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+
+		// si existe, actualizar datos
+		if (!is_null($expediente)) {
+			ExpedientesEditarFactory::update($medico, $expediente, $request);
+
+		} else {
+			// no existe, es nuevo
+			// collect request variables and perform business rules
+			$expediente = ExpedientesFactory::create($medico, $paciente, $request);
+		}
 
 		if (!$this->expedientesRepositorio->persistir($expediente)) {
 			// error
 			$respuesta['estatus'] = 'fail';
 			return response()->json($respuesta);
 		}
+
+		// guardar foto de paciente
+        if($request->get('capturada') === '1') {
+            $url = $request->get('foto');
+            // foto temporal
+            $fotografia = new FotografiaPaciente($url);
+
+            // renombrar foto y adjuntar a la carpeta de fotos
+            $fotografia->guardar($expediente->getId());
+        }
 
 		// success
 		if ($request->session()->has('expediente')) {
@@ -228,5 +249,26 @@ class ExpedienteController extends Controller
 		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
 
 		return VistasExpedientesMostrarFactory::make($medico, $expediente);
+	}
+
+	public function firmar(Request $request)
+	{
+		$pacienteId = base64_decode($request->get('pacienteId'));
+		$medicoId   = base64_decode($request->get('medicoId'));
+		$respuesta  = [];
+
+		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
+		$medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
+		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+
+		$expediente->revisadoPorPaciente();
+
+		$respuesta['estatus'] = 'OK';
+		if (!$this->expedientesRepositorio->persistir($expediente)) {
+			// error
+			$respuesta['estatus'] = 'fail';
+		}
+
+		return response()->json($respuesta);
 	}
 }

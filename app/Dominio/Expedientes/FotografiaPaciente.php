@@ -3,7 +3,7 @@ namespace Siacme\Dominio\Expedientes;
 
 /**
  * Class FotografiaPaciente
- * @package Siacme\Dominio\Pacientes
+ * @package Siacme\Dominio\Expedientes
  * @author Gerardo Adrián Gómez Ruiz
  * @version 1.0
  */

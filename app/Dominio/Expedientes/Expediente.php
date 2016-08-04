@@ -666,6 +666,8 @@ class Expediente
      */
     public function tieneFoto()
     {
+        $this->revisaFoto();
+
         if(is_null($this->fotografia)) {
             return false;
         }
@@ -683,9 +685,9 @@ class Expediente
      */
     public function revisaFoto()
     {
-        $id = $this->id;
+        $id = (string)$this->id;
         if(file_exists("storage/pacientesFotografias/$id.jpg")) {
-            $this->fotografia = new FotografiaPaciente("public/pacientesFotografias/$id.jpg");
+            $this->asignarFoto(new FotografiaPaciente("storage/pacientesFotografias/$id.jpg"));
         }
     }
 
@@ -799,5 +801,13 @@ class Expediente
     {
         $this->expedienteEspecialidad = $expediente;
         $expediente->expediente($this);
+    }
+
+    /**
+     * marcar al expediente como revisado
+     */
+    public function revisadoPorPaciente()
+    {
+        $this->expedienteEspecialidad->revisadoPorPaciente();
     }
 }

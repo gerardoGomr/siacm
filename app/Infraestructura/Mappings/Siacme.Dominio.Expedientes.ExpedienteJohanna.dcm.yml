@@ -11,6 +11,10 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       type: boolean
       column: PrimeraVez
       nullable: false
+    revisado:
+      type: boolean
+      column: revisado
+      nullable: false
     nombrePadre:
       type: string
       nullable: true
@@ -126,6 +130,9 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       type: boolean
       nullable: true
       column: TuvoMalaReaccionAnestesico
+    traumatismoBucal:
+      type: string
+      column: TraumatismoBucal
     tipoCepillo:
       type: integer
       nullable: true
