@@ -47,7 +47,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
 	/////////////////////////////////////////// EXPEDIENTES //////////////////////////////////////////////
 	// abrir formulario de captura
-	Route::get('expedientes/registrar/{pacienteId}/{medicoId}', 'Expedientes\ExpedienteController@registrar');
+	Route::get('expedientes/registrar/{pacienteId}/{medicoId}/{citaId}', 'Expedientes\ExpedienteController@registrar');
 	// abrir pantalla de vista previa
 	Route::get('expedientes/ver/{pacienteId}/{medicoId}', 'Expedientes\ExpedienteController@ver');
 	// guardar / editar expediente

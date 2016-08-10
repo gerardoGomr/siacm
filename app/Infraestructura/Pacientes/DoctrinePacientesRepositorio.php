@@ -3,6 +3,7 @@ namespace Siacme\Infraestructura\Pacientes;
 
 use Doctrine\ORM\EntityManager;
 use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
+use Siacme\Dominio\Pacientes\Paciente;
 use Siacme\Exceptions\PDO\PDOLogger;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -85,4 +86,23 @@ class DoctrinePacientesRepositorio implements PacientesRepositorio
 	{
 		// TODO: Implement obtenerTodos() method.
 	}
+
+	/**
+     * actualizar paciente
+     * @param Paciente $paciente
+     * @return bool
+     */
+    public function persistir(Paciente $paciente)
+    {
+    	try {
+    		$this->entityManager->persist($paciente);
+			$this->entityManager->flush();
+			return true;
+
+		} catch (\PDOException $e) {
+			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+			$pdoLogger->log($e);
+			return false;
+		}	
+    }
 }

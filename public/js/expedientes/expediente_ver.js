@@ -25,8 +25,9 @@ $(document).ready(function($) {
 					}
 
 					if (respuesta.estatus === 'OK') {
-						bootbox.alert('Se marcó al expediente como revisado');
-						window.location.href = '';
+						bootbox.alert('Se marcó al expediente como revisado', function () {
+							window.location.href = '';
+						});
 					}
 				})
 				.fail(function(XMLHttpRequest, textStatus, errorThrown) {

@@ -8,6 +8,7 @@ use Siacme\Aplicacion\Factories\VistasExpedientesGenerarFactory;
 use Siacme\Aplicacion\Factories\VistasExpedientesMostrarFactory;
 use Siacme\Dominio\Expedientes\FotografiaPaciente;
 use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
+use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Http\Controllers\Controller;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
@@ -52,11 +53,12 @@ class ExpedienteController extends Controller
 
 	/**
 	 * generar la vista para el registro de expedientes
-	 * @param $pacienteId
-	 * @param $medicoId
+	 * @param string $pacienteId
+	 * @param string $medicoId
+	 * @param string $citaId
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
 	 */
-	public function registrar($pacienteId, $medicoId)
+	public function registrar($pacienteId, $medicoId, $citaId)
 	{
 		if (request()->session()->has('expediente')) {
 			request()->session()->forget('expediente');
@@ -64,10 +66,14 @@ class ExpedienteController extends Controller
 
 		$pacienteId = (int)base64_decode($pacienteId);
 		$medicoId   = (int)base64_decode($medicoId);
+		$citaId     = (int)base64_decode($citaId);
 
 		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
 		$medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
 		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+
+		// guardar la cita en sesión para su posterior procesamiento
+		request()->session()->put('citaId', $citaId);
 
 		return VistasExpedientesGenerarFactory::make($paciente, $medico, $expediente);
 	}
@@ -214,6 +220,8 @@ class ExpedienteController extends Controller
 			return response()->json($respuesta);
 		}
 
+		// $this->pacientesRepositorio->persistir($paciente);
+
 		// guardar foto de paciente
         if($request->get('capturada') === '1') {
             $url = $request->get('foto');
@@ -251,7 +259,13 @@ class ExpedienteController extends Controller
 		return VistasExpedientesMostrarFactory::make($medico, $expediente);
 	}
 
-	public function firmar(Request $request)
+	/**
+	 * cambiar el estatus de expediente a revisado
+	 * @param Request $request
+	 * @param CitasRepositorio $citasRepositorio
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function firmar(Request $request, CitasRepositorio $citasRepositorio)
 	{
 		$pacienteId = base64_decode($request->get('pacienteId'));
 		$medicoId   = base64_decode($request->get('medicoId'));
@@ -268,6 +282,13 @@ class ExpedienteController extends Controller
 			// error
 			$respuesta['estatus'] = 'fail';
 		}
+
+		// actualizar la cita
+		$citaId = $request->session()->get('citaId');
+		$cita   = $citasRepositorio->obtenerPorId($citaId);
+		$cita->enEsperaDeConsulta();
+		$citasRepositorio->actualizar($cita);
+		$request->session()->forget('citaId');
 
 		return response()->json($respuesta);
 	}

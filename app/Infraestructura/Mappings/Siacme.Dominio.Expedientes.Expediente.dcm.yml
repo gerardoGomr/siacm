@@ -190,7 +190,7 @@ Siacme\Dominio\Expedientes\Expediente:
       joinColumn:
         name: PacienteId
         referencedColumnName: id
-      cascade: [persist]
+      cascade: [merge]
     escolaridad:
       targetEntity: Escolaridad
       joinColumn:

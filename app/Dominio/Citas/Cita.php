@@ -179,6 +179,10 @@ class Cita
 			case CitaEstatus::CANCELADA:
 				$estatus = 'Cancelada';
 				break;
+
+			case CitaEstatus::EN_ESPERA_CONSULTA:
+				$estatus = 'En espera de consulta';
+				break;
 		}
 
 		return $estatus;
@@ -213,6 +217,11 @@ class Cita
 	public function cancelar()
 	{
 		$this->estatus = CitaEstatus::CANCELADA;
+	}
+
+	public function enEsperaDeConsulta()
+	{
+		$this->estatus = CitaEstatus::EN_ESPERA_CONSULTA;
 	}
 
 	/**

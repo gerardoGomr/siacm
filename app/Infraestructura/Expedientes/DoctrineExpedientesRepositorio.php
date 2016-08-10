@@ -81,11 +81,12 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	{
 		// TODO: Implement persistir() method.
 		try {
+			$this->entityManager->merge($expediente->getPaciente());
 
 			if (is_null($expediente->getId())) {
 				// insertar
 				$this->entityManager->persist($expediente);
-				$this->entityManager->persist($expediente->getExpedienteEspecialidad());
+				// $this->entityManager->persist($expediente->getExpedienteEspecialidad());
 			}
 			
 			$this->entityManager->flush();
@@ -95,6 +96,33 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return false;
+		}
+	}
+
+	/**
+	 * obtener parte de la construcción del objeto
+	 * @param int $id
+	 * @return Paciente
+	 */
+	public function obtenerPacientePorId($id)
+	{
+		// TODO: Implement obtenerPorId() method.
+		try {
+			$query = $this->entityManager->createQuery("SELECT p, d FROM Pacientes:Paciente p LEFT JOIN p.domicilio d WHERE p.id = :id")
+					->setParameter('id', $id);
+
+			$pacientes = $query->getResult();
+
+			if (count($pacientes) === 0) {
+				return null;
+			}
+
+			return $pacientes[0];
+
+		} catch (\PDOException $e) {
+			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+			$pdoLogger->log($e);
+			return null;
 		}
 	}
 }

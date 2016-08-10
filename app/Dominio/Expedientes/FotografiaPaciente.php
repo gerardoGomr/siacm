@@ -82,15 +82,11 @@ class FotografiaPaciente extends Fotografia
 
 	/**
 	 * verificar si ha sido recortada
-	 * @return int
+	 * @return boolean
 	 */
 	public function recortada()
 	{
-		if($this->haSidoRecortada === true) {
-			return 1;
-		}
-
-		return 0;
+		return $this->haSidoRecortada;
 	}
 
 	/**

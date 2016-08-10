@@ -23,8 +23,8 @@ return [
     'managers'                  => [
         'default' => [
             'dev'        => env('APP_DEBUG'),
-            'meta'       => env('DOCTRINE_METADATA', 'yaml'),
-            'connection' => env('DB_CONNECTION', 'mysql'),
+            'meta'       => env('DOCTRINE_METADATA'),
+            'connection' => env('DB_CONNECTION'),
             'namespaces' => [
                 'Dominio'     => 'Siacme\Dominio',
                 'Usuarios'    => 'Siacme\Dominio\Usuarios',
@@ -40,7 +40,7 @@ return [
             'proxies'    => [
                 'namespace'     => false,
                 'path'          => storage_path('proxies'),
-                'auto_generate' => env('DOCTRINE_PROXY_AUTOGENERATE', false)
+                'auto_generate' => env('DOCTRINE_PROXY_AUTOGENERATE')
             ],
             /*
             |--------------------------------------------------------------------------

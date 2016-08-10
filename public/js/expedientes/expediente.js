@@ -182,6 +182,7 @@ $(document).ready(function() {
 				// mostrar modal de detalle
 				jcrop.destroy();
 				$fotografia.html(resultado.html);
+				$('#capturada').val('1');
 			}
 
 		}) .fail(function(XMLHttpRequest, textStatus, errorThrown) {
@@ -366,13 +367,21 @@ $(document).ready(function() {
 		if ($('#capturada').val() === '1') {
 			if ($('#imagenRecortada').val() === '0') {
 				bootbox.confirm('Se anexará la fotografía del paciente sin editar (tal como se capturó). ¿Desea continuar sin editarla?', function(r) {
-					if (!r) {
+					if (r) {
+						guardarExpediente();
+					} else {
 						return false;
 					}
 				});
+			} else {
+				guardarExpediente();
 			}
+		} else {
+			guardarExpediente();
 		}
+	});
 
+	function guardarExpediente() {
 		$.ajax({
 			url:      $formExpediente.attr('action'),
 			type:     'post',
@@ -401,7 +410,7 @@ $(document).ready(function() {
 			console.log(textStatus + ': ' + errorThrown);
 			bootbox.alert('Ocurrió un error al generar el expediente. Intente de nuevo');
 		});
-	});
+	}
 });
 
 /**

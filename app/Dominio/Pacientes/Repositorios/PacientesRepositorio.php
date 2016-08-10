@@ -2,6 +2,7 @@
 namespace Siacme\Dominio\Pacientes\Repositorios;
 
 use Siacme\Dominio\Repositorios\Repositorio;
+use Siacme\Dominio\Pacientes\Paciente;
 
 /**
  * Interface PacientesRepositorio
@@ -17,4 +18,11 @@ interface PacientesRepositorio extends Repositorio
      * @return array|null
      */
     public function obtenerPorNombre($nombre);
+
+    /**
+     * actualizar paciente
+     * @param Paciente $paciente
+     * @return bool
+     */
+    public function persistir(Paciente $paciente);
 }
