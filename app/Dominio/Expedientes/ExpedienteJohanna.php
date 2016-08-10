@@ -1486,7 +1486,7 @@ class ExpedienteJohanna extends AbstractExpediente
         $this->leHanColocadoAnestesico = $anestesico;
         $this->traumatismoBucal        = $traumatismo;
 
-        if ($this->primeraVisitaDentista) {
+        if (!$this->primeraVisitaDentista) {
             $this->fechaUltimoExamenBucal = $fechaUltimoExamen;
             $this->motivoVisitaDentista   = $motivoUltimoExamen;
         }

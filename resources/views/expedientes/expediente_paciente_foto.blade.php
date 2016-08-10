@@ -16,7 +16,11 @@
                     <div class="dvFoto">
                         <input type="hidden" id="urlFotoRecortada" value="{{ url('expedientes/foto/recortar') }}">
                         <span id="fotografiaAgregada">
-                            @include('expedientes.paciente_foto')
+                            @if(isset($expediente) && $expediente->tieneFoto())
+                                @include('expedientes.paciente_foto')
+                            @else
+                                @include('expedientes.paciente_foto_temporal')
+                            @endif
                         </span>
                         <div class="separator"></div>
                         {!!
@@ -25,8 +29,9 @@
                                 'id'      => 'formSubirImagen'
                             ])
                         !!}
-                        <input type="file" name="fotoAdjuntada" id="adjuntarFoto" style="display:none;" class="imagenJpg" />
-                        <input type="hidden" name="pacienteId" value="{{ base64_encode($paciente->getId()) }}">
+                            <input type="file" name="fotoAdjuntada" id="adjuntarFoto" style="display:none;" class="imagenJpg" />
+                            <input type="hidden" name="pacienteId" value="{{ base64_encode($paciente->getId()) }}">
+                            <input type="hidden" name="medicoId" value="{{ base64_encode($medico->getId()) }}">
                         {!! Form::close() !!}
                     </div>
                 </div>

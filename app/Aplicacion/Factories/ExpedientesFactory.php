@@ -19,6 +19,12 @@ use Siacme\Dominio\Usuarios\Usuario;
  */
 class ExpedientesFactory
 {
+    /**
+     * @param Usuario $medico
+     * @param Paciente $paciente
+     * @param Request $request
+     * @return mixed|Expediente
+     */
     public static function create(Usuario $medico, Paciente $paciente, Request $request)
     {
         $expediente = self::crearExpediente($request, $paciente);
@@ -77,6 +83,11 @@ class ExpedientesFactory
         return $expediente;
     }
 
+    /**
+     * @param Request $request
+     * @param Paciente $paciente
+     * @return mixed|Expediente
+     */
     private static function crearExpediente(Request $request, Paciente $paciente)
     {
         $expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente);
@@ -128,7 +139,7 @@ class ExpedientesFactory
         $moretones     = !is_null($request->get('moretones'))     ? true : false;
         $transfusion   = !is_null($request->get('transfusion'))   ? true : false;
         $fracturas     = !is_null($request->get('fracturas'))     ? true : false;
-        $cirugia       = !is_null($request->get('cirugia'))       ? true : false;
+        $cirugia       = !is_null($request->get('cirugias'))       ? true : false;
         $hospitalizado = !is_null($request->get('hospitalizado')) ? true : false;
         $tratamiento   = !is_null($request->get('tratamiento'))   ? true : false;
 

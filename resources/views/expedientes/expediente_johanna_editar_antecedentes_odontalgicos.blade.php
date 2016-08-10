@@ -19,7 +19,7 @@
 				@if($expediente->getExpedienteEspecialidad()->primeraVisitaDentista())
 					{!! Form::text('fechaUltimoExamen', '', ['class' => 'form-control fecha', 'readonly']) !!}
 				@else
-					{!! Form::text('fechaUltimoExamen', $expediente->getExpedienteEspecialidad()->getFechaUltimoExamen(), ['class' => 'form-control fecha']) !!}
+					{!! Form::text('fechaUltimoExamen', $expediente->getExpedienteEspecialidad()->getFechaUltimoExamenBucal(), ['class' => 'form-control fecha']) !!}
 				@endif
 			</div>
 		</div>

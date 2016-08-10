@@ -23,6 +23,13 @@ interface ExpedientesRepositorio extends Repositorio
     public function obtenerPorPacienteMedico(Paciente $paciente, Usuario $medico);
 
     /**
+     * obtener parte de la construcción del objeto
+     * @param int $id
+     * @return Paciente
+     */
+    public function obtenerPacientePorId($id);
+
+    /**
      * persistir un nuevo expediente
      * @param Expediente $expediente
      * @return bool

@@ -13,7 +13,9 @@
 								<div class="row">
 									<div class="col-md-1">
 										@if(isset($expediente) && $expediente->tieneFoto())
-											<img src="{{ url($expediente->getFotografia()->getRuta()) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
+											<div class="innerAll">
+												<img src="{{ url($expediente->getFotografia()->getRuta()) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
+											</div>
 										@endif
 									</div>
 									<div class="col-md-6">

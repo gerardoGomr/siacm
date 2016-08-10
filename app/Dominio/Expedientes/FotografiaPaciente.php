@@ -108,6 +108,7 @@ class FotografiaPaciente extends Fotografia
 	    	$this->alto  = $nuevoAlto;
 
 	    	$this->obtenerPesoDeFoto();
+			$this->haSidoRecortada = true;
 
 	    	imagejpeg($this->imgDestino, $this->ruta, 100);
 

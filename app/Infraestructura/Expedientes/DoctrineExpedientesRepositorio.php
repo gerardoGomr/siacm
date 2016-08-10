@@ -81,7 +81,6 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	{
 		// TODO: Implement persistir() method.
 		try {
-			$this->entityManager->merge($expediente->getPaciente());
 
 			if (is_null($expediente->getId())) {
 				// insertar

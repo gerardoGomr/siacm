@@ -58,12 +58,8 @@ class ExpedienteController extends Controller
 	 * @param string $citaId
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
 	 */
-	public function registrar($pacienteId, $medicoId, $citaId)
+	public function registrar($pacienteId, $medicoId, $citaId = null)
 	{
-		if (request()->session()->has('expediente')) {
-			request()->session()->forget('expediente');
-		}
-
 		$pacienteId = (int)base64_decode($pacienteId);
 		$medicoId   = (int)base64_decode($medicoId);
 		$citaId     = (int)base64_decode($citaId);
@@ -73,7 +69,9 @@ class ExpedienteController extends Controller
 		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
 
 		// guardar la cita en sesión para su posterior procesamiento
-		request()->session()->put('citaId', $citaId);
+		if (!request()->session()->has('citaId')) {
+			request()->session()->put('citaId', $citaId);
+		}
 
 		return VistasExpedientesGenerarFactory::make($paciente, $medico, $expediente);
 	}
@@ -93,9 +91,6 @@ class ExpedienteController extends Controller
 			return response()->json($respuesta);
 		}
 
-		$pacienteId = (int)base64_decode($pacienteId);
-
-		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
 		$fotografia = new FotografiaPaciente($_FILES['webcam']['tmp_name']);
 		$nombreFoto = request()->session()->getId();
 
@@ -104,15 +99,7 @@ class ExpedienteController extends Controller
 			return response()->json($respuesta);
 		}
 
-		$expediente = request()->session()->has('expediente') ? request()->session()->get('expediente') : new Expediente($paciente);
-		$expediente->asignarFoto($fotografia);
-
-		request()->session()->put('expediente', $expediente);
-
-		/*$respuesta['estatus'] = 'OK';
-		$respuesta['html']    = view('expedientes.paciente_foto', compact('expediente'))->render();*/
-
-		return response(view('expedientes.paciente_foto', compact('expediente')));
+		return response(view('expedientes.paciente_foto_temporal', compact('fotografia')));
 	}
 
 	/**
@@ -129,8 +116,7 @@ class ExpedienteController extends Controller
 		$ancho      = $request->get('w');
 		$alto       = $request->get('h');
 		$url        = $request->get('urlFoto');
-		$pacienteId = (int)base64_decode($request->get('pacienteId'));
-		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
+
 		$respuesta  = [];
 
 		$fotografia = new FotografiaPaciente($url);
@@ -140,11 +126,8 @@ class ExpedienteController extends Controller
 			return response()->json($respuesta);
 		}
 
-		$expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente);
-		$expediente->asignarFoto($fotografia);
-
 		$respuesta['estatus'] = 'OK';
-		$respuesta['html']    = view('expedientes.paciente_foto', compact('expediente'))->render();
+		$respuesta['html']    = view('expedientes.paciente_foto_temporal', compact('fotografia'))->render();
 
 		return response()->json($respuesta);
 	}
@@ -166,8 +149,6 @@ class ExpedienteController extends Controller
 			return response()->json($respuesta);
 		}
 
-		$pacienteId = (int)base64_decode($request->get('pacienteId'));
-		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
 		$fotografia = new FotografiaPaciente($_FILES['fotoAdjuntada']['tmp_name']);
 
 		if(!$fotografia->moverATemporal($request->session()->getId())) {
@@ -175,13 +156,8 @@ class ExpedienteController extends Controller
 			return response()->json($respuesta);
 		}
 
-		$expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente);
-		$expediente->asignarFoto($fotografia);
-
-		$request->session()->put('expediente', $expediente);
-
 		$respuesta['estatus'] = 'OK';
-		$respuesta['html']    = view('expedientes.paciente_foto', compact('expediente'))->render();
+		$respuesta['html']    = view('expedientes.paciente_foto_temporal', compact('fotografia'))->render();
 
 		return response()->json($respuesta);
 	}
@@ -196,7 +172,7 @@ class ExpedienteController extends Controller
 		$respuesta = [];
 
 		$pacienteId = (int)base64_decode($request->get('pacienteId'));
-		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
+		$paciente   = $this->expedientesRepositorio->obtenerPacientePorId($pacienteId);
 
 		$medicoId = (int)base64_decode($request->get('medicoId'));
 		$medico   = $this->usuariosRepositorio->obtenerPorId($medicoId);
@@ -231,11 +207,6 @@ class ExpedienteController extends Controller
             // renombrar foto y adjuntar a la carpeta de fotos
             $fotografia->guardar($expediente->getId());
         }
-
-		// success
-		if ($request->session()->has('expediente')) {
-			$request->session()->forget('expediente');
-		}
 
 		$respuesta['estatus'] = 'OK';
 		return response()->json($respuesta);
