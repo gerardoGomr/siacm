@@ -1,18 +1,8 @@
-$(function() {
+$(document).ready(function() {
 	// variables
 	var $capturar = $('#capturar'),
 		$cancelar = $('#cancelar'),
 		$guardar  = $('#guardar');
-
-	//// inicializar la cámara
-	//Webcam.set({
-	//	image_format: 'jpeg',
-	//	jpeg_quality: 90,
-	//	fps: 45
-	//});
-    //
-	//// attach
-	//Webcam.attach('#camara');
 
 	// capturar foto
 	$capturar.on('click', function(event) {

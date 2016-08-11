@@ -58,7 +58,7 @@
                             <button type="button" class="btn btn-primary" id="capturar"><i class="fa fa-camera"></i> Capturar</button>
                             <button type="button" class="btn btn-default" id="cancelar" style="display: none;"><i class="fa fa-times"></i> Capturar otra</button>
                             <button type="button" class="btn btn-success" id="guardar" style="display: none;"><i class="fa fa-save"></i> Guardar captura</button>
-                            <input type="hidden" id="urlCaptura" value="{{ url('expedientes/foto/guardar/'.base64_encode($paciente->getId())) }}">
+                            <input type="hidden" id="urlCaptura" value="{{ url('expedientes/foto/guardar') }}">
                             <input type="hidden" id="_token" value="{{ csrf_token() }}">
                         </div>
                     </div>

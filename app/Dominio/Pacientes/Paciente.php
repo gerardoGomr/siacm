@@ -114,8 +114,12 @@ class Paciente extends Persona
      */
     public function edadCompleta()
     {
+        if (is_null($this->fechaNacimiento)) {
+            return '-';
+        }
+
         $this->calcularEdad();
-        return (string)$this->edadAnios . ' años, ' . (string)$this->edadMeses;
+        return $this->edadAnios > 1 ? (string)$this->edadAnios . ' años, ' . (string)$this->edadMeses. ' meses' : (string)$this->edadAnios . ' año, ' . (string)$this->edadMeses. ' meses';
     }
 
     /**

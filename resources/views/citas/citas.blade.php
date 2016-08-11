@@ -16,7 +16,7 @@
 											<a href="javascript:;" class="btn btn-success" id="generarLista" target="_blank" disabled="disabled"><i class="fa fa-print"></i> Generar lista</a>
 											<div class="separator bottom"></div>
 											<div id="calendario"></div>
-											<input type="hidden" id="medico" value="{{ $medico->getId() }}" />
+											<input type="hidden" id="medicoId" value="{{ base64_encode($medico->getId()) }}" />
 											<input type="hidden" id="rutaCitas" value="{!! url('citas/') !!}" />
 											<input type="hidden" id="rutaPdf" value="{{ url('citas/lista/pdf') }}" />
 											<input type="hidden" id="reprogramar" value="0" />

@@ -103,11 +103,12 @@ $(document).ready(function($) {
 					$('#buscadorPacientes').addClass('hide');
 					$('#datos').removeClass('hide');
 					$('#nombre').focus();
+					$('#dvResultados').addClass('hide');
 				});
 			}
 
 			if (resultado.estatus === 'OK') {
-				$('#dvResultados').html(resultado.html);
+				$('#dvResultados').html(resultado.html).removeClass('hide');
 			}
 
 		}) .fail(function(XMLHttpRequest, textStatus, errorThrown) {
@@ -142,6 +143,7 @@ $(document).ready(function($) {
 			if (resultado.estatus === 'OK') {
 				bootbox.alert('Cita agendada con éxito', function() {
 					reiniciarForm();
+					recargarCitas();
 					$('#modalAgendarCita').modal('hide');
 				});
 			}
@@ -158,13 +160,30 @@ $(document).ready(function($) {
 	 * y layers
 	 */
 	function reiniciarForm() {
-		$('#formNuevacita').each('input', function() {
-			$(this).val('');
-		});
+		document.getElementById('formNuevaCita').reset();
 
 		$('#buscadorPacientes').removeClass('hide');
 		$('#datos').addClass('hide');
 		$('#nombreBusqueda').focus();
 		$('#seguirCapturando').addClass('hide');
+	}
+
+	// recargar eventos del calendario
+	function recargarCitas() {
+		$('#calendario').fullCalendar('refetchEvents');
+		setTimeout(activarDesactivarLinkALista, 500);
+	}
+
+	/**
+	 * verificar cuantos eventos existen y activar|desactivar link
+	 */
+	function activarDesactivarLinkALista() {
+		var eventos = $('#calendario').fullCalendar('clientEvents');
+
+		if (eventos.length > 0) {
+			$('#generarLista').attr('disabled', false);
+		} else {
+			$('#generarLista').attr('disabled', true);
+		}
 	}
 });

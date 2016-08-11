@@ -4,14 +4,14 @@ $(document).ready(function($) {
         d           = date.getDate(),
         m           = date.getMonth() + 1,
         y           = date.getFullYear(),
-        medicoId    = $('#medico').val(),
+        medicoId    = $('#medicoId').val(),
         fecha       = y + '-' + m + '-' + d,
-        rutaCitas   = $('#rutaCitas').val() + '/ver/' + btoa(medicoId) + '/' + btoa(fecha);
+        rutaCitas   = $('#rutaCitas').val() + '/ver/' + medicoId + '/' + btoa(fecha);
 
     // configuración del calendario
 	$calendario.fullCalendar({
 		header: {
-			left: 'prev,next today',
+			left: 'prev,next, today',
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
@@ -143,54 +143,81 @@ $(document).ready(function($) {
 				$('#modalLoading').modal('hide');
 				bootbox.alert('Error al visualizar la cita. Intente de nuevo');
 			});
-        	//window.open($('#rutaCitas').val() + '/detalle/' + btoa(calEvent.id) + '/' + btoa(med), '_blank', 'scrollbars=yes, width=700, height=500');
         }
 	});
 
-	$calendario.find('span.fc-button-prev').click(function(){
-		verificarFechas();
-		$calendario.fullCalendar('removeEventSource', rutaCitas);
-		fecha = $.fullCalendar.formatDate($('#calendario').fullCalendar('getDate'), 'yyyy-MM-dd');		
-		rutaCitas = $('#rutaCitas').val() + '/ver/' + btoa(medicoId) + '/' + btoa(fecha);
-		$calendario.fullCalendar('addEventSource', rutaCitas);
-
-		setTimeout(verificarEventos, 500);
+	/**
+	 * recargar citas cuando se pulsen los botones de anterior y siguiente así como cuando se presionen
+	 * los botones de las visas
+	 */
+	$calendario.find('span.fc-button-prev, span.fc-button-next, span.fc-button-month, span.fc-button-agendaWeek').on('click', function(event) {
+		recargarCitasPorDia();
 	});
 
-	$calendario.find('span.fc-button-next').click(function(){
-		verificarFechas();
-		$calendario.fullCalendar('removeEventSource', rutaCitas);
-		fecha = $.fullCalendar.formatDate($('#calendario').fullCalendar('getDate'), 'yyyy-MM-dd');
-		rutaCitas = $('#rutaCitas').val() + '/ver/' + btoa(medicoId) + '/' + btoa(fecha);
-		$calendario.fullCalendar('addEventSource', rutaCitas);
-		setTimeout(verificarEventos, 500);
-	});
+	generarLinkALista();
 
-	verificarFechas();
+	/**
+	 * responde al evento click de dia anterior o siguiente
+	 */
+	function recargarCitasPorDia() {
+
+		$('#modalLoading').modal('show');
+
+		var view = $calendario.fullCalendar('getView');
+
+		if (view.name === 'agendaDay') {
+			generarLinkALista();
+			$calendario.fullCalendar('removeEventSource', rutaCitas);
+			//$calendario.fullCalendar('refetchEvents');
+
+			fecha     = $.fullCalendar.formatDate($calendario.fullCalendar('getDate'), 'yyyy-MM-dd');
+			rutaCitas = $('#rutaCitas').val() + '/ver/' + medicoId + '/' + btoa(fecha);
+
+			$calendario.fullCalendar('addEventSource', rutaCitas);
+			$calendario.fullCalendar('refetchEvents');
+
+			setTimeout(activarDesactivarLinkALista, 500);
+
+		} else {
+			$calendario.fullCalendar('removeEventSource', rutaCitas);
+			//$calendario.fullCalendar('refetchEvents');
+
+			rutaCitas = $('#rutaCitas').val() + '/ver/' + medicoId;
+
+			$calendario.fullCalendar('addEventSource', rutaCitas);
+			$calendario.fullCalendar('refetchEvents');
+			$('#generarLista').attr('disabled', true);
+		}
+
+		$('#modalLoading').modal('hide');
+	}
+
+	/**
+	 * verificar cuantos eventos existen y activar|desactivar link
+	 */
+	function activarDesactivarLinkALista() {
+		var eventos = $calendario.fullCalendar('clientEvents');
+
+		if (eventos.length > 0) {
+			$('#generarLista').attr('disabled', false);
+		} else {
+			$('#generarLista').attr('disabled', true);
+		}
+	}
+
+	/**
+	 * construir el link para la lista de citas PDF
+	 */
+	function generarLinkALista() {
+		var fecha = $.fullCalendar.formatDate($calendario.fullCalendar('getDate'), 'yyyy-MM-dd');
+
+		// por default no se puede
+		$('#generarLista').attr('href', $('#rutaPdf').val() + '/' + $('#medicoId').val() + '/' + btoa(fecha));
+	}
 });
 
 // recargar eventos del calendario
 function recargarCitas() {
-    $('#calendario').fullCalendar('refetchEvents');
-    verificarEventos();
-}
-
-function verificarEventos() {
-	var eventos = $('#calendario').fullCalendar('clientEvents');
-
-    if (eventos.length > 0) {
-    	$('#generarLista').attr('disabled', false);
-    } else {
-    	$('#generarLista').attr('disabled', true);
-    }
-}
-
-/**
- * verificar si se puede o no generar el reporte
- */
-function verificarFechas() {
-	var fecha = $.fullCalendar.formatDate($('#calendario').fullCalendar('getDate'), 'yyyy-MM-dd');
-
-	// por default no se puede
-	$('#generarLista').attr('href', $('#rutaPdf').val() + '/' + btoa($('#medico').val()) + '/' + btoa(fecha));
+	$('#calendario').fullCalendar('refetchEvents');
+	activarDesactivarLinkALista();
 }

@@ -2,6 +2,7 @@
 namespace Siacme\Http\Controllers\Citas;
 
 use Illuminate\Http\Request;
+use Siacme\Aplicacion\Reportes\Citas\ListaCitas;
 use Siacme\Dominio\Citas\CitaEstatus;
 use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
@@ -26,23 +27,29 @@ class CitasController extends Controller
     protected $citasRepositorio;
 
     /**
+     * @var UsuariosRepositorio
+     */
+    protected $usuariosRepositorio;
+
+    /**
      * constructor
      * @param CitasRepositorio $citasRepositorio
+     * @param UsuariosRepositorio $usuariosRepositorio
      */
-    public function __construct(CitasRepositorio $citasRepositorio)
+    public function __construct(CitasRepositorio $citasRepositorio, UsuariosRepositorio $usuariosRepositorio)
     {
-        $this->citasRepositorio = $citasRepositorio;
+        $this->citasRepositorio    = $citasRepositorio;
+        $this->usuariosRepositorio = $usuariosRepositorio;
     }
 
     /**
      * @param string $medicoId
-     * @param UsuariosRepositorio $usuariosRepositorio
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($medicoId, UsuariosRepositorio $usuariosRepositorio)
+    public function index($medicoId)
     {
         $medicoId = (int)$medicoId;
-        if(is_null($medico = $usuariosRepositorio->obtenerPorId($medicoId))) {
+        if(is_null($medico = $this->usuariosRepositorio->obtenerPorId($medicoId))) {
             return view('error');
         }
 
@@ -83,12 +90,10 @@ class CitasController extends Controller
     /**
      * agendar una nueva cita en una fecha, hora y para un paciente
      * @param Request $request
-     * @param UsuariosRepositorio $medicosRepositorio
      * @param PacientesRepositorio $pacientesRepositorio
      * @return \Illuminate\Http\JsonResponse
-     * @internal param CitasRepositorio $citasRepositorio
      */
-    public function agendar(Request $request, UsuariosRepositorio $medicosRepositorio, PacientesRepositorio $pacientesRepositorio)
+    public function agendar(Request $request,PacientesRepositorio $pacientesRepositorio)
     {
         // post variables
         $nombre     = $request->get('nombre');
@@ -112,7 +117,7 @@ class CitasController extends Controller
             $paciente = new Paciente($nombre, $paterno, $materno, $telefono, $celular, $email);
         }
 
-        $medico = $medicosRepositorio->obtenerPorId($medicoId);
+        $medico = $this->usuariosRepositorio->obtenerPorId($medicoId);
 
         $cita = new Cita();
         $cita->agendar($fecha, $hora, $paciente, $medico);
@@ -128,18 +133,17 @@ class CitasController extends Controller
 
     /**
      * obtener una lista de citas
-     * @param $medicoId
-     * @param $fecha
-     * @param UsuariosRepositorio $medicosRepositorio
+     * @param string $medicoId
+     * @param string $fecha
      * @return \Illuminate\Http\JsonResponse
      */
-    public function verCitas($medicoId, $fecha, UsuariosRepositorio $medicosRepositorio)
+    public function verCitas($medicoId, $fecha = null)
     {
         $medicoId       = (int)base64_decode($medicoId);
         $fecha          = !is_null($fecha) ? base64_decode($fecha) : null;
         $listaCitas     = null;
         $listaCitasJson = null;
-        $medico         = $medicosRepositorio->obtenerPorId($medicoId);
+        $medico         = $this->usuariosRepositorio->obtenerPorId($medicoId);
 
         $listaCitas = $this->citasRepositorio->obtenerPorMedico($medico, $fecha);
 
@@ -279,22 +283,24 @@ class CitasController extends Controller
 
         return response()->json($respuesta);
     }
-//
-//    /**
-//     * generar lista citas PDF
-//     * @param $medico
-//     * @param $fecha
-//     */
-//    public function pdf($medico, $fecha)
-//    {
-//        $medico = base64_decode($medico);
-//        $fecha  = base64_decode($fecha);
-//
-//        $listaCitas = $this->citasRepositorio->obtenerCitasPorMedico($medico, $fecha);
-//        $reporte = new ListaCitasPdf($listaCitas, $fecha);
-//        $reporte->SetHeaderMargin(10);
-//        $reporte->SetAutoPageBreak(true);
-//        $reporte->SetMargins(15, 25);
-//        $reporte->generar();
-//    }
+
+    /**
+     * generar lista citas PDF
+     * @param string $medicoId
+     * @param string $fecha
+     */
+    public function generarLista($medicoId, $fecha)
+    {
+        $medicoId = (int)base64_decode($medicoId);
+        $fecha    = base64_decode($fecha);
+
+        $medico = $this->usuariosRepositorio->obtenerPorId($medicoId);
+
+        $citas = $this->citasRepositorio->obtenerPorMedico($medico, $fecha);
+        $reporte = new ListaCitas($citas, $fecha);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true);
+        $reporte->SetMargins(15, 25);
+        $reporte->generar();
+    }
 }

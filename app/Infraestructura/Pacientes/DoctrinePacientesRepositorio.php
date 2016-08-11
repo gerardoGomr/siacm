@@ -55,7 +55,7 @@ class DoctrinePacientesRepositorio implements PacientesRepositorio
 
 	/**
 	 * @param int $id
-	 * @return mixed
+	 * @return Paciente
 	 */
 	public function obtenerPorId($id)
 	{

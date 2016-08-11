@@ -3,6 +3,7 @@ namespace Siacme\Infraestructura\Usuarios;
 
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Doctrine\ORM\EntityManager;
+use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Exceptions\PDO\PDOLogger;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -31,7 +32,7 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 	/**
 	 * obtener un usuario por su username
 	 * @param $username
-	 * @return \Siacme\Dominio\Usuarios\Usuario
+	 * @return Usuario
 	 */
 	public function obtenerPorUsername($username)
 	{
@@ -57,7 +58,7 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 
 	/**
 	 * @param int $id
-	 * @return mixed
+	 * @return Usuario
 	 */
 	public function obtenerPorId($id)
 	{

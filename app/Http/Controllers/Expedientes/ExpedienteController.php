@@ -78,10 +78,9 @@ class ExpedienteController extends Controller
 
 	/**
 	 * guardar la fotografía tomada, guardarla en un directorio temporal y asignarla al paciente actual
-	 * @param string $pacienteId
 	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\Response
 	 */
-	public function capturarFoto($pacienteId)
+	public function capturarFoto()
 	{
 		$respuesta = [];
 

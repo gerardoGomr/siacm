@@ -42,7 +42,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// acción de reprogramar
 	Route::post('citas/reprogramar/confirmar', 'Citas\CitasController@reprogramar');
 	// generar el reporte de las citas del dia
-	Route::get('citas/lista/pdf/{medico}/{fecha}', 'Citas\CitasController@pdf');
+	Route::get('citas/lista/pdf/{medicoId}/{fecha}', 'Citas\CitasController@generarLista');
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/////////////////////////////////////////// EXPEDIENTES //////////////////////////////////////////////
@@ -59,7 +59,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	//recortar foto
 	Route::post('expedientes/foto/recortar', 'Expedientes\ExpedienteController@recortarFoto');
 	// guardar foto capturada por camara
-	Route::post('expedientes/foto/guardar/{pacienteId}', 'Expedientes\ExpedienteController@capturarFoto');
+	Route::post('expedientes/foto/guardar', 'Expedientes\ExpedienteController@capturarFoto');
 
 	/////////////////////////////////////////// CONSULTAS //////////////////////////////////////////////
 	// principal consultas
