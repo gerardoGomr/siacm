@@ -153,9 +153,10 @@ class Cita
 	 */
 	public function atendida()
 	{
-		if ($this->estatus->getId() === 4) {
+		if ($this->estatus === CitaEstatus::ATENDIDA) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -233,5 +234,34 @@ class Cita
 	{
 		$this->fecha = $fecha;
 		$this->hora  = $hora;
+	}
+
+	public function getColor()
+	{
+		$color = '';
+
+		switch ($this->estatus) {
+			case CitaEstatus::AGENDADA:
+				$color = '#34B9F7';
+				break;
+
+			case CitaEstatus::CONFIRMADA:
+				$color = '#CAC008';
+				break;
+
+			case CitaEstatus::CANCELADA:
+				$color = '#B0263B';
+				break;
+
+			case CitaEstatus::EN_ESPERA_CONSULTA:
+				$color = '#47BA3A';
+				break;
+
+			case CitaEstatus::ATENDIDA:
+				$color = '#9008CA';
+				break;
+		}
+
+		return $color;
 	}
 }

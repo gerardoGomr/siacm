@@ -1,13 +1,14 @@
 <?php
-namespace Siacme\Servicios\Pacientes;
+namespace Siacme\Aplicacion\Servicios\Expedientes;
 
-use Siacme\Dominio\Pacientes\Odontograma;
-use Siacme\Servicios\DibujadorInterface;
+use Siacme\Aplicacion\Servicios\DibujadorInterface;
+use Siacme\Dominio\Expedientes\Odontograma;
 
 /**
  * Class DibujadorOdontogramas
- * @package Siacme\Servicios\Pacientes
+ * @package Siacme\Aplicacion\Servicios\Expedientes
  * @author  Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class DibujadorOdontogramas implements DibujadorInterface
 {
@@ -122,10 +123,15 @@ class DibujadorOdontogramas implements DibujadorInterface
 		if($inicio > $fin) {
 			for ($i = $inicio; $i >= $fin; $i--) {
 
-				if($this->odontograma->diente($i)) {
+				if(!is_null($this->odontograma->diente($i))) {
 					$strImagen = '';
-					foreach ($this->odontograma->diente($i)->getListaPadecimientos() as $dientePadecimiento) {
-						$strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
+
+					if (!is_null($this->odontograma->diente($i)->getPadecimientos()) && $this->odontograma->diente($i)->getPadecimientos()->count() > 0) {
+						foreach ($this->odontograma->diente($i)->getPadecimientos()->getValues() as $dientePadecimiento) {
+							$strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
+						}
+					} else {
+						$strImagen .= '<img src="' . asset('public/img/dientes/x.png') . '" />';
 					}
 
 					$html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->diente($i)->getNumero() . '" /></a></td>';
@@ -136,14 +142,18 @@ class DibujadorOdontogramas implements DibujadorInterface
 
 			for ($i = $inicio; $i <= $fin; $i++) {
 
-				if($this->odontograma->diente($i)) {
+				if(!is_null($this->odontograma->diente($i))) {
 
 					$strImagen = '';
-					foreach ($this->odontograma->diente($i)->getListaPadecimientos() as $dientePadecimiento) {
-						$strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
+					if (!is_null($this->odontograma->diente($i)->getPadecimientos()) && $this->odontograma->diente($i)->getPadecimientos()->count() > 0) {
+						foreach ($this->odontograma->diente($i)->getPadecimientos()->getValues() as $dientePadecimiento) {
+							$strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
+						}
+					} else {
+						$strImagen .= '<img src="' . asset('public/img/dientes/x.png') . '" />';
 					}
 
-					$html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->diente($i)->getNumero() . '" /></a></td>';
+					$html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal" data-id="' . $this->odontograma->diente($i)->getNumero() . '">' . $strImagen . '</a></td>';
 				}
 			}
 		}
@@ -164,7 +174,7 @@ class DibujadorOdontogramas implements DibujadorInterface
 		if($inicio > $fin) {
 			for ($i = $inicio; $i >= $fin; $i--) {
 
-				if($this->odontograma->diente($i)) {
+				if(!is_null($this->odontograma->diente($i))) {
 
 					$html .= '<td>' . $this->odontograma->diente($i)->getNumero() . '</td>';
 				}
@@ -174,7 +184,7 @@ class DibujadorOdontogramas implements DibujadorInterface
 
 			for ($i = $inicio; $i <= $fin; $i++) {
 
-				if($this->odontograma->diente($i)) {
+				if(!is_null($this->odontograma->diente($i))) {
 
 					$html .= '<td>' . $this->odontograma->diente($i)->getNumero() . '</td>';
 				}

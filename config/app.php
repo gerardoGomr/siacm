@@ -162,6 +162,7 @@ return [
         Siacme\Providers\PacientesRepositorioServiceProvider::class,
         Siacme\Providers\CitasRepositorioServiceProvider::class,
         Siacme\Providers\ExpedientesRepositorioServiceProvider::class,
+        Siacme\Providers\DientePadecimientosRepositorioServiceProvider::class,
     ],
 
     /*

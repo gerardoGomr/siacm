@@ -56,35 +56,47 @@ $(function() {
 			_token:        $formConsulta.find('input[name="_token"]').val(),
 			diente:        $('#diente').val(),
 			padecimientos: padecimientos
-		};
+		},
+			url = $btnGuardarPadecimientoDental.data('url');
 
-		var respuesta = ajax($(this).attr('href'), 'post', 'html', datos, 'guardar');
-		respuesta.done(function(resultado) {
+		$.ajax({
+			url:      url,
+			type:     'post',
+			dataType: 'json',
+			data:     datos,
+			beforeSend: function() {
+				$('#modalLoading').modal('show');
+			}
+		})
+		.done(function(resultado) {
+			$('#modalLoading').modal('hide');
 			console.log(resultado);
 
-			if(resultado === '0') {
+			if(resultado === 'fail') {
 				bootbox.alert('Ocurrió un error al guardar los padecimientos del diente seleccionado.');
-				return false;
 			}
 
-			bootbox.alert('Padecimientos asignados al diente seleccionado', function() {
-				$('#dvOdontograma').html(resultado);
+			if (resultado === 'OK') {
+				bootbox.alert('Padecimientos asignados al diente seleccionado', function() {
+					$('#dvOdontograma').html(resultado.html);
 
-				$('#dvPadecimientosDentales').find('input.padecimiento').each(function() {
-					// reiniciar modal
-					$(this).attr('checked', false);
+					$('#dvPadecimientosDentales').find('input.padecimiento').each(function() {
+						// reiniciar modal
+						$(this).attr('checked', false);
+					});
+
+					// cerrar modal
+					$('#dvPadecimientosDentales').modal('hide');
+
+					// activar boton de plan
+					$btnGenerarPlan.attr('disabled', false);
 				});
-
-				// cerrar modal
-				$('#dvPadecimientosDentales').modal('hide');
-
-				// activar boton de plan
-				$btnGenerarPlan.attr('disabled', false);
-			});
+			}
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log(textStatus + ': ' + errorThrown);
-			bootbox.alert('Imposible realizar la operación solicitada');
+			$('#modalLoading').modal('hide');
+			bootbox.alert('Ocurrió un error al guardar los padecimientos del diente seleccionado.');
 		});
 	});
 

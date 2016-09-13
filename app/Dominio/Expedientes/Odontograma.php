@@ -1,11 +1,14 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
-use Illuminate\Support\Collection;
+namespace Siacme\Dominio\Expedientes;
+
+use Siacme\Dominio\Listas\IColeccion;
+use Siacme\Exceptions\MasDeDosPadecimientosPorDienteException;
 
 /**
  * Class Odontograma
- * @package Siacme\Dominio\Pacientes
+ * @package Siacme\Dominio\Expedientes
  * @author  Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class Odontograma
 {
@@ -16,9 +19,9 @@ class Odontograma
 
 	/**
 	 * lista de dientes
-	 * @var Collection
+	 * @var IColeccion
 	 */
-	protected $listaDientes;
+	protected $dientes;
 
 	/**
 	 * @var boolean
@@ -29,27 +32,13 @@ class Odontograma
 	 * construir el odontograma con una lista de dientes
 	 * si la lista no se proporciona, se asignan todos los diente
 	 * caso contrario, se asigna el que se pasa como parámetro
-	 * @param Collection $listaDientes
+	 * @param IColeccion $dientes
 	 * @param bool  $revisado
 	 */
-	public function __construct(Collection $listaDientes = null, $revisado = false)
+	public function __construct(IColeccion $dientes, $revisado = false)
 	{
 		$this->revisado = $revisado;
-		if(!is_null($listaDientes)) {
-			$this->listaDientes = $listaDientes;
-
-		} else {
-			$this->listaDientes = new Collection();
-			$this->agregarDientes(11, 18);
-			$this->agregarDientes(21, 28);
-			$this->agregarDientes(31, 38);
-			$this->agregarDientes(41, 48);
-			$this->agregarDientes(51, 55);
-			$this->agregarDientes(61, 65);
-			$this->agregarDientes(71, 75);
-			$this->agregarDientes(81, 85);
-
-		}
+		$this->dientes = $dientes;
 	}
 
 	/**
@@ -61,34 +50,37 @@ class Odontograma
 	}
 
 	/**
-	 * @param int $id
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	/**
 	 * agregar nuevo diente
 	 * @param  Diente $diente
-	 * @return void
 	 */
 	public function agregarDiente(Diente $diente)
 	{
-		$this->listaDientes->push($diente);
+		$this->dientes->add($diente);
 	}
 
 	/**
-	 * agregar dientes dependiendo el rango
-	 * @param  int $inicio
-	 * @param  int $fin
-	 * @return void
+	 * remover los padecimientos al diente
+	 * @param int $numeroDiente
 	 */
-	public function agregarDientes($inicio, $fin)
+	public function removerPadecimientosADiente($numeroDiente)
 	{
-		for ($i = $inicio; $i <= $fin; $i++) {
-			// se agrega un nuevo diente con sus características por default
-			$this->agregarDiente(new Diente($i, new DientePadecimiento(1)));
+		$this->diente($numeroDiente)->removerPadecimientos();
+	}
+
+	/**
+	 * agregar un padecimiento al diente
+	 * @param int $numeroDiente
+	 * @param DientePadecimiento $dientePadecimiento
+	 * @throws MasDeDosPadecimientosPorDienteException
+	 */
+	public function agregarPadecimientoADiente($numeroDiente, DientePadecimiento $dientePadecimiento)
+	{
+		try {
+			$this->diente($numeroDiente)->agregarPadecimiento($dientePadecimiento);
+
+		} catch(MasDeDosPadecimientosPorDienteException $e) {
+			// log the error onto file
+			return false;
 		}
 	}
 
@@ -99,7 +91,7 @@ class Odontograma
 	 */
 	public function diente($numero)
 	{
-		foreach ($this->listaDientes as $diente) {
+		foreach ($this->dientes->getValues() as $diente) {
 
 			if($diente->getNumero() === $numero) {
 				return $diente;
@@ -118,32 +110,16 @@ class Odontograma
 	}
 
 	/**
-	 * @param boolean $revisado
+	 * @return IColeccion
 	 */
-	public function setRevisado($revisado)
+	public function getDientes()
 	{
-		$this->revisado = $revisado;
-	}
-
-	/**
-	 * @return Collection
-	 */
-	public function getListaDientes()
-	{
-		return $this->listaDientes;
-	}
-
-	/**
-	 * @param Collection $listaDientes
-	 */
-	public function setListaDientes(Collection $listaDientes)
-	{
-		$this->listaDientes = $listaDientes;
+		return $this->dientes;
 	}
 
 	public function borrarDientesTratamientos()
 	{
-		foreach ($this->listaDientes as $diente) {
+		foreach ($this->dientes as $diente) {
 			$diente->removerTratamientos();
 		}
 	}

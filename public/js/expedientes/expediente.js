@@ -12,11 +12,9 @@ $(document).ready(function() {
 
 	// inicializar la cámara
 	Webcam.set({
-		image_format: 'jpeg',
-		jpeg_quality: 90,
-		fps: 45,
-		width: 200,
-		height: 300
+		fps:         45,
+		crop_width:  200,
+		crop_height: 200
 	});
 
 	// abrir modal para fotos
@@ -77,7 +75,7 @@ $(document).ready(function() {
 
 			$('#modalLoading').modal('show');
 		},
-		success: function(respuesta, statusText, xhr, $form){
+		success: function(respuesta){
 			$('#modalLoading').modal('hide');
 
 			if (respuesta.estatus === 'fail') {
@@ -116,21 +114,27 @@ $(document).ready(function() {
 	$formSubirImagen.ajaxForm(opciones);
 
 	// botón subida de archivos
-	$('#subirFoto').on('click', function(event) {
-		$adjuntarFoto.click();
+	$('#subirFoto').on('click', function() {
+		$formSubirImagen.find('input.imagenJpg').click();
 	});
 
 	//adjuntar imagen
-	$adjuntarFoto.on('change', function(event) {
+	$formSubirImagen.on('change', 'input.imagenJpg', function() {
 		//subir el archivo via ajax
+		if (!$formSubirImagen.valid()) {
+			bootbox.alert('Ingrese una imagen con extensión .jpg');
+			return false;
+
+		}
 		$formSubirImagen.submit();
-		$adjuntarFoto.replaceWith($adjuntarFoto.val('').clone(true));
+		var inputImagen = $formSubirImagen.find('input.imagenJpg');
+		inputImagen.replaceWith(inputImagen.val('').clone(true));
 
 		agregaValidacionAElemento('adjuntarFoto', 'imagenJpg');
 	});
 
 	// botón recortar imagen
-	$fotografia.on('click', 'a.recortar', function(event) {
+	$fotografia.on('click', 'a.recortar', function() {
 		$(this).siblings('a.aceptarRecorte').show();
 		$(this).siblings('a.cancelarRecorte').show();
 		$(this).hide();

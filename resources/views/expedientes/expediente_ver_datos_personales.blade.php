@@ -141,7 +141,7 @@ use Siacme\Aplicacion\Fecha;
 				<div class="form-group">
 					{!! Form::label('quienRecomienda', '¿Quién lo recomienda?:', ['class' => 'control-label col-md-4']) !!}
 					<div class="col-md-7">
-						<p class="form-control-static">{{ $expediente->getNombreRecomienda() }}</p>
+						<p class="form-control-static">{{ $expediente->getNombreRecomienda() ?? '-' }}</p>
 					</div>
 				</div>
 				<div class="form-group">

@@ -1,21 +1,20 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
- * Class DienteEstatus
- * @package Siacme\Dominio\Pacientes
+ * Class DientePadecimiento
+ * @package Siacme\Dominio\Expedientes
  * @author  Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class DientePadecimiento
 {
 	/**
-	 * id de estatus
 	 * @var int
 	 */
 	private $id;
 
 	/**
-	 * nombre del estatus
 	 * @var string
 	 */
 	private $nombre;
@@ -26,16 +25,13 @@ class DientePadecimiento
 	 */
 	private $imagen;
 
-	public function __construct($id = 1, $nombre = 'Sin Estatus', $imagen = 'public/img/dientes/x.png')
+	public function __construct($nombre = 'Sin Estatus', $imagen = 'public/img/dientes/x.png')
 	{
-		$this->id     = $id;
 		$this->nombre = $nombre;
 		$this->imagen = $imagen;
 	}
 
     /**
-     * Gets the id de estatus.
-     *
      * @return int
      */
     public function getId()
@@ -44,18 +40,6 @@ class DientePadecimiento
     }
 
     /**
-     * Sets the id de estatus.
-     *
-     * @param int $id the id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * Gets the nombre del estatus.
-     *
      * @return string
      */
     public function getNombre()
@@ -64,32 +48,10 @@ class DientePadecimiento
     }
 
     /**
-     * Sets the nombre del estatus.
-     *
-     * @param string $nombre the nombre
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-    }
-
-    /**
-     * Gets the ruta de la imagen que representa el estatus.
-     *
      * @return string
      */
     public function getImagen()
     {
         return $this->imagen;
-    }
-
-    /**
-     * Sets the ruta de la imagen que representa el estatus.
-     *
-     * @param string $imagen the imagen
-     */
-    public function setImagen($imagen)
-    {
-        $this->imagen = $imagen;
     }
 }

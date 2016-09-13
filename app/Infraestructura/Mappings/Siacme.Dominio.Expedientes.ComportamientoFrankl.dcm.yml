@@ -1,0 +1,12 @@
+Siacme\Dominio\Expedientes\ComportamientoFrankl:
+  type: entity
+  table: comportamiento_frankl
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    comportamientoFrankl:
+      type: string
+      nullable: false
+      column: ComportamientoFrankl

@@ -51,13 +51,14 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <div id="camara" style="width:200px; height:300px;"></div>
+                            <div id="camara" style="width: 300px; height: 200px;"></div>
                         </div>
 
                         <div class="col-md-6">
                             <button type="button" class="btn btn-primary" id="capturar"><i class="fa fa-camera"></i> Capturar</button>
                             <button type="button" class="btn btn-default" id="cancelar" style="display: none;"><i class="fa fa-times"></i> Capturar otra</button>
                             <button type="button" class="btn btn-success" id="guardar" style="display: none;"><i class="fa fa-save"></i> Guardar captura</button>
+                            <button type="button" class="btn btn-warning" id="terminar"><i class="fa fa-arrow-left"></i> Cancelar captura</button>
                             <input type="hidden" id="urlCaptura" value="{{ url('expedientes/foto/guardar') }}">
                             <input type="hidden" id="_token" value="{{ csrf_token() }}">
                         </div>

@@ -12,12 +12,12 @@
 				</tr>
 				<tr>
 					<td><strong>Estatus:</strong></td>
-					<td>{{ $cita->getEstatus()->getEstatus() }}</td>
+					<td>{{ $cita->getEstatus() }}</td>
 				</tr>
 				<tr>
 					<td><strong>Paciente:</strong></td>
 					<td>
-						{{ $cita->getPaciente()->getNombreCompleto() }}<br>
+						{{ $cita->getPaciente()->nombreCompleto() }}<br>
 
 					</td>
 				</tr>
@@ -34,8 +34,8 @@
 
 		<div class="col-xs-4 col-md-3 col-lg-4">
 			<div class="box-generic">
-				@if (!$cita->estaAtendida())
-					<a href="{{ url('consultas/capturar/'.base64_encode($cita->getPaciente()->getId()).'/'.base64_encode($cita->getMedico()->getUsername()) . '/' . base64_encode($cita->getId())) }}" class="generarConsulta btn btn-primary btn-block"><i class="fa fa-plus"></i> Generar consulta</a>
+				@if (!$cita->atendida())
+					<a href="{{ url('consultas/capturar/'.base64_encode($cita->getPaciente()->getId()).'/'.base64_encode($cita->getMedico()->getId()) . '/' . base64_encode($cita->getId())) }}" class="generarConsulta btn btn-danger btn-block"><i class="fa fa-plus"></i> Generar consulta</a>
 				@endif
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 Siacme\Dominio\Expedientes\MorfologiaCraneofacial:
   type: entity
-  table: morfolofia_craneofacial
+  table: morfologia_craneofacial
   id:
     id:
       type: integer

@@ -1,7 +1,8 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
-use Illuminate\Support\Collection;
-use Siacme\Dominio\Consultas\DientePlan;
+namespace Siacme\Dominio\Expedientes;
+
+use Siacme\Dominio\Listas\IColeccion;
+use Siacme\Exceptions\MasDeDosPadecimientosPorDienteException;
 
 /**
  * Class Diente
@@ -17,10 +18,10 @@ class Diente
 	protected $numero;
 
 	/**
-	 * estatus del diente
-	 * @var array
+	 * padecimientos del diente
+	 * @var IColeccion
 	 */
-	protected $listaPadecimientos;
+	protected $padecimientos;
 
     /**
      * tratamientos del diente
@@ -35,17 +36,13 @@ class Diente
 
     /**
      * Diente constructor.
-     * @param $numero
-     * @param DientePadecimiento|null $padecimiento
+     * @param int $numero
      * @param bool|true $existe
      */
-	public function __construct($numero, DientePadecimiento $padecimiento = null, $existe = true)
+	public function __construct($numero, IColeccion $padecimientos = null)
 	{
-        $this->numero               = $numero;
-        if(!is_null($padecimiento)) {
-            $this->listaPadecimientos[] = $padecimiento;
-        }
-        $this->existe               = $existe;
+        $this->numero        = $numero;
+        $this->padecimientos = $padecimientos;
 	}
 
     /**
@@ -57,168 +54,165 @@ class Diente
     }
 
     /**
-     * @param int $numero the numero
+     * @return IColeccion
      */
-    public function setNumero($numero)
+    public function getPadecimientos()
     {
-        $this->numero = $numero;
+        return $this->padecimientos;
     }
+//
+//    /**
+//     * agregar nuevo padecimiento al diente
+//     * @param DientePadecimiento $padecimiento
+//     * @throws \Exception
+//     */
+//    public function agregarPadecimiento(DientePadecimiento $padecimiento)
+//    {
+//        if (count($this->padecimientos) > 2) {
+//            throw new \Exception('Solo se permiten hasta dos padecimientos');
+//        }
+//        $this->padecimientos[] = $padecimiento;
+//    }
+//
+   /**
+    * remover todos los padecimientos del diente
+    */
+   public function removerPadecimientos()
+   {
+       $this->padecimientos->clear();
+   }
 
-    /**
-     * @return string
-     */
-    public function getListaPadecimientos()
-    {
-        return $this->listaPadecimientos;
-    }
-
-    /**
-     * @param array $listaPadecimientos
-     */
-    public function setListaPadecimientos($listaPadecimientos)
-    {
-        $this->listaPadecimientos = $listaPadecimientos;
-    }
-
-    /**
-     * agregar nuevo padecimiento al diente
-     * @param DientePadecimiento $padecimiento
-     * @throws \Exception
-     */
-    public function agregarPadecimiento(DientePadecimiento $padecimiento)
-    {
-        if (count($this->listaPadecimientos) > 2) {
-            throw new \Exception('Solo se permiten hasta dos padecimientos');
-        }
-        $this->listaPadecimientos[] = $padecimiento;
-    }
-
-    /**
-     * remover todos los padecimientos del diente
-     */
-    public function removerPadecimientos()
-    {
-        $this->listaPadecimientos = null;
-    }
-
-    /**
-     * devolver un padecimiento en base a su id
-     * @param $id
-     * @return DientePadecimiento
-     */
-    public function padecimiento($id)
-    {
-        foreach ($this->listaPadecimientos as $padecimiento) {
-
-            if($padecimiento->getId() === $id) {
-                return $padecimiento;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * indica si el tipo de diente es de leche o permanente
-     * @return string
-     */
-    public function tipo()
-    {
-        if ($this->numero >= 51) {
-            return 'Leche';
-        }
-
-        return 'Permanente';
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getListaTratamientos()
-    {
-        return $this->listaTratamientos;
-    }
-
-    /**
-     * @param Collection $listaTratamientos
-     */
-    public function setListaTratamientos(Collection $listaTratamientos)
-    {
-        $this->listaTratamientos = $listaTratamientos;
-    }
-
-    /**
-     * agregar nuevo tratamiento al diente
-     * @param int $indice
-     * @param DientePlan $tratamiento
-     * @throws \Exception
-     */
-    public function agregarTratamiento($indice, DientePlan $tratamiento)
-    {
-        if(is_null($this->listaTratamientos)) {
-            $this->listaTratamientos = new Collection();
-        }
-
-        /*if (count($this->listaTratamientos) === 2) {
-            throw new \Exception('Solo se permiten hasta dos tratamientos por diente');
-        }*/
-
-        // si ya está ocupada la posición, la elimina para permitir agregar uno nuevo
-        if ($this->listaTratamientos->has($indice)) {
-            $this->listaTratamientos->forget($indice);
-        }
-
-        $this->listaTratamientos->put($indice, $tratamiento);
-    }
-
-    /**
-     * remover todos los tratamientos del diente
-     */
-    public function removerTratamientos()
-    {
-        $this->listaTratamientos = null;
-    }
-
-    /**
-     * devolver un padecimiento en base a su id
-     * @param $id
-     * @return DientePlan
-     */
-    public function tratamiento($id)
-    {
-        foreach ($this->listaTratamientos as $tratamiento) {
-
-            if($tratamiento->getId() === $id) {
-                return $tratamiento;
-            }
-        }
-
-        return null;
-    }
-
-    public function tieneTratamientos()
-    {
-        return count($this->listaTratamientos) > 0 ? true : false;
-    }
-
-    public function costoTratamientos()
-    {
-        $costo = null;
-        if ($this->tieneTratamientos()) {
-            foreach ($this->listaTratamientos as $dientePlan) {
-                $costo += $dientePlan->getDienteTratamiento()->getCosto();
-            }
-        }
-
-        return $costo;
-    }
-
-    public function atenderTratamientos()
-    {
-        if ($this->tieneTratamientos()) {
-            foreach ($this->listaTratamientos as $dientePlan) {
-                $dientePlan->atender();
-            }
-        }
-    }
+   /**
+    * agrega un nuevo padecimiento al diente
+    * @param DientePadecimiento $padecimiento
+    * @throws MasDeDosPadecimientosPorDienteException
+    */
+   public function agregarPadecimiento(DientePadecimiento $padecimiento)
+   {
+       if (count($this->padecimientos) > 2) {
+           throw new MasDeDosPadecimientosPorDienteException('Solo se permiten hasta dos padecimientos');
+       }
+       $this->padecimientos[] = $padecimiento;
+   }
+//
+//    /**
+//     * devolver un padecimiento en base a su id
+//     * @param $id
+//     * @return DientePadecimiento
+//     */
+//    public function padecimiento($id)
+//    {
+//        foreach ($this->padecimientos as $padecimiento) {
+//
+//            if($padecimiento->getId() === $id) {
+//                return $padecimiento;
+//            }
+//        }
+//
+//        return null;
+//    }
+//
+//    /**
+//     * indica si el tipo de diente es de leche o permanente
+//     * @return string
+//     */
+//    public function tipo()
+//    {
+//        if ($this->numero >= 51) {
+//            return 'Leche';
+//        }
+//
+//        return 'Permanente';
+//    }
+//
+//    /**
+//     * @return Collection
+//     */
+//    public function getListaTratamientos()
+//    {
+//        return $this->listaTratamientos;
+//    }
+//
+//    /**
+//     * @param Collection $listaTratamientos
+//     */
+//    public function setListaTratamientos(Collection $listaTratamientos)
+//    {
+//        $this->listaTratamientos = $listaTratamientos;
+//    }
+//
+//    /**
+//     * agregar nuevo tratamiento al diente
+//     * @param int $indice
+//     * @param DientePlan $tratamiento
+//     * @throws \Exception
+//     */
+//    public function agregarTratamiento($indice, DientePlan $tratamiento)
+//    {
+//        if(is_null($this->listaTratamientos)) {
+//            $this->listaTratamientos = new Collection();
+//        }
+//
+//        /*if (count($this->listaTratamientos) === 2) {
+//            throw new \Exception('Solo se permiten hasta dos tratamientos por diente');
+//        }*/
+//
+//        // si ya está ocupada la posición, la elimina para permitir agregar uno nuevo
+//        if ($this->listaTratamientos->has($indice)) {
+//            $this->listaTratamientos->forget($indice);
+//        }
+//
+//        $this->listaTratamientos->put($indice, $tratamiento);
+//    }
+//
+//    /**
+//     * remover todos los tratamientos del diente
+//     */
+//    public function removerTratamientos()
+//    {
+//        $this->listaTratamientos = null;
+//    }
+//
+//    /**
+//     * devolver un padecimiento en base a su id
+//     * @param $id
+//     * @return DientePlan
+//     */
+//    public function tratamiento($id)
+//    {
+//        foreach ($this->listaTratamientos as $tratamiento) {
+//
+//            if($tratamiento->getId() === $id) {
+//                return $tratamiento;
+//            }
+//        }
+//
+//        return null;
+//    }
+//
+//    public function tieneTratamientos()
+//    {
+//        return count($this->listaTratamientos) > 0 ? true : false;
+//    }
+//
+//    public function costoTratamientos()
+//    {
+//        $costo = null;
+//        if ($this->tieneTratamientos()) {
+//            foreach ($this->listaTratamientos as $dientePlan) {
+//                $costo += $dientePlan->getDienteTratamiento()->getCosto();
+//            }
+//        }
+//
+//        return $costo;
+//    }
+//
+//    public function atenderTratamientos()
+//    {
+//        if ($this->tieneTratamientos()) {
+//            foreach ($this->listaTratamientos as $dientePlan) {
+//                $dientePlan->atender();
+//            }
+//        }
+//    }
 }

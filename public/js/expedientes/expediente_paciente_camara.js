@@ -20,16 +20,29 @@ $(document).ready(function() {
 		$capturar.show();
 	});
 
+	// cancelar captura de foto
+	$('#terminar').on('click', function () {
+		$guardar.hide();
+		$capturar.show();
+		$cancelar.hide();
+		Webcam.reset();
+		$('#modalCapturarFoto').modal('hide');
+	});
+
 	// guardar
-	$guardar.on('click', function(event){
+	$guardar.on('click', function(){
 		Webcam.snap( function(data_uri) {
 			// snap complete, image data is in 'data_uri'
 			Webcam.upload( data_uri, $('#urlCaptura').val(), function(code, text) {
 				$('#fotografiaAgregada').html(text);
 				$('#capturada').val('1');
-				$('#foto').val($('#urlFoto').val())
+				$('#foto').val($('#urlFoto').val());
 				$('#modalCapturarFoto').modal('hide');
-				Webcam.unset();
+
+				$guardar.hide();
+				$capturar.show();
+				$cancelar.hide();
+				Webcam.reset();
 			});
 		});
 	});

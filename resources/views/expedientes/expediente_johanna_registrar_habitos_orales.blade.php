@@ -76,7 +76,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('otroHabito', null, null, []) !!} Otro hábito
+						{!! Form::checkbox('otroHabito', null, null, ['id' => 'otroHabito']) !!} Otro hábito
 					</label>
 				</div>
 			</div>
@@ -85,7 +85,7 @@
 			<div class="col-md-5 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::text('especifiqueHabito', '', ['class' => 'form-control', 'placeholder' => 'Especifique hábito', 'readonly']) !!}
+						{!! Form::text('especifiqueHabito', '', ['class' => 'form-control', 'placeholder' => 'Especifique hábito', 'readonly', 'id' => 'especifiqueHabito']) !!}
 					</label>
 				</div>
 			</div>

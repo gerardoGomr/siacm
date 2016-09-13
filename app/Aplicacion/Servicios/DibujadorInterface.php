@@ -1,10 +1,11 @@
 <?php
-namespace Siacme\Servicios;
+namespace Siacme\Aplicacion\Servicios;
 
 /**
  * Interface DibujadorInterface
- * @package Siacme\Servicios\Pacientes
+ * @package Siacme\Aplicacion\Servicios
  * @author  Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 interface DibujadorInterface
 {

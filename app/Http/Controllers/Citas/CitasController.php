@@ -1,6 +1,7 @@
 <?php
 namespace Siacme\Http\Controllers\Citas;
 
+use DateTime;
 use Illuminate\Http\Request;
 use Siacme\Aplicacion\Reportes\Citas\ListaCitas;
 use Siacme\Dominio\Citas\CitaEstatus;
@@ -48,12 +49,14 @@ class CitasController extends Controller
      */
     public function index($medicoId)
     {
-        $medicoId = (int)$medicoId;
+        $medicoId = (int)base64_decode($medicoId);
         if(is_null($medico = $this->usuariosRepositorio->obtenerPorId($medicoId))) {
             return view('error');
         }
 
-        return view('citas.citas', compact('medico'));
+        $citas = $this->citasRepositorio->obtenerPorMedico($medico, (new DateTime())->format('Y-m-d'));
+
+        return view('citas.citas', compact('medico', 'citas'));
     }
 
     /**
@@ -159,6 +162,7 @@ class CitasController extends Controller
                 $citaActual["title"]  = "Cita de ".$cita->getPaciente()->nombreCompleto();
                 $citaActual["start"]  = $cita->getFecha()." ".$cita->getHora();
                 $citaActual["end"]    = $cita->getFinCita();
+                $citaActual["color"]  = $cita->getColor();
                 $citaActual["allDay"] = false;
 
                 $listaCitasJson[] = $citaActual;

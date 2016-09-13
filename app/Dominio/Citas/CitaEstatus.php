@@ -12,5 +12,6 @@ abstract class CitaEstatus
 	const AGENDADA           = 1;
 	const CONFIRMADA         = 2;
 	const EN_ESPERA_CONSULTA = 3;
+	const ATENDIDA           = 4;
 	const CANCELADA          = 5;
 }

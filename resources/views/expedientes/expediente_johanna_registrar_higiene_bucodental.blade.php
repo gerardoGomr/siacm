@@ -104,14 +104,14 @@
 			<div class="col-md-4 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('otroAuxiliar', null, null, []) !!} Otro
+						{!! Form::checkbox('otroAuxiliar', null, null, ['id' => 'otroAuxiliar']) !!} Otro
 					</label>
 				</div>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-md-8 col-md-offset-3">
-				{!! Form::text('especifiqueAuxiliar', '', ['class' => 'form-control', 'placeholder' => 'Especifique', 'readonly']) !!}
+				{!! Form::text('especifiqueAuxiliar', '', ['class' => 'form-control', 'placeholder' => 'Especifique', 'readonly', 'id' => 'especifiqueAuxiliar']) !!}
 			</div>
 		</div>
 	</div>

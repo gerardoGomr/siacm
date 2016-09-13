@@ -1,0 +1,14 @@
+Siacme\Dominio\Expedientes\DientePadecimiento:
+  type: entity
+  table: diente_padecimiento
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    nombre:
+      type: string
+      column: nombre
+    imagen:
+      type: string
+      column: RutaImagen

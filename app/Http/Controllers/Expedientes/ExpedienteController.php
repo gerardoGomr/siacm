@@ -93,7 +93,7 @@ class ExpedienteController extends Controller
 		$fotografia = new FotografiaPaciente($_FILES['webcam']['tmp_name']);
 		$nombreFoto = request()->session()->getId();
 
-		if(!$fotografia->moverATemporal($nombreFoto, 200, 300)) {
+		if(!$fotografia->moverATemporal($nombreFoto, 200, 200)) {
 			$respuesta['estatus'] = 'fail';
 			return response()->json($respuesta);
 		}
@@ -110,11 +110,11 @@ class ExpedienteController extends Controller
 	 */
 	public function recortarFoto(Request $request)
 	{
-		$x          = $request->get('x');
-		$y          = $request->get('y');
-		$ancho      = $request->get('w');
-		$alto       = $request->get('h');
-		$url        = $request->get('urlFoto');
+		$x     = $request->get('x');
+		$y     = $request->get('y');
+		$ancho = $request->get('w');
+		$alto  = $request->get('h');
+		$url   = $request->get('urlFoto');
 
 		$respuesta  = [];
 
@@ -194,8 +194,6 @@ class ExpedienteController extends Controller
 			$respuesta['estatus'] = 'fail';
 			return response()->json($respuesta);
 		}
-
-		// $this->pacientesRepositorio->persistir($paciente);
 
 		// guardar foto de paciente
         if($request->get('capturada') === '1') {

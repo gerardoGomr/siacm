@@ -19,57 +19,75 @@ Route::get('logout', 'Usuarios\LoginController@logout');
 Route::group(['middleware' => 'checaLogin'], function() {
 	// pagina principal
 	Route::get('/', 'PrincipalController@index');
-
 	/////////////////////////////////////////// CITAS /////////////////////////////////////////////////////
 	// pagina principal
 	Route::get('citas/{medicoId}', 'Citas\CitasController@index');
+
 	// ver eventos
 	Route::get('citas/ver/{medicoId}/{fecha?}', 'Citas\CitasController@verCitas');
+
 	// guardar cita
 	Route::post('citas/agendar', 'Citas\CitasController@agendar');
+
 	// verificar que exista un expediente
 	Route::post('citas/pacientes/buscar', 'Citas\CitasController@buscarPacientes');
+
 	// ver detalles de una cita
 	Route::post('citas/detalle', 'Citas\CitasController@verDetalle');
+
 	// ver formulario de editar
 	Route::get('citas/editar/{id}', 'Citas\CitasController@editar');
+
 	// actualizar cita
 	Route::post('citas/actualizar', 'Citas\CitasController@actualizar');
+
 	// modificar estatus de cita
 	Route::post('citas/estatus', 'Citas\CitasController@cambiarEstatus');
+
 	// seleccion de reprogramar
 	Route::post('citas/reprogramar/asignar', 'Citas\CitasController@asignarReprogramacion');
+
 	// acción de reprogramar
 	Route::post('citas/reprogramar/confirmar', 'Citas\CitasController@reprogramar');
+
 	// generar el reporte de las citas del dia
 	Route::get('citas/lista/pdf/{medicoId}/{fecha}', 'Citas\CitasController@generarLista');
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	/////////////////////////////////////////// EXPEDIENTES //////////////////////////////////////////////
 	// abrir formulario de captura
 	Route::get('expedientes/registrar/{pacienteId}/{medicoId}/{citaId?}', 'Expedientes\ExpedienteController@registrar');
+
 	// abrir pantalla de vista previa
 	Route::get('expedientes/ver/{pacienteId}/{medicoId}', 'Expedientes\ExpedienteController@ver');
+
 	// guardar / editar expediente
 	Route::post('expedientes/registrar', 'Expedientes\ExpedienteController@registrarExpediente');
+
 	// firmar expediente
 	Route::post('expedientes/firmar', 'Expedientes\ExpedienteController@firmar');
+
 	// subir foto
 	Route::post('expedientes/foto/anexar', 'Expedientes\ExpedienteController@anexarFoto');
+
 	//recortar foto
 	Route::post('expedientes/foto/recortar', 'Expedientes\ExpedienteController@recortarFoto');
+
 	// guardar foto capturada por camara
 	Route::post('expedientes/foto/guardar', 'Expedientes\ExpedienteController@capturarFoto');
 
 	/////////////////////////////////////////// CONSULTAS //////////////////////////////////////////////
 	// principal consultas
-	Route::get('consultas/{medico}', 'Consultas\ConsultasController@index');
+	Route::get('consultas/{medicoId}', 'Consultas\ConsultasController@index');
+
 	// buscar citas por dia
 	Route::post('consultas/citas', 'Consultas\ConsultasController@verCitasDelDia');
+
 	// ver detalle de una cita
 	Route::post('consultas/cita/detalle', 'Consultas\ConsultasController@citaDetalle');
+
 	// abrir pantalla de captura de consulta
-	Route::get('consultas/capturar/{id}/{med}/{idCita}', 'Consultas\ConsultasController@capturar');
+	Route::get('consultas/capturar/{pacienteId}/{medicoId}/{citaId}', 'Consultas\ConsultasController@capturar');
+
 	// abrir pantalla de selección de estatus, pasando el número de diente
 	Route::get('consultas/odontograma/estatus/{id}', 'Consultas\ConsultasController@seleccionEstatus');
 	// guardar estatus para el odontograma
@@ -78,8 +96,13 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	Route::post('consultas/odontograma/dibujar', 'Consultas\ConsultasController@dibujar');
 	// ventana recetas
 	Route::get('consultas/receta/agregar', 'Consultas\ConsultasController@capturaReceta');
+	
 	// asignar padecimientos al diente
-	Route::post('consultas/capturar/diente/padecimiento', 'Consultas\ConsultasController@agregaDientePadecimiento');
+	Route::post('consultas/asignar/diente/padecimiento', [
+		'as'   => 'asignar-diente-padecimiento', 
+		'uses' => 'Consultas\ConsultasController@agregaDientePadecimiento'
+	]);
+
 	// abrir ventana para plan de tratamiento
 	Route::get('consultas/plan/agregar/{med}/{id}', 'Consultas\ConsultasController@verPlan');
 	// agregar un tratamiento a un diente
