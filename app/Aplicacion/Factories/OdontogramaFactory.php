@@ -43,7 +43,7 @@ class OdontogramaFactory
 	{
 		for ($numero = $inicio; $numero <= $fin; $numero++) {
 			// se agrega un nuevo diente con sus características por default
-			$odontograma->agregarDiente(new Diente($numero, new ColeccionArray()));
+			$odontograma->agregarDiente(new Diente($numero, new ColeccionArray(), new ColeccionArray()));
 		}
 	}
 }

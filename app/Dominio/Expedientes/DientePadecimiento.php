@@ -25,6 +25,11 @@ class DientePadecimiento
 	 */
 	private $imagen;
 
+    /**
+     * DientePadecimiento Constructor
+     * @param string $nombre
+     * @param string $imagen
+     */
 	public function __construct($nombre = 'Sin Estatus', $imagen = 'public/img/dientes/x.png')
 	{
 		$this->nombre = $nombre;

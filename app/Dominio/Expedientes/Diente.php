@@ -27,7 +27,7 @@ class Diente
      * tratamientos del diente
      * @var Collection
      */
-    protected $listaTratamientos;
+    protected $tratamientos;
 
     /**
      * @var bool
@@ -37,12 +37,14 @@ class Diente
     /**
      * Diente constructor.
      * @param int $numero
-     * @param bool|true $existe
+     * @param IColeccion|null $padecimientos
+     * @param IColeccion|null $tratamientos
      */
-	public function __construct($numero, IColeccion $padecimientos = null)
+	public function __construct($numero, IColeccion $padecimientos = null, IColeccion $tratamientos = null)
 	{
         $this->numero        = $numero;
         $this->padecimientos = $padecimientos;
+        $this->tratamientos  = $tratamientos;
 	}
 
     /**
@@ -125,20 +127,20 @@ class Diente
 //        return 'Permanente';
 //    }
 //
-//    /**
-//     * @return Collection
-//     */
-//    public function getListaTratamientos()
-//    {
-//        return $this->listaTratamientos;
-//    }
+    /**
+     * @return IColeccion
+     */
+    public function getTratamientos()
+    {
+        return $this->tratamientos;
+    }
 //
 //    /**
-//     * @param Collection $listaTratamientos
+//     * @param Collection $tratamientos
 //     */
-//    public function setListaTratamientos(Collection $listaTratamientos)
+//    public function setListaTratamientos(Collection $tratamientos)
 //    {
-//        $this->listaTratamientos = $listaTratamientos;
+//        $this->tratamientos = $tratamientos;
 //    }
 //
 //    /**
@@ -149,29 +151,31 @@ class Diente
 //     */
 //    public function agregarTratamiento($indice, DientePlan $tratamiento)
 //    {
-//        if(is_null($this->listaTratamientos)) {
-//            $this->listaTratamientos = new Collection();
+//        if(is_null($this->tratamientos)) {
+//            $this->tratamientos = new Collection();
 //        }
 //
-//        /*if (count($this->listaTratamientos) === 2) {
+//        /*if (count($this->tratamientos) === 2) {
 //            throw new \Exception('Solo se permiten hasta dos tratamientos por diente');
 //        }*/
 //
 //        // si ya está ocupada la posición, la elimina para permitir agregar uno nuevo
-//        if ($this->listaTratamientos->has($indice)) {
-//            $this->listaTratamientos->forget($indice);
+//        if ($this->tratamientos->has($indice)) {
+//            $this->tratamientos->forget($indice);
 //        }
 //
-//        $this->listaTratamientos->put($indice, $tratamiento);
+//        $this->tratamientos->put($indice, $tratamiento);
 //    }
 //
-//    /**
-//     * remover todos los tratamientos del diente
-//     */
-//    public function removerTratamientos()
-//    {
-//        $this->listaTratamientos = null;
-//    }
+    /**
+     * remover todos los tratamientos del diente
+     */
+    public function removerTratamientos()
+    {
+        if (!is_null($this->tratamientos)) {
+            $this->tratamientos->clear();
+        }
+    }
 //
 //    /**
 //     * devolver un padecimiento en base a su id
@@ -180,7 +184,7 @@ class Diente
 //     */
 //    public function tratamiento($id)
 //    {
-//        foreach ($this->listaTratamientos as $tratamiento) {
+//        foreach ($this->tratamientos as $tratamiento) {
 //
 //            if($tratamiento->getId() === $id) {
 //                return $tratamiento;
@@ -190,16 +194,19 @@ class Diente
 //        return null;
 //    }
 //
-//    public function tieneTratamientos()
-//    {
-//        return count($this->listaTratamientos) > 0 ? true : false;
-//    }
+    /**
+     * @return bool
+     */
+    public function tieneTratamientos()
+    {
+        return count($this->tratamientos) > 0 ? true : false;
+    }
 //
 //    public function costoTratamientos()
 //    {
 //        $costo = null;
 //        if ($this->tieneTratamientos()) {
-//            foreach ($this->listaTratamientos as $dientePlan) {
+//            foreach ($this->tratamientos as $dientePlan) {
 //                $costo += $dientePlan->getDienteTratamiento()->getCosto();
 //            }
 //        }
@@ -210,7 +217,7 @@ class Diente
 //    public function atenderTratamientos()
 //    {
 //        if ($this->tieneTratamientos()) {
-//            foreach ($this->listaTratamientos as $dientePlan) {
+//            foreach ($this->tratamientos as $dientePlan) {
 //                $dientePlan->atender();
 //            }
 //        }

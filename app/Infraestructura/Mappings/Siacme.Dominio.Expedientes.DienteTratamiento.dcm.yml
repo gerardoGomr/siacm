@@ -1,0 +1,14 @@
+Siacme\Dominio\Expedientes\DienteTratamiento:
+  type: entity
+  table: diente_tratamiento
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    tratamiento:
+      type: string
+      column: Tratamiento
+    costo:
+      type: float
+      column: Costo

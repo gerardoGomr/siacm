@@ -47,6 +47,8 @@ elixir(function(mix) {
 			'components/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js',
 			'components/modules/admin/calendar/assets/lib/js/fullcalendar.min.js',
 			'components/common/gallery/image-crop/assets/lib/js/jquery.Jcrop.js',
+			'components/common/tables/datatables/DataTables-1.10.12/media/js/jquery.dataTables.min.js',
+			'components/common/tables/datatables/DataTables-1.10.12/media/js/dataTables.bootstrap.min.js',
 			'components/common/forms/ajax.js',
 			'components/common/forms/validaciones.js'
 		], 'public/js/base-scripts.js', 'resources/assets')

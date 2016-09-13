@@ -1,45 +1,33 @@
-@extends('app_no_sidebar')
-
-@section('titulo')
-    <i class="fa fa-search"></i> Plan de Tratamiento
-@stop
-
-@section('contenido')
-    <div class="row">
-        <div class="col-md-3 col-sm-12">
-            <div class="innerAll">
+<div id="planDeTratamiento" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style="width: 900px; height: 600px; overflow: auto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Plan de tratamiento</h4>
+                <button class="close" aria-hidden="true" data-dismiss="modal" type="button">X</button>
+            </div>
+            <div class="modal-body">
+                <button type="button" id="btnAceptar" class="btn btn-success"><i class="fa fa-check"></i> Aceptar</button>
+                <a href="" id="generarPlan" class="btn btn-success" disabled="disabled" target="_blank"><i class="fa fa-print"></i> Generar PDF</a>
+                <div class="separator"></div>
                 <div class="form-group">
                     <label class="control-label">Otros tratamientos:</label>
-                    <select name="otrosTratamientos" id="otrosTratamientos" class="form-control">
-                        <option value="">Seleccione</option>
-                        @foreach($listaOtrosTratamientos as $otroTratamiento)
-                            <option value="{{ $otroTratamiento->getId() }}">{{ $otroTratamiento->getTratamiento() }}</option>
-                        @endforeach
-                    </select>
+                    <div class="input-group">
+                        <select name="otrosTratamientos" id="otrosTratamientos" class="form-control">
+                            <option value="">Seleccione</option>
+                            @foreach($otrosTratamientos as $otroTratamiento)
+                                <option value="{{ $otroTratamiento->getId() }}">{{ $otroTratamiento->getTratamiento() }}</option>
+                            @endforeach
+                        </select>
+                        <div class="input-group-btn">
+                            <a href="{{ url('consultas/plan/tratamientos/otros/agregar') }}" class="btn btn-primary btn-small" id="btnAgregarOtroTratamiento"><i class="fa fa-plus"></i> Agregar a plan</a>
+                        </div>
+                    </div>
                 </div>
+                <div class="innerAll" id="dvPlanTratamiento">
 
-                <div class="form-group">
-                    <a href="{{ url('consultas/plan/tratamientos/otros/agregar') }}" class="btn btn-primary btn-small" id="btnAgregarOtroTratamiento"><i class="fa fa-plus"></i> Agregar a plan</a>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-9 col-sm-12 border-left">
-            <div class="innerAll">
-                <a href="javascript:;" id="btnAceptar" class="btn btn-success"><i class="fa fa-check"></i> Aceptar</a>
-
-                <a href="{{ url("consultas/plan/$userMed/$idPaciente") }}" id="generarPlan" class="btn btn-success" disabled="disabled" target="_blank"><i class="fa fa-print"></i> Generar PDF</a>
-            </div>
-            <div class="separator"></div>
-            <div class="innerAll" id="dvPlanTratamiento">
-                {!! $dibujadorPlan->dibujar() !!}
+                <input type="hidden" id="urlAgregarTratamientos" value="{{ url('consultas/plan/tratamientos/agregar') }}">
             </div>
         </div>
     </div>
-
-    <input type="hidden" id="_token" value="{{ csrf_token() }}">
-    <input type="hidden" id="urlAgregarTratamientos" value="{{ url('consultas/plan/tratamientos/agregar') }}">
-@stop
-
-@section('js')
-    <script src="{{ asset('public/js/consultas/consultas_plan_tratamiento.js') }}"></script>
-@stop
+</div>

@@ -1,6 +1,6 @@
 <div class="tab-pane" id="odontograma">
-	<input type="hidden" id="urlOdontograma" value="{{ url('consultas/odontograma/dibujar') }}">
-	{{--<a href="{{ url('consultas/plan/agregar/' . base64_encode($expediente->getMedico()->getUsername()) . '/' . base64_encode($expediente->getPaciente()->getId())) }}" id="btnGenerarPlan" class="btn btn-success btn-small" disabled="disabled"><i class="fa fa-money"></i> Generar plan</a>--}}
+	<button type="button" id="btnGenerarPlan" class="btn btn-success" disabled="disabled" data-toggle="modal" data-url="{{ route('dibujar-plan-tratamiento') }}"><i class="fa fa-money"></i> Generar plan de tratamiento</button>
+
 	<div class="separator"></div>
 	<div id="dvOdontograma" class="table-responsive">
 		{!! $dibujadorOdontograma->dibujar() !!}

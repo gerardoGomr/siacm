@@ -88,6 +88,7 @@
 @stop
 
 @include('modal_loading')
+@include('consultas.consultas_plan_tratamiento')
 
 @section('js')
 	<script src="{{ asset('public/js/consultas/consultas_johanna_capturar.js') }}"></script>

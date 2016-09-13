@@ -1,9 +1,9 @@
 <?php
-namespace Siacme\Dominio\Pacientes;
+namespace Siacme\Dominio\Expedientes;
 
 /**
  * Class DienteTratamiento
- * @package Siacme\Dominio\Pacientes
+ * @package Siacme\Dominio\Expedientes
  * @author  Gerardo Adrián Gómez Ruiz
  */
 class DienteTratamiento
@@ -45,14 +45,6 @@ class DienteTratamiento
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getTratamiento()
@@ -61,26 +53,10 @@ class DienteTratamiento
     }
 
     /**
-     * @param string $tratamiento
-     */
-    public function setTratamiento($tratamiento)
-    {
-        $this->tratamiento = $tratamiento;
-    }
-
-    /**
      * @return float
      */
     public function getCosto()
     {
         return $this->costo;
-    }
-
-    /**
-     * @param float $costo
-     */
-    public function setCosto($costo)
-    {
-        $this->costo = $costo;
     }
 }

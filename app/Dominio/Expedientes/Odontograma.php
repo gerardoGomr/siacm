@@ -71,6 +71,7 @@ class Odontograma
 	 * agregar un padecimiento al diente
 	 * @param int $numeroDiente
 	 * @param DientePadecimiento $dientePadecimiento
+	 * @return bool
 	 * @throws MasDeDosPadecimientosPorDienteException
 	 */
 	public function agregarPadecimientoADiente($numeroDiente, DientePadecimiento $dientePadecimiento)
@@ -117,6 +118,9 @@ class Odontograma
 		return $this->dientes;
 	}
 
+	/**
+	 * borrar los tratamientos asignados a sus dientes
+	 */
 	public function borrarDientesTratamientos()
 	{
 		foreach ($this->dientes as $diente) {

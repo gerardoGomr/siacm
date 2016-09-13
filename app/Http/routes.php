@@ -96,23 +96,34 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	Route::post('consultas/odontograma/dibujar', 'Consultas\ConsultasController@dibujar');
 	// ventana recetas
 	Route::get('consultas/receta/agregar', 'Consultas\ConsultasController@capturaReceta');
-	
+
 	// asignar padecimientos al diente
 	Route::post('consultas/asignar/diente/padecimiento', [
-		'as'   => 'asignar-diente-padecimiento', 
+		'as'   => 'asignar-diente-padecimiento',
 		'uses' => 'Consultas\ConsultasController@agregaDientePadecimiento'
 	]);
 
+	// generar plan de tratamiento
+	Route::post('consultas/plan/agregar', [
+		'as'   => 'dibujar-plan-tratamiento',
+		'uses' => 'Consultas\ConsultasController@verPlan'
+	]);
+
 	// abrir ventana para plan de tratamiento
-	Route::get('consultas/plan/agregar/{med}/{id}', 'Consultas\ConsultasController@verPlan');
+	// Route::get('consultas/plan/agregar/{med}/{id}', 'Consultas\ConsultasController@verPlan');
+
 	// agregar un tratamiento a un diente
 	Route::post('consultas/plan/tratamientos/agregar', 'Consultas\ConsultasController@agregarTratamiento');
+
 	// agregar otro tratamiento al plan
 	Route::post('consultas/plan/tratamientos/otros/agregar', 'Consultas\ConsultasController@agregarOtroTratamiento');
+
 	// agregar receta
 	Route::post('consultas/capturar/receta', 'Consultas\ConsultasController@agregarReceta');
+
 	// agregar interconsulta
 	Route::post('consultas/capturar/interconsulta', 'Consultas\ConsultasController@agregarInterconsulta');
+
 	// guardar consulta
 	Route::post('consultas/guardar', 'Consultas\ConsultasController@guardar');
 

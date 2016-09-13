@@ -4,9 +4,13 @@ namespace Siacme\Http\Controllers\Consultas;
 use DateTime;
 use \Exception;
 use Illuminate\Http\Request;
+use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Aplicacion\Factories\VistasConsultasFactory;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
+use Siacme\Dominio\Expedientes\PlanTratamiento;
 use Siacme\Dominio\Expedientes\Odontograma;
+use Siacme\Dominio\Expedientes\Repositorios\DienteTratamientosRepositorio;
+use Siacme\Dominio\Expedientes\Repositorios\OtrosTratamientosRepositorio;
 use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
 use Siacme\Http\Requests;
 use Siacme\Http\Controllers\Controller;
@@ -14,6 +18,7 @@ use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
+use Siacme\Aplicacion\Servicios\Expedientes\DibujadorPlanTratamiento;
 
 /**
  * Class ConsultasController
@@ -143,7 +148,7 @@ class ConsultasController extends Controller
      * agrega padecimientos al diente
      * @param Request $request
      * @param DientePadecimientosRepositorio $padecimientosRepositorio
-     * @return 
+     * @return \Illuminate\Http\JsonResponse
      */
     public function agregaDientePadecimiento(Request $request, DientePadecimientosRepositorio $padecimientosRepositorio)
     {
@@ -171,7 +176,39 @@ class ConsultasController extends Controller
         $respuesta['estatus'] = 'OK';
         $respuesta['html']    = $dibujadorOdontograma->dibujar();
 
-        $request->session()->put('odontograma', $odontograma);
+        // $request->session()->put('odontograma', $odontograma);
+
+        return response()->json($respuesta);
+    }
+
+    public function verPlan(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    {
+        $respuesta   = [];
+        $odontograma = $request->session()->get('odontograma');
+
+        if(!($request->session()->has('plan'))) {
+            $odontograma->borrarDientesTratamientos();
+
+            // obtener primeros dos otros tratamientos para el plan
+            $otroTratamiento1 = $otrosTratamientosRepositorio->obtenerPorId(1);
+            $otroTratamiento2 = $otrosTratamientosRepositorio->obtenerPorId(2);
+
+            // obtener plan
+            $plan = new PlanTratamiento(new ColeccionArray());
+            $plan->agregarOtroTratamiento($otroTratamiento1);
+            $plan->agregarOtroTratamiento($otroTratamiento2);
+
+            $plan->generarDeOdontograma($odontograma);
+
+        } else {
+            $plan = $request->session()->get('plan');
+        }
+
+        $dienteTratamientos = $dienteTratamientosRepositorio->obtenerTodos();
+        $dibujadorPlan      = new DibujadorPlanTratamiento($plan, $dienteTratamientos);
+
+        $respuesta['estatus'] = 'OK';
+        $respuesta['html']    = $dibujadorPlan->dibujar();
 
         return response()->json($respuesta);
     }

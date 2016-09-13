@@ -16,6 +16,8 @@ $(function() {
 		ignore: []
 	});
 
+	$('#planDeTratamiento').dataTables();
+
 	// validar formulario
 	agregaValidacionesElementos($formConsulta);
 
@@ -72,25 +74,23 @@ $(function() {
 			$('#modalLoading').modal('hide');
 			console.log(resultado);
 
-			if(resultado === 'fail') {
+			if(resultado.estatus === 'fail') {
 				bootbox.alert('Ocurrió un error al guardar los padecimientos del diente seleccionado.');
 			}
 
-			if (resultado === 'OK') {
-				bootbox.alert('Padecimientos asignados al diente seleccionado', function() {
-					$('#dvOdontograma').html(resultado.html);
+			if (resultado.estatus === 'OK') {
+				$('#dvOdontograma').html(resultado.html);
 
-					$('#dvPadecimientosDentales').find('input.padecimiento').each(function() {
-						// reiniciar modal
-						$(this).attr('checked', false);
-					});
-
-					// cerrar modal
-					$('#dvPadecimientosDentales').modal('hide');
-
-					// activar boton de plan
-					$btnGenerarPlan.attr('disabled', false);
+				$('#dvPadecimientosDentales').find('input.padecimiento').each(function() {
+					// reiniciar modal
+					$(this).attr('checked', false);
 				});
+
+				// cerrar modal
+				$('#dvPadecimientosDentales').modal('hide');
+
+				// activar boton de plan
+				$btnGenerarPlan.attr('disabled', false);
 			}
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
@@ -105,8 +105,35 @@ $(function() {
 	 * generar plan de tratamiento en base a odontograma
 	 */
 	$btnGenerarPlan.on('click', function(event) {
-		event.preventDefault();
-		window.open($(this).attr('href'), '_blank', 'width=800, height=600, scrollbars=yes');
+		var url = $(this).data('url');
+
+		$.ajax({
+			url:      url,
+			type:     'post',
+			dataType: 'json',
+			data:     {_token: $formConsulta.find('input[name="_token"]').val()},
+			beforeSend: function() {
+				$('#modalLoading').modal('show');
+			}
+		})
+		.done(function(resultado) {
+			$('#modalLoading').modal('hide');
+			console.log(resultado);
+
+			if(resultado.estatus === 'fail') {
+				bootbox.alert('Ocurrió un error al generar el plan de tratamiento.');
+			}
+
+			if (resultado.estatus === 'OK') {
+				$('#dvPlanTratamiento').html(resultado.html);
+				$('#planDeTratamiento').modal('show');
+			}
+		})
+		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log(textStatus + ': ' + errorThrown);
+			$('#modalLoading').modal('hide');
+			bootbox.alert('Ocurrió un error al generar el plan de tratamiento.');
+		});
 	});
 
 	// change para mostrar receta
@@ -210,7 +237,7 @@ $(function() {
 					return false;
 				} else {
 					bootbox.confirm('¿El plan de tratamiento está generado de manera correcta?', function (r) {
-						
+
 						if (r) {
 							// guardar form
 							var datos 		   = $formConsulta.serialize(),
@@ -247,7 +274,7 @@ $(function() {
 							.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 								console.log(textStatus + ': ' + errorThrown);
 								bootbox.alert('Imposible realizar la operación solicitada');
-							});	
+							});
 						}
 					});
 				}
@@ -287,7 +314,7 @@ $(function() {
 				.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 					console.log(textStatus + ': ' + errorThrown);
 					bootbox.alert('Imposible realizar la operación solicitada');
-				});	
+				});
 			}
 		}
 	});

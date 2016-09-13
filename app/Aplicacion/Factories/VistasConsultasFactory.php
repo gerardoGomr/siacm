@@ -13,6 +13,8 @@ use Siacme\Infraestructura\Expedientes\DoctrineConvexividadesFacialesRepositorio
 use Siacme\Infraestructura\Expedientes\DoctrineMorfologiasCraneofacialesRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineMorfologiasFacialesRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineDientePadecimientosRepositorio;
+use Siacme\Infraestructura\Expedientes\DoctrineDienteTratamientosRepositorio;
+use Siacme\Infraestructura\Expedientes\DoctrineOtrosTratamientosRepositorio;
 
 /**
  * Class VistasConsultasFactory
@@ -42,19 +44,20 @@ class VistasConsultasFactory
                 $convexividadesFacialesRepositorio    = new DoctrineConvexividadesFacialesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
                 $atmsRepositorio                      = new DoctrineAtmsRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
                 $dientePadecimientosRepositorio       = new DoctrineDientePadecimientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+                $otrosTratamientosRepositorio  = new DoctrineOtrosTratamientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
 
                 $comportamientosFrankl     = $comportamientosFranklRepositorio->obtenerTodos();
                 $morfologiasCraneofaciales = $morfologiasCraneofacialesRepositorio->obtenerTodos();
                 $morfologiasFaciales       = $morfologiasFacialesRepositorio->obtenerTodos();
                 $convexividadesFaciales    = $convexividadesFacialesRepositorio->obtenerTodos();
                 $atms                      = $atmsRepositorio->obtenerTodos();
-
-                $dientePadecimientos = $dientePadecimientosRepositorio->obtenerTodos();
+                $dientePadecimientos       = $dientePadecimientosRepositorio->obtenerTodos();
+                $otrosTratamientos         = $otrosTratamientosRepositorio->obtenerTodos();
 
                 if ($expediente->getExpedienteEspecialidad()->primeraVez()) {
                     // construir y generar odontograma
                     $odontograma = OdontogramaFactory::crear();
-                    
+
                     $dibujadorOdontograma  = new DibujadorOdontogramas($odontograma);
                 }
 
@@ -62,7 +65,7 @@ class VistasConsultasFactory
                     request()->session()->put('odontograma', $odontograma);
                 }
 
-                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma'));
+                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos'));
                 break;
         }
 
