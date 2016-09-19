@@ -118,6 +118,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// agregar otro tratamiento al plan
 	Route::post('consultas/plan/tratamientos/otros/agregar', 'Consultas\ConsultasController@agregarOtroTratamiento');
 
+	// eliminar otro tratamiento del plan
+	Route::post('consultas/plan/tratamientos/otros/eliminar', 'Consultas\ConsultasController@eliminarOtroTratamiento');
+
 	// agregar receta
 	Route::post('consultas/capturar/receta', 'Consultas\ConsultasController@agregarReceta');
 

@@ -181,7 +181,14 @@ class ConsultasController extends Controller
         return response()->json($respuesta);
     }
 
-    public function verPlan(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    /**
+     * construir el plan de tratamiento
+     * @param Request $request
+     * @param OtrosTratamientosRepositorio $otrosTratamientosRepositorio
+     * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verPlan(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio)
     {
         $respuesta   = [];
         $odontograma = $request->session()->get('odontograma');
@@ -199,17 +206,66 @@ class ConsultasController extends Controller
             $plan->agregarOtroTratamiento($otroTratamiento2);
 
             $plan->generarDeOdontograma($odontograma);
+            $request->session()->put('plan', $plan);
 
         } else {
             $plan = $request->session()->get('plan');
         }
 
-        $dienteTratamientos = $dienteTratamientosRepositorio->obtenerTodos();
-        $dibujadorPlan      = new DibujadorPlanTratamiento($plan, $dienteTratamientos);
-
         $respuesta['estatus'] = 'OK';
-        $respuesta['html']    = $dibujadorPlan->dibujar();
+        $respuesta['html']    = $this->dibujarPlan();
 
         return response()->json($respuesta);
+    }
+
+    /**
+     * agregar otro tratamiento al plan actual
+     * @param Request $request
+     * @param OtrosTratamientosRepositorio $otrosTratamientosRepositorio
+     * @param DienteTratamientosRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function agregarOtroTratamiento(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    {
+        $respuesta          = [];
+        $otroTratamientoId  = (int)$request->get('otroTratamientoId');
+        $plan               = $request->session()->get('plan');
+        $otroTratamiento    = $otrosTratamientosRepositorio->obtenerPorId($otroTratamientoId);
+
+        $plan->agregarOtroTratamiento($otroTratamiento);
+
+        $respuesta['estatus'] = 'OK';
+        $respuesta['html']    = $this->dibujarPlan($dienteTratamientosRepositorio);
+
+        return response()->json($respuesta);
+    }
+
+    public function eliminarOtroTratamiento(OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    {
+        $respuesta          = [];
+        $otroTratamientoId  = (int)$request->get('otroTratamientoId');
+        $plan               = $request->session()->get('plan');
+        $otroTratamiento    = $otrosTratamientosRepositorio->obtenerPorId($otroTratamientoId);
+
+        try {
+            $plan->quitarOtroTratamiento($otroTratamiento);
+
+            $respuesta['estatus'] = 'OK';
+            $respuesta['html']    = $this->dibujarPlan($dienteTratamientosRepositorio);
+
+            return response()->json($respuesta);
+
+        } catch(OtroTratamientoNoExisteEnPlanActualException $e) {
+            $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = $e->getMessage();
+        }
+    }
+
+    private function dibujarPlan(DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    {
+        $dienteTratamientos = $dienteTratamientosRepositorio->obtenerTodos();
+        $dibujadorPlan      = new DibujadorPlanTratamiento($plan, $dienteTratamientos);   
+
+        return $dibujadorPlan->dibujar();
     }
 }

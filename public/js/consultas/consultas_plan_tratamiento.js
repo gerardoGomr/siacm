@@ -1,57 +1,113 @@
 $(function() {
-	// bandera padre
-	window.opener.$('#generoPlan').val('1');
+	var $btnGenerarPlan = $('#btnGenerarPlan');
 
-	// variables
-	var $dvPlanTratamiento = $('#dvPlanTratamiento');
+	/**
+	 * abir nueva ventana
+	 * generar plan de tratamiento en base a odontograma
+	 */
+	$btnGenerarPlan.on('click', function(event) {
+		var url = $(this).data('url');
 
-	// evento change de los selects
-	$dvPlanTratamiento.on('change', 'select.tratamientos', function(event) {
-		if ($(this).val() !== '') {
+		$.ajax({
+			url:      url,
+			type:     'post',
+			dataType: 'json',
+			data:     {_token: $formConsulta.find('input[name="_token"]').val()},
+			beforeSend: function() {
+				$('#modalLoading').modal('show');
+			}
+		})
+		.done(function(resultado) {
+			$('#modalLoading').modal('hide');
+			console.log(resultado);
 
-			var datos = {
-					_token: 	    $('#_token').val(),
-					numeroDiente:   $(this).parent('td').siblings('td.diente').text(),
-					idTratamiento:  $(this).val(),
-					numeroElemento: $(this).siblings('input.numeroTratamiento').val()
-				},
-				respuestaAjax = ajax($('#urlAgregarTratamientos').val(), 'post', 'html', datos, 'guardar');
+			if(resultado.estatus === 'fail') {
+				bootbox.alert('Ocurrió un error al generar el plan de tratamiento.');
+			}
 
-			respuestaAjax.done(function(resultado) {
-				console.log('éxito');
+			if (resultado.estatus === 'OK') {
+				$('#dvPlanTratamiento').html(resultado.html);
+				$('#planDeTratamiento').modal('show');
+			}
+		})
+		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log(textStatus + ': ' + errorThrown);
+			$('#modalLoading').modal('hide');
+			bootbox.alert('Ocurrió un error al generar el plan de tratamiento.');
+		});
+	});
 
-				$('#dvPlanTratamiento').html(resultado);
-				$('#generarPlan').attr('disabled', false);
-			})
-			.fail(function(XMLHttpRequest, textStatus, errorThrown) {
-				console.log(errorThrown);
-			});
+	// evento para agregar otro tratamiento al plan
+	$('#btnAgregarOtroTratamiento').on('click', function () {
+		var url = $(this).data('url');
+
+		if ($("#otrosTratamientos").val() === '') {
+			bootbox.alert('Por favor, seleccione un tratamiento');
+			return false;
 		}
-	});
 
-	// evento click para otros tratamientos
-	$('#btnAgregarOtroTratamiento').on('click', function(event) {
-		event.preventDefault();
-		if ($("#otrosTratamientos").val() !== '') {
-			var datos = {
-					_token: 	       $('#_token').val(),
-					idOtroTratamiento: $('#otrosTratamientos').val()
-				},
-				respuestaAjax = ajax($(this).attr('href'), 'post', 'html', datos, 'guardar');
+		$.ajax({
+			url:      url,
+			type:     'post',
+			dataType: 'json',
+			data:     {_token: $formConsulta.find('input[name="_token"]').val(), otroTratamientoId: $('#otrosTratamientos').val()},
+			beforeSend: function() {
+				$('#modalLoading').modal('show');
+			}
+		})
+		.done(function(resultado) {
+			$('#modalLoading').modal('hide');
+			console.log(resultado);
 
-			respuestaAjax.done(function(resultado) {
-				console.log('éxito');
+			if(resultado.estatus === 'fail') {
+				bootbox.alert('Ocurrió un error al agregar el tratamiento al plan actual.');
+			}
 
-				$('#dvPlanTratamiento').html(resultado);
-			})
-			.fail(function(XMLHttpRequest, textStatus, errorThrown) {
-				console.log(errorThrown);
-			});
-		}
-	});
+			if (resultado.estatus === 'OK') {
+				$('#dvPlanTratamiento').html(resultado.html);
+			}
+		})
+		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log(textStatus + ': ' + errorThrown);
+			$('#modalLoading').modal('hide');
+			bootbox.alert('Ocurrió un error alagregar el tratamiento al plan actual.');
+		});
+	});	
 
-	// cerrar ventana
-	$('#btnAceptar').on('click', function(event) {
-		window.close();
-	});
+	// eliminar otro tratamiento
+	$('#dvPlanTratamiento').on('click', 'button.eliminarOtroTratamiento', function () {
+		var url = $(this).data('url'),
+			otroTratamientoId = $(this).data('id'),
+			datos = {
+				_token: $formConsulta.find('input[name="_token"]').val(), 
+				otroTratamientoId: otroTratamientoId
+			};
+
+		$.ajax({
+			url:      url,
+			type:     'post',
+			dataType: 'json',
+			data:     datos,
+			beforeSend: function() {
+				$('#modalLoading').modal('show');
+			}
+		})
+		.done(function(resultado) {
+			$('#modalLoading').modal('hide');
+			console.log(resultado);
+
+			if(resultado.estatus === 'fail') {
+				bootbox.alert('Ocurrió un error al eliminar el tratamiento del plan actual.');
+			}
+
+			if (resultado.estatus === 'OK') {
+				$('#dvPlanTratamiento').html(resultado.html);
+			}
+		})
+		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log(textStatus + ': ' + errorThrown);
+			$('#modalLoading').modal('hide');
+			bootbox.alert('Ocurrió un error al eliminar el tratamiento del plan actual.');
+		});
+	});	
 });

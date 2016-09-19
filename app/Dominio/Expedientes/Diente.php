@@ -201,6 +201,14 @@ class Diente
     {
         return count($this->tratamientos) > 0 ? true : false;
     }
+
+    /**
+     * @return bool
+     */
+    public function tienePadecimientos()
+    {
+        return count($this->padecimientos) > 0 ? true : false;
+    }
 //
 //    public function costoTratamientos()
 //    {

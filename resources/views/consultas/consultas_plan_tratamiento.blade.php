@@ -11,21 +11,26 @@
                 <div class="separator"></div>
                 <div class="form-group">
                     <label class="control-label">Otros tratamientos:</label>
-                    <div class="input-group">
-                        <select name="otrosTratamientos" id="otrosTratamientos" class="form-control">
-                            <option value="">Seleccione</option>
-                            @foreach($otrosTratamientos as $otroTratamiento)
-                                <option value="{{ $otroTratamiento->getId() }}">{{ $otroTratamiento->getTratamiento() }}</option>
-                            @endforeach
-                        </select>
-                        <div class="input-group-btn">
-                            <a href="{{ url('consultas/plan/tratamientos/otros/agregar') }}" class="btn btn-primary btn-small" id="btnAgregarOtroTratamiento"><i class="fa fa-plus"></i> Agregar a plan</a>
-                        </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="input-group">
+                                <select name="otrosTratamientos" id="otrosTratamientos" class="form-control">
+                                    <option value="">Seleccione</option>
+                                    @foreach($otrosTratamientos as $otroTratamiento)
+                                        <option value="{{ $otroTratamiento->getId() }}">{{ $otroTratamiento->getTratamiento() }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-btn">
+                                    <button type="button" data-url="{{ url('consultas/plan/tratamientos/otros/agregar') }}" class="btn btn-primary btn-small" id="btnAgregarOtroTratamiento"><i class="fa fa-plus"></i> Agregar a plan</a>
+                                </div>
+                            </div>  
+                        </div>    
                     </div>
                 </div>
                 <div class="innerAll" id="dvPlanTratamiento">
 
                 </div>
+                <input type="hidden" id="urlEliminarOtroTratamiento" value="{{ url('consultas/plan/tratamientos/otros/eliminar') }}">
                 <input type="hidden" id="urlAgregarTratamientos" value="{{ url('consultas/plan/tratamientos/agregar') }}">
             </div>
         </div>

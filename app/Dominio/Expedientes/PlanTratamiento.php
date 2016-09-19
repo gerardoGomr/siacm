@@ -180,6 +180,22 @@ class PlanTratamiento
 	}
 
 	/**
+	 * quitar el tratamiento especificado del plan
+	 * @param OtroTratamiento $tratamiento
+	 * @throws OtroTratamientoNoExisteEnPlanActualException
+	 */
+	public function quitarOtroTratamiento(OtroTratamiento $tratamiento)
+	{
+		foreach ($this->otrosTratamientos as $otroTratamiento) {
+			if ($otroTratamiento->getId() === $tratamiento->getId()) {
+				$this->otrosTratamientos->removeElement($otroTratamiento);
+			}
+		}
+
+		throw new OtroTratamientoNoExisteEnPlanActualException('El tratamiento especificado no existe en el plan actual.');
+	}
+
+	/**
 	 * remover todos los "otros" tratamientos del plan
 	 */
 	public function removerOtrosTratamientos()

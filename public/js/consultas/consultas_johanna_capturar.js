@@ -2,7 +2,6 @@ $(function() {
 	// variables
 	var $formConsulta       		  = $('#formConsulta'),
 		$btnGuardarPadecimientoDental = $('#btnGuardarPadecimientoDental'),
-		$btnGenerarPlan				  = $('#btnGenerarPlan'),
 		$btnGuardarConsulta 		  = $('#btnGuardarConsulta'),
 		$btnGuardarInterconsulta      = $('#btnGuardarInterconsulta'),
 		$btnGuardarReceta 			  = $('#btnGuardarReceta'),
@@ -16,7 +15,7 @@ $(function() {
 		ignore: []
 	});
 
-	$('#planDeTratamiento').dataTables();
+	$('#planDeTratamiento').niceScroll();
 
 	// validar formulario
 	agregaValidacionesElementos($formConsulta);
@@ -97,42 +96,6 @@ $(function() {
 			console.log(textStatus + ': ' + errorThrown);
 			$('#modalLoading').modal('hide');
 			bootbox.alert('Ocurrió un error al guardar los padecimientos del diente seleccionado.');
-		});
-	});
-
-	/**
-	 * abir nueva ventana
-	 * generar plan de tratamiento en base a odontograma
-	 */
-	$btnGenerarPlan.on('click', function(event) {
-		var url = $(this).data('url');
-
-		$.ajax({
-			url:      url,
-			type:     'post',
-			dataType: 'json',
-			data:     {_token: $formConsulta.find('input[name="_token"]').val()},
-			beforeSend: function() {
-				$('#modalLoading').modal('show');
-			}
-		})
-		.done(function(resultado) {
-			$('#modalLoading').modal('hide');
-			console.log(resultado);
-
-			if(resultado.estatus === 'fail') {
-				bootbox.alert('Ocurrió un error al generar el plan de tratamiento.');
-			}
-
-			if (resultado.estatus === 'OK') {
-				$('#dvPlanTratamiento').html(resultado.html);
-				$('#planDeTratamiento').modal('show');
-			}
-		})
-		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
-			console.log(textStatus + ': ' + errorThrown);
-			$('#modalLoading').modal('hide');
-			bootbox.alert('Ocurrió un error al generar el plan de tratamiento.');
 		});
 	});
 
