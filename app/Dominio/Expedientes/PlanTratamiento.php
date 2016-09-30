@@ -2,6 +2,8 @@
 namespace Siacme\Dominio\Expedientes;
 
 use Siacme\Dominio\Listas\IColeccion;
+use Siacme\Exceptions\OtroTratamientoNoExisteEnPlanActualException;
+use Siacme\Exceptions\OtroTratamientoYaHaSidoAgregadoAPlanActualException;
 
 /**
  * Class PlanTratamiento
@@ -37,7 +39,7 @@ class PlanTratamiento
 	private $aQuienSeDirige;
 
 	/**
-	 * @var Collection
+	 * @var IColeccion
 	 */
 	private $otrosTratamientos;
 
@@ -80,7 +82,7 @@ class PlanTratamiento
 			foreach ($this->dientes as $diente) {
 				if ($diente->tieneTratamientos()) {
 					foreach ($diente->getTratamientos() as $tratamiento) {
-						$this->costo += $tratamiento->getCosto();
+						$this->costo += $tratamiento->getDienteTratamiento()->getCosto();
 					}
 				}
 			}
@@ -173,9 +175,21 @@ class PlanTratamiento
 	/**
 	 * agregar nuevo "otro" tratamiento al plan
 	 * @param OtroTratamiento $tratamiento
+	 * @throws OtroTratamientoYaHaSidoAgregadoAPlanActualException
 	 */
 	public function agregarOtroTratamiento(OtroTratamiento $tratamiento)
 	{
+		$encontrado = false;
+		foreach ($this->otrosTratamientos as $otroTratamiento) {
+			if ($otroTratamiento->getId() === $tratamiento->getId()) {
+				$encontrado = true;
+			}
+		}
+
+		if ($encontrado) {
+			throw new OtroTratamientoYaHaSidoAgregadoAPlanActualException('El tratamiento especificado ya se ha agregado al plan actual.');
+		}
+
 		$this->otrosTratamientos->add($tratamiento);
 	}
 
@@ -186,13 +200,17 @@ class PlanTratamiento
 	 */
 	public function quitarOtroTratamiento(OtroTratamiento $tratamiento)
 	{
+		$encontrado = false;
 		foreach ($this->otrosTratamientos as $otroTratamiento) {
 			if ($otroTratamiento->getId() === $tratamiento->getId()) {
 				$this->otrosTratamientos->removeElement($otroTratamiento);
+				$encontrado = true;
 			}
 		}
 
-		throw new OtroTratamientoNoExisteEnPlanActualException('El tratamiento especificado no existe en el plan actual.');
+		if (!$encontrado) {
+			throw new OtroTratamientoNoExisteEnPlanActualException('El tratamiento especificado no existe en el plan actual.');
+		}
 	}
 
 	/**
@@ -214,11 +232,50 @@ class PlanTratamiento
 	}
 
 	/**
+	 * agregar un tratamiento al diente
+	 * @param int $numeroDiente
+	 * @param DientePlan $dientePlan
+	 * @throws \Siacme\Exceptions\SoloSePermitenDosTratamientosException
+	 */
+	public function agregarTratamiento($numeroDiente, DientePlan $dientePlan)
+	{
+		$this->diente($numeroDiente)->agregarTratamiento($dientePlan);
+	}
+
+	/**
 	 * @return float
 	 */
 	public function getCosto()
 	{
 		return $this->costo;
+	}
+
+	/**
+	 * eliminar el tratamiento del diente seleccionado
+	 * @param int $numeroDiente
+	 * @param DienteTratamiento $dienteTratamiento
+	 * @throws \Siacme\Exceptions\TratamientoNoExisteEnPlanActualException
+	 */
+	public function eliminarTratamiento($numeroDiente, DienteTratamiento $dienteTratamiento)
+	{
+		$this->diente($numeroDiente)->eliminarTratamiento($dienteTratamiento);
+	}
+
+	/**
+	 * validar que todos los dientes tengan tratamientos
+	 * @return bool
+	 */
+	public function todosLosDientesTienenTratamientos()
+	{
+		foreach ($this->dientes as $diente) {
+			if ($diente->tienePadecimientos()) {
+				if (!$diente->tieneTratamientos()) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
 	public function atender() {

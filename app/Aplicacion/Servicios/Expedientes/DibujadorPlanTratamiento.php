@@ -54,25 +54,19 @@ class DibujadorPlanTratamiento implements DibujadorInterface
                     <tr>
                         <th>Diente</th>
                         <th>Padecimiento</th>
-                        <th>Tratamiento 1</th>
-                        <th>Tratamiento 2</th>
+                        <th>Tratamientos</th>
                         <th>Costo</th>
                     </tr>
                 </thead>
                 <tbody>';
 
         foreach ($this->planTratamiento->getDientes() as $diente) {
-            $dientePlan1 = $dientePlan2 = null;
-            /*if ($diente->tieneTratamientos()) {
-                $dientePlan1 = $diente->getTratamientos()->get('1');
-                $dientePlan2 = $diente->getTratamientos()->get('2');
-            }*/
+
             $html .= '
                 <tr>
                     <td class="diente">' . $diente->getNumero() . '</td>
                     <td>' . $this->dibujarPadecimientos($diente->getPadecimientos()) . '</td>
-                    <td>' . $this->dibujarComboTratamientos('1', $diente, $this->dienteTratamientos, $dientePlan1) . '</td>
-                    <td>' . $this->dibujarComboTratamientos('2', $diente, $this->dienteTratamientos, $dientePlan2) . '</td>
+                    <td>' . $this->dibujarComboTratamientos($diente, $this->dienteTratamientos) . '</td>
                     <td>' . $this->dibujarCostosTratamientos($diente->getTratamientos()) . '</td>
                 </tr>
             ';
@@ -90,7 +84,6 @@ class DibujadorPlanTratamiento implements DibujadorInterface
      */
     private function dibujarPadecimientos($padecimientos)
     {
-        $html     = '';
         $indice   = 1;
         $longitud = count($padecimientos);
 
@@ -112,37 +105,32 @@ class DibujadorPlanTratamiento implements DibujadorInterface
 
     /**
      * dibuja un combo de tratamientos
-     * @param string $nombre
      * @param Diente $diente
      * @param array $dienteTratamientos
-     * @param DientePlan|null $dientePlan
      * @return string
      */
-    private function dibujarComboTratamientos($nombre, Diente $diente, array $dienteTratamientos, DientePlan $dientePlan = null)
+    private function dibujarComboTratamientos(Diente $diente, array $dienteTratamientos)
     {
         if (!$diente->tienePadecimientos()) {
             return '';
         }
 
-        $html = '
+        $html = '<div class="form-group">
+            <div class="input-group">
             <select class="tratamientos form-control">
                 <option value="">Seleccione</option>
         ';
 
-        foreach ($dienteTratamientos as $dienteTratamientos) {
-            $selected = '';
-
-            if (!is_null($dientePlan)) {
-                if ($dienteTratamientos->getId() === $dientePlan->getDienteTratamiento()->getId()) {
-                    $selected = 'selected="selected"';
-                }
-            }
-
-            $html .= '<option value="' . $dienteTratamientos->getId() . '" ' . $selected . '>' . $dienteTratamientos->getTratamiento() . '</option>';
+        foreach ($dienteTratamientos as $dienteTratamiento) {
+            $html .= '<option value="' . $dienteTratamiento->getId() . '">' . $dienteTratamiento->getTratamiento() . '</option>';
         }
 
         $html .= '</select>
-            <input type="hidden" class="numeroTratamiento" value="' . $nombre . '">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-primary agregarTratamiento"><i class="fa fa-plus-square"></i></button>
+            </div>
+            </div>
+            </div>
         ';
 
         return $html;
@@ -160,17 +148,12 @@ class DibujadorPlanTratamiento implements DibujadorInterface
             return '';
         }
 
-        $html = '';
-        $i = 1;
+        $html = '<ul>';
         foreach ($dienteTratamientos as $dienteTratamiento) {
-            if ($i < $total) {
-                $html .= '$' . (string) number_format($dienteTratamiento->getCosto(), 2) . ' + ';
-            } else {
-                $html .= '$' . (string) number_format($dienteTratamiento->getCosto(), 2);
-            }
-
-            $i++;
+            $html .= '<li><button type="button" class="btn btn-danger btn-xs eliminarTratamiento" data-toggle="tooltip" data-original-title="Quitar de plan" data-placement="top" data-id="' . $dienteTratamiento->getDienteTratamiento()->getId() . '"><i class="fa fa-times"></i></button> ' . $dienteTratamiento->getDienteTratamiento()->getTratamiento() . ' $' . (string) number_format($dienteTratamiento->getDienteTratamiento()->getCosto(), 2) . '</li>';
         }
+
+        $html .= '</ul>';
 
         return $html;
     }

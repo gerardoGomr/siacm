@@ -17,10 +17,10 @@ interface ExpedientesRepositorio extends Repositorio
     /**
      * obtener un expediente por el paciente al que le pertenece y al médico que atiende
      * @param Paciente $paciente
-     * @param Usuario $medico
+     * @param Usuario|null $medico
      * @return Expediente
      */
-    public function obtenerPorPacienteMedico(Paciente $paciente, Usuario $medico);
+    public function obtenerPorPacienteMedico(Paciente $paciente, Usuario $medico = null);
 
     /**
      * obtener parte de la construcción del objeto

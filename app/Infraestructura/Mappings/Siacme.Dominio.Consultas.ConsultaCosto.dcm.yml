@@ -1,0 +1,17 @@
+Siacme\Dominio\Consultas\ConsultaCosto:
+  type: entity
+  table: consulta_costo
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    concepto:
+      type: string
+      column: Concepto
+    costo:
+      type: float
+      column: Costo
+    asignadoAPrimeraVez:
+      type: boolean
+      column: AsignadoAPrimeraVez

@@ -1,0 +1,14 @@
+Siacme\Dominio\Consultas\Receta:
+  type: entity
+  table: receta
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    receta:
+      type: string
+      column: Receta
+    nombre:
+      type: string
+      column: Nombre

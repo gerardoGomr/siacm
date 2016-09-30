@@ -2,23 +2,36 @@
 namespace Siacme\Http\Controllers\Consultas;
 
 use DateTime;
-use \Exception;
+use Exception;
 use Illuminate\Http\Request;
 use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Aplicacion\Factories\VistasConsultasFactory;
+use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
+use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
+use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
+use Siacme\Dominio\Consultas\Consulta;
+use Siacme\Dominio\Consultas\ExploracionFisica;
+use Siacme\Dominio\Expedientes\ComportamientoFrankl;
+use Siacme\Dominio\Expedientes\DientePlan;
 use Siacme\Dominio\Expedientes\PlanTratamiento;
-use Siacme\Dominio\Expedientes\Odontograma;
+use Siacme\Dominio\Consultas\Receta;
+use Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio;
+use Siacme\Dominio\Interconsultas\Interconsulta;
 use Siacme\Dominio\Expedientes\Repositorios\DienteTratamientosRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\OtrosTratamientosRepositorio;
 use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
+use Siacme\Exceptions\OtroTratamientoNoExisteEnPlanActualException;
+use Siacme\Exceptions\OtroTratamientoYaHaSidoAgregadoAPlanActualException;
 use Siacme\Http\Requests;
 use Siacme\Http\Controllers\Controller;
 use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
+use Siacme\Dominio\Interconsultas\Repositorios\MedicosReferenciaRepositorio;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorPlanTratamiento;
+use Siacme\Http\Requests\RegistrarConsultaRequest;
 
 /**
  * Class ConsultasController
@@ -188,7 +201,7 @@ class ConsultasController extends Controller
      * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
      * @return \Illuminate\Http\JsonResponse
      */
-    public function verPlan(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio)
+    public function verPlan(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
     {
         $respuesta   = [];
         $odontograma = $request->session()->get('odontograma');
@@ -212,8 +225,9 @@ class ConsultasController extends Controller
             $plan = $request->session()->get('plan');
         }
 
-        $respuesta['estatus'] = 'OK';
-        $respuesta['html']    = $this->dibujarPlan();
+        $respuesta['estatus']    = 'OK';
+        $respuesta['html']       = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
+        $respuesta['planValido'] = $plan->todosLosDientesTienenTratamientos() ? '1' : '0';
 
         return response()->json($respuesta);
     }
@@ -222,7 +236,7 @@ class ConsultasController extends Controller
      * agregar otro tratamiento al plan actual
      * @param Request $request
      * @param OtrosTratamientosRepositorio $otrosTratamientosRepositorio
-     * @param DienteTratamientosRepositorio
+     * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
      * @return \Illuminate\Http\JsonResponse
      */
     public function agregarOtroTratamiento(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
@@ -232,15 +246,29 @@ class ConsultasController extends Controller
         $plan               = $request->session()->get('plan');
         $otroTratamiento    = $otrosTratamientosRepositorio->obtenerPorId($otroTratamientoId);
 
-        $plan->agregarOtroTratamiento($otroTratamiento);
+        try {
+            $plan->agregarOtroTratamiento($otroTratamiento);
+            $respuesta['estatus'] = 'OK';
+            $respuesta['html']    = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
 
-        $respuesta['estatus'] = 'OK';
-        $respuesta['html']    = $this->dibujarPlan($dienteTratamientosRepositorio);
+            return response()->json($respuesta);
 
-        return response()->json($respuesta);
+        } catch(OtroTratamientoYaHaSidoAgregadoAPlanActualException $e) {
+            $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = $e->getMessage();
+
+            return response()->json($respuesta);
+        }
     }
 
-    public function eliminarOtroTratamiento(OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    /**
+     * eliminar el tratamiento especificado del plan
+     * @param Request $request
+     * @param OtrosTratamientosRepositorio $otrosTratamientosRepositorio
+     * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function eliminarOtroTratamiento(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
     {
         $respuesta          = [];
         $otroTratamientoId  = (int)$request->get('otroTratamientoId');
@@ -251,21 +279,249 @@ class ConsultasController extends Controller
             $plan->quitarOtroTratamiento($otroTratamiento);
 
             $respuesta['estatus'] = 'OK';
-            $respuesta['html']    = $this->dibujarPlan($dienteTratamientosRepositorio);
+            $respuesta['html']    = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
 
             return response()->json($respuesta);
 
         } catch(OtroTratamientoNoExisteEnPlanActualException $e) {
             $respuesta['estatus'] = 'fail';
             $respuesta['mensaje'] = $e->getMessage();
+
+            return response()->json($respuesta);
         }
     }
 
-    private function dibujarPlan(DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    /**
+     * dibujar la representación del plan de tratamiento
+     * @param PlanTratamiento $plan
+     * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
+     * @return string
+     */
+    private function dibujarPlan(PlanTratamiento $plan, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
     {
         $dienteTratamientos = $dienteTratamientosRepositorio->obtenerTodos();
-        $dibujadorPlan      = new DibujadorPlanTratamiento($plan, $dienteTratamientos);   
+        $dibujadorPlan      = new DibujadorPlanTratamiento($plan, $dienteTratamientos);
 
         return $dibujadorPlan->dibujar();
+    }
+
+    /**
+     * agregar un tratamiento al diente seleccionado
+     * @param Request $request
+     * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function agregarTratamiento(Request $request, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    {
+        $numeroDiente   = (int)$request->get('numeroDiente');
+        $tratamientoId  = (int)$request->get('tratamientoId');
+        $respuesta      = [];
+
+        $dienteTratamiento = $dienteTratamientosRepositorio->obtenerPorId($tratamientoId);
+        $plan              = $request->session()->get('plan');
+
+        try {
+            $plan->agregarTratamiento($numeroDiente, new DientePlan($dienteTratamiento));
+
+            $respuesta['estatus']    = 'OK';
+            $respuesta['html']       = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
+            $respuesta['planValido'] = $plan->todosLosDientesTienenTratamientos() ? '1' : '0';
+
+        } catch (Exception $e) {
+            $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = $e->getMessage();
+
+        } finally {
+            return response()->json($respuesta);
+        }
+    }
+
+    /**
+     * eliminar el tratamiento del diente seleccionado
+     * @param Request $request
+     * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function eliminarTratamiento(Request $request, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    {
+        $numeroDiente   = (int)$request->get('numeroDiente');
+        $tratamientoId  = (int)$request->get('tratamientoId');
+        $respuesta      = [];
+
+        $dienteTratamiento = $dienteTratamientosRepositorio->obtenerPorId($tratamientoId);
+        $plan              = $request->session()->get('plan');
+
+        try {
+            $plan->eliminarTratamiento($numeroDiente, $dienteTratamiento);
+
+            $respuesta['estatus']    = 'OK';
+            $respuesta['html']       = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
+            $respuesta['planValido'] = $plan->todosLosDientesTienenTratamientos() ? '1' : '0';
+
+        } catch (Exception $e) {
+            $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = $e->getMessage();
+
+        } finally {
+            return response()->json($respuesta);
+        }
+    }
+
+    /**
+     * generar el plan de tratamiento en PDF
+     * @param string $pacienteId
+     * @param PacientesRepositorio $pacientesRepositorio
+     */
+    public function planPDF($pacienteId, PacientesRepositorio $pacientesRepositorio)
+    {
+        $pacienteId = (int)base64_decode($pacienteId);
+
+        $paciente   = $pacientesRepositorio->obtenerPorId($pacienteId);
+        $expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente);
+        $plan       = request()->session()->get('plan');
+
+        $reporte = new PlanTratamientoJohanna($plan, $expediente);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
+    }
+
+    /**
+     * agregar una receta al proceso actual
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function agregarReceta(Request $request)
+    {
+        $recetaId = (int)$request->get('recetaId');
+        $receta   = base64_decode($request->get('receta'));
+
+        $receta = new Receta($recetaId, $receta);
+        $request->session()->put('receta', $receta);
+
+        return response()->json([
+            'estatus' => 'OK'
+        ]);
+    }
+
+    /**
+     * generar receta médica en PDF
+     * @param string $pacienteId
+     * @param string $medicoId
+     * @param PacientesRepositorio $pacientesRepositorio
+     */
+    public function generarRecetaEnPDF($pacienteId, $medicoId, PacientesRepositorio $pacientesRepositorio)
+    {
+        $pacienteId = (int)base64_decode($pacienteId);
+        $medicoId   = base64_decode($medicoId);
+        $paciente   = $pacientesRepositorio->obtenerPorId($pacienteId);
+        $medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
+        $expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+        $receta     = request()->session()->get('receta');
+
+        $reporte = new RecetaJohanna($receta, $expediente);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
+    }
+
+    /**
+     * agregar interconsulta a la consulta actual
+     * @param Request $request
+     * @param MedicosReferenciaRepositorio $medicosReferenciaRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function agregarInterconsulta(Request $request, MedicosReferenciaRepositorio $medicosReferenciaRepositorio)
+    {
+        $medicoId         = (int)$request->get('medicoId');
+        $referencia       = base64_decode($request->get('referencia'));
+        $medicoReferencia = $medicosReferenciaRepositorio->obtenerPorId($medicoId);
+        $interconsulta    = new Interconsulta($medicoReferencia, $referencia);
+
+        $request->session()->put('interconsulta', $interconsulta);
+
+        return response()->json([
+            'estatus' => 'OK'
+        ]);
+    }
+
+    /**
+     * generar el envío a interconsulta en PDF
+     * @param $pacienteId
+     * @param $medicoId
+     * @param PacientesRepositorio $pacientesRepositorio
+     */
+    public function generarInterconsultaEnPDF($pacienteId, $medicoId, PacientesRepositorio $pacientesRepositorio)
+    {
+        $pacienteId    = (int)base64_decode($pacienteId);
+        $medicoId      = base64_decode($medicoId);
+        $paciente      = $pacientesRepositorio->obtenerPorId($pacienteId);
+        $medico        = $this->usuariosRepositorio->obtenerPorId($medicoId);
+        $expediente    = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+        $interconsulta = request()->session()->get('interconsulta');
+
+        $reporte = new InterconsultaJohanna($interconsulta, $expediente);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 50);
+        $reporte->generar();
+    }
+
+    public function guardarConsulta(RegistrarConsultaRequest $request, ComportamientosFranklRepositorio $comportamientosFranklRepositorio, PacientesRepositorio $pacientesRepositorio)
+    {
+        // como se va a almacenar la consulta
+        $medicoId                       = (int)base64_decode($request->get('medicoId'));
+        $pacienteId                     = (int)base64_decode($request->get('pacienteId'));
+        $padecimientoActual             = $request->get('padecimiento');
+        $interrogatorioAparatosSistemas = $request->get('interrogatorio');
+        $peso                           = $request->get('peso');
+        $talla                          = $request->get('talla');
+        $pulso                          = $request->get('pulso');
+        $temperatura                    = $request->get('temperatura');
+        $tensionArterial                = $request->get('tension');
+        $notaMedica                     = $request->get('nota');
+        $comportamientoFranklId         = (int)$request->get('comportamientoFrankl');
+        $costoConsulta                  = $request->get('costoAsignadoConsulta');
+        $exploracion                    = new ExploracionFisica($peso, $talla, $pulso, $temperatura, $tensionArterial);
+        $comportamiento                 = $comportamientosFranklRepositorio->obtenerPorId($comportamientoFranklId);
+        $medico                         = $this->usuariosRepositorio->obtenerPorId($medicoId);
+        $paciente                       = $pacientesRepositorio->obtenerPorId($pacienteId);
+        $expediente                     = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente);
+        $citaId                         = $request->session()->get('citaId');
+        $cita                           = $this->citasRepositorio->obtenerPorId($citaId);
+
+        $consulta                       = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, new DateTime(), $medico);
+
+        // atender cita
+        $cita->atender();
+
+        // crear objetos propios de cada especialidad
+        // si es de johanna se deben crear plan de tratamiento, odontograma
+        if ((int)$request->get('primeraVez') === 1) {
+            // es de primera vez
+
+
+        } else {
+            //es subsecuente
+        }
+
+        // verificar si se mandaron a crear receta e interconsulta
+        // interconsulta es propio de expediente
+        if ($request->has('interconsulta')) {
+            $interconsulta = $request->get('interconsulta');
+            $expediente->agregarInterconsulta($interconsulta);
+        }
+
+        // receta es propio de consulta
+        if ($request->has('receta')) {
+            $receta = $request->get('receta');
+            $consulta->agregarReceta($receta);
+        }
+
+        // si es de primera vez se debe considerar la creación del complemento al expediente
+        // dependiendo del médico
+
     }
 }

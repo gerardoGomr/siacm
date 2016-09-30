@@ -219,3 +219,8 @@ Siacme\Dominio\Expedientes\Expediente:
       targetEntity: ExpedienteJohanna
       mappedBy: expediente
       cascade: [persist]
+  oneToMany:
+    consultas:
+      targetEntity: Siacme\Dominio\Consultas\Consulta
+      mappedBy: expediente
+      cascade: [persist]

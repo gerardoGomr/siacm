@@ -1,6 +1,9 @@
 <?php
 namespace Siacme\Infraestructura\Expedientes;
 
+use PDOException;
+use Siacme\Dominio\Expedientes\ComportamientoFrankl;
+use Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio;
 use Siacme\Exceptions\PDO\PDOLogger;
 use Doctrine\ORM\EntityManager;
 use Monolog\Handler\StreamHandler;
@@ -12,7 +15,7 @@ use Monolog\Logger;
  * @author Gerardo Adrián Gómez Ruiz
  * @version 1.0
  */
-class DoctrineComportamientosFranklRepositorio
+class DoctrineComportamientosFranklRepositorio implements ComportamientosFranklRepositorio
 {
     /**
      * DoctrinePadecimientosRepositorio constructor.
@@ -25,11 +28,27 @@ class DoctrineComportamientosFranklRepositorio
 
     /**
      * @param int $id
-     * @return mixed
+     * @return ComportamientoFrankl
      */
     public function obtenerPorId($id)
     {
         // TODO: Implement obtenerPorId() method.
+        try {
+            $query           = $this->entityManager->createQuery("SELECT c FROM Expedientes:ComportamientoFrankl c WHERE c.id = :id")
+                ->setParameter('id', $id);
+            $comportamientos = $query->getResult();
+
+            if (count($comportamientos) === 0) {
+                return null;
+            }
+
+            return $comportamientos[0];
+
+        } catch (PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
     }
 
     /**
@@ -48,7 +67,7 @@ class DoctrineComportamientosFranklRepositorio
 
             return $comportamientos;
 
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
             $pdoLogger->log($e);
             return null;

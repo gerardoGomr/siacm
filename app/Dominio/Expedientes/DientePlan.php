@@ -1,11 +1,11 @@
 <?php
-namespace Siacme\Dominio\Consultas;
-
-use Siacme\Dominio\Pacientes\DienteTratamiento;
+namespace Siacme\Dominio\Expedientes;
 
 /**
- * @package Siacme\Dominio\Consultas
- * @author  Gerardo Adrián Gómez Ruiz
+ * Class DientePlan
+ * @package Siacme\Dominio\Expedientes
+ * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class DientePlan
 {
@@ -31,14 +31,6 @@ class DientePlan
 	}
 
 	/**
-	 * @param bool $atendido
-	 */
-	public function setAtendido($atendido)
-	{
-		$this->atendido = $atendido;
-	}
-
-	/**
 	 * @return bool
 	 */
 	public function atendido()
@@ -46,19 +38,17 @@ class DientePlan
 		return $this->atendido;
 	}
 
+	/**
+	 * @return DienteTratamiento
+	 */
 	public function getDienteTratamiento()
 	{
 		return $this->dienteTratamiento;
 	}
 
 	/**
-	 * @param DienteTratamiento $dienteTratamiento
+	 * atender el tratamiento
 	 */
-	public function setDienteTratamiento(DienteTratamiento $dienteTratamiento)
-	{
-		$this->dienteTratamiento = $dienteTratamiento;
-	}
-
 	public function atender()
 	{
 		$this->atendido = true;

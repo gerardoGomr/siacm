@@ -9,6 +9,9 @@ namespace Siacme\Aplicacion;
  */
 class Fecha
 {
+    /**
+     * @var array
+     */
     public static $meses = [
         '01' => 'enero',
         '02' => 'feberero',
@@ -24,6 +27,11 @@ class Fecha
         '12' => 'diciembre'
     ];
 
+    /**
+     * devolver una fecha en formato año - mes - dia a dia, mes en español y el año
+     * @param string $fecha
+     * @return string
+     */
     public static function convertir($fecha)
     {
         list($anio, $mes, $dia) = explode('-', $fecha);

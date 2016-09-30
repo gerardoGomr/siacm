@@ -1,6 +1,7 @@
 <?php
 namespace Siacme\Infraestructura\Expedientes;
 
+use PDOException;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Pacientes\Paciente;
@@ -29,10 +30,10 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	/**
 	 * obtener un expediente por el paciente al que le pertenece y al médico que atiende
 	 * @param Paciente $paciente
-	 * @param Usuario $medico
+	 * @param Usuario|null $medico
 	 * @return Expediente|null
 	 */
-	public function obtenerPorPacienteMedico(Paciente $paciente, Usuario $medico)
+	public function obtenerPorPacienteMedico(Paciente $paciente, Usuario $medico = null)
 	{
 		// TODO: Implement obtenerPorPacienteMedico() method.
 		try {
@@ -48,7 +49,7 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 
 			return $expediente[0];
 
-		} catch (\PDOException $e) {
+		} catch (PDOException $e) {
 			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return null;
@@ -57,11 +58,29 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 
 	/**
 	 * @param int $id
-	 * @return mixed
+	 * @return Expediente
 	 */
 	public function obtenerPorId($id)
 	{
 		// TODO: Implement obtenerPorId() method.
+		try {
+
+			$query = $this->entityManager->createQuery("SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.expedienteEspecialidad ee WHERE e.id = :id")
+					->setParameter('id', $id);
+
+			$expediente = $query->getResult();
+
+			if (count($expediente) === 0) {
+				return null;
+			}
+
+			return $expediente[0];
+
+		} catch (PDOException $e) {
+			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+			$pdoLogger->log($e);
+			return null;
+		}
 	}
 
 	/**
@@ -91,7 +110,7 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 			$this->entityManager->flush();
 			return true;
 
-		} catch (\PDOException $e) {
+		} catch (PDOException $e) {
 			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return false;
@@ -118,7 +137,7 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 
 			return $pacientes[0];
 
-		} catch (\PDOException $e) {
+		} catch (PDOException $e) {
 			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return null;

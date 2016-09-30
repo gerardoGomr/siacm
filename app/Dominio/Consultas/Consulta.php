@@ -1,13 +1,16 @@
 <?php
 namespace Siacme\Dominio\Consultas;
 
+use DateTime;
 use Siacme\Dominio\Expedientes\Expediente;
-use Siacme\Dominio\Pacientes\ComportamientoFrankl;
+use Siacme\Dominio\Expedientes\ComportamientoFrankl;
+use Siacme\Dominio\Usuarios\Usuario;
 
 /**
  * Class Consulta
  * @package Siacme\Dominio\Consultas
  * @author  Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class Consulta
 {
@@ -62,23 +65,28 @@ class Consulta
     private $consultaCosto;
 
     /**
-     * @var string
+     * @var DateTime
      */
     private $fecha;
 
     /**
+     * @var Usuario
+     */
+    private $medico;
+
+    /**
      * Consulta constructor.
-     * @param int $id
      * @param string $padecimientoActual
      * @param string $interrogatorioAparatosSistemas
      * @param ExploracionFisica $exploracionFisica
      * @param string $notaMedica
      * @param ComportamientoFrankl $comportamientoFrankl
      * @param double $costo
+     * @param DateTime $fecha
+     * @param Usuario $medico
      */
-    public function __construct($id = 0, $padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $fecha = '')
+    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $fecha, $medico)
     {
-        $this->id                             = $id;
         $this->padecimientoActual             = $padecimientoActual;
         $this->interrogatorioAparatosSistemas = $interrogatorioAparatosSistemas;
         $this->exploracionFisica              = $exploracionFisica;
@@ -86,6 +94,7 @@ class Consulta
         $this->comportamientoFrankl           = $comportamientoFrankl;
         $this->costo                          = $costo;
         $this->fecha                          = $fecha;
+        $this->medico                         = $medico;
     }
 
     /**
@@ -97,27 +106,11 @@ class Consulta
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getPadecimientoActual()
     {
         return $this->padecimientoActual;
-    }
-
-    /**
-     * @param string $padecimientoActual
-     */
-    public function setPadecimientoActual($padecimientoActual)
-    {
-        $this->padecimientoActual = $padecimientoActual;
     }
 
     /**
@@ -129,27 +122,11 @@ class Consulta
     }
 
     /**
-     * @param string $interrogatorioAparatosSistemas
-     */
-    public function setInterrogatorioAparatosSistemas($interrogatorioAparatosSistemas)
-    {
-        $this->interrogatorioAparatosSistemas = $interrogatorioAparatosSistemas;
-    }
-
-    /**
      * @return ExploracionFisica
      */
     public function getExploracionFisica()
     {
         return $this->exploracionFisica;
-    }
-
-    /**
-     * @param ExploracionFisica $exploracionFisica
-     */
-    public function setExploracionFisica(ExploracionFisica $exploracionFisica)
-    {
-        $this->exploracionFisica = $exploracionFisica;
     }
 
     /**
@@ -161,14 +138,6 @@ class Consulta
     }
 
     /**
-     * @param string $notaMedica
-     */
-    public function setNotaMedica($notaMedica)
-    {
-        $this->notaMedica = $notaMedica;
-    }
-
-    /**
      * @return ComportamientoFrankl
      */
     public function getComportamientoFrankl()
@@ -177,31 +146,11 @@ class Consulta
     }
 
     /**
-     * @param ComportamientoFrankl $comportamientoFrankl
-     */
-    public function setComportamientoFrankl(ComportamientoFrankl $comportamientoFrankl)
-    {
-        $this->comportamientoFrankl = $comportamientoFrankl;
-    }
-
-    /**
      * @return float
      */
     public function getCosto()
     {
         return $this->costo;
-    }
-
-    /**
-     * @param float $costo
-     */
-    public function setCosto($costo)
-    {
-        if ($costo < 0) {
-            throw new \InvalidArgumentException('Por favor, especifique un costo mayor o igual a $0.00');
-        }
-
-        $this->costo = $costo;
     }
 
     /**
@@ -218,14 +167,6 @@ class Consulta
     public function getReceta()
     {
         return $this->receta;
-    }
-
-    /**
-     * @param Receta $receta
-     */
-    public function setReceta(Receta $receta)
-    {
-        $this->receta = $receta;
     }
 
     /**
@@ -262,14 +203,6 @@ class Consulta
     }
 
     /**
-     * @param Expediente $expediente
-     */
-    public function setExpediente(Expediente $expediente)
-    {
-        $this->expediente = $expediente;
-    }
-
-    /**
      * @return ConsultaCosto
      */
     public function getConsultaCosto()
@@ -278,26 +211,27 @@ class Consulta
     }
 
     /**
-     * @param ConsultaCosto $consultaCosto
-     */
-    public function setConsultaCosto(ConsultaCosto $consultaCosto)
-    {
-        $this->consultaCosto = $consultaCosto;
-    }
-
-    /**
      * @return string
      */
     public function getFecha()
     {
-        return $this->fecha;
+        return $this->fecha->format('Y-m-d');
     }
 
     /**
-     * @param string $fecha
+     * @return Usuario
      */
-    public function setFecha($fecha)
+    public function getMedico()
     {
-        $this->fecha = $fecha;
+        return $this->medico;
+    }
+
+    /**
+     * agregar una receta
+     * @param Receta $receta
+     */
+    public function agregarReceta(Receta $receta)
+    {
+        $this->receta = $receta;
     }
 }

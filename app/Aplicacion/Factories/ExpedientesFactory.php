@@ -3,6 +3,7 @@ namespace Siacme\Aplicacion\Factories;
 
 use DateTime;
 use Illuminate\Http\Request;
+use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ExpedienteJohanna;
 use Siacme\Dominio\Pacientes\Domicilio;
@@ -90,7 +91,7 @@ class ExpedientesFactory
      */
     private static function crearExpediente(Request $request, Paciente $paciente)
     {
-        $expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente);
+        $expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente, new ColeccionArray(), new ColeccionArray());
 
         $fotoCapturada               = $request->get('capturada');
         $nombre                      = $request->get('nombre');

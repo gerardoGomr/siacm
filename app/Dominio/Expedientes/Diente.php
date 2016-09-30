@@ -3,6 +3,8 @@ namespace Siacme\Dominio\Expedientes;
 
 use Siacme\Dominio\Listas\IColeccion;
 use Siacme\Exceptions\MasDeDosPadecimientosPorDienteException;
+use Siacme\Exceptions\SoloSePermitenDosTratamientosException;
+use Siacme\Exceptions\TratamientoNoExisteEnPlanActualException;
 
 /**
  * Class Diente
@@ -62,20 +64,7 @@ class Diente
     {
         return $this->padecimientos;
     }
-//
-//    /**
-//     * agregar nuevo padecimiento al diente
-//     * @param DientePadecimiento $padecimiento
-//     * @throws \Exception
-//     */
-//    public function agregarPadecimiento(DientePadecimiento $padecimiento)
-//    {
-//        if (count($this->padecimientos) > 2) {
-//            throw new \Exception('Solo se permiten hasta dos padecimientos');
-//        }
-//        $this->padecimientos[] = $padecimiento;
-//    }
-//
+
    /**
     * remover todos los padecimientos del diente
     */
@@ -96,24 +85,7 @@ class Diente
        }
        $this->padecimientos[] = $padecimiento;
    }
-//
-//    /**
-//     * devolver un padecimiento en base a su id
-//     * @param $id
-//     * @return DientePadecimiento
-//     */
-//    public function padecimiento($id)
-//    {
-//        foreach ($this->padecimientos as $padecimiento) {
-//
-//            if($padecimiento->getId() === $id) {
-//                return $padecimiento;
-//            }
-//        }
-//
-//        return null;
-//    }
-//
+
 //    /**
 //     * indica si el tipo de diente es de leche o permanente
 //     * @return string
@@ -134,39 +106,21 @@ class Diente
     {
         return $this->tratamientos;
     }
-//
-//    /**
-//     * @param Collection $tratamientos
-//     */
-//    public function setListaTratamientos(Collection $tratamientos)
-//    {
-//        $this->tratamientos = $tratamientos;
-//    }
-//
-//    /**
-//     * agregar nuevo tratamiento al diente
-//     * @param int $indice
-//     * @param DientePlan $tratamiento
-//     * @throws \Exception
-//     */
-//    public function agregarTratamiento($indice, DientePlan $tratamiento)
-//    {
-//        if(is_null($this->tratamientos)) {
-//            $this->tratamientos = new Collection();
-//        }
-//
-//        /*if (count($this->tratamientos) === 2) {
-//            throw new \Exception('Solo se permiten hasta dos tratamientos por diente');
-//        }*/
-//
-//        // si ya está ocupada la posición, la elimina para permitir agregar uno nuevo
-//        if ($this->tratamientos->has($indice)) {
-//            $this->tratamientos->forget($indice);
-//        }
-//
-//        $this->tratamientos->put($indice, $tratamiento);
-//    }
-//
+
+    /**
+     * agregar nuevo tratamiento al diente
+     * @param DientePlan $tratamiento
+     * @throws SoloSePermitenDosTratamientosException
+     */
+    public function agregarTratamiento(DientePlan $tratamiento)
+    {
+        if (count($this->tratamientos) === 2) {
+            throw new SoloSePermitenDosTratamientosException('Solo se permiten hasta dos tratamientos por diente');
+        }
+
+        $this->tratamientos->add($tratamiento);
+    }
+
     /**
      * remover todos los tratamientos del diente
      */
@@ -176,24 +130,45 @@ class Diente
             $this->tratamientos->clear();
         }
     }
-//
-//    /**
-//     * devolver un padecimiento en base a su id
-//     * @param $id
-//     * @return DientePlan
-//     */
-//    public function tratamiento($id)
-//    {
-//        foreach ($this->tratamientos as $tratamiento) {
-//
-//            if($tratamiento->getId() === $id) {
-//                return $tratamiento;
-//            }
-//        }
-//
-//        return null;
-//    }
-//
+
+    /**
+     * comprueba que el tratamiento esté asignado al diente
+     * @param DienteTratamiento $dienteTratamiento
+     * @return bool
+     */
+    public function tieneElTratamientoAsignado(DienteTratamiento $dienteTratamiento)
+    {
+        foreach ($this->tratamientos as $dientePlan) {
+            if ($dientePlan->getDienteTratamiento()->getId() === $dienteTratamiento->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * eliminar el tratamiento especificado
+     * @param DienteTratamiento $dienteTratamiento
+     * @throws TratamientoNoExisteEnPlanActualException
+     */
+    public function eliminarTratamiento(DienteTratamiento $dienteTratamiento)
+    {
+        $encontrado = false;
+        foreach ($this->tratamientos as $dientePlan) {
+            if ($dientePlan->getDienteTratamiento()->getId() === $dienteTratamiento->getId()) {
+                $key = $this->tratamientos->key();
+
+                $this->tratamientos->remove($key);
+                $encontrado = true;
+            }
+        }
+
+        if (!$encontrado) {
+            throw new TratamientoNoExisteEnPlanActualException('El tratamiento especificado no existe en el plan actual.');
+        }
+    }
+
     /**
      * @return bool
      */

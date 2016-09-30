@@ -1,5 +1,6 @@
 <?php
 namespace Siacme\Dominio\Interconsultas;
+
 use Siacme\Dominio\Personas\Persona;
 use Siacme\Dominio\Usuarios\Especialidad;
 
@@ -7,6 +8,7 @@ use Siacme\Dominio\Usuarios\Especialidad;
  * Class MedicoReferencia
  * @package Siacme\Dominio\Interconsultas
  * @author  Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class MedicoReferencia extends Persona
 {
@@ -49,14 +51,6 @@ class MedicoReferencia extends Persona
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getDireccion()
@@ -65,26 +59,10 @@ class MedicoReferencia extends Persona
     }
 
     /**
-     * @param string $direccion
-     */
-    public function setDireccion($direccion)
-    {
-        $this->direccion = $direccion;
-    }
-
-    /**
      * @return Especialidad
      */
     public function getEspecialidad()
     {
         return $this->especialidad;
-    }
-
-    /**
-     * @param Especialidad $especialidad
-     */
-    public function setEspecialidad($especialidad)
-    {
-        $this->especialidad = $especialidad;
     }
 }

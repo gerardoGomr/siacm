@@ -5,6 +5,7 @@ namespace Siacme\Dominio\Consultas;
  * Class ConsultaCosto
  * @package Siacme\Dominio\Consultas
  * @author Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class ConsultaCosto
 {
@@ -22,6 +23,11 @@ class ConsultaCosto
      * @var double
      */
     private $costo;
+
+    /**
+     * @var bool
+     */
+    private $asignadoAPrimeraVez;
 
     /**
      * ConsultaCosto constructor.
@@ -45,27 +51,11 @@ class ConsultaCosto
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getConcepto()
     {
         return $this->concepto;
-    }
-
-    /**
-     * @param string $concepto
-     */
-    public function setConcepto($concepto)
-    {
-        $this->concepto = $concepto;
     }
 
     /**
@@ -77,11 +67,11 @@ class ConsultaCosto
     }
 
     /**
-     * @param float $costo
+     * @return boolean
      */
-    public function setCosto($costo)
+    public function asignadoAPrimeraVez()
     {
-        $this->costo = $costo;
+        return $this->asignadoAPrimeraVez;
     }
 
     /**

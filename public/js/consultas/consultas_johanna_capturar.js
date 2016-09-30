@@ -15,10 +15,11 @@ $(function() {
 		ignore: []
 	});
 
-	$('#planDeTratamiento').niceScroll();
-
 	// validar formulario
 	agregaValidacionesElementos($formConsulta);
+
+	// validar el costo de la consulta
+	asignarCostoAConsulta();
 
 	// evento click de los dientes
 	$('#dvOdontograma').on('click', 'a.diente', function(event) {
@@ -89,7 +90,7 @@ $(function() {
 				$('#dvPadecimientosDentales').modal('hide');
 
 				// activar boton de plan
-				$btnGenerarPlan.attr('disabled', false);
+				$('#btnGenerarPlan').attr('disabled', false);
 			}
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
@@ -102,46 +103,55 @@ $(function() {
 	// change para mostrar receta
 	$('#receta').on('change', function() {
 		var receta = atob($('input[name="receta' + $(this).val() + '"]').val());
-		$('#txtReceta').val(receta);
+		$('#cuerpoReceta').val(receta);
 	});
 
 	// guardar receta
 	$btnGuardarReceta.on('click', function(event) {
 		event.preventDefault();
 
-		// objeto a enviar
 		var datos = {
-			_token:   $formConsulta.find('input[name="_token"]').val(),
-			idReceta: $('#receta').val(),
-			receta:   btoa($('#txtReceta').val())
-		};
+				_token:   $formConsulta.find('input[name="_token"]').val(),
+				recetaId: $('#receta').val(),
+				receta:   btoa($('#cuerpoReceta').val())
+			},
+			url   = $btnGuardarReceta.attr('href');
 
-		var respuesta = ajax($(this).attr('href'), 'post', 'html', datos, 'guardar');
-		respuesta.done(function(resultado) {
+		$.ajax({
+			url:      url,
+			type:     'post',
+			dataType: 'json',
+			data:     datos,
+			beforeSend: function() {
+				$('#modalLoading').modal('show');
+			}
+		})
+		.done(function(resultado) {
+			$('#modalLoading').modal('hide');
 			console.log(resultado);
 
-			if(resultado === '0') {
-				bootbox.alert('Ocurrió un error al guardar la receta.');
-				return false;
+			if(resultado.estatus === 'fail') {
+				bootbox.alert('Ocurrió un error al anexar la receta a la consulta actual.');
 			}
 
-			bootbox.alert('Receta guardada', function() {
-				// cerrar modal
-				//$('#dvRecetas').modal('hide');
-				$('#generarReceta').attr('disabled', false);
-				$('#generoReceta').val(1);
-			});
+			if (resultado.estatus === 'OK') {
+				bootbox.alert('Se anexó la receta a la consulta actual.', function() {
+					$('#generarReceta').attr('disabled', false);
+					$('#generoReceta').val('1');
+				});
+			}
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log(textStatus + ': ' + errorThrown);
-			bootbox.alert('Imposible realizar la operación solicitada');
+			$('#modalLoading').modal('hide');
+			bootbox.alert('Ocurrió un error al anexar la receta a la consulta actual.');
 		});
 	});
 
 	// interconsulta
 	$btnGuardarInterconsulta.on('click', function(event) {
 		event.preventDefault();
-		if ($('#txtReferencia').val() === '') {
+		if ($('#referencia').val() === '') {
 			bootbox.alert('Por favor, escriba una referencia');
 			return false;
 		}
@@ -152,30 +162,40 @@ $(function() {
 		}
 		// objeto a enviar
 		var datos = {
-			_token:   $formConsulta.find('input[name="_token"]').val(),
-			idMedico: $('#medico').val(),
-			referencia:   btoa($('#txtReferencia').val())
-		};
+				_token:     $formConsulta.find('input[name="_token"]').val(),
+				medicoId:   $('#medico').val(),
+				referencia: btoa($('#referencia').val())
+			},
+			url   = $btnGuardarInterconsulta.attr('href');
 
-		var respuesta = ajax($(this).attr('href'), 'post', 'html', datos, 'guardar');
-		respuesta.done(function(resultado) {
+		$.ajax({
+			url:      url,
+			type:     'post',
+			dataType: 'json',
+			data:     datos,
+			beforeSend: function() {
+				$('#modalLoading').modal('show');
+			}
+		})
+		.done(function(resultado) {
+			$('#modalLoading').modal('hide');
 			console.log(resultado);
 
-			if(resultado === '0') {
-				bootbox.alert('Ocurrió un error al generar la interconsulta.');
-				return false;
+			if(resultado.estatus === 'fail') {
+				bootbox.alert('Ocurrió un error al anexar la interconsulta a la consulta actual.');
 			}
 
-			bootbox.alert('Interconsulta guardada', function() {
-				// cerrar modal
-				//$('#dvInterconsulta').modal('hide');
-				$('#generarInterconsulta').attr('disabled', false);
-				$('#generoInterconsulta').val(1);
-			});
+			if (resultado.estatus === 'OK') {
+				bootbox.alert('Se anexó la interconsulta a la consulta actual.', function() {
+					$('#generarInterconsulta').attr('disabled', false);
+					$('#generoInterconsulta').val('1');
+				});
+			}
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log(textStatus + ': ' + errorThrown);
-			bootbox.alert('Imposible realizar la operación solicitada');
+			$('#modalLoading').modal('hide');
+			bootbox.alert('Ocurrió un error al anexar la interconsulta a la consulta actual.');
 		});
 	});
 
@@ -199,91 +219,100 @@ $(function() {
 					bootbox.alert('Por favor, genere el plan de tratamiento para el odontograma del paciente');
 					return false;
 				} else {
-					bootbox.confirm('¿El plan de tratamiento está generado de manera correcta?', function (r) {
+					bootbox.confirm('¿El plan de tratamiento está generado de manera correcta?', function (eleccion) {
 
-						if (r) {
-							// guardar form
+						if (eleccion) {
+							// generar objeto de datos
 							var datos 		   = $formConsulta.serialize(),
 								tipoEncontrado = false;
 
 							// agregando valor de anestesia general si asi procede
-							$formConsulta.find('input.costoConsulta').each(function() {
-								if ($(this).attr('checked') === 'checked') {
-									if ($(this).data('id') === 7) {
-										/*bootbox.confirm('Se marcó el cobro de tratamiento por anestesia general y se inhabilitará el plan de tratamiento actual si está aún activo. ¿Desea continuar?', function(e){
-											if (e === true) {
-												tipoEncontrado = true;
-											}
-										});*/
-										datos += '&tipoCostoConsulta=7';
-									}
+							//$formConsulta.find('input.costoConsulta').each(function() {
+							//	if ($(this).attr('checked') === 'checked') {
+							//		if ($(this).data('id') === 7) {
+							//			/*bootbox.confirm('Se marcó el cobro de tratamiento por anestesia general y se inhabilitará el plan de tratamiento actual si está aún activo. ¿Desea continuar?', function(e){
+							//				if (e === true) {
+							//					tipoEncontrado = true;
+							//				}
+							//			});*/
+							//			datos += '&tipoCostoConsulta=7';
+							//		}
+							//	}
+							//});
+
+							$.ajax({
+								url:        $formConsulta.attr('action'),
+								type:       'post',
+								dataType:   'json',
+								data:       datos,
+								beforeSend: function () {
+									$('#modalLoading').modal('show');
 								}
-							});
 
-							var respuesta = ajax($formConsulta.attr('action'), 'post', 'json', datos, 'guardar');
-							respuesta.done(function(resultado) {
-								console.log(resultado);
+							}).done(function (respuesta) {
+								$('#modalLoading').modal('hide');
 
-								if(resultado.respuesta === '0') {
-									bootbox.alert('Ocurrió un error al generar la consulta.');
-									return false;
+								if (respuesta.estatus === 'fail') {
+									bootbox.alert('Ocurrió un error al generar la consulta. Por favor, intente de nuevo.');
 								}
 
-								bootbox.alert('Consulta generada con éxito', function() {
-									// se guardó con éxito, retornar a pantalla de consultas agendadas
-									window.location.href = $('#url').val();
-								});
-							})
-							.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+								if (respuesta.estatus === 'OK') {
+									bootbox.alert('La consulta se guardó exitósamente.', function () {
+										// redirigir a pantalla principal
+									});
+								}
+
+							}).fail(function (XMLHttpRequest, textStatus, errorThrown) {
 								console.log(textStatus + ': ' + errorThrown);
-								bootbox.alert('Imposible realizar la operación solicitada');
+								$('#modalLoading').modal('hide');
+								bootbox.alert('Ocurrió un error al generar la consulta. Por favor, intente de nuevo.');
 							});
 						}
 					});
 				}
 			} else {
 				// guardar form
-				var datos 		   = $formConsulta.serialize(),
-					tipoEncontrado = false;
-
-				// agregando valor de anestesia general si asi procede
-				$formConsulta.find('input.costoConsulta').each(function() {
-					if ($(this).attr('checked') === 'checked') {
-						if ($(this).data('id') === 7) {
-							/*bootbox.confirm('Se marcó el cobro de tratamiento por anestesia general y se inhabilitará el plan de tratamiento actual si está aún activo. ¿Desea continuar?', function(e){
-								if (e === true) {
-									tipoEncontrado = true;
-								}
-							});*/
-							datos += '&tipoCostoConsulta=7';
-						}
-					}
-				});
-
-				var respuesta = ajax($formConsulta.attr('action'), 'post', 'json', datos, 'guardar');
-				respuesta.done(function(resultado) {
-					console.log(resultado);
-
-					if(resultado.respuesta === '0') {
-						bootbox.alert('Ocurrió un error al generar la consulta.');
-						return false;
-					}
-
-					bootbox.alert('Consulta generada con éxito', function() {
-						// se guardó con éxito, retornar a pantalla de consultas agendadas
-						window.location.href = $('#url').val();
-					});
-				})
-				.fail(function(XMLHttpRequest, textStatus, errorThrown) {
-					console.log(textStatus + ': ' + errorThrown);
-					bootbox.alert('Imposible realizar la operación solicitada');
-				});
+				//var datos 		   = $formConsulta.serialize(),
+				//	tipoEncontrado = false;
+                //
+				//// agregando valor de anestesia general si asi procede
+				//$formConsulta.find('input.costoConsulta').each(function() {
+				//	if ($(this).attr('checked') === 'checked') {
+				//		if ($(this).data('id') === 7) {
+				//			/*bootbox.confirm('Se marcó el cobro de tratamiento por anestesia general y se inhabilitará el plan de tratamiento actual si está aún activo. ¿Desea continuar?', function(e){
+				//				if (e === true) {
+				//					tipoEncontrado = true;
+				//				}
+				//			});*/
+				//			datos += '&tipoCostoConsulta=7';
+				//		}
+				//	}
+				//});
+                //
+				//var respuesta = ajax($formConsulta.attr('action'), 'post', 'json', datos, 'guardar');
+				//respuesta.done(function(resultado) {
+				//	console.log(resultado);
+                //
+				//	if(resultado.respuesta === '0') {
+				//		bootbox.alert('Ocurrió un error al generar la consulta.');
+				//		return false;
+				//	}
+                //
+				//	bootbox.alert('Consulta generada con éxito', function() {
+				//		// se guardó con éxito, retornar a pantalla de consultas agendadas
+				//		window.location.href = $('#url').val();
+				//	});
+				//})
+				//.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+				//	console.log(textStatus + ': ' + errorThrown);
+				//	bootbox.alert('Imposible realizar la operación solicitada');
+				//});
 			}
 		}
 	});
 
 	// costos de consulta
-	$formConsulta.on('click', 'input.costoConsulta', function(event) {
+	$formConsulta.on('click', 'input.consultaCosto', function(event) {
 		if($(this).attr('checked') === 'checked') {
 			costoTotalConsulta += Number($(this).val());
 		} else {
@@ -306,4 +335,19 @@ $(function() {
 
 		$('#costoAsignadoConsulta').val(costoTotalConsulta);
 	});
+
+	/**
+	 * se ejecuta una sola vez
+	 */
+	function asignarCostoAConsulta() {
+		$formConsulta.find('input.consultaCosto').each(function() {
+			if ($(this).is(':checked')) {
+				costoTotalConsulta += Number($(this).data('value'));
+			}
+		});
+
+		if (costoTotalConsulta > 0) {
+			$('#costoAsignadoConsulta').val(costoTotalConsulta);
+		}
+	}
 });

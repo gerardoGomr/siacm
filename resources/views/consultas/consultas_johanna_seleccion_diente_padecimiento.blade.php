@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <button type="button" data-url="{{ route('asignar-diente-padecimiento') }}" class="btn btn-success" id="btnGuardarPadecimientoDental">Asignar padecimientos al diente</a>
+                    <button type="button" data-url="{{ route('asignar-diente-padecimiento') }}" class="btn btn-success" id="btnGuardarPadecimientoDental">Asignar padecimientos al diente</button>
                     <input type="hidden" name="diente" id="diente" value="">
                 </div>
                 <div class="form-group">

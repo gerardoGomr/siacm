@@ -26,6 +26,19 @@ $(document).ready(function() {
 
             if (respuesta.estatus === 'OK') {
                 $('#resultadoCitas').html(respuesta.html);
+
+                setTimeout(function() {
+                    var totalResultados = $('#totalResultados').val();
+                    if (totalResultados === '1') {
+                        var url   = $('#resultadoCitas').data('url'),
+                            datos = {
+                                citaId:  $('#resultadoCitas').find('li.paciente').first().data('id'),
+                                _token:  $('#formCitas').find('input[name="_token"]').val()
+                            };
+
+                        mostrarCitas(url, datos);
+                    }
+                }, 500);
             }
 
         }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -37,7 +50,6 @@ $(document).ready(function() {
 
     // click en lista y cargar contenido derecho
     $('#resultadoCitas').on('click', 'li.paciente', function() {
-        //efecto de active
         $(this).addClass('active');
         $(this).siblings('li.active').removeClass('active');
 
@@ -47,6 +59,10 @@ $(document).ready(function() {
                 _token:  $('#formCitas').find('input[name="_token"]').val()
             };
 
+        mostrarCitas(url, datos);
+    });
+
+    function mostrarCitas(url, datos) {
         $.ajax({
             url:        url,
             type:       'post',
@@ -72,6 +88,6 @@ $(document).ready(function() {
             bootbox.alert('Ocurrió un error al revisar el detalle de la cita. Intente de nuevo');
             console.log(textStatus + ': ' + errorThrown);
         });
-    });
+    }
 });
 

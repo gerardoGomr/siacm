@@ -1,0 +1,49 @@
+Siacme\Dominio\Consultas\Consulta:
+  type: entity
+  table: consulta
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    fecha:
+      type: date
+      column: Fecha
+    padecimientoActual:
+      type: string
+      column: PadecimientoActual
+    interrogatorioAparatosSistemas:
+      type: string
+      column: Interrogatorio
+    notaMedica:
+      type: string
+      column: Nota
+    costo:
+      type: float
+      column: Costo
+  oneToOne:
+    comportamientoFrankl:
+      targetEntity: Siacme\Dominio\Expedientes\ComportamientoFrankl
+      joinColumn:
+        name: ComportamientoFranklId
+        referencedColumnName: id
+      cascade: [persist]
+    receta:
+      targetEntity: Receta
+      joinColumn:
+        name: RecetaId
+        referencedColumnName: id
+      cascade: [persist]
+    medico:
+      targetEntity: Siacme\Dominio\Usuarios\Usuario
+      joinColumn:
+        name: UsuarioId
+        referencedColumnName: id
+      cascade: [persist]
+  manyToOne:
+    expediente:
+      targetEntity: Siacme\Dominio\Expedientes\Expediente
+      inversedBy: consultas
+      joinColumn:
+        name: ExpedienteId
+        referencedColumnName: id

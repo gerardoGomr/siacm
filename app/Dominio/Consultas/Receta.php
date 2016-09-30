@@ -1,11 +1,13 @@
 <?php
 namespace Siacme\Dominio\Consultas;
-use Siacme\Dominio\Fecha;
+
+use Siacme\Aplicacion\Fecha;
 
 /**
  * Class Receta
  * @package Siacme\Dominio\Consultas
  * @author  Gerardo Adrián Gómez Ruiz
+ * @version 1.0
  */
 class Receta
 {
@@ -48,14 +50,6 @@ class Receta
     }
 
     /**
-     * @param int $id the id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return string
      */
     public function getReceta()
@@ -64,27 +58,11 @@ class Receta
     }
 
     /**
-     * @param string $receta
-     */
-    public function setReceta($receta)
-    {
-        $this->receta = $receta;
-    }
-
-    /**
      * @return string
      */
     public function getNombre()
     {
         return $this->nombre;
-    }
-
-    /**
-     * @param string $nombre
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
     }
 
     /**

@@ -26,11 +26,13 @@ return [
             'meta'       => env('DOCTRINE_METADATA'),
             'connection' => env('DB_CONNECTION'),
             'namespaces' => [
-                'Dominio'     => 'Siacme\Dominio',
-                'Usuarios'    => 'Siacme\Dominio\Usuarios',
-                'Pacientes'   => 'Siacme\Dominio\Pacientes',
-                'Citas'       => 'Siacme\Dominio\Citas',
-                'Expedientes' => 'Siacme\Dominio\Expedientes',
+                'Dominio'        => 'Siacme\Dominio',
+                'Usuarios'       => 'Siacme\Dominio\Usuarios',
+                'Pacientes'      => 'Siacme\Dominio\Pacientes',
+                'Consultas'      => 'Siacme\Dominio\Consultas',
+                'Citas'          => 'Siacme\Dominio\Citas',
+                'Expedientes'    => 'Siacme\Dominio\Expedientes',
+                'Interconsultas' => 'Siacme\Dominio\Interconsultas'
             ],
             'paths'      => [
                 base_path('app/Dominio'),

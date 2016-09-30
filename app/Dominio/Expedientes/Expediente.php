@@ -1,8 +1,10 @@
 <?php
 namespace Siacme\Dominio\Expedientes;
 
+use Siacme\Dominio\Consultas\Consulta;
+use Siacme\Dominio\Interconsultas\Interconsulta;
+use Siacme\Dominio\Listas\IColeccion;
 use Siacme\Dominio\Pacientes\Paciente;
-use Siacme\Dominio\Usuarios\Usuario;
 
 /**
  * Class Expediente
@@ -258,14 +260,28 @@ class Expediente
     protected $institucionMedica;
 
     /**
+     * @var IColeccion
+     */
+    protected $consultas;
+
+    /**
+     * @var IColeccion
+     */
+    protected $interconsultas;
+
+    /**
      * Expediente constructor.
      * @param Paciente $paciente
+     * @param IColeccion $consultas
+     * @param IColeccion $interconsultas
      * @param AbstractExpediente $expedienteEspecialidad
      */
-	public function __construct(Paciente $paciente = null, AbstractExpediente $expedienteEspecialidad = null)
+	public function __construct(Paciente $paciente = null, IColeccion $consultas, IColeccion $interconsultas, AbstractExpediente $expedienteEspecialidad = null)
 	{
         $this->paciente               = $paciente;
         $this->expedienteEspecialidad = $expedienteEspecialidad;
+        $this->consultas              = $consultas;
+        $this->interconsultas         = $interconsultas;
 	}
 
 	/**
@@ -661,6 +677,14 @@ class Expediente
     }
 
     /**
+     * @return IColeccion
+     */
+    public function getConsultas()
+    {
+        return $this->consultas;
+    }
+
+    /**
      * verificar si tiene foto
      * @return bool
      */
@@ -675,6 +699,10 @@ class Expediente
         return true;
     }
 
+    /**
+     * asignar fotografía
+     * @param Fotografia $fotografia
+     */
     public function asignarFoto(Fotografia $fotografia)
     {
         $this->fotografia = $fotografia;
@@ -809,5 +837,23 @@ class Expediente
     public function revisadoPorPaciente()
     {
         $this->expedienteEspecialidad->revisadoPorPaciente();
+    }
+
+    /**
+     * anexar una consulta al expediente
+     * @param Consulta $consulta
+     */
+    public function agregarConsulta(Consulta $consulta)
+    {
+        $this->consultas->add($consulta);
+    }
+
+    /**
+     * anexar una interconsulta al expediente
+     * @param Interconsulta $interconsulta
+     */
+    public function agregarInterconsulta(Interconsulta $interconsulta)
+    {
+        $this->interconsultas->add($interconsulta);
     }
 }

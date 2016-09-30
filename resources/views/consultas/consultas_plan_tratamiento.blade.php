@@ -1,16 +1,15 @@
-<div id="planDeTratamiento" class="modal fade" aria-hidden="true">
+<div id="planDeTratamiento" class="modal fade" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" style="width: 900px; height: 600px; overflow: auto">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Plan de tratamiento</h4>
-                <button class="close" aria-hidden="true" data-dismiss="modal" type="button">X</button>
             </div>
             <div class="modal-body">
                 <button type="button" id="btnAceptar" class="btn btn-success"><i class="fa fa-check"></i> Aceptar</button>
-                <a href="" id="generarPlan" class="btn btn-success" disabled="disabled" target="_blank"><i class="fa fa-print"></i> Generar PDF</a>
+                <a href="{{ url('consultas/plan/pdf/' . base64_encode($paciente->getId())) }}" id="generarPlan" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Generar PDF</a>
                 <div class="separator"></div>
                 <div class="form-group">
-                    <label class="control-label">Otros tratamientos:</label>
+                    <label for="otrosTratamientos" class="control-label">Otros tratamientos:</label>
                     <div class="row">
                         <div class="col-md-7">
                             <div class="input-group">
@@ -21,7 +20,7 @@
                                     @endforeach
                                 </select>
                                 <div class="input-group-btn">
-                                    <button type="button" data-url="{{ url('consultas/plan/tratamientos/otros/agregar') }}" class="btn btn-primary btn-small" id="btnAgregarOtroTratamiento"><i class="fa fa-plus"></i> Agregar a plan</a>
+                                    <button type="button" data-url="{{ url('consultas/plan/tratamientos/otros/agregar') }}" class="btn btn-primary btn-small" id="btnAgregarOtroTratamiento"><i class="fa fa-plus"></i> Agregar a plan</button>
                                 </div>
                             </div>  
                         </div>    
@@ -31,7 +30,8 @@
 
                 </div>
                 <input type="hidden" id="urlEliminarOtroTratamiento" value="{{ url('consultas/plan/tratamientos/otros/eliminar') }}">
-                <input type="hidden" id="urlAgregarTratamientos" value="{{ url('consultas/plan/tratamientos/agregar') }}">
+                <input type="hidden" id="urlAgregarTratamiento" value="{{ url('consultas/plan/tratamientos/agregar') }}">
+                <input type="hidden" id="urlEliminarTratamiento" value="{{ url('consultas/plan/tratamientos/eliminar') }}">
             </div>
         </div>
     </div>

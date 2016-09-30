@@ -61,56 +61,6 @@ class ExpedienteJohanna extends AbstractExpediente
     protected $notas;
 
     /**
-     * @var string
-     */
-    protected $labios;
-
-    /**
-     * @var string
-     */
-    protected $carrillos;
-
-    /**
-     * @var string
-     */
-    protected $frenillos;
-
-    /**
-     * @var string
-     */
-    protected $paladar;
-
-    /**
-     * @var string
-     */
-    protected $lengua;
-
-    /**
-     * @var string
-     */
-    protected $pisoDeBoca;
-
-    /**
-     * @var string
-     */
-    protected $parodonto;
-
-    /**
-     * @var string
-     */
-    protected $uvula;
-
-    /**
-     * @var string
-     */
-    protected $amigdalas;
-
-    /**
-     * @var string
-     */
-    protected $orofaringe;
-
-    /**
      * @var int
      */
     protected $edadErupcionoPrimerDiente;
@@ -378,6 +328,11 @@ class ExpedienteJohanna extends AbstractExpediente
     /**
      * @var bool
      */
+    protected $tipoArcoII;
+
+    /**
+     * @var bool
+     */
     protected $mordidaBordeBorde;
 
     /**
@@ -541,24 +496,14 @@ class ExpedienteJohanna extends AbstractExpediente
     protected $trastornoLenguaje;
 
     /**
-     * @var MorfologiaCraneofacial
+     * @var ExamenExtraoral
      */
-    protected $morfologiaCraneofacial;
+    protected $examenExtraoral;
 
     /**
-     * @var MorfologiaFacial
+     * @var ExamenIntraoral
      */
-    protected $morfologiaFacial;
-
-    /**
-     * @var ConvexividadFacial
-     */
-    protected $convexividadFacial;
-
-    /**
-     * @var ATM
-     */
-    protected $atm;
+    protected $examenIntraoral;
 
     /**
      * @return string
@@ -638,86 +583,6 @@ class ExpedienteJohanna extends AbstractExpediente
     public function getNotas()
     {
         return $this->notas;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLabios()
-    {
-        return $this->labios;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCarrillos()
-    {
-        return $this->carrillos;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFrenillos()
-    {
-        return $this->frenillos;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPaladar()
-    {
-        return $this->paladar;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLengua()
-    {
-        return $this->lengua;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPisoDeBoca()
-    {
-        return $this->pisoDeBoca;
-    }
-
-    /**
-     * @return string
-     */
-    public function getParodonto()
-    {
-        return $this->parodonto;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUvula()
-    {
-        return $this->uvula;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAmigdalas()
-    {
-        return $this->amigdalas;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOrofaringe()
-    {
-        return $this->orofaringe;
     }
 
     /**
@@ -1409,35 +1274,11 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return MorfologiaCraneofacial
+     * @return ExamenExtraoral
      */
-    public function getMorfologiaCraneofacial()
+    public function getExamenExtraoral()
     {
-        return $this->morfologiaCraneofacial;
-    }
-
-    /**
-     * @return MorfologiaFacial
-     */
-    public function getMorfologiaFacial()
-    {
-        return $this->morfologiaFacial;
-    }
-
-    /**
-     * @return ConvexividadFacial
-     */
-    public function getConvexividadFacial()
-    {
-        return $this->convexividadFacial;
-    }
-
-    /**
-     * @return ATM
-     */
-    public function getAtm()
-    {
-        return $this->atm;
+        return $this->examenExtraoral;
     }
 
     /**
@@ -1561,6 +1402,47 @@ class ExpedienteJohanna extends AbstractExpediente
 
         if ($this->otroHabito) {
             $this->descripcionHabito = $especifiqueHabito;
+        }
+    }
+
+    /**
+     * @param ExamenExtraoral $examen
+     */
+    public function agregarExamenExtraoral(ExamenExtraoral $examen)
+    {
+        $this->examenExtraoral = $examen;
+    }
+
+    /**
+     * @param ExamenIntraoral $examen
+     */
+    public function agregarExamenIntraoral(ExamenIntraoral $examen)
+    {
+        $this->examenIntraoral = $examen;
+    }
+
+    /**
+     * agregar los tipos de arco
+     * @param $arcoI
+     * @param $arcoII
+     */
+    public function agregarArcos($arcoI, $arcoII)
+    {
+        $this->tipoArcoI  = $arcoI;
+        $this->tipoArcoII = $arcoII;
+    }
+
+    /**
+     * @return string
+     */
+    public function tipoArco()
+    {
+        if ($this->tipoArcoI) {
+            return 'Tipo Arco I';
+        }
+
+        if ($this->tipoArcoII) {
+            return 'Tipo Arco II';
         }
     }
 }

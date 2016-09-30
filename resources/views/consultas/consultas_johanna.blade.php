@@ -11,6 +11,7 @@
 							<div class="media-body innerAll half">
 								<h4 class="media-heading">{{ $expediente->getPaciente()->nombreCompleto() }}</h4>
 								<p>{{ $expediente->getPaciente()->getEdadAnios() }} años<br/>Vive en: {{ $expediente->getPaciente()->getLugarNacimiento() }}<br/>Expediente {{ $expediente->getExpedienteEspecialidad()->numero() }}</p>
+								<p><a href="{{ url('expedientes/ver/' . base64_encode($paciente->getId()) . '/' . base64_encode($medico->getId())) }}" class="btn btn-success btn-xs" target="_blank"><i class="fa fa-eye"></i> Ver expediente</a></p>
 							</div>
 						</div>
 					</div>
@@ -89,7 +90,10 @@
 
 @include('modal_loading')
 @include('consultas.consultas_plan_tratamiento')
+@include('consultas.consultas_johanna_receta')
+@include('consultas.consultas_johanna_interconsulta')
 
 @section('js')
+	<script src="{{ asset('public/js/consultas/consultas_plan_tratamiento.js') }}"></script>
 	<script src="{{ asset('public/js/consultas/consultas_johanna_capturar.js') }}"></script>
 @stop

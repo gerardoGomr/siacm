@@ -7,6 +7,9 @@ use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Pacientes\Paciente;
 use Siacme\Dominio\Usuarios\Usuario;
+use Siacme\Infraestructura\Consultas\DoctrineConsultaCostosRepositorio;
+use Siacme\Infraestructura\Consultas\DoctrineRecetasRepositorio;
+use Siacme\Infraestructura\Interconsultas\DoctrineMedicosReferenciaRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineAtmsRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineComportamientosFranklRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineConvexividadesFacialesRepositorio;
@@ -44,7 +47,10 @@ class VistasConsultasFactory
                 $convexividadesFacialesRepositorio    = new DoctrineConvexividadesFacialesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
                 $atmsRepositorio                      = new DoctrineAtmsRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
                 $dientePadecimientosRepositorio       = new DoctrineDientePadecimientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $otrosTratamientosRepositorio  = new DoctrineOtrosTratamientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+                $otrosTratamientosRepositorio         = new DoctrineOtrosTratamientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+                $recetasRepositorio                   = new DoctrineRecetasRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+                $medicosReferenciaRepositorio         = new DoctrineMedicosReferenciaRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+                $consultaCostosRepositorio            = new DoctrineConsultaCostosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
 
                 $comportamientosFrankl     = $comportamientosFranklRepositorio->obtenerTodos();
                 $morfologiasCraneofaciales = $morfologiasCraneofacialesRepositorio->obtenerTodos();
@@ -53,6 +59,9 @@ class VistasConsultasFactory
                 $atms                      = $atmsRepositorio->obtenerTodos();
                 $dientePadecimientos       = $dientePadecimientosRepositorio->obtenerTodos();
                 $otrosTratamientos         = $otrosTratamientosRepositorio->obtenerTodos();
+                $recetas                   = $recetasRepositorio->obtenerTodos();
+                $medicosReferencia         = $medicosReferenciaRepositorio->obtenerTodos();
+                $consultaCostos            = $consultaCostosRepositorio->obtenerTodos();
 
                 if ($expediente->getExpedienteEspecialidad()->primeraVez()) {
                     // construir y generar odontograma
@@ -65,7 +74,7 @@ class VistasConsultasFactory
                     request()->session()->put('odontograma', $odontograma);
                 }
 
-                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos'));
+                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'consultaCostos'));
                 break;
         }
 

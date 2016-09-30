@@ -32,6 +32,23 @@ class DoctrineDienteTratamientosRepositorio implements DienteTratamientosReposit
     public function obtenerPorId($id)
     {
         // TODO: Implement obtenerPorId() method.
+        try {
+            $query              = $this->entityManager->createQuery("SELECT d FROM Expedientes:DienteTratamiento d WHERE d.id = :id")
+                ->setParameter('id', $id);
+
+            $dienteTratamiento = $query->getResult();
+
+            if (count($dienteTratamiento) === 0) {
+                return null;
+            }
+
+            return $dienteTratamiento[0];
+
+        } catch (PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
     }
 
     /**

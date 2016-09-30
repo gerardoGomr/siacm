@@ -264,4 +264,12 @@ class Cita
 
 		return $color;
 	}
+
+	/**
+	 * marcar la cita como atendida
+	 */
+	public function atender()
+	{
+		$this->estatus = CitaEstatus::ATENDIDA;
+	}
 }

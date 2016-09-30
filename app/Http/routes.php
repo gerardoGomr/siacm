@@ -90,12 +90,15 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
 	// abrir pantalla de selección de estatus, pasando el número de diente
 	Route::get('consultas/odontograma/estatus/{id}', 'Consultas\ConsultasController@seleccionEstatus');
+
 	// guardar estatus para el odontograma
 	Route::post('consultas/odontograma/estatus/asignar', 'Consultas\ConsultasController@asignarEstatusDental');
+
 	// pintar odontograma
 	Route::post('consultas/odontograma/dibujar', 'Consultas\ConsultasController@dibujar');
-	// ventana recetas
-	Route::get('consultas/receta/agregar', 'Consultas\ConsultasController@capturaReceta');
+
+	// agregar una receta a la consulta
+	Route::post('consultas/receta/agregar', 'Consultas\ConsultasController@agregarReceta');
 
 	// asignar padecimientos al diente
 	Route::post('consultas/asignar/diente/padecimiento', [
@@ -109,9 +112,6 @@ Route::group(['middleware' => 'checaLogin'], function() {
 		'uses' => 'Consultas\ConsultasController@verPlan'
 	]);
 
-	// abrir ventana para plan de tratamiento
-	// Route::get('consultas/plan/agregar/{med}/{id}', 'Consultas\ConsultasController@verPlan');
-
 	// agregar un tratamiento a un diente
 	Route::post('consultas/plan/tratamientos/agregar', 'Consultas\ConsultasController@agregarTratamiento');
 
@@ -121,23 +121,23 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// eliminar otro tratamiento del plan
 	Route::post('consultas/plan/tratamientos/otros/eliminar', 'Consultas\ConsultasController@eliminarOtroTratamiento');
 
-	// agregar receta
-	Route::post('consultas/capturar/receta', 'Consultas\ConsultasController@agregarReceta');
-
-	// agregar interconsulta
-	Route::post('consultas/capturar/interconsulta', 'Consultas\ConsultasController@agregarInterconsulta');
-
-	// guardar consulta
-	Route::post('consultas/guardar', 'Consultas\ConsultasController@guardar');
-
-	// imprimir receta
-	Route::get('consultas/receta/{med}/{id}', 'Consultas\ConsultasController@receta');
-
-	// imprimir interconsulta
-	Route::get('consultas/interconsulta/{med}/{id}', 'Consultas\ConsultasController@interconsulta');
+	// eliminar tratamiento del plan
+	Route::post('consultas/plan/tratamientos/eliminar', 'Consultas\ConsultasController@eliminarTratamiento');
 
 	// imprimir plan
-	Route::get('consultas/plan/{med}/{id}', 'Consultas\ConsultasController@plan');
+	Route::get('consultas/plan/pdf/{pacienteId}', 'Consultas\ConsultasController@planPDF');
+
+	// agregar interconsulta
+	Route::post('consultas/interconsulta/agregar', 'Consultas\ConsultasController@agregarInterconsulta');
+
+	// guardar consulta
+	Route::post('consultas/guardar', 'Consultas\ConsultasController@guardarConsulta');
+
+	// imprimir receta
+	Route::get('consultas/receta/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarRecetaEnPDF');
+
+	// imprimir interconsulta
+	Route::get('consultas/interconsulta/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarInterconsultaEnPDF');
 
 	/////////////////////////////////////////// PACIENTES //////////////////////////////////////////////
 	Route::get('pacientes/{med}', 'Pacientes\PacientesController@index');

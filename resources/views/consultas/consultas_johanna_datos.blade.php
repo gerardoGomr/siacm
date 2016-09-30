@@ -13,7 +13,7 @@
 						<label class="control-label col-md-3" for="peso">Peso:</label>
 						<div class="col-md-3">
 							<div class="input-group">
-								<input type="text" name="peso" id="peso" value="" placeholder="" class="required numeros form-control">
+								<input type="text" name="peso" id="peso" value="" placeholder="" class="required numerosFlotantes form-control">
 								<span class="input-group-addon">Kg.</span>
 							</div>
 						</div>
@@ -22,7 +22,7 @@
 						<label class="control-label col-md-3" for="talla">Talla:</label>
 						<div class="col-md-3">
 							<div class="input-group">
-								<input type="text" name="talla" id="talla" value="" placeholder="" class="required numeros form-control">
+								<input type="text" name="talla" id="talla" value="" placeholder="" class="required numerosFlotantes form-control">
 								<span class="input-group-addon">m.</span>
 							</div>
 						</div>
@@ -37,7 +37,7 @@
 						<label class="control-label col-md-3" for="temperatura">Temperatura:</label>
 						<div class="col-md-3">
 							<div class="input-group">
-								<input type="text" name="temperatura" id="temperatura" value="" placeholder="" class="required numeros form-control">
+								<input type="text" name="temperatura" id="temperatura" value="" placeholder="" class="required numerosFlotantes form-control">
 								<span class="input-group-addon">°C</span>
 							</div>
 						</div>
@@ -92,13 +92,26 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-md-3">Cuotas:</label>
-						<div class="col-md-3">
+						<label for="consultaCosto" class="control-label col-md-3">Cuotas:</label>
+						<div class="col-md-8">
+						@foreach($consultaCostos as $consultaCosto)
+							<?php
+							$checked = '';
+							$disabled = '';
+							?>
+							@if($expediente->getExpedienteEspecialidad()->primeraVez())
+								@if($consultaCosto->asignadoAPrimeraVez())
+									<?php $checked = 'checked' ?>
+								@else
+									<?php $disabled = 'disabled' ?>
+								@endif
+							@endif
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="costoConsulta[]" class="costoConsulta" data-id="" value=""> Concepto
+									<input type="checkbox" name="consultaCosto[]" class="consultaCosto" data-id="{{ $consultaCosto->getId() }}" {!! $checked . ' ' . $disabled !!} data-value="{{ $consultaCosto->getCosto() }}"> {{  $consultaCosto->getConcepto() . ' - ' . $consultaCosto->costo() }}
 								</label>
 							</div>
+						@endforeach
 						</div>
 					</div>
 					<div class="form-group">
@@ -106,7 +119,7 @@
 						<div class="col-md-3">
 							<div class="input-group">
 								<span class="input-group-addon">$</span>
-								<input type="text" name="costoAsignadoConsulta" id="costoAsignadoConsulta" placeholder="0.00" class="form-control required number" value="0">
+								<input type="text" name="costoAsignadoConsulta" id="costoAsignadoConsulta" placeholder="0.00" class="form-control required numerosFlotantes" value="0">
 							</div>
 						</div>
 					</div>
