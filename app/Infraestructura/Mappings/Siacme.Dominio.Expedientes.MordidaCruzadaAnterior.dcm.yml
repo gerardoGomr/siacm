@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\MordidaCruzadaAnterior:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: MordidaCruzadaAnterior
+    medida:
+      column: MedidaMordidaCruzadaAnterior

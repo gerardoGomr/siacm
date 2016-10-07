@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\AlteracionTextura:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: AlteracionesTextura
+    medida:
+      column: MedidaAlteracionesTextura

@@ -1,0 +1,15 @@
+Siacme\Dominio\Expedientes\DentincionMixtaPermanente:
+  type: mappedSuperclass
+  fields:
+    derechaI:
+      type: boolean
+    derechaII:
+      type: boolean
+    derechaIII:
+      type: boolean
+    izquierdaI:
+      type: boolean
+    izquierdaII:
+      type: boolean
+    izquierdaIII:
+      type: boolean

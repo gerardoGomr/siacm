@@ -1,0 +1,15 @@
+Siacme\Dominio\Expedientes\RelacionCaninaPermanente:
+  type: embeddable
+  attributeOverride:
+    derechaI:
+      column: RelacionCaninaDerechaI
+    derechaII:
+      column: RelacionCaninaDerechaII
+    derechaIII:
+      column: RelacionCaninaDerechaIII
+    izquierdaI:
+      column: RelacionCaninaIzquierdaI
+    izquierdaII:
+      column: RelacionCaninaIzquierdaII
+    izquierdaIII:
+      column: RelacionCaninaIzquierdaIII

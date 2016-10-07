@@ -2,6 +2,7 @@
 namespace Siacme\Infraestructura\Expedientes;
 
 use PDOException;
+use Siacme\Dominio\Expedientes\MorfologiaCraneofacial;
 use Siacme\Exceptions\PDO\PDOLogger;
 use Doctrine\ORM\EntityManager;
 use Monolog\Handler\StreamHandler;
@@ -26,11 +27,27 @@ class DoctrineMorfologiasCraneofacialesRepositorio
 
     /**
      * @param int $id
-     * @return mixed
+     * @return MorfologiaCraneofacial
      */
     public function obtenerPorId($id)
     {
         // TODO: Implement obtenerPorId() method.
+        try {
+            $query      = $this->entityManager->createQuery("SELECT m FROM Expedientes:MorfologiaCraneofacial m WHERE m.id = :id")
+                ->setParameter('id', $id);
+            $morfologias = $query->getResult();
+
+            if (count($morfologias) === 0) {
+                return null;
+            }
+
+            return $morfologias[0];
+
+        } catch (PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
     }
 
     /**

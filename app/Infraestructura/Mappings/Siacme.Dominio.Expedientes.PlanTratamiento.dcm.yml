@@ -1,0 +1,39 @@
+Siacme\Dominio\Expedientes\PlanTratamiento:
+  type: entity
+  table: plan_tratamiento
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    atendido:
+      type: boolean
+      column: Atendido
+    costo:
+      type: float
+      column: Costo
+    aQuienSeDirige:
+      type: string
+      column: AQuienSeDirige
+  manyToMany:
+    dientes:
+      targetEntity: Diente
+      joinTable:
+        name: diente_plan
+        joinColumns:
+          PlanTratamientoId:
+            referencedColumnName: id
+        inverseJoinColumns:
+          Numero:
+            referencedColumnName: Numero
+    otrosTratamientos:
+      targetEntity: OtroTratamiento
+      joinTable:
+        name: plan_tratamiento_otro
+        joinColumns:
+          PlanTratamientoId:
+            referencedColumnName: id
+        inverseJoinColumns:
+          Numero:
+            referencedColumnName: Numero

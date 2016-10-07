@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\MordidaAbiertaAnterior:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: MordidaAbiertaAnterior
+    medida:
+      column: MedidaMordidaAbiertaAnterior

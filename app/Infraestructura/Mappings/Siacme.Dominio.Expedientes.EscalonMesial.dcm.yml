@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\EscalonMesial:
+  type: embeddable
+  attributeOverride:
+    derecho:
+      column: EscalonMesialDerecho
+    izquierdo:
+      column: EscalonMesialIzquierdo

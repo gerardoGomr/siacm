@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\EscalonDistal:
+  type: embeddable
+  attributeOverride:
+    derecho:
+      column: EscalonDistalDerecho
+    izquierdo:
+      column: EscalonDistalIzquierdo

@@ -4,10 +4,32 @@ namespace Siacme\Aplicacion\Factories;
 use App;
 use DateTime;
 use Illuminate\Http\Request;
-use Siacme\Dominio\Expedientes\ExamenExtraoral;
+use Siacme\Dominio\Expedientes\AlteracionColor;
+use Siacme\Dominio\Expedientes\AlteracionEstructura;
+use Siacme\Dominio\Expedientes\AlteracionForma;
+use Siacme\Dominio\Expedientes\AlteracionNumero;
+use Siacme\Dominio\Expedientes\AlteracionTamanio;
+use Siacme\Dominio\Expedientes\AlteracionTextura;
+use Siacme\Dominio\Expedientes\DentincionTemporal;
+use Siacme\Dominio\Expedientes\EscalonDistal;
+use Siacme\Dominio\Expedientes\EscalonMesial;
+use Siacme\Dominio\Expedientes\EscalonRecto;
 use Siacme\Dominio\Expedientes\ExamenIntraoral;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ExpedienteJohanna;
+use Siacme\Dominio\Expedientes\LineaMediaDental;
+use Siacme\Dominio\Expedientes\LineaMediaEsqueletica;
+use Siacme\Dominio\Expedientes\MesialExagerado;
+use Siacme\Dominio\Expedientes\MesialNoDeterminado;
+use Siacme\Dominio\Expedientes\MordidaAbiertaAnterior;
+use Siacme\Dominio\Expedientes\MordidaBordeBorde;
+use Siacme\Dominio\Expedientes\MordidaCruzadaAnterior;
+use Siacme\Dominio\Expedientes\MordidaCruzadaPosterior;
+use Siacme\Dominio\Expedientes\RelacionCaninaPermanente;
+use Siacme\Dominio\Expedientes\RelacionCaninaTemporal;
+use Siacme\Dominio\Expedientes\RelacionMolar;
+use Siacme\Dominio\Expedientes\SobremordidaHorizontal;
+use Siacme\Dominio\Expedientes\SobremordidaVertical;
 use Siacme\Dominio\Pacientes\Domicilio;
 use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Infraestructura\Expedientes\DoctrineAtmsRepositorio;
@@ -38,9 +60,9 @@ class ExpedientesAgregarDatosConsultaFactory
         switch ($medico->getId()) {
             case Usuario::JOHANNA:
                 // crear expediente y detalle
-                $craneofacialId                = (int)$request->get('craneofacial');
-                $facialId                      = (int)$request->get('facial');
-                $convexividadId                = (int)$request->get('convexividad');
+                $craneofacialId                = (int)$request->get('morfologiaCraneofacial');
+                $facialId                      = (int)$request->get('morfologiaFacial');
+                $convexividadId                = (int)$request->get('convexividadFacial');
                 $atmId                         = (int)$request->get('atm');
                 $labios                        = $request->get('labios');
                 $carrillos                     = $request->get('carrillos');
@@ -118,13 +140,50 @@ class ExpedientesAgregarDatosConsultaFactory
                 $convexividadFacial     = $convexividadesFacialesRepositorio->obtenerPorId($convexividadId);
                 $atm                    = $atmsRepositorio->obtenerPorId($atmId);
 
-                $examenExtraoral = new ExamenExtraoral($morfologiaCraneofacial, $morfologiaFacial, $convexividadFacial, $atm);
-                $expediente->getExpedienteEspecialidad()->agregarExamenExtraoral($examenExtraoral);
+                $expediente->getExpedienteEspecialidad()->agregarExamenExtraoral($morfologiaCraneofacial, $morfologiaFacial, $convexividadFacial, $atm);
 
                 $examenIntraoral = new ExamenIntraoral($labios, $carrillos, $frenillos, $paladar, $lengua, $pisoBoca, $parodonto, $uvula, $orofaringe);
                 $expediente->getExpedienteEspecialidad()->agregarExamenIntraoral($examenIntraoral);
 
                 $expediente->getExpedienteEspecialidad()->agregarArcos($arcoI, $arcoII);
+
+                // agregar dentinción temporal
+                $escalonMesial          = new EscalonMesial($mesialDerecho, $mesialIzquierdo);
+                $escalonDistal          = new EscalonDistal($distalDerecho, $distalIzquierdo);
+                $escalonRecto           = new EscalonRecto($rectoDerecho, $rectoIzquierdo);
+                $mesialExagerado        = new MesialExagerado($exageradoDerecho, $exageradoIzquierdo);
+                $mesialNoDeterminado    = new MesialNoDeterminado($noDeterminadoDerecho, $noDeterminadoIzquierdo);
+                $relacionCaninaTemporal = new RelacionCaninaTemporal($caninaDerecho, $caninaIzquierdo);
+
+                $dentincionTemporal = new DentincionTemporal($escalonMesial, $escalonDistal, $escalonRecto, $mesialExagerado, $mesialNoDeterminado, $relacionCaninaTemporal);
+
+                $expediente->getExpedienteEspecialidad()->agregarDentincionTemporal($dentincionTemporal);
+                // ========================================================================================
+
+                // agregar dentinción mixta - permanente
+                $relacionMolar            = new RelacionMolar($relacionMolarDerechoI, $relacionMolarDerechoII, $relacionMolarDerechoIII, $relacionMolarIzquierdoI, $relacionMolarIzquierdoII, $relacionMolarIzquierdoIII);
+                $relacionCaninaPermanente = new RelacionCaninaPermanente($relacionCaninaDerechoI, $relacionCaninaDerechoII, $relacionCaninaDerechoIII, $relacionCaninaIzquierdoI, $relacionCaninaIzquierdoII, $relacionCaninaIzquierdoIII);
+
+                $expediente->getExpedienteEspecialidad()->agregarDentincionMixtaPermanente($relacionMolar, $relacionCaninaPermanente);
+                // ==================================================================================================================
+
+                // agregar mordidas
+                $mordidaBordeBorde       = new MordidaBordeBorde($mordidaBordeBorde, $medidaMordidaBordeABorde);
+                $sobremordidaVertical    = new SobremordidaVertical($sobremordidaVertical, $medidaSobremordidaVertical);
+                $sobremordidaHorizontal  = new SobremordidaHorizontal($sobremordidaHorizontal, $medidaSobremordidaHorizontal);
+                $mordidaAbiertaAnterior  = new MordidaAbiertaAnterior($mordidaAbiertaAnterior, $medidaMordidaAbierta);
+                $mordidaCruzadaAnterior  = new MordidaCruzadaAnterior($mordidaCruzadaAnterior, $medidaMordidaCruzadaAnterior);
+                $mordidaCruzadaPosterior = new MordidaCruzadaPosterior($mordidaCruzadaPosterior, $medidaMordidaCruzadaPosterior);
+                $lineaMediaDental        = new LineaMediaDental($lineaMediaDental, $medidaLineaMediaDental);
+                $lineaMediaEsqueletica   = new LineaMediaEsqueletica($lineaMediaEsqueletica, $medidaLineaMediaEsqueletica);
+                $alteracionTamanio       = new AlteracionTamanio($alteracionTamanio, $medidaAlteracionTamanio);
+                $alteracionForma         = new AlteracionForma($alteracionForma, $medidaAlteracionForma);
+                $alteracionNumero        = new AlteracionNumero($alteracionNumero, $medidaAlteracionNumero);
+                $alteracionEstructura    = new AlteracionEstructura($alteracionEstructura, $medidaAlteracionEstructura);
+                $alteracionTextura       = new AlteracionTextura($alteracionTextura, $medidaAlteracionTextura);
+                $alteracionColor         = new AlteracionColor($alteracionColor, $medidaAlteracionColor);
+
+                $expediente->getExpedienteEspecialidad()->agregarMordidas($mordidaBordeBorde, $sobremordidaVertical, $sobremordidaHorizontal, $mordidaAbiertaAnterior, $mordidaCruzadaAnterior, $mordidaCruzadaPosterior, $lineaMediaDental, $lineaMediaEsqueletica, $alteracionTamanio, $alteracionForma, $alteracionNumero, $alteracionEstructura, $alteracionTextura, $alteracionColor);
                 break;
         }
     }

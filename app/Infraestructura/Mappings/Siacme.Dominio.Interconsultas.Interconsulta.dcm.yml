@@ -1,0 +1,32 @@
+Siacme\Dominio\Interconsultas\Interconsulta:
+  type: entity
+  table: interconsulta
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    referencia:
+      type: string
+      column: Referencia
+    respuesta:
+      type: string
+      column: Respuesta
+    respondida:
+      type: boolean
+      column: Respondida
+  oneToOne:
+    medico:
+      targetEntity: MedicoReferencia
+      joinColumn:
+        name: MedicoReferenciaId
+        referencedColumnName: id
+      cascade: [persist]
+  manyToOne:
+    expediente:
+      targetEntity: Siacme\Dominio\Expedientes\Expediente
+      inversedBy: interconsultas
+      joinColumn:
+        name: ExpedienteId
+        referencedColumnName: id

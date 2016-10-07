@@ -1,0 +1,11 @@
+Siacme\Dominio\Consultas\RecetaConsulta:
+  type: entity
+  table: receta_consulta
+  id:
+    id:
+      type: integer
+      column: id
+  fields:
+    cuerpo:
+      type: string
+      column: Cuerpo

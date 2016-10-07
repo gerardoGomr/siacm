@@ -71,7 +71,7 @@ class ExpedientesFactory
                 $especifiqueHabito         = $request->get('especifiqueHabito');
 
                 // crear expediente y detalle
-                $expedienteJohanna = new ExpedienteJohanna();
+                $expedienteJohanna = new ExpedienteJohanna(new ColeccionArray(), new ColeccionArray());
                 $expedienteJohanna->agregarDatosPersonales($nombrePadre, $ocupacionPadre, $nombreMadre, $ocupacionMadre);
                 $expedienteJohanna->agregarAntecedentesOdontopatologicos($dolorBoca, $sangradoEncias, $malOlor, $dienteFlojo);
                 $expedienteJohanna->agregarAntecedentesNoPatologicos($primeraVisita, $fechaUltimoExamen, $motivoUltimoExamen, $anestesico, $malaReaccion, $queReaccion, $traumatismo);

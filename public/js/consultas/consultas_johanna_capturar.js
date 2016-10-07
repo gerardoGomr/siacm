@@ -259,6 +259,7 @@ $(function() {
 								if (respuesta.estatus === 'OK') {
 									bootbox.alert('La consulta se guardó exitósamente.', function () {
 										// redirigir a pantalla principal
+                                        window.location.href = $('#url').val();
 									});
 								}
 

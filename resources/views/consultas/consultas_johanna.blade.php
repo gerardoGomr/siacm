@@ -74,7 +74,7 @@
 												<input type="hidden" name="generoPlan" id="generoPlan" value="0">
 
 												<input type="hidden" name="generoInterconsulta" id="generoInterconsulta" value="0">
-												<input type="hidden" id="url" value="{{ url('consultas') }}">
+												<input type="hidden" id="url" value="{{ url('consultas/' . base64_encode($medico->getId())) }}">
 											{!! Form::close() !!}
 										</div>
 									</div>

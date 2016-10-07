@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\AlteracionTamanio:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: AlteracionesTamanio
+    medida:
+      column: MedidaAlteracionesTamanio

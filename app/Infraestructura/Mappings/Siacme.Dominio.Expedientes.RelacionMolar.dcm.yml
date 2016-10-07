@@ -1,0 +1,15 @@
+Siacme\Dominio\Expedientes\RelacionMolar:
+  type: embeddable
+  attributeOverride:
+    derechaI:
+      column: RelacionMolarDerechaI
+    derechaII:
+      column: RelacionMolarDerechaII
+    derechaIII:
+      column: RelacionMolarDerechaIII
+    izquierdaI:
+      column: RelacionMolarIzquierdaI
+    izquierdaII:
+      column: RelacionMolarIzquierdaII
+    izquierdaIII:
+      column: RelacionMolarIzquierdaIII

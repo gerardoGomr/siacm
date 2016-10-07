@@ -2,6 +2,7 @@
 namespace Siacme\Infraestructura\Expedientes;
 
 use PDOException;
+use Siacme\Dominio\Expedientes\ConvexividadFacial;
 use Siacme\Exceptions\PDO\PDOLogger;
 use Doctrine\ORM\EntityManager;
 use Monolog\Handler\StreamHandler;
@@ -26,11 +27,27 @@ class DoctrineConvexividadesFacialesRepositorio
 
     /**
      * @param int $id
-     * @return mixed
+     * @return ConvexividadFacial
      */
     public function obtenerPorId($id)
     {
         // TODO: Implement obtenerPorId() method.
+        try {
+            $query      = $this->entityManager->createQuery("SELECT c FROM Expedientes:ConvexividadFacial c WHERE c.id = :id")
+                ->setParameter('id', $id);
+            $convexividades = $query->getResult();
+
+            if (count($convexividades) === 0) {
+                return null;
+            }
+
+            return $convexividades[0];
+
+        } catch (PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
     }
 
     /**

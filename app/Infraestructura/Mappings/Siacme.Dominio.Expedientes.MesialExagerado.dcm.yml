@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\MesialExagerado:
+  type: embeddable
+  attributeOverride:
+    derecho:
+      column: MesialExageradoDerecho
+    izquierdo:
+      column: MesialExageradoIzquierdo

@@ -28,6 +28,11 @@ class Odontograma
 	 */
 	protected $revisado;
 
+    /**
+     * @var ExpedienteJohanna
+     */
+    protected $expedienteEspecialidad;
+
 	/**
 	 * construir el odontograma con una lista de dientes
 	 * si la lista no se proporciona, se asignan todos los diente
@@ -127,4 +132,13 @@ class Odontograma
 			$diente->removerTratamientos();
 		}
 	}
+
+    /**
+     * asignar para expediente especialidad
+     * @param ExpedienteJohanna $expedienteJohanna
+     */
+    public function generarPara(ExpedienteJohanna $expedienteJohanna)
+    {
+        $this->expedienteEspecialidad = $expedienteJohanna;
+    }
 }

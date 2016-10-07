@@ -1,0 +1,28 @@
+Siacme\Dominio\Expedientes\Diente:
+  type: entity
+  table: diente
+  id:
+    numero:
+      type: integer
+      column: Numero
+  manyToMany:
+    padecimientos:
+      targetEntity: DientePadecimiento
+      joinTable:
+        name: diente_plan_padecimiento
+        joinColumns:
+          Numero:
+            referencedColumnName: Numero
+        inverseJoinColumns:
+          PadecimientoId
+            referencedColumnName: id
+    tratamientos:
+      targetEntity: DientePlan
+      joinTable:
+        name: diente_plan_tratamiento
+        joinColumns:
+          Numero:
+            referencedColumnName: Numero
+        inverseJoinColumns:
+          DienteTratamientoId
+            referencedColumnName: id

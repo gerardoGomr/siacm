@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\SobremordidaHorizontal:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: SobremordidaHorizontal
+    medida:
+      column: MedidaSobremordidaHorizontal

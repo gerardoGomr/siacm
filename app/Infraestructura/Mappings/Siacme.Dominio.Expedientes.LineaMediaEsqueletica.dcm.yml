@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\LineaMediaEsqueletica:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: LineaMediaEsqueletica
+    medida:
+      column: MedidaLineaMediaEsqueletica

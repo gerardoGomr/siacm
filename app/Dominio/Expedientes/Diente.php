@@ -27,7 +27,7 @@ class Diente
 
     /**
      * tratamientos del diente
-     * @var Collection
+     * @var IColeccion
      */
     protected $tratamientos;
 
@@ -109,12 +109,12 @@ class Diente
 
     /**
      * agregar nuevo tratamiento al diente
-     * @param DientePlan $tratamiento
+     * @param DienteTratamiento $tratamiento
      * @throws SoloSePermitenDosTratamientosException
      */
-    public function agregarTratamiento(DientePlan $tratamiento)
+    public function agregarTratamiento(DienteTratamiento $tratamiento)
     {
-        if (count($this->tratamientos) === 2) {
+        if ($this->tratamientos->count() === 2) {
             throw new SoloSePermitenDosTratamientosException('Solo se permiten hasta dos tratamientos por diente');
         }
 

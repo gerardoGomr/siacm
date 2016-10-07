@@ -1,10 +1,15 @@
 Siacme\Dominio\Consultas\Consulta:
   type: entity
+  embedded:
+    exploracionFisica:
+      class: ExploracionFisica
+      columnPrefix: false
   table: consulta
   id:
     id:
       type: integer
-      column: id
+      generator:
+        strategy: AUTO
   fields:
     fecha:
       type: date
@@ -29,9 +34,9 @@ Siacme\Dominio\Consultas\Consulta:
         referencedColumnName: id
       cascade: [persist]
     receta:
-      targetEntity: Receta
+      targetEntity: RecetaConsulta
       joinColumn:
-        name: RecetaId
+        name: RecetaConsultaId
         referencedColumnName: id
       cascade: [persist]
     medico:

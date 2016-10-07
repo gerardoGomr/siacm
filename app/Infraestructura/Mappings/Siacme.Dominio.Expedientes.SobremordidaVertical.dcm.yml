@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\SobremordidaVertical:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: SobremordidaVertical
+    medida:
+      column: MedidaSobremordidaVertical

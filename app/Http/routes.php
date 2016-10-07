@@ -109,7 +109,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// generar plan de tratamiento
 	Route::post('consultas/plan/agregar', [
 		'as'   => 'dibujar-plan-tratamiento',
-		'uses' => 'Consultas\ConsultasController@verPlan'
+		'uses' => 'Consultas\ConsultasController@generarPlanTratamiento'
 	]);
 
 	// agregar un tratamiento a un diente

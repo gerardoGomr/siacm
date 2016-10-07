@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\LineaMediaDental:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: LineaMediaDental
+    medida:
+      column: MedidaLineaMediaDental

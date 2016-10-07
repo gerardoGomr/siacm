@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\EscalonRecto:
+  type: embeddable
+  attributeOverride:
+    derecho:
+      column: EscalonRectoDerecho
+    izquierdo:
+      column: EscalonRectoIzquierdo

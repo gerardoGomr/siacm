@@ -1,0 +1,27 @@
+Siacme\Dominio\Expedientes\ExamenExtraoral:
+  type: embeddable
+  oneToOne:
+    atm:
+      targetEntity: ATM
+      joinColumn:
+        name: AtmId
+        referencedColumnName: id
+      cascade: [persist]
+    convexividadFacial:
+      targetEntity: ConvexividadFacial
+      joinColumn:
+        name: ConvexividadFacialId
+        referencedColumnName: id
+      cascade: [persist]
+    morfologiaCraneofacial:
+      targetEntity: MorfologiaCraneofacial
+      joinColumn:
+        name: MorfologiaCraneofacialId
+        referencedColumnName: id
+      cascade: [persist]
+    morfologiaFacial:
+      targetEntity: MorfologiaFacial
+      joinColumn:
+        name: MorfologiaFacialId
+        referencedColumnName: id
+      cascade: [persist]

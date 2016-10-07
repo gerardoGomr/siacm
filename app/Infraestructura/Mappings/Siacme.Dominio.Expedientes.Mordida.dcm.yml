@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\Mordida:
+  type: mappedSuperclass
+  fields:
+    activa:
+      type: boolean
+    medida:
+      type: float

@@ -5,6 +5,8 @@ use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Siacme\Aplicacion\ColeccionArray;
+use Siacme\Aplicacion\Factories\ExpedientesAgregarDatosConsultaFactory;
+use Siacme\Aplicacion\Factories\ExpedientesAgregarElementosConsulta;
 use Siacme\Aplicacion\Factories\VistasConsultasFactory;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
@@ -12,10 +14,10 @@ use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
 use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Consultas\ExploracionFisica;
-use Siacme\Dominio\Expedientes\ComportamientoFrankl;
+use Siacme\Dominio\Consultas\RecetaConsulta;
 use Siacme\Dominio\Expedientes\DientePlan;
 use Siacme\Dominio\Expedientes\PlanTratamiento;
-use Siacme\Dominio\Consultas\Receta;
+use Siacme\Dominio\Expedientes\PlanTratamientoDiente;
 use Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio;
 use Siacme\Dominio\Interconsultas\Interconsulta;
 use Siacme\Dominio\Expedientes\Repositorios\DienteTratamientosRepositorio;
@@ -201,7 +203,7 @@ class ConsultasController extends Controller
      * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
      * @return \Illuminate\Http\JsonResponse
      */
-    public function verPlan(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    public function generarPlanTratamiento(Request $request, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
     {
         $respuesta   = [];
         $odontograma = $request->session()->get('odontograma');
@@ -214,6 +216,7 @@ class ConsultasController extends Controller
             $otroTratamiento2 = $otrosTratamientosRepositorio->obtenerPorId(2);
 
             // obtener plan
+            // se inicializan los otros tratamientos
             $plan = new PlanTratamiento(new ColeccionArray());
             $plan->agregarOtroTratamiento($otroTratamiento1);
             $plan->agregarOtroTratamiento($otroTratamiento2);
@@ -321,7 +324,7 @@ class ConsultasController extends Controller
         $plan              = $request->session()->get('plan');
 
         try {
-            $plan->agregarTratamiento($numeroDiente, new DientePlan($dienteTratamiento));
+            $plan->agregarTratamiento($numeroDiente, $dienteTratamiento);
 
             $respuesta['estatus']    = 'OK';
             $respuesta['html']       = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
@@ -394,10 +397,10 @@ class ConsultasController extends Controller
      */
     public function agregarReceta(Request $request)
     {
-        $recetaId = (int)$request->get('recetaId');
-        $receta   = base64_decode($request->get('receta'));
+        //$recetaId = (int)$request->get('recetaId'); // id
+        $receta   = base64_decode($request->get('receta')); // cuerpo de la receta
 
-        $receta = new Receta($recetaId, $receta);
+        $receta = new RecetaConsulta($receta);
         $request->session()->put('receta', $receta);
 
         return response()->json([
@@ -469,8 +472,19 @@ class ConsultasController extends Controller
         $reporte->generar();
     }
 
+    /**
+     * se guarda una nueva consulta. Se generan también los elementos adicionales de la consulta, pertenecientes
+     * al médico que atiende. Se guardan también los datos de expediente si el paciente que ingresa a consulta es
+     * de primera vez
+     *
+     * @param RegistrarConsultaRequest $request
+     * @param ComportamientosFranklRepositorio $comportamientosFranklRepositorio
+     * @param PacientesRepositorio $pacientesRepositorio
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function guardarConsulta(RegistrarConsultaRequest $request, ComportamientosFranklRepositorio $comportamientosFranklRepositorio, PacientesRepositorio $pacientesRepositorio)
     {
+        $respuesta = [];
         // como se va a almacenar la consulta
         $medicoId                       = (int)base64_decode($request->get('medicoId'));
         $pacienteId                     = (int)base64_decode($request->get('pacienteId'));
@@ -484,7 +498,6 @@ class ConsultasController extends Controller
         $notaMedica                     = $request->get('nota');
         $comportamientoFranklId         = (int)$request->get('comportamientoFrankl');
         $costoConsulta                  = $request->get('costoAsignadoConsulta');
-        $exploracion                    = new ExploracionFisica($peso, $talla, $pulso, $temperatura, $tensionArterial);
         $comportamiento                 = $comportamientosFranklRepositorio->obtenerPorId($comportamientoFranklId);
         $medico                         = $this->usuariosRepositorio->obtenerPorId($medicoId);
         $paciente                       = $pacientesRepositorio->obtenerPorId($pacienteId);
@@ -492,36 +505,49 @@ class ConsultasController extends Controller
         $citaId                         = $request->session()->get('citaId');
         $cita                           = $this->citasRepositorio->obtenerPorId($citaId);
 
-        $consulta                       = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, new DateTime(), $medico);
+        // objetos de consulta
+        $exploracion = new ExploracionFisica($peso, $talla, $pulso, $temperatura, $tensionArterial);
+        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, new DateTime(), $medico);
 
         // atender cita
         $cita->atender();
 
         // crear objetos propios de cada especialidad
         // si es de johanna se deben crear plan de tratamiento, odontograma
-        if ((int)$request->get('primeraVez') === 1) {
-            // es de primera vez
-
-
-        } else {
-            //es subsecuente
-        }
+        ExpedientesAgregarElementosConsulta::crear($medico, $expediente, $request);
 
         // verificar si se mandaron a crear receta e interconsulta
         // interconsulta es propio de expediente
-        if ($request->has('interconsulta')) {
-            $interconsulta = $request->get('interconsulta');
+        if ($request->session()->has('interconsulta')) {
+            $interconsulta = $request->session()->get('interconsulta');
+
+            // asignación bilateral
             $expediente->agregarInterconsulta($interconsulta);
+            $interconsulta->generadaPara($expediente);
         }
 
         // receta es propio de consulta
-        if ($request->has('receta')) {
-            $receta = $request->get('receta');
+        if ($request->session()->has('receta')) {
+            $receta = $request->session()->get('receta');
             $consulta->agregarReceta($receta);
         }
 
         // si es de primera vez se debe considerar la creación del complemento al expediente
         // dependiendo del médico
+        if ($request->get('primeraVez') === '1') {
+            ExpedientesAgregarDatosConsultaFactory::agregar($medico, $expediente, $request);
+        }
 
+        // asignación bilateral
+        $expediente->agregarConsulta($consulta);
+        $consulta->generadaPara($expediente);
+
+        if (!$this->expedientesRepositorio->persistir($expediente)) {
+            $respuesta['estatus'] = 'fail';
+        }
+
+        $respuesta['estatus'] = 'OK';
+
+        return response()->json($respuesta);
     }
 }

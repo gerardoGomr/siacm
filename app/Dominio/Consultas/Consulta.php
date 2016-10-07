@@ -50,7 +50,7 @@ class Consulta
     private $costo;
 
     /**
-     * @var Receta
+     * @var RecetaConsulta
      */
     private $receta;
 
@@ -162,7 +162,7 @@ class Consulta
     }
 
     /**
-     * @return Receta
+     * @return RecetaConsulta
      */
     public function getReceta()
     {
@@ -228,10 +228,19 @@ class Consulta
 
     /**
      * agregar una receta
-     * @param Receta $receta
+     * @param RecetaConsulta $receta
      */
-    public function agregarReceta(Receta $receta)
+    public function agregarReceta(RecetaConsulta $receta)
     {
         $this->receta = $receta;
+    }
+
+    /**
+     * generar la consulta para un expediente
+     * @param Expediente $expediente
+     */
+    public function generadaPara(Expediente $expediente)
+    {
+        $this->expediente = $expediente;
     }
 }

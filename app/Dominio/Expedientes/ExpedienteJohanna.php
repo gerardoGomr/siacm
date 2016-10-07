@@ -1,6 +1,8 @@
 <?php
 namespace Siacme\Dominio\Expedientes;
+
 use DateTime;
+use Siacme\Dominio\Listas\IColeccion;
 
 /**
  * Class PacienteJohanna
@@ -201,274 +203,74 @@ class ExpedienteJohanna extends AbstractExpediente
     protected $posturaRectaSentar;
 
     /**
-     * @var bool
-     */
-    protected $escalonMesialDerecho;
-
-    /**
-     * @var bool
-     */
-    protected $escalonMesialIzquierdo;
-
-    /**
-     * @var bool
-     */
-    protected $escalonDistalDerecho;
-
-    /**
-     * @var bool
-     */
-    protected $escalonDistalIzquierdo;
-
-    /**
-     * @var bool
-     */
-    protected $escalonRectoDerecho;
-
-    /**
-     * @var bool
-     */
-    protected $escalonRectoIzquierdo;
-
-    /**
-     * @var bool
-     */
-    protected $mesialExageradoDerecho;
-
-    /**
-     * @var bool
-     */
-    protected $mesialExageradoIzquierdo;
-
-    /**
-     * @var bool
-     */
-    protected $noDeterminadoDerecho;
-
-    /**
-     * @var bool
-     */
-    protected $noDeterminadoIzquierdo;
-
-    /**
-     * @var bool
-     */
-    protected $relacionCaninaDerecha;
-
-    /**
-     * @var bool
-     */
-    protected $relacionCaninaIzquierda;
-
-    /**
-     * @var bool
-     */
-    protected $relacionMolarDerechaI;
-
-    /**
-     * @var bool
-     */
-    protected $relacionMolarDerechaII;
-
-    /**
-     * @var bool
-     */
-    protected $relacionMolarDerechaIII;
-
-    /**
-     * @var bool
-     */
-    protected $relacionMolarIzquierdaI;
-
-    /**
-     * @var bool
-     */
-    protected $relacionMolarIzquierdaII;
-
-    /**
-     * @var bool
-     */
-    protected $relacionMolarIzquierdaIII;
-
-    /**
-     * @var bool
-     */
-    protected $relacionCaninaDerechaI;
-
-    /**
-     * @var bool
-     */
-    protected $relacionCaninaDerechaII;
-
-    /**
-     * @var bool
-     */
-    protected $relacionCaninaDerechaIII;
-
-    /**
-     * @var bool
-     */
-    protected $relacionCaninaIzquierdaI;
-
-    /**
-     * @var bool
-     */
-    protected $relacionCaninaIzquierdaII;
-
-    /**
-     * @var bool
-     */
-    protected $relacionCaninaIzquierdaIII;
-
-    /**
-     * @var bool
-     */
-    protected $tipoArcoI;
-
-    /**
-     * @var bool
-     */
-    protected $tipoArcoII;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $mordidaBordeBorde;
 
     /**
-     * @var double
-     */
-    protected $medidaBordeBorde;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $sobremordidaVertical;
 
     /**
-     * @var double
-     */
-    protected $medidaSobremordidaVertical;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $sobremordidaHorizontal;
 
     /**
-     * @var double
-     */
-    protected $medidaSobremordidaHorizontal;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $mordidaAbiertaAnterior;
 
     /**
-     * @var double
-     */
-    protected $medidaMedidaAbiertaAnterior;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $mordidaCruzadaAnterior;
 
     /**
-     * @var double
-     */
-    protected $medidaMordidaCruzadaAnterior;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $mordidaCruzadaPosterior;
 
     /**
-     * @var double
-     */
-    protected $medidaMordidaCruzadaPosterior;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $lineaMediaDental;
 
     /**
-     * @var double
-     */
-    protected $medidaLineaMediaDental;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $lineaMediaEsqueletica;
 
     /**
-     * @var double
-     */
-    protected $medidaLineaMediaEsqueletica;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $alteracionesTamanio;
 
     /**
-     * @var double
-     */
-    protected $medidaAlteracionesTamanio;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $alteracionesForma;
 
     /**
-     * @var double
-     */
-    protected $medidaAlteracionesForma;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $alteracionesNumero;
 
     /**
-     * @var double
-     */
-    protected $medidaAlteracionesNumero;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $alteracionesEstructura;
 
     /**
-     * @var double
-     */
-    protected $medidaAlteracionesEstructura;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $alteracionesTextura;
 
     /**
-     * @var double
-     */
-    protected $medidaAlteracionesTextura;
-
-    /**
-     * @var bool
+     * @var Mordida
      */
     protected $alteracionesColor;
-
-    /**
-     * @var double
-     */
-    protected $medidaAlteracionesColor;
 
     /**
      * @var string
@@ -504,6 +306,72 @@ class ExpedienteJohanna extends AbstractExpediente
      * @var ExamenIntraoral
      */
     protected $examenIntraoral;
+
+    /**
+     * @var DentincionTemporal
+     */
+    protected $dentincionTemporal;
+
+    /**
+     * @var DentincionMixtaPermanente
+     */
+    protected $relacionMolar;
+
+    /**
+     * @var DentincionMixtaPermanente
+     */
+    protected $relacionCanina;
+
+    /**
+     * @var bool
+     */
+    protected $tipoArcoI;
+
+    /**
+     * @var bool
+     */
+    protected $tipoArcoII;
+
+    /**
+     * @var IColeccion
+     */
+    protected $odontogramas;
+
+    /**
+     * @var IColeccion
+     */
+    protected $planesTratamiento;
+
+    /**
+     * @var MorfologiaCraneofacial
+     */
+    private $morfologiaCraneofacial;
+
+    /**
+     * @var MorfologiaFacial
+     */
+    private $morfologiaFacial;
+
+    /**
+     * @var ConvexividadFacial
+     */
+    private $convexividadFacial;
+
+    /**
+     * @var ATM
+     */
+    private $atm;
+
+    /**
+     * ExpedienteJohanna constructor.
+     * @param IColeccion $odontogramas
+     * @param IColeccion $planesTratamiento
+     */
+    public function __construct(IColeccion $odontogramas, IColeccion $planesTratamiento)
+    {
+        $this->odontogramas      = $odontogramas;
+        $this->planesTratamiento = $planesTratamiento;
+    }
 
     /**
      * @return string
@@ -794,7 +662,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function posturaRectaCaminar()
     {
@@ -802,7 +670,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function posturaRectaSentar()
     {
@@ -810,427 +678,115 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return boolean
+     * @return Mordida
      */
-    public function escalonMesialDerecho()
-    {
-        return $this->escalonMesialDerecho;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function escalonMesialIzquierdo()
-    {
-        return $this->escalonMesialIzquierdo;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function escalonDistalDerecho()
-    {
-        return $this->escalonDistalDerecho;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function escalonDistalIzquierdo()
-    {
-        return $this->escalonDistalIzquierdo;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function escalonRectoDerecho()
-    {
-        return $this->escalonRectoDerecho;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function escalonRectoIzquierdo()
-    {
-        return $this->escalonRectoIzquierdo;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function mesialExageradoDerecho()
-    {
-        return $this->mesialExageradoDerecho;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function mesialExageradoIzquierdo()
-    {
-        return $this->mesialExageradoIzquierdo;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function noDeterminadoDerecho()
-    {
-        return $this->noDeterminadoDerecho;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function noDeterminadoIzquierdo()
-    {
-        return $this->noDeterminadoIzquierdo;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionCaninaDerecha()
-    {
-        return $this->relacionCaninaDerecha;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionCaninaIzquierda()
-    {
-        return $this->relacionCaninaIzquierda;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionMolarDerechaI()
-    {
-        return $this->relacionMolarDerechaI;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionMolarDerechaII()
-    {
-        return $this->relacionMolarDerechaII;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionMolarDerechaIII()
-    {
-        return $this->relacionMolarDerechaIII;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionMolarIzquierdaI()
-    {
-        return $this->relacionMolarIzquierdaI;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionMolarIzquierdaII()
-    {
-        return $this->relacionMolarIzquierdaII;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionMolarIzquierdaIII()
-    {
-        return $this->relacionMolarIzquierdaIII;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionCaninaDerechaI()
-    {
-        return $this->relacionCaninaDerechaI;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionCaninaDerechaII()
-    {
-        return $this->relacionCaninaDerechaII;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionCaninaDerechaIII()
-    {
-        return $this->relacionCaninaDerechaIII;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionCaninaIzquierdaI()
-    {
-        return $this->relacionCaninaIzquierdaI;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionCaninaIzquierdaII()
-    {
-        return $this->relacionCaninaIzquierdaII;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function relacionCaninaIzquierdaIII()
-    {
-        return $this->relacionCaninaIzquierdaIII;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function tipoArcoI()
-    {
-        return $this->tipoArcoI;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function mordidaBordeBorde()
+    public function getMordidaBordeBorde()
     {
         return $this->mordidaBordeBorde;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaBordeBorde()
-    {
-        return $this->medidaBordeBorde;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function sobremordidaVertical()
+    public function getMobremordidaVertical()
     {
         return $this->sobremordidaVertical;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaSobremordidaVertical()
-    {
-        return $this->medidaSobremordidaVertical;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function sobremordidaHorizontal()
+    public function getMobremordidaHorizontal()
     {
         return $this->sobremordidaHorizontal;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaSobremordidaHorizontal()
-    {
-        return $this->medidaSobremordidaHorizontal;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function mordidaAbiertaAnterior()
+    public function getMordidaAbiertaAnterior()
     {
         return $this->mordidaAbiertaAnterior;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaMedidaAbiertaAnterior()
-    {
-        return $this->medidaMedidaAbiertaAnterior;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function mordidaCruzadaAnterior()
+    public function getMordidaCruzadaAnterior()
     {
         return $this->mordidaCruzadaAnterior;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaMordidaCruzadaAnterior()
-    {
-        return $this->medidaMordidaCruzadaAnterior;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function mordidaCruzadaPosterior()
+    public function getMordidaCruzadaPosterior()
     {
         return $this->mordidaCruzadaPosterior;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaMordidaCruzadaPosterior()
-    {
-        return $this->medidaMordidaCruzadaPosterior;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function lineaMediaDental()
+    public function getLineaMediaDental()
     {
         return $this->lineaMediaDental;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaLineaMediaDental()
-    {
-        return $this->medidaLineaMediaDental;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function lineaMediaEsqueletica()
+    public function getLineaMediaEsqueletica()
     {
         return $this->lineaMediaEsqueletica;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaLineaMediaEsqueletica()
-    {
-        return $this->medidaLineaMediaEsqueletica;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function alteracionesTamanio()
+    public function getAlteracionesTamanio()
     {
         return $this->alteracionesTamanio;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaAlteracionesTamanio()
-    {
-        return $this->medidaAlteracionesTamanio;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function alteracionesForma()
+    public function getAlteracionesForma()
     {
         return $this->alteracionesForma;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaAlteracionesForma()
-    {
-        return $this->medidaAlteracionesForma;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function alteracionesNumero()
+    public function getAlteracionesNumero()
     {
         return $this->alteracionesNumero;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaAlteracionesNumero()
-    {
-        return $this->medidaAlteracionesNumero;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function alteracionesEstructura()
+    public function getAlteracionesEstructura()
     {
         return $this->alteracionesEstructura;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaAlteracionesEstructura()
-    {
-        return $this->medidaAlteracionesEstructura;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function alteracionesTextura()
+    public function getAlteracionesTextura()
     {
         return $this->alteracionesTextura;
     }
 
     /**
-     * @return float
+     * @return Mordida
      */
-    public function getMedidaAlteracionesTextura()
-    {
-        return $this->medidaAlteracionesTextura;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function alteracionesColor()
+    public function getAlteracionesColor()
     {
         return $this->alteracionesColor;
-    }
-
-    /**
-     * @return float
-     */
-    public function getMedidaAlteracionesColor()
-    {
-        return $this->medidaAlteracionesColor;
     }
 
     /**
@@ -1406,11 +962,17 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @param ExamenExtraoral $examen
+     * @param MorfologiaCraneofacial $morfologiaCraneofacial
+     * @param MorfologiaFacial $morfologiaFacial
+     * @param ConvexividadFacial $convexividadFacial
+     * @param ATM $atm
      */
-    public function agregarExamenExtraoral(ExamenExtraoral $examen)
+    public function agregarExamenExtraoral(MorfologiaCraneofacial $morfologiaCraneofacial, MorfologiaFacial $morfologiaFacial, ConvexividadFacial $convexividadFacial, ATM $atm)
     {
-        $this->examenExtraoral = $examen;
+        $this->morfologiaCraneofacial = $morfologiaCraneofacial;
+        $this->morfologiaFacial       = $morfologiaFacial;
+        $this->convexividadFacial     = $convexividadFacial;
+        $this->atm                    = $atm;
     }
 
     /**
@@ -1444,5 +1006,199 @@ class ExpedienteJohanna extends AbstractExpediente
         if ($this->tipoArcoII) {
             return 'Tipo Arco II';
         }
+    }
+
+    /**
+     * @return Mordida
+     */
+    public function getSobremordidaVertical()
+    {
+        return $this->sobremordidaVertical;
+    }
+
+    /**
+     * @return Mordida
+     */
+    public function getSobremordidaHorizontal()
+    {
+        return $this->sobremordidaHorizontal;
+    }
+
+    /**
+     * @return ExamenIntraoral
+     */
+    public function getExamenIntraoral()
+    {
+        return $this->examenIntraoral;
+    }
+
+    /**
+     * @return DentincionTemporal
+     */
+    public function getDentincionTemporal()
+    {
+        return $this->dentincionTemporal;
+    }
+
+    /**
+     * @return DentincionMixtaPermanente
+     */
+    public function getRelacionMolar()
+    {
+        return $this->relacionMolar;
+    }
+
+    /**
+     * @return DentincionMixtaPermanente
+     */
+    public function getRelacionCanina()
+    {
+        return $this->relacionCanina;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function tipoArcoI()
+    {
+        return $this->tipoArcoI;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function tipoArcoII()
+    {
+        return $this->tipoArcoII;
+    }
+
+    /**
+     * @return MorfologiaCraneofacial
+     */
+    public function getMorfologiaCraneofacial()
+    {
+        return $this->morfologiaCraneofacial;
+    }
+
+    /**
+     * @return MorfologiaFacial
+     */
+    public function getMorfologiaFacial()
+    {
+        return $this->morfologiaFacial;
+    }
+
+    /**
+     * @return ConvexividadFacial
+     */
+    public function getConvexividadFacial()
+    {
+        return $this->convexividadFacial;
+    }
+
+    /**
+     * @return ATM
+     */
+    public function getAtm()
+    {
+        return $this->atm;
+    }
+
+    /**
+     * se agrega la dentinción temporal encontrada
+     * @param DentincionTemporal $dentincionTemporal
+     */
+    public function agregarDentincionTemporal(DentincionTemporal $dentincionTemporal)
+    {
+        $this->dentincionTemporal = $dentincionTemporal;
+    }
+
+    /**
+     * se agrega la dentincion mixta - permanente
+     * @param DentincionMixtaPermanente $relacionMolar
+     * @param DentincionMixtaPermanente $relacionCanina
+     */
+    public function agregarDentincionMixtaPermanente(DentincionMixtaPermanente $relacionMolar, DentincionMixtaPermanente $relacionCanina)
+    {
+        $this->relacionMolar  = $relacionMolar;
+        $this->relacionCanina = $relacionCanina;
+    }
+
+    /**
+     * agregar mordidas
+     * @param Mordida $mordidaBordeBorde
+     * @param Mordida $sobremordidaVertical
+     * @param Mordida $sobremordidaHorizontal
+     * @param Mordida $mordidaAbiertaAnterior
+     * @param Mordida $mordidaCruzadaAnterior
+     * @param Mordida $mordidaCruzadaPosterior
+     * @param Mordida $lineaMediaDental
+     * @param Mordida $lineaMediaEsqueletica
+     * @param Mordida $alteracionTamanio
+     * @param Mordida $alteracionForma
+     * @param Mordida $alteracionNumero
+     * @param Mordida $alteracionEstructura
+     * @param Mordida $alteracionTextura
+     * @param Mordida $alteracionColor
+     */
+    public function agregarMordidas(Mordida $mordidaBordeBorde, Mordida $sobremordidaVertical, Mordida $sobremordidaHorizontal, Mordida $mordidaAbiertaAnterior, Mordida $mordidaCruzadaAnterior, Mordida $mordidaCruzadaPosterior, Mordida $lineaMediaDental, Mordida $lineaMediaEsqueletica, Mordida $alteracionTamanio, Mordida $alteracionForma, Mordida $alteracionNumero, Mordida $alteracionEstructura, Mordida $alteracionTextura, Mordida $alteracionColor)
+    {
+        $this->mordidaBordeBorde       = $mordidaBordeBorde;
+        $this->sobremordidaVertical    = $sobremordidaVertical;
+        $this->sobremordidaHorizontal  = $sobremordidaHorizontal;
+        $this->mordidaAbiertaAnterior  = $mordidaAbiertaAnterior;
+        $this->mordidaCruzadaAnterior  = $mordidaCruzadaAnterior;
+        $this->mordidaCruzadaPosterior = $mordidaCruzadaPosterior;
+        $this->lineaMediaDental        = $lineaMediaDental;
+        $this->lineaMediaEsqueletica   = $lineaMediaEsqueletica;
+        $this->alteracionesTamanio     = $alteracionTamanio;
+        $this->alteracionesForma       = $alteracionForma;
+        $this->alteracionesNumero      = $alteracionNumero;
+        $this->alteracionesEstructura  = $alteracionEstructura;
+        $this->alteracionesTextura     = $alteracionTextura;
+        $this->alteracionesColor       = $alteracionColor;
+    }
+
+    /**
+     * agregar un odontograma a la lista
+     * @param Odontograma $odontograma
+     */
+    public function agregarOdontograma(Odontograma $odontograma)
+    {
+        $this->odontogramas->add($odontograma);
+    }
+
+    /**
+     * agregar un plan de tratamiento
+     * @param PlanTratamiento $plan
+     */
+    public function agregarPlanTratamiento(PlanTratamiento $plan)
+    {
+        $this->planesTratamiento->add($plan);
+    }
+
+    /**
+     * obtener al plan de tratamiento que esté marcado como activo
+     * @return PlanTratamiento|null
+     */
+    public function obtenerPlanActivo()
+    {
+        if ($this->planesTratamiento->count() === 0) {
+            return null;
+        }
+
+        foreach ( $this->planesTratamiento as $plan ) {
+            if (!$plan->atendido()) {
+                return $plan;
+            }
+        }
+
+        return null;
+    }
+
+    public function inicializarTemp(IColeccion $odontogramas, IColeccion $planesTratamiento)
+    {
+        $this->odontogramas      = $odontogramas;
+        $this->planesTratamiento = $planesTratamiento;
     }
 }

@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\AlteracionForma:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: AlteracionesForma
+    medida:
+      column: MedidaAlteracionesForma

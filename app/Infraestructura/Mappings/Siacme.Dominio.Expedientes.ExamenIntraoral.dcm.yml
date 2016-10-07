@@ -1,0 +1,30 @@
+Siacme\Dominio\Expedientes\ExamenIntraoral:
+  type: embeddable
+  fields:
+    labios:
+      type: string
+      column: Labios
+    carrillos:
+      type: string
+      column: Carrillos
+    frenillos:
+      type: string
+      column: Frenillos
+    paladar:
+      type: string
+      column: Paladar
+    lengua:
+      type: string
+      column: Lengua
+    pisoDeBoca:
+      type: string
+      column: PisoDeBoca
+    parodonto:
+      type: string
+      column: Parodonto
+    uvula:
+      type: string
+      column: Uvula
+    orofaringe:
+      type: string
+      column: Orofaringe

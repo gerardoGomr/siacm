@@ -1,0 +1,18 @@
+Siacme\Dominio\Consultas\ExploracionFisica:
+  type: embeddable
+  fields:
+    peso:
+      type: float
+      column: Peso
+    talla:
+      type: float
+      column: Talla
+    pulso:
+      type: string
+      column: Pulso
+    temperatura:
+      type: float
+      column: Temperatura
+    tensionArterial:
+      type: string
+      column: TensionArterial

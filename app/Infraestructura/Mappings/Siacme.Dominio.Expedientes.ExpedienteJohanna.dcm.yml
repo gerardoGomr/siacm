@@ -1,5 +1,60 @@
 Siacme\Dominio\Expedientes\ExpedienteJohanna:
   type: entity
+  embedded:
+    examenIntraoral:
+      class: ExamenIntraoral
+      columnPrefix: false
+    dentincionTemporal:
+      class: DentincionTemporal
+      columnPrefix: false
+    relacionMolar:
+      class: RelacionMolar
+      columnPrefix: false
+    relacionCanina:
+      class: RelacionCaninaPermanente
+      columnPrefix: false
+    mordidaBordeBorde:
+      class: MordidaBordeBorde
+      columnPrefix: false
+    sobremordidaVertical:
+      class: SobremordidaVertical
+      columnPrefix: false
+    sobremordidaHorizontal:
+      class: SobremordidaHorizontal
+      columnPrefix: false
+    mordidaAbiertaAnterior:
+      class: MordidaAbiertaAnterior
+      columnPrefix: false
+    mordidaCruzadaAnterior:
+      class: MordidaCruzadaAnterior
+      columnPrefix: false
+    mordidaCruzadaPosterior:
+      class: MordidaCruzadaPosterior
+      columnPrefix: false
+    lineaMediaDental:
+      class: LineaMediaDental
+      columnPrefix: false
+    lineaMediaEsqueletica:
+      class: LineaMediaEsqueletica
+      columnPrefix: false
+    alteracionesTamanio:
+      class: AlteracionTamanio
+      columnPrefix: false
+    alteracionesForma:
+      class: AlteracionForma
+      columnPrefix: false
+    alteracionesNumero:
+      class: AlteracionNumero
+      columnPrefix: false
+    alteracionesEstructura:
+      class: AlteracionEstructura
+      columnPrefix: false
+    alteracionesTextura:
+      class: AlteracionTextura
+      columnPrefix: false
+    alteracionesColor:
+      class: AlteracionColor
+      columnPrefix: false
   table: expediente_johanna
   id:
     id:
@@ -58,46 +113,6 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       type: string
       nullable: true
       column: Notas
-    labios:
-      type: string
-      nullable: true
-      column: Labios
-    carrillos:
-      type: string
-      nullable: true
-      column: Carrillos
-    frenillos:
-      type: string
-      nullable: true
-      column: Frenillos
-    paladar:
-      type: string
-      nullable: true
-      column: Paladar
-    lengua:
-      type: string
-      nullable: true
-      column: Lengua
-    pisoDeBoca:
-      type: string
-      nullable: true
-      column: PisoDeBoca
-    parodonto:
-      type: string
-      nullable: true
-      column: Parodonto
-    uvula:
-      type: string
-      nullable: true
-      column: Uvula
-    amigdalas:
-      type: string
-      nullable: true
-      column: Amigdalas
-    orofaringe:
-      type: string
-      nullable: true
-      column: Orofaringe
     edadErupcionoPrimerDiente:
       type: integer
       nullable: true
@@ -205,17 +220,23 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       type: boolean
       nullable: true
       column: OtroHabito
+    tipoArcoI:
+      type: boolean
+      column: TipoArcoI
+    tipoArcoII:
+      type: boolean
+      column: TipoArcoII
   oneToOne:
+    expediente:
+      targetEntity: Expediente
+      inversedBy: expedienteEspecialidad
+      joinColumn:
+        name: ExpedienteId
+        referencedColumnName: id
     atm:
       targetEntity: ATM
       joinColumn:
         name: AtmId
-        referencedColumnName: id
-      cascade: [persist]
-    comportamientoInicial:
-      targetEntity: ComportamientoInicial
-      joinColumn:
-        name: ComportamientoInicialId
         referencedColumnName: id
       cascade: [persist]
     convexividadFacial:
@@ -236,9 +257,8 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
         name: MorfologiaFacialId
         referencedColumnName: id
       cascade: [persist]
-    expediente:
-      targetEntity: Expediente
-      inversedBy: expedienteEspecialidad
-      joinColumn:
-        name: ExpedienteId
-        referencedColumnName: id
+  oneToMany:
+    odontogramas:
+      targetEntity: Odontograma
+      mappedBy: expedienteEspecialidad
+      cascade: [persist]

@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\MordidaBordeBorde:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: MordidaBordeBorde
+    medida:
+      column: MedidaMordidaBordeBorde

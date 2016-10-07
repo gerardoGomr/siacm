@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\AbstractEscalon:
+  type: mappedSuperclass
+  fields:
+    derecho:
+      type: boolean
+    izquierdo:
+      type: boolean

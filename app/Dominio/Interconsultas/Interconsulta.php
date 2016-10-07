@@ -1,8 +1,6 @@
 <?php
 namespace Siacme\Dominio\Interconsultas;
 
-use Siacme\Dominio\Fecha;
-
 /**
  * Class Interconsulta
  * @package Siacme\Dominio\Interconsultas
@@ -37,8 +35,12 @@ class Interconsulta
     private $respondida;
 
     /**
+     * @var Expediente
+     */
+    private $expediente;
+
+    /**
      * Interconsulta constructor.
-     * @param int $id
      * @param MedicoReferencia $medico
      * @param string $referencia
      */
@@ -88,8 +90,20 @@ class Interconsulta
         return $this->respondida;
     }
 
-    public function fechaInterconsulta($fecha)
+    /**
+     * @return Expediente
+     */
+    public function getExpediente()
     {
+        return $this->expediente;
+    }
 
+    /**
+     * asignar expediente a la interconsulta
+     * @param Expediente $expediente
+     */
+    public function generadaPara(Expediente $expediente)
+    {
+        $this->expediente = $expediente;
     }
 }

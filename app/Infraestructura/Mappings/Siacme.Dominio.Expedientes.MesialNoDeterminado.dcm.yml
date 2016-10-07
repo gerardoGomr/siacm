@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\MesialNoDeterminado:
+  type: embeddable
+  attributeOverride:
+    derecho:
+      column: NoDeterminadoDerecho
+    izquierdo:
+      column: NoDeterminadoIzquierdo

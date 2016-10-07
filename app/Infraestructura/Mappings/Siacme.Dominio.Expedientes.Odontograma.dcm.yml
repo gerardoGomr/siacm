@@ -1,0 +1,26 @@
+Siacme\Dominio\Expedientes\Odontograma:
+  type: entity
+  table: odontograma
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  manyToMany:
+    dientes:
+      targetEntity: Diente
+      joinTable:
+        name: odontograma_diente
+        joinColumns:
+          OdontogramaId:
+            referencedColumnName: id
+        inverseJoinColumns:
+          Numero:
+            referencedColumnName: Numero
+  manyToOne:
+    expedienteJohanna:
+      targetEntity: ExpedienteJohanna
+      inversedBy: odontogramas
+      joinColumn:
+        name: ExpedienteJohannaId
+        referencedColumnName: id

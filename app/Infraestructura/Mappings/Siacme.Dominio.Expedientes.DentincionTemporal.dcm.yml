@@ -1,0 +1,21 @@
+Siacme\Dominio\Expedientes\DentincionTemporal:
+  type: embeddable
+  embedded:
+    escalonMesial:
+      class: EscalonMesial
+      columnPrefix: false
+    escalonDistal:
+      class: EscalonDistal
+      columnPrefix: false
+    escalonRecto:
+      class: EscalonRecto
+      columnPrefix: false
+    mesialExagerado:
+      class: MesialExagerado
+      columnPrefix: false
+    mesialNoDeterminado:
+      class: MesialNoDeterminado
+      columnPrefix: false
+    relacionCanina:
+      class: RelacionCaninaTemporal
+      columnPrefix: false

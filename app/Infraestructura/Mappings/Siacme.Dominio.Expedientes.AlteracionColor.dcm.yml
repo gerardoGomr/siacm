@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\AlteracionColor:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: AlteracionesColor
+    medida:
+      column: MedidaAlteracionesColor

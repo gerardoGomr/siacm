@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\RelacionCaninaTemporal:
+  type: embeddable
+  attributeOverride:
+    derecho:
+      column: RelacionCaninaTemporalDerecho
+    izquierdo:
+      column: RelacionCaninaTemporalIzquierdo

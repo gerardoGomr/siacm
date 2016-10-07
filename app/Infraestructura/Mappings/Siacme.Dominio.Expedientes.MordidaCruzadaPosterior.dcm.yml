@@ -1,0 +1,7 @@
+Siacme\Dominio\Expedientes\MordidaCruzadaPosterior:
+  type: embeddable
+  attributeOverride:
+    activa:
+      column: MordidaCruzadaPosterior
+    medida:
+      column: MedidaMordidaCruzadaPosterior

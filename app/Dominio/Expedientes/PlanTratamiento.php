@@ -77,7 +77,7 @@ class PlanTratamiento
 	private function calcularCosto()
 	{
 		$this->costo = 0;
-		if(count($this->dientes) > 0) {
+		if($this->dientes->count() > 0) {
 			// hay dientes
 			foreach ($this->dientes as $diente) {
 				if ($diente->tieneTratamientos()) {
@@ -101,32 +101,32 @@ class PlanTratamiento
 	 */
 	public function tieneOtrosTratamientos()
 	{
-		return count($this->otrosTratamientos) > 0 ? true : false;
+		return $this->otrosTratamientos->count() > 0 ? true : false;
 	}
 
 	/**
 	 * verifica si esta atendido o no el plan
 	 * @return bool
 	 */
-	public function atendido()
+	public function estaAtendido()
 	{
 		$faltantesPorAtender = 0;
-		if (count($this->dientes) > 0) {
+		if ($this->dientes->count() > 0) {
 			foreach ( $this->dientes as $diente ) {
-				if (count($diente->getListaTratamientos()) > 0) {
-					foreach ($diente->getListaTratamientos() as $tratamiento) {
-						if($tratamiento->atendido() === false) {
+				if ($diente->getTratamientos()->count() > 0) {
+					foreach ($diente->getTratamientos() as $tratamiento) {
+						if(!$tratamiento->atendido()) {
 							$faltantesPorAtender++;
 						}
 					}
 				}
-
-				if ($faltantesPorAtender > 0) {
-					$this->atendido = false;
-				} else {
-					$this->atendido = true;
-				}
 			}
+
+            if ($faltantesPorAtender > 0) {
+                $this->atendido = false;
+            } else {
+                $this->atendido = true;
+            }
 		}
 
 		return $this->atendido;
@@ -142,7 +142,7 @@ class PlanTratamiento
 	}
 
 	/**
-	 * @return Collection
+	 * @return IColeccion
 	 */
 	public function getDientes()
 	{
@@ -165,7 +165,7 @@ class PlanTratamiento
 	}
 
 	/**
-	 * @return Collection
+	 * @return IColeccion
 	 */
 	public function getOtrosTratamientos()
 	{
@@ -234,10 +234,10 @@ class PlanTratamiento
 	/**
 	 * agregar un tratamiento al diente
 	 * @param int $numeroDiente
-	 * @param DientePlan $dientePlan
+	 * @param DienteTratamiento $dientePlan
 	 * @throws \Siacme\Exceptions\SoloSePermitenDosTratamientosException
 	 */
-	public function agregarTratamiento($numeroDiente, DientePlan $dientePlan)
+	public function agregarTratamiento($numeroDiente, DienteTratamiento $dientePlan)
 	{
 		$this->diente($numeroDiente)->agregarTratamiento($dientePlan);
 	}
@@ -283,4 +283,12 @@ class PlanTratamiento
 			$diente->atenderTratamientos();
 		}
 	}
+
+    /**
+     * @return string
+     */
+    public function getAQuienSeDirige()
+    {
+        return $this->aQuienSeDirige;
+    }
 }
