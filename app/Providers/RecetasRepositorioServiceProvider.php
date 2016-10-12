@@ -2,7 +2,6 @@
 namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App;
 use Siacme\Infraestructura\Consultas\DoctrineRecetasRepositorio;
 
 class RecetasRepositorioServiceProvider extends ServiceProvider
@@ -25,8 +24,8 @@ class RecetasRepositorioServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->bind('Siacme\Dominio\Consultas\Repositorios\RecetasRepositorio', function() {
-            return new DoctrineRecetasRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+        $this->app->bind('Siacme\Dominio\Consultas\Repositorios\RecetasRepositorio', function($app) {
+            return new DoctrineRecetasRepositorio($app['em']);
         });
     }
 }

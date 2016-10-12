@@ -2,7 +2,6 @@
 namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App;
 use Siacme\Infraestructura\Expedientes\DoctrineOtrosTratamientosRepositorio;
 
 class OtrosTratamientosRepositorioServiceProvider extends ServiceProvider
@@ -25,8 +24,8 @@ class OtrosTratamientosRepositorioServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->bind('Siacme\Dominio\Expedientes\Repositorios\OtrosTratamientosRepositorio', function() {
-            return new DoctrineOtrosTratamientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+        $this->app->bind('Siacme\Dominio\Expedientes\Repositorios\OtrosTratamientosRepositorio', function($app) {
+            return new DoctrineOtrosTratamientosRepositorio($app['em']);
         });
     }
 }

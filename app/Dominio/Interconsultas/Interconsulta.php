@@ -1,6 +1,8 @@
 <?php
 namespace Siacme\Dominio\Interconsultas;
 
+use Siacme\Dominio\Expedientes\Expediente;
+
 /**
  * Class Interconsulta
  * @package Siacme\Dominio\Interconsultas

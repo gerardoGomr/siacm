@@ -3,7 +3,6 @@ namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Siacme\Infraestructura\Pacientes\DoctrinePacientesRepositorio;
-use App;
 
 class PacientesRepositorioServiceProvider extends ServiceProvider
 {
@@ -25,8 +24,8 @@ class PacientesRepositorioServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->bind('Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio', function() {
-            return new DoctrinePacientesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+        $this->app->bind('Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio', function($app) {
+            return new DoctrinePacientesRepositorio($app['em']);
         });
     }
 }

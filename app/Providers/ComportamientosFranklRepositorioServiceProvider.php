@@ -2,8 +2,6 @@
 namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Siacme\Infraestructura\Citas\DoctrineCitasRepositorio;
-use App;
 use Siacme\Infraestructura\Expedientes\DoctrineComportamientosFranklRepositorio;
 
 class ComportamientosFranklRepositorioServiceProvider extends ServiceProvider
@@ -25,8 +23,8 @@ class ComportamientosFranklRepositorioServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio', function() {
-            return new DoctrineComportamientosFranklRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+        $this->app->bind('Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio', function($app) {
+            return new DoctrineComportamientosFranklRepositorio($app['em']);
         });
     }
 }

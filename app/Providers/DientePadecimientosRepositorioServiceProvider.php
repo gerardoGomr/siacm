@@ -3,7 +3,6 @@ namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Siacme\Infraestructura\Expedientes\DoctrineDientePadecimientosRepositorio;
-use App;
 
 class DientePadecimientosRepositorioServiceProvider extends ServiceProvider
 {
@@ -25,8 +24,8 @@ class DientePadecimientosRepositorioServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->bind('Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio', function() {
-            return new DoctrineDientePadecimientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+        $this->app->bind('Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio', function($app) {
+            return new DoctrineDientePadecimientosRepositorio($app['em']);
         });
     }
 }

@@ -9,19 +9,52 @@ namespace Siacme\Dominio\Expedientes;
  */
 class DientePlan
 {
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @var DienteTratamiento
+     */
+    private $dienteTratamiento;
+
 	/**
 	 * @var bool
 	 */
 	private $atendido;
 
-	/**
-	 * constructor
-	 * @param bool $atendido
-	 */
-	public function __construct($atendido = false)
+    /**
+     * @var Diente
+     */
+    private $diente;
+
+    /**
+     * constructor
+     * @param DienteTratamiento $dienteTratamiento
+     * @param bool $atendido
+     */
+	public function __construct(DienteTratamiento $dienteTratamiento, $atendido = false)
 	{
+        $this->dienteTratamiento = $dienteTratamiento;
 		$this->atendido          = $atendido;
 	}
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return DienteTratamiento
+     */
+    public function getDienteTratamiento()
+    {
+        return $this->dienteTratamiento;
+    }
 
 	/**
 	 * @return bool
@@ -38,4 +71,12 @@ class DientePlan
 	{
 		$this->atendido = true;
 	}
+
+    /**
+     * @return Diente
+     */
+    public function getDiente()
+    {
+        return $this->diente;
+    }
 }

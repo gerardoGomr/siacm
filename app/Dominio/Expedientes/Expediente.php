@@ -856,4 +856,10 @@ class Expediente
     {
         $this->interconsultas->add($interconsulta);
     }
+
+    public function inicializarInterconsulta(IColeccion $consultas, IColeccion $interconsultas)
+    {
+        $this->consultas      = $consultas;
+        $this->interconsultas = $interconsultas;
+    }
 }

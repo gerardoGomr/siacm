@@ -24,11 +24,6 @@ class DienteTratamiento
     private $costo;
 
     /**
-     * @var DientePlan
-     */
-    private $dientePlan;
-
-    /**
      * DienteTratamiento constructor.
      * @param int $id
      * @param string $tratamiento
@@ -63,13 +58,5 @@ class DienteTratamiento
     public function getCosto()
     {
         return $this->costo;
-    }
-
-    /**
-     * @return DientePlan
-     */
-    public function getDientePlan()
-    {
-        return $this->dientePlan;
     }
 }

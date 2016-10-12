@@ -14,15 +14,11 @@ Siacme\Dominio\Expedientes\Diente:
           Numero:
             referencedColumnName: Numero
         inverseJoinColumns:
-          PadecimientoId
+          DientePadecimientoId:
             referencedColumnName: id
+      cascade: [merge]
+  oneToMany:
     tratamientos:
       targetEntity: DientePlan
-      joinTable:
-        name: diente_plan_tratamiento
-        joinColumns:
-          Numero:
-            referencedColumnName: Numero
-        inverseJoinColumns:
-          DienteTratamientoId
-            referencedColumnName: id
+      mappedBy: diente
+      cascade: [persist]

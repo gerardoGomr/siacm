@@ -80,25 +80,12 @@ class Diente
     */
    public function agregarPadecimiento(DientePadecimiento $padecimiento)
    {
-       if (count($this->padecimientos) > 2) {
+       if ($this->padecimientos->count() > 2) {
            throw new MasDeDosPadecimientosPorDienteException('Solo se permiten hasta dos padecimientos');
        }
-       $this->padecimientos[] = $padecimiento;
+       $this->padecimientos->add($padecimiento);
    }
 
-//    /**
-//     * indica si el tipo de diente es de leche o permanente
-//     * @return string
-//     */
-//    public function tipo()
-//    {
-//        if ($this->numero >= 51) {
-//            return 'Leche';
-//        }
-//
-//        return 'Permanente';
-//    }
-//
     /**
      * @return IColeccion
      */
@@ -109,10 +96,10 @@ class Diente
 
     /**
      * agregar nuevo tratamiento al diente
-     * @param DienteTratamiento $tratamiento
+     * @param DientePlan $tratamiento
      * @throws SoloSePermitenDosTratamientosException
      */
-    public function agregarTratamiento(DienteTratamiento $tratamiento)
+    public function agregarTratamiento(DientePlan $tratamiento)
     {
         if ($this->tratamientos->count() === 2) {
             throw new SoloSePermitenDosTratamientosException('Solo se permiten hasta dos tratamientos por diente');
@@ -184,25 +171,4 @@ class Diente
     {
         return count($this->padecimientos) > 0 ? true : false;
     }
-//
-//    public function costoTratamientos()
-//    {
-//        $costo = null;
-//        if ($this->tieneTratamientos()) {
-//            foreach ($this->tratamientos as $dientePlan) {
-//                $costo += $dientePlan->getDienteTratamiento()->getCosto();
-//            }
-//        }
-//
-//        return $costo;
-//    }
-//
-//    public function atenderTratamientos()
-//    {
-//        if ($this->tieneTratamientos()) {
-//            foreach ($this->tratamientos as $dientePlan) {
-//                $dientePlan->atender();
-//            }
-//        }
-//    }
 }

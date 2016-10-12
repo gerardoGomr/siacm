@@ -20,7 +20,7 @@ Siacme\Dominio\Expedientes\PlanTratamiento:
     dientes:
       targetEntity: Diente
       joinTable:
-        name: diente_plan
+        name: diente_plan_tratamiento
         joinColumns:
           PlanTratamientoId:
             referencedColumnName: id

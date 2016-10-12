@@ -4,7 +4,8 @@ Siacme\Dominio\Consultas\RecetaConsulta:
   id:
     id:
       type: integer
-      column: id
+      generator:
+        strategy: AUTO
   fields:
     cuerpo:
       type: string

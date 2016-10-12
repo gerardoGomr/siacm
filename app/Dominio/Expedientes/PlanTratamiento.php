@@ -234,10 +234,10 @@ class PlanTratamiento
 	/**
 	 * agregar un tratamiento al diente
 	 * @param int $numeroDiente
-	 * @param DienteTratamiento $dientePlan
+	 * @param DientePlan $dientePlan
 	 * @throws \Siacme\Exceptions\SoloSePermitenDosTratamientosException
 	 */
-	public function agregarTratamiento($numeroDiente, DienteTratamiento $dientePlan)
+	public function agregarTratamiento($numeroDiente, DientePlan $dientePlan)
 	{
 		$this->diente($numeroDiente)->agregarTratamiento($dientePlan);
 	}

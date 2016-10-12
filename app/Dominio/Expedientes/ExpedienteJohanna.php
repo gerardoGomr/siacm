@@ -1196,6 +1196,13 @@ class ExpedienteJohanna extends AbstractExpediente
         return null;
     }
 
+    /**
+     * una vez se genere de manera correcta la consulta, eliminar este metodo e inicializar
+     * las colecciones al generar el expediente
+     *
+     * @param IColeccion $odontogramas
+     * @param IColeccion $planesTratamiento
+     */
     public function inicializarTemp(IColeccion $odontogramas, IColeccion $planesTratamiento)
     {
         $this->odontogramas      = $odontogramas;

@@ -17,8 +17,8 @@ use Siacme\Dominio\Consultas\ExploracionFisica;
 use Siacme\Dominio\Consultas\RecetaConsulta;
 use Siacme\Dominio\Expedientes\DientePlan;
 use Siacme\Dominio\Expedientes\PlanTratamiento;
-use Siacme\Dominio\Expedientes\PlanTratamientoDiente;
 use Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio;
+use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
 use Siacme\Dominio\Interconsultas\Interconsulta;
 use Siacme\Dominio\Expedientes\Repositorios\DienteTratamientosRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\OtrosTratamientosRepositorio;
@@ -29,7 +29,6 @@ use Siacme\Http\Requests;
 use Siacme\Http\Controllers\Controller;
 use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
-use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
 use Siacme\Dominio\Interconsultas\Repositorios\MedicosReferenciaRepositorio;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorPlanTratamiento;
@@ -143,6 +142,14 @@ class ConsultasController extends Controller
      */
     public function capturar($pacienteId, $medicoId, $citaId, PacientesRepositorio $pacientesRepositorio)
     {
+        if(request()->session()->has('plan')) {
+            request()->session()->forget('plan');
+        }
+
+        if(request()->session()->has('odontograma')) {
+            request()->session()->forget('odontograma');
+        }
+
         $pacienteId = (int)base64_decode($pacienteId);
         $medicoId   = (int)base64_decode($medicoId);
         $citaId     = (int)base64_decode($citaId);
@@ -162,10 +169,10 @@ class ConsultasController extends Controller
     /**
      * agrega padecimientos al diente
      * @param Request $request
-     * @param DientePadecimientosRepositorio $padecimientosRepositorio
+     * @param DientePadecimientosRepositorio $dientePadecimientosRepositorio
      * @return \Illuminate\Http\JsonResponse
      */
-    public function agregaDientePadecimiento(Request $request, DientePadecimientosRepositorio $padecimientosRepositorio)
+    public function agregaDientePadecimiento(Request $request, DientePadecimientosRepositorio $dientePadecimientosRepositorio)
     {
         $numeroDiente = (int)$request->get('diente');
         $odontograma  = $request->session()->get('odontograma');
@@ -175,7 +182,7 @@ class ConsultasController extends Controller
 
         foreach ($request->get('padecimientos') as $padecimientos) {
             // alimentar la lista de estatus
-            $padecimiento = $padecimientosRepositorio->obtenerPorId($padecimientos);
+            $padecimiento = $dientePadecimientosRepositorio->obtenerPorId($padecimientos);
 
             try {
                 $odontograma->agregarPadecimientoADiente($numeroDiente, $padecimiento);
@@ -324,7 +331,7 @@ class ConsultasController extends Controller
         $plan              = $request->session()->get('plan');
 
         try {
-            $plan->agregarTratamiento($numeroDiente, $dienteTratamiento);
+            $plan->agregarTratamiento($numeroDiente, new DientePlan($dienteTratamiento));
 
             $respuesta['estatus']    = 'OK';
             $respuesta['html']       = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
@@ -522,6 +529,7 @@ class ConsultasController extends Controller
             $interconsulta = $request->session()->get('interconsulta');
 
             // asignación bilateral
+            $expediente->inicializarInterconsulta(new ColeccionArray(), new ColeccionArray());
             $expediente->agregarInterconsulta($interconsulta);
             $interconsulta->generadaPara($expediente);
         }

@@ -143,4 +143,55 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 			return null;
 		}
 	}
+
+    /**
+     * obtener un diente Tratamiento por id
+     * @param int $id
+     * @return DienteTratamiento|null
+     */
+    public function obtenerTratamientoPorId($id)
+    {
+        try {
+            $query = $this->entityManager->createQuery("SELECT d FROM Expedientes:DienteTratamiento d WHERE d.id = :id")
+                ->setParameter('id', $id);
+            $dienteTratamiento = $query->getResult();
+
+            if (count($dienteTratamiento) === 0) {
+                return null;
+            }
+
+            return $dienteTratamiento[0];
+
+        } catch (PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
+    }
+
+    /**
+     * obtener un diente padecimiento por id
+     * @param int $id
+     * @return DientePadecimiento
+     */
+    public function obtenerPadecimientoPorId($id)
+    {
+        try {
+            $query = $this->entityManager->createQuery("SELECT p FROM Expedientes:DientePadecimiento p WHERE p.id = :id")
+                ->setParameter('id', $id);
+
+            $dientePadecimiento = $query->getResult();
+
+            if (count($dientePadecimiento) === 0) {
+                return null;
+            }
+
+            return $dientePadecimiento[0];
+
+        } catch (PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
+    }
 }

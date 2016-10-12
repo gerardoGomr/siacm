@@ -3,7 +3,6 @@ namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Siacme\Infraestructura\Interconsultas\DoctrineMedicosReferenciaRepositorio;
-use App;
 
 class MedicosReferenciaRepositorioServiceProvider extends ServiceProvider
 {
@@ -24,8 +23,8 @@ class MedicosReferenciaRepositorioServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Siacme\Dominio\Interconsultas\Repositorios\MedicosReferenciaRepositorio', function() {
-            return new DoctrineMedicosReferenciaRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+        $this->app->bind('Siacme\Dominio\Interconsultas\Repositorios\MedicosReferenciaRepositorio', function($app) {
+            return new DoctrineMedicosReferenciaRepositorio($app['em']);
         });
     }
 }

@@ -3,7 +3,6 @@ namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Siacme\Infraestructura\Citas\DoctrineCitasRepositorio;
-use App;
 
 class CitasRepositorioServiceProvider extends ServiceProvider
 {
@@ -24,8 +23,8 @@ class CitasRepositorioServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Siacme\Dominio\Citas\Repositorios\CitasRepositorio', function() {
-            return new DoctrineCitasRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+        $this->app->bind('Siacme\Dominio\Citas\Repositorios\CitasRepositorio', function($app) {
+            return new DoctrineCitasRepositorio($app['em']);
         });
     }
 }

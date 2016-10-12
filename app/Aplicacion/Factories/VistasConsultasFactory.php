@@ -41,16 +41,16 @@ class VistasConsultasFactory
         switch($medico->getId()) {
             // johanna
             case Usuario::JOHANNA:
-                $comportamientosFranklRepositorio     = new DoctrineComportamientosFranklRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $morfologiasCraneofacialesRepositorio = new DoctrineMorfologiasCraneofacialesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $morfologiasFacialesRepositorio       = new DoctrineMorfologiasFacialesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $convexividadesFacialesRepositorio    = new DoctrineConvexividadesFacialesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $atmsRepositorio                      = new DoctrineAtmsRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $dientePadecimientosRepositorio       = new DoctrineDientePadecimientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $otrosTratamientosRepositorio         = new DoctrineOtrosTratamientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $recetasRepositorio                   = new DoctrineRecetasRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $medicosReferenciaRepositorio         = new DoctrineMedicosReferenciaRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $consultaCostosRepositorio            = new DoctrineConsultaCostosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+                $comportamientosFranklRepositorio     = new DoctrineComportamientosFranklRepositorio(App::getInstance()['em']);
+                $morfologiasCraneofacialesRepositorio = new DoctrineMorfologiasCraneofacialesRepositorio(App::getInstance()['em']);
+                $morfologiasFacialesRepositorio       = new DoctrineMorfologiasFacialesRepositorio(App::getInstance()['em']);
+                $convexividadesFacialesRepositorio    = new DoctrineConvexividadesFacialesRepositorio(App::getInstance()['em']);
+                $atmsRepositorio                      = new DoctrineAtmsRepositorio(App::getInstance()['em']);
+                $dientePadecimientosRepositorio       = new DoctrineDientePadecimientosRepositorio(App::getInstance()['em']);
+                $otrosTratamientosRepositorio         = new DoctrineOtrosTratamientosRepositorio(App::getInstance()['em']);
+                $recetasRepositorio                   = new DoctrineRecetasRepositorio(App::getInstance()['em']);
+                $medicosReferenciaRepositorio         = new DoctrineMedicosReferenciaRepositorio(App::getInstance()['em']);
+                $consultaCostosRepositorio            = new DoctrineConsultaCostosRepositorio(App::getInstance()['em']);
 
                 $comportamientosFrankl     = $comportamientosFranklRepositorio->obtenerTodos();
                 $morfologiasCraneofaciales = $morfologiasCraneofacialesRepositorio->obtenerTodos();

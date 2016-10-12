@@ -1,27 +1,27 @@
 Siacme\Dominio\Expedientes\DientePlan:
-  table: diente
+  type: entity
+  table: diente_plan_tratamiento
   id:
-    numero:
+    id:
       type: integer
-      column: Numero
-  manyToMany:
-    padecimientos:
-      targetEntity: DientePadecimiento
-      joinTable:
-        name: diente_plan_padecimiento
-        joinColumns:
-          Numero:
-            referencedColumnName: Numero
-        inverseJoinColumns:
-          PadecimientoId
-            referencedColumnName: id
-    tratamientos:
-      targetEntity: DientePlan
-      joinTable:
-        name: diente_plan_tratamiento
-        joinColumns:
-          Numero:
-            referencedColumnName: Numero
-        inverseJoinColumns:
-          Id
-            referencedColumnName: id
+      generator:
+        strategy: AUTO
+  fields:
+    atendido:
+      type: boolean
+      column: Atendido
+  oneToOne:
+    dienteTratamiento:
+      targetEntity: DienteTratamiento
+      joinColumn:
+        name: DienteTratamientoId
+        referencedColumnName: id
+      cascade: [persist]
+  manyToOne:
+    diente:
+      targetEntity: Diente
+      inversedBy: tratamientos
+      joinColumn:
+        name: Numero
+        referencedColumnName: Numero
+      cascade: [persist]

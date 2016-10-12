@@ -3,7 +3,6 @@ namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Siacme\Infraestructura\Expedientes\DoctrineExpedientesRepositorio;
-use App;
 
 class ExpedientesRepositorioServiceProvider extends ServiceProvider
 {
@@ -25,8 +24,8 @@ class ExpedientesRepositorioServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->bind('Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio', function() {
-            return new DoctrineExpedientesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+        $this->app->bind('Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio', function($app) {
+            return new DoctrineExpedientesRepositorio($app['em']);
         });
     }
 }

@@ -17,8 +17,9 @@ Siacme\Dominio\Expedientes\Odontograma:
         inverseJoinColumns:
           Numero:
             referencedColumnName: Numero
+      cascade: [persist]
   manyToOne:
-    expedienteJohanna:
+    expedienteEspecialidad:
       targetEntity: ExpedienteJohanna
       inversedBy: odontogramas
       joinColumn:

@@ -129,10 +129,10 @@ class ExpedientesAgregarDatosConsultaFactory
                 $medidaAlteracionColor         = (double)$request->get('medidaAlteracionColor');
 
                 // repositorios
-                $morfologiasCraneofacialesRepositorio = new DoctrineMorfologiasCraneofacialesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $morfologiasFacialesRepositorio       = new DoctrineMorfologiasFacialesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $convexividadesFacialesRepositorio    = new DoctrineConvexividadesFacialesRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-                $atmsRepositorio                      = new DoctrineAtmsRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+                $morfologiasCraneofacialesRepositorio = new DoctrineMorfologiasCraneofacialesRepositorio(App::getInstance()['em']);
+                $morfologiasFacialesRepositorio       = new DoctrineMorfologiasFacialesRepositorio(App::getInstance()['em']);
+                $convexividadesFacialesRepositorio    = new DoctrineConvexividadesFacialesRepositorio(App::getInstance()['em']);
+                $atmsRepositorio                      = new DoctrineAtmsRepositorio(App::getInstance()['em']);
 
                 // objetos catalogos
                 $morfologiaCraneofacial = $morfologiasCraneofacialesRepositorio->obtenerPorId($craneofacialId);

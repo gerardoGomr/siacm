@@ -30,7 +30,7 @@ class VistasExpedientesGenerarFactory
             // johanna
             case Usuario::JOHANNA:
                 // repositorios
-                $padecimientoRepositorio = new DoctrinePadecimientosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
+                $padecimientoRepositorio = new DoctrinePadecimientosRepositorio(App::getInstance()['em']);
                 //$trastornosRepositorio   = new DoctrineTrastornosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
 
                 // catálogos
