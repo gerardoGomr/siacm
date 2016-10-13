@@ -3,7 +3,7 @@ namespace Siacme\Aplicacion\Reportes\Consultas;
 
 use DateTime;
 use Siacme\Aplicacion\Reportes\ReporteJohanna;
-use Siacme\Dominio\Consultas\Receta;
+use Siacme\Dominio\Consultas\RecetaConsulta;
 use Siacme\Dominio\Expedientes\Expediente;
 
 /**
@@ -15,7 +15,7 @@ use Siacme\Dominio\Expedientes\Expediente;
 class RecetaJohanna extends ReporteJohanna
 {
     /**
-     * @var Receta
+     * @var RecetaConsulta
      */
     private $receta;
 
@@ -26,10 +26,10 @@ class RecetaJohanna extends ReporteJohanna
 
     /**
      * RecetaJohanna Constructor
-     * @param Receta $receta
+     * @param RecetaConsulta $receta
      * @param Expediente $expediente
      */
-    public function __construct($receta, $expediente)
+    public function __construct(RecetaConsulta $receta, Expediente $expediente)
     {
         $this->receta     = $receta;
         $this->expediente = $expediente;
@@ -45,7 +45,7 @@ class RecetaJohanna extends ReporteJohanna
         $this->SetTitle('Receta');
         $this->AddPage();
         $this->SetFont('helvetica', '', 12);
-        $this->Cell(0, 10, $this->receta->fechaReceta((new DateTime())->format('Y-m-d')), 0, 1, 'R');
+        $this->Cell(0, 10, (new DateTime())->format('Y-m-d'), 0, 1, 'R');
         $this->Ln(5);
 
         $html = '<p><strong>Nombre:</strong> ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>
@@ -55,7 +55,7 @@ class RecetaJohanna extends ReporteJohanna
 
         $this->Ln(5);
         $this->WriteHTML('<p><b>Indicaciones:</b></p>', true);
-        $this->MultiCell(0, 5, utf8_encode($this->receta->getReceta()), false, 'J');
+        $this->MultiCell(0, 5, utf8_encode($this->receta->getCuerpo()), false, 'J');
         $this->Ln(5);
 
         $this->Output('Receta médica', 'I');

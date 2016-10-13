@@ -2,6 +2,7 @@
 namespace Siacme\Http\Controllers\Consultas;
 
 use DateTime;
+use EntityManager;
 use Exception;
 use Illuminate\Http\Request;
 use Siacme\Aplicacion\ColeccionArray;
@@ -16,6 +17,7 @@ use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Consultas\ExploracionFisica;
 use Siacme\Dominio\Consultas\RecetaConsulta;
 use Siacme\Dominio\Expedientes\DientePlan;
+use Siacme\Dominio\Expedientes\Odontograma;
 use Siacme\Dominio\Expedientes\PlanTratamiento;
 use Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
@@ -142,10 +144,6 @@ class ConsultasController extends Controller
      */
     public function capturar($pacienteId, $medicoId, $citaId, PacientesRepositorio $pacientesRepositorio)
     {
-        if(request()->session()->has('plan')) {
-            request()->session()->forget('plan');
-        }
-
         if(request()->session()->has('odontograma')) {
             request()->session()->forget('odontograma');
         }
@@ -176,6 +174,7 @@ class ConsultasController extends Controller
     {
         $numeroDiente = (int)$request->get('diente');
         $odontograma  = $request->session()->get('odontograma');
+        $odontograma  = $request->session()->get('odontograma');
         $respuesta    = [];
 
         $odontograma->removerPadecimientosADiente($numeroDiente);
@@ -198,8 +197,6 @@ class ConsultasController extends Controller
         $respuesta['estatus'] = 'OK';
         $respuesta['html']    = $dibujadorOdontograma->dibujar();
 
-        // $request->session()->put('odontograma', $odontograma);
-
         return response()->json($respuesta);
     }
 
@@ -215,29 +212,20 @@ class ConsultasController extends Controller
         $respuesta   = [];
         $odontograma = $request->session()->get('odontograma');
 
-        if(!($request->session()->has('plan'))) {
-            $odontograma->borrarDientesTratamientos();
-
+        if (!$odontograma->tieneOtrosTratamientos()) {
             // obtener primeros dos otros tratamientos para el plan
             $otroTratamiento1 = $otrosTratamientosRepositorio->obtenerPorId(1);
             $otroTratamiento2 = $otrosTratamientosRepositorio->obtenerPorId(2);
 
             // obtener plan
             // se inicializan los otros tratamientos
-            $plan = new PlanTratamiento(new ColeccionArray());
-            $plan->agregarOtroTratamiento($otroTratamiento1);
-            $plan->agregarOtroTratamiento($otroTratamiento2);
-
-            $plan->generarDeOdontograma($odontograma);
-            $request->session()->put('plan', $plan);
-
-        } else {
-            $plan = $request->session()->get('plan');
+            $odontograma->agregarOtroTratamiento($otroTratamiento1);
+            $odontograma->agregarOtroTratamiento($otroTratamiento2);
         }
 
         $respuesta['estatus']    = 'OK';
-        $respuesta['html']       = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
-        $respuesta['planValido'] = $plan->todosLosDientesTienenTratamientos() ? '1' : '0';
+        $respuesta['html']       = $this->dibujarPlan($odontograma, $dienteTratamientosRepositorio);
+        $respuesta['planValido'] = $odontograma->todosLosDientesTienenTratamientos() ? '1' : '0';
 
         return response()->json($respuesta);
     }
@@ -253,13 +241,13 @@ class ConsultasController extends Controller
     {
         $respuesta          = [];
         $otroTratamientoId  = (int)$request->get('otroTratamientoId');
-        $plan               = $request->session()->get('plan');
+        $odontograma        = $request->session()->get('odontograma');
         $otroTratamiento    = $otrosTratamientosRepositorio->obtenerPorId($otroTratamientoId);
 
         try {
-            $plan->agregarOtroTratamiento($otroTratamiento);
+            $odontograma->agregarOtroTratamiento($otroTratamiento);
             $respuesta['estatus'] = 'OK';
-            $respuesta['html']    = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
+            $respuesta['html']    = $this->dibujarPlan($odontograma, $dienteTratamientosRepositorio);
 
             return response()->json($respuesta);
 
@@ -282,14 +270,14 @@ class ConsultasController extends Controller
     {
         $respuesta          = [];
         $otroTratamientoId  = (int)$request->get('otroTratamientoId');
-        $plan               = $request->session()->get('plan');
+        $odontograma        = $request->session()->get('odontograma');
         $otroTratamiento    = $otrosTratamientosRepositorio->obtenerPorId($otroTratamientoId);
 
         try {
-            $plan->quitarOtroTratamiento($otroTratamiento);
+            $odontograma->quitarOtroTratamiento($otroTratamiento);
 
             $respuesta['estatus'] = 'OK';
-            $respuesta['html']    = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
+            $respuesta['html']    = $this->dibujarPlan($odontograma, $dienteTratamientosRepositorio);
 
             return response()->json($respuesta);
 
@@ -303,14 +291,14 @@ class ConsultasController extends Controller
 
     /**
      * dibujar la representación del plan de tratamiento
-     * @param PlanTratamiento $plan
+     * @param Odontograma $odontograma
      * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
      * @return string
      */
-    private function dibujarPlan(PlanTratamiento $plan, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
+    private function dibujarPlan(Odontograma $odontograma, DienteTratamientosRepositorio $dienteTratamientosRepositorio)
     {
         $dienteTratamientos = $dienteTratamientosRepositorio->obtenerTodos();
-        $dibujadorPlan      = new DibujadorPlanTratamiento($plan, $dienteTratamientos);
+        $dibujadorPlan      = new DibujadorPlanTratamiento($odontograma, $dienteTratamientos);
 
         return $dibujadorPlan->dibujar();
     }
@@ -328,14 +316,14 @@ class ConsultasController extends Controller
         $respuesta      = [];
 
         $dienteTratamiento = $dienteTratamientosRepositorio->obtenerPorId($tratamientoId);
-        $plan              = $request->session()->get('plan');
+        $odontograma       = $request->session()->get('odontograma');
 
         try {
-            $plan->agregarTratamiento($numeroDiente, new DientePlan($dienteTratamiento));
+            $odontograma->agregarTratamiento($numeroDiente, new DientePlan($dienteTratamiento));
 
             $respuesta['estatus']    = 'OK';
-            $respuesta['html']       = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
-            $respuesta['planValido'] = $plan->todosLosDientesTienenTratamientos() ? '1' : '0';
+            $respuesta['html']       = $this->dibujarPlan($odontograma, $dienteTratamientosRepositorio);
+            $respuesta['planValido'] = $odontograma->todosLosDientesTienenTratamientos() ? '1' : '0';
 
         } catch (Exception $e) {
             $respuesta['estatus'] = 'fail';
@@ -359,14 +347,14 @@ class ConsultasController extends Controller
         $respuesta      = [];
 
         $dienteTratamiento = $dienteTratamientosRepositorio->obtenerPorId($tratamientoId);
-        $plan              = $request->session()->get('plan');
+        $odontograma       = $request->session()->get('odontograma');
 
         try {
-            $plan->eliminarTratamiento($numeroDiente, $dienteTratamiento);
+            $odontograma->eliminarTratamiento($numeroDiente, $dienteTratamiento);
 
             $respuesta['estatus']    = 'OK';
-            $respuesta['html']       = $this->dibujarPlan($plan, $dienteTratamientosRepositorio);
-            $respuesta['planValido'] = $plan->todosLosDientesTienenTratamientos() ? '1' : '0';
+            $respuesta['html']       = $this->dibujarPlan($odontograma, $dienteTratamientosRepositorio);
+            $respuesta['planValido'] = $odontograma->todosLosDientesTienenTratamientos() ? '1' : '0';
 
         } catch (Exception $e) {
             $respuesta['estatus'] = 'fail';
@@ -386,11 +374,11 @@ class ConsultasController extends Controller
     {
         $pacienteId = (int)base64_decode($pacienteId);
 
-        $paciente   = $pacientesRepositorio->obtenerPorId($pacienteId);
-        $expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente);
-        $plan       = request()->session()->get('plan');
+        $paciente    = $pacientesRepositorio->obtenerPorId($pacienteId);
+        $expediente  = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente);
+        $odontograma = request()->session()->get('odontograma');
 
-        $reporte = new PlanTratamientoJohanna($plan, $expediente);
+        $reporte = new PlanTratamientoJohanna($odontograma, $expediente);
         $reporte->SetHeaderMargin(10);
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 60);
@@ -487,9 +475,12 @@ class ConsultasController extends Controller
      * @param RegistrarConsultaRequest $request
      * @param ComportamientosFranklRepositorio $comportamientosFranklRepositorio
      * @param PacientesRepositorio $pacientesRepositorio
+     * @param DientePadecimientosRepositorio $dientePadecimientosRepositorio
+     * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
+     * @param OtrosTratamientosRepositorio $otrosTratamientosRepositorio
      * @return \Illuminate\Http\JsonResponse
      */
-    public function guardarConsulta(RegistrarConsultaRequest $request, ComportamientosFranklRepositorio $comportamientosFranklRepositorio, PacientesRepositorio $pacientesRepositorio)
+    public function guardarConsulta(RegistrarConsultaRequest $request, ComportamientosFranklRepositorio $comportamientosFranklRepositorio, PacientesRepositorio $pacientesRepositorio, DientePadecimientosRepositorio $dientePadecimientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio, OtrosTratamientosRepositorio $otrosTratamientosRepositorio)
     {
         $respuesta = [];
         // como se va a almacenar la consulta
@@ -521,12 +512,13 @@ class ConsultasController extends Controller
 
         // crear objetos propios de cada especialidad
         // si es de johanna se deben crear plan de tratamiento, odontograma
-        ExpedientesAgregarElementosConsulta::crear($medico, $expediente, $request);
+        ExpedientesAgregarElementosConsulta::crear($medico, $expediente, $request, $dientePadecimientosRepositorio, $dienteTratamientosRepositorio, $otrosTratamientosRepositorio);
 
         // verificar si se mandaron a crear receta e interconsulta
         // interconsulta es propio de expediente
         if ($request->session()->has('interconsulta')) {
             $interconsulta = $request->session()->get('interconsulta');
+            $interconsulta = EntityManager::merge($interconsulta);
 
             // asignación bilateral
             $expediente->inicializarInterconsulta(new ColeccionArray(), new ColeccionArray());
@@ -537,6 +529,7 @@ class ConsultasController extends Controller
         // receta es propio de consulta
         if ($request->session()->has('receta')) {
             $receta = $request->session()->get('receta');
+            $receta = EntityManager::merge($receta);
             $consulta->agregarReceta($receta);
         }
 

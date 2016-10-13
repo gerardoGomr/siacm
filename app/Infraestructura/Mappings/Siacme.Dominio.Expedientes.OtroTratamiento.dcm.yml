@@ -1,10 +1,9 @@
 Siacme\Dominio\Expedientes\OtroTratamiento:
   type: entity
-  table: plan_otro_tratamiento
+  table: otro_tratamiento
   id:
     id:
       type: integer
-      column: id
   fields:
     tratamiento:
       type: string

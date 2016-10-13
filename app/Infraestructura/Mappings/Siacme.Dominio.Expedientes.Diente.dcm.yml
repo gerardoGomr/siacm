@@ -9,14 +9,14 @@ Siacme\Dominio\Expedientes\Diente:
     padecimientos:
       targetEntity: DientePadecimiento
       joinTable:
-        name: diente_plan_padecimiento
+        name: odontograma_diente_padecimiento
         joinColumns:
           Numero:
             referencedColumnName: Numero
         inverseJoinColumns:
           DientePadecimientoId:
             referencedColumnName: id
-      cascade: [merge]
+      cascade: [persist]
   oneToMany:
     tratamientos:
       targetEntity: DientePlan

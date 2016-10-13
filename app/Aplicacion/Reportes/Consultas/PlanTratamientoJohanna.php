@@ -3,6 +3,7 @@ namespace Siacme\Aplicacion\Reportes\Consultas;
 
 use Siacme\Aplicacion\Reportes\ReporteJohanna;
 use Siacme\Dominio\Expedientes\Expediente;
+use Siacme\Dominio\Expedientes\Odontograma;
 use Siacme\Dominio\Expedientes\PlanTratamiento;
 use Siacme\Dominio\Listas\IColeccion;
 
@@ -14,14 +15,14 @@ class PlanTratamientoJohanna extends ReporteJohanna
     private $expediente;
 
     /**
-     * @var PlanTratamiento
+     * @var Odontograma
      */
-    private $plan;
+    private $odontograma;
 
-    public function __construct($plan, $expediente)
+    public function __construct($odontograma, $expediente)
     {
-        $this->expediente = $expediente;
-        $this->plan       = $plan;
+        $this->expediente  = $expediente;
+        $this->odontograma = $odontograma;
         parent::__construct(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
     }
 
@@ -45,7 +46,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $this->SetFont('helvetica', '', 8);
 
         $otrosTratamientos = '';
-        foreach ($this->plan->getOtrosTratamientos() as $otroTratamiento) {
+        foreach ($this->odontograma->getOtrosTratamientos() as $otroTratamiento) {
             $otrosTratamientos .= $otroTratamiento->getTratamiento() . ' ($' . (string)number_format($otroTratamiento->getCosto(), 2) . ') - ';
         }
 
@@ -60,7 +61,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
                 padding: 3px;
             }
             </style>
-            <p style="font-size: 13pt;"><strong>Costo total:</strong> <span style="color: #ff0000">$ '.(string) number_format($this->plan->costo(), 2).'</span></p>
+            <p style="font-size: 13pt;"><strong>Costo total:</strong> <span style="color: #ff0000">$ '.(string) number_format($this->odontograma->costo(), 2).'</span></p>
             <p style="font-size: 13pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>
             <table>
                 <thead>
@@ -72,7 +73,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
                 </thead>
                 <tbody>';
 
-        foreach ($this->plan->getDientes() as $diente) {
+        foreach ($this->odontograma->getDientes() as $diente) {
 
             $html .= '
                 <tr>

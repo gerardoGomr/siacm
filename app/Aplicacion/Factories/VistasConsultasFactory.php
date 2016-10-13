@@ -2,7 +2,7 @@
 namespace Siacme\Aplicacion\Factories;
 
 use App;
-use Siacme\Aplicacion\ColeccionArray;
+use EntityManager;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Pacientes\Paciente;
@@ -16,7 +16,6 @@ use Siacme\Infraestructura\Expedientes\DoctrineConvexividadesFacialesRepositorio
 use Siacme\Infraestructura\Expedientes\DoctrineMorfologiasCraneofacialesRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineMorfologiasFacialesRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineDientePadecimientosRepositorio;
-use Siacme\Infraestructura\Expedientes\DoctrineDienteTratamientosRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineOtrosTratamientosRepositorio;
 
 /**
@@ -71,6 +70,7 @@ class VistasConsultasFactory
                 }
 
                 if (!request()->session()->has('odontograma')) {
+                    EntityManager::detach($odontograma);
                     request()->session()->put('odontograma', $odontograma);
                 }
 

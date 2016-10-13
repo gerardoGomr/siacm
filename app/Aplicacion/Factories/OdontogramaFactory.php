@@ -19,7 +19,7 @@ class OdontogramaFactory
 	 */
 	public static function crear()
 	{
-		$odontograma = new Odontograma(new ColeccionArray());
+		$odontograma = new Odontograma(new ColeccionArray(), new ColeccionArray());
 
 		self::agregarDientes(11, 18, $odontograma);
         self::agregarDientes(21, 28, $odontograma);

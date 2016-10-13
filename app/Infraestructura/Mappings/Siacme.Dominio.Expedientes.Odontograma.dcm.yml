@@ -18,6 +18,17 @@ Siacme\Dominio\Expedientes\Odontograma:
           Numero:
             referencedColumnName: Numero
       cascade: [persist]
+    otrosTratamientos:
+      targetEntity: OtroTratamiento
+      joinTable:
+        name: odontograma_otro_tratamiento
+        joinColumns:
+          OdontogramaId:
+            referencedColumnName: id
+        inverseJoinColumns:
+          OtroTratamientoId:
+            referencedColumnName: id
+      cascade: [persist]
   manyToOne:
     expedienteEspecialidad:
       targetEntity: ExpedienteJohanna

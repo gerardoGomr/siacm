@@ -1,6 +1,7 @@
 <?php
 namespace Siacme\Aplicacion\Servicios\Expedientes;
 
+use Siacme\Dominio\Expedientes\Odontograma;
 use Siacme\Dominio\Expedientes\PlanTratamiento;
 use Siacme\Dominio\Expedientes\Diente;
 use Siacme\Dominio\Listas\IColeccion;
@@ -15,9 +16,9 @@ use Siacme\Aplicacion\Servicios\DibujadorInterface;
 class DibujadorPlanTratamiento implements DibujadorInterface
 {
     /**
-     * @var PlanTratamiento
+     * @var Odontograma
      */
-    protected $planTratamiento;
+    protected $odontograma;
 
     /**
      * @var array
@@ -26,12 +27,12 @@ class DibujadorPlanTratamiento implements DibujadorInterface
 
     /**
      * DibujadorPlanTratamiento constructor.
-     * @param PlanTratamiento $planTratamiento
+     * @param Odontograma $odontograma
      * @param array $dienteTratamientos
      */
-    public function __construct(PlanTratamiento $planTratamiento, array $dienteTratamientos)
+    public function __construct(Odontograma $odontograma, array $dienteTratamientos)
     {
-        $this->planTratamiento    = $planTratamiento;
+        $this->planTratamiento    = $odontograma;
         $this->dienteTratamientos = $dienteTratamientos;
     }
 

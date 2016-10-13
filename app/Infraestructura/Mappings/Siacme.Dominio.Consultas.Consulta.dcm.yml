@@ -12,7 +12,7 @@ Siacme\Dominio\Consultas\Consulta:
         strategy: AUTO
   fields:
     fecha:
-      type: date
+      type: datetime
       column: Fecha
     padecimientoActual:
       type: string

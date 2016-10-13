@@ -1,6 +1,6 @@
 Siacme\Dominio\Expedientes\DientePlan:
   type: entity
-  table: diente_plan_tratamiento
+  table: odontograma_diente_tratamiento
   id:
     id:
       type: integer
