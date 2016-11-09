@@ -64,10 +64,10 @@ class Odontograma extends \Siacme\Dominio\Expedientes\Odontograma implements \Do
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'dientes', 'revisado', 'expedienteEspecialidad'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'odontogramaDientes', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'otrosTratamientos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'expedienteEspecialidad'];
         }
 
-        return ['__isInitialized__', 'id', 'dientes', 'revisado', 'expedienteEspecialidad'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'odontogramaDientes', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'otrosTratamientos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'expedienteEspecialidad'];
     }
 
     /**
@@ -191,89 +191,199 @@ class Odontograma extends \Siacme\Dominio\Expedientes\Odontograma implements \Do
     /**
      * {@inheritDoc}
      */
-    public function agregarDiente(\Siacme\Dominio\Expedientes\Diente $diente)
+    public function getOdontogramaDientes()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarDiente', [$diente]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOdontogramaDientes', []);
 
-        return parent::agregarDiente($diente);
+        return parent::getOdontogramaDientes();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function removerPadecimientosADiente($numeroDiente)
+    public function getOtrosTratamientos()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerPadecimientosADiente', [$numeroDiente]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOtrosTratamientos', []);
 
-        return parent::removerPadecimientosADiente($numeroDiente);
+        return parent::getOtrosTratamientos();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function agregarPadecimientoADiente($numeroDiente, \Siacme\Dominio\Expedientes\DientePadecimiento $dientePadecimiento)
+    public function atendido()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarPadecimientoADiente', [$numeroDiente, $dientePadecimiento]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'atendido', []);
 
-        return parent::agregarPadecimientoADiente($numeroDiente, $dientePadecimiento);
+        return parent::atendido();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function diente($numero)
+    public function getExpedienteEspecialidad()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'diente', [$numero]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExpedienteEspecialidad', []);
 
-        return parent::diente($numero);
+        return parent::getExpedienteEspecialidad();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function revisado()
+    public function getCosto()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'revisado', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCosto', []);
 
-        return parent::revisado();
+        return parent::getCosto();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDientes()
+    public function agregarOdontogramaDiente(\Siacme\Dominio\Expedientes\OdontogramaDiente $odontogramaDiente)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDientes', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarOdontogramaDiente', [$odontogramaDiente]);
 
-        return parent::getDientes();
+        return parent::agregarOdontogramaDiente($odontogramaDiente);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function borrarDientesTratamientos()
+    public function getOdontogramaDiente($numero)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'borrarDientesTratamientos', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOdontogramaDiente', [$numero]);
 
-        return parent::borrarDientesTratamientos();
+        return parent::getOdontogramaDiente($numero);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function generarPara(\Siacme\Dominio\Expedientes\ExpedienteJohanna $expedienteJohanna)
+    public function removerPadecimientosADiente($numero)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'generarPara', [$expedienteJohanna]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerPadecimientosADiente', [$numero]);
 
-        return parent::generarPara($expedienteJohanna);
+        return parent::removerPadecimientosADiente($numero);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarPadecimientoADiente($numero, \Siacme\Dominio\Expedientes\DientePadecimiento $dientePadecimiento)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarPadecimientoADiente', [$numero, $dientePadecimiento]);
+
+        return parent::agregarPadecimientoADiente($numero, $dientePadecimiento);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function tieneOtrosTratamientos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneOtrosTratamientos', []);
+
+        return parent::tieneOtrosTratamientos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarOtroTratamiento(\Siacme\Dominio\Expedientes\OtroTratamiento $otroTratamiento)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarOtroTratamiento', [$otroTratamiento]);
+
+        return parent::agregarOtroTratamiento($otroTratamiento);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function quitarOtroTratamiento(\Siacme\Dominio\Expedientes\OtroTratamiento $otroTratamiento)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'quitarOtroTratamiento', [$otroTratamiento]);
+
+        return parent::quitarOtroTratamiento($otroTratamiento);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function todosLosDientesTienenTratamientos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'todosLosDientesTienenTratamientos', []);
+
+        return parent::todosLosDientesTienenTratamientos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function costo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'costo', []);
+
+        return parent::costo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function costoFormato()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'costoFormato', []);
+
+        return parent::costoFormato();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarTratamiento($numero, \Siacme\Dominio\Expedientes\DientePlan $dientePlan)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarTratamiento', [$numero, $dientePlan]);
+
+        return parent::agregarTratamiento($numero, $dientePlan);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function eliminarTratamiento($numero, \Siacme\Dominio\Expedientes\DienteTratamiento $dienteTratamiento)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'eliminarTratamiento', [$numero, $dienteTratamiento]);
+
+        return parent::eliminarTratamiento($numero, $dienteTratamiento);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function asignadoA(\Siacme\Dominio\Expedientes\ExpedienteJohanna $expedienteJohanna)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignadoA', [$expedienteJohanna]);
+
+        return parent::asignadoA($expedienteJohanna);
     }
 
 }

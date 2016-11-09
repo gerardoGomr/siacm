@@ -1,5 +1,5 @@
 <div class="tab-pane" id="plan">
-    @if($expediente->tienePlanesTratamiento())
+    @if($expediente->getExpedienteEspecialidad()->tieneOdontogramas())
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
@@ -10,12 +10,12 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($expediente->getListaPlanesTratamiento() as $plan)
+            @foreach($expediente->getExpedienteEspecialidad()->odontogramas() as $odontograma)
                 <tr>
                     <td>-</td>
-                    <td>{{ $plan->atendido() ? 'Atendido' : 'Activo' }}</td>
-                    <td>{{ '$' . number_format($plan->getCosto(), 2) }}</td>
-                    <td><a href="{{ url('pacientes/plan/' . base64_encode($plan->getId()) . '/' . base64_encode($expediente->getPaciente()->getId()) . '/' . base64_encode($expediente->getMedico()->getUsername())) }}" data-toggle="tooltip" data-original-title="generar PDF" data-placement="top" target="_blank"><i class="fa fa-print fa-2x"></i></a></td>
+                    <td>{{ $odontograma->atendido() ? 'Atendido' : 'Activo' }}</td>
+                    <td>{{ $odontograma->costo() }}</td>
+                    <td><a href="{{ url('pacientes/plan/' . base64_encode($odontograma->getId()) . '/' . base64_encode($expediente->getId())) }}" data-toggle="tooltip" data-original-title="Imprimir plan" data-placement="top" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i></a></td>
                 </tr>
             @endforeach
             </tbody>

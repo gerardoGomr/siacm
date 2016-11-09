@@ -261,4 +261,5 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
     odontogramas:
       targetEntity: Odontograma
       mappedBy: expedienteEspecialidad
-      cascade: [persist]
+      cascade: [persist, merge]
+      fetch: EAGER

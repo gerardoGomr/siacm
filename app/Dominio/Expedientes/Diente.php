@@ -19,34 +19,13 @@ class Diente
 	 */
 	protected $numero;
 
-	/**
-	 * padecimientos del diente
-	 * @var IColeccion
-	 */
-	protected $padecimientos;
-
-    /**
-     * tratamientos del diente
-     * @var IColeccion
-     */
-    protected $tratamientos;
-
-    /**
-     * @var bool
-     */
-    protected $existe;
-
     /**
      * Diente constructor.
      * @param int $numero
-     * @param IColeccion|null $padecimientos
-     * @param IColeccion|null $tratamientos
      */
-	public function __construct($numero, IColeccion $padecimientos = null, IColeccion $tratamientos = null)
+	public function __construct($numero)
 	{
-        $this->numero        = $numero;
-        $this->padecimientos = $padecimientos;
-        $this->tratamientos  = $tratamientos;
+        $this->numero = $numero;
 	}
 
     /**
@@ -55,120 +34,5 @@ class Diente
     public function getNumero()
     {
         return $this->numero;
-    }
-
-    /**
-     * @return IColeccion
-     */
-    public function getPadecimientos()
-    {
-        return $this->padecimientos;
-    }
-
-   /**
-    * remover todos los padecimientos del diente
-    */
-   public function removerPadecimientos()
-   {
-       $this->padecimientos->clear();
-   }
-
-   /**
-    * agrega un nuevo padecimiento al diente
-    * @param DientePadecimiento $padecimiento
-    * @throws MasDeDosPadecimientosPorDienteException
-    */
-   public function agregarPadecimiento(DientePadecimiento $padecimiento)
-   {
-       if ($this->padecimientos->count() > 2) {
-           throw new MasDeDosPadecimientosPorDienteException('Solo se permiten hasta dos padecimientos');
-       }
-       $this->padecimientos->add($padecimiento);
-   }
-
-    /**
-     * @return IColeccion
-     */
-    public function getTratamientos()
-    {
-        return $this->tratamientos;
-    }
-
-    /**
-     * agregar nuevo tratamiento al diente
-     * @param DientePlan $tratamiento
-     * @throws SoloSePermitenDosTratamientosException
-     */
-    public function agregarTratamiento(DientePlan $tratamiento)
-    {
-        if ($this->tratamientos->count() === 2) {
-            throw new SoloSePermitenDosTratamientosException('Solo se permiten hasta dos tratamientos por diente');
-        }
-
-        $this->tratamientos->add($tratamiento);
-    }
-
-    /**
-     * remover todos los tratamientos del diente
-     */
-    public function removerTratamientos()
-    {
-        if (!is_null($this->tratamientos)) {
-            $this->tratamientos->clear();
-        }
-    }
-
-    /**
-     * comprueba que el tratamiento esté asignado al diente
-     * @param DienteTratamiento $dienteTratamiento
-     * @return bool
-     */
-    public function tieneElTratamientoAsignado(DienteTratamiento $dienteTratamiento)
-    {
-        foreach ($this->tratamientos as $dientePlan) {
-            if ($dientePlan->getDienteTratamiento()->getId() === $dienteTratamiento->getId()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * eliminar el tratamiento especificado
-     * @param DienteTratamiento $dienteTratamiento
-     * @throws TratamientoNoExisteEnPlanActualException
-     */
-    public function eliminarTratamiento(DienteTratamiento $dienteTratamiento)
-    {
-        $encontrado = false;
-        foreach ($this->tratamientos as $dientePlan) {
-            if ($dientePlan->getDienteTratamiento()->getId() === $dienteTratamiento->getId()) {
-                $key = $this->tratamientos->key();
-
-                $this->tratamientos->remove($key);
-                $encontrado = true;
-            }
-        }
-
-        if (!$encontrado) {
-            throw new TratamientoNoExisteEnPlanActualException('El tratamiento especificado no existe en el plan actual.');
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    public function tieneTratamientos()
-    {
-        return count($this->tratamientos) > 0 ? true : false;
-    }
-
-    /**
-     * @return bool
-     */
-    public function tienePadecimientos()
-    {
-        return count($this->padecimientos) > 0 ? true : false;
     }
 }

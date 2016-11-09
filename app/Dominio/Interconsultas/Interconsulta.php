@@ -42,6 +42,11 @@ class Interconsulta
     private $expediente;
 
     /**
+     * @var string
+     */
+    private $fechaInterconsulta;
+
+    /**
      * Interconsulta constructor.
      * @param MedicoReferencia $medico
      * @param string $referencia
@@ -107,5 +112,30 @@ class Interconsulta
     public function generadaPara(Expediente $expediente)
     {
         $this->expediente = $expediente;
+    }
+
+    /**
+     * remover medico
+     */
+    public function removerMedico()
+    {
+        $this->medico = null;
+    }
+
+    /**
+     * se agrega el médico
+     * @param MedicoReferencia $medicoReferencia
+     */
+    public function agregarMedico(MedicoReferencia $medicoReferencia)
+    {
+        $this->medico = $medicoReferencia;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFechaInterconsulta()
+    {
+        return $this->fechaInterconsulta;
     }
 }

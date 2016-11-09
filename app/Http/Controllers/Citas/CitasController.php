@@ -213,15 +213,7 @@ class CitasController extends Controller
         $cita        = $this->citasRepositorio->obtenerPorId($citaId);
         $accion      = (int)$request->get('accion');
 
-        switch ($accion) {
-            case CitaEstatus::CONFIRMADA:
-                $cita->confirmar();
-                break;
-
-            case CitaEstatus::CANCELADA:
-                $cita->cancelar();
-                break;
-        }
+        $cita->registrarEstatus($accion);
 
         if(!$this->citasRepositorio->actualizar($cita)) {
             // error

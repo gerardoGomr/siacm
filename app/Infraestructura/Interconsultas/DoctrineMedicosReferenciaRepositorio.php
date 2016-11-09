@@ -33,7 +33,7 @@ class DoctrineMedicosReferenciaRepositorio implements MedicosReferenciaRepositor
     {
         // TODO: Implement obtenerPorId() method.
         try {
-            $query   = $this->entityManager->createQuery("SELECT m FROM Interconsultas:MedicoReferencia m WHERE m.id = :id")
+            $query   = $this->entityManager->createQuery("SELECT m, e FROM Interconsultas:MedicoReferencia m INNER JOIN m.especialidad e WHERE m.id = :id")
                 ->setParameter('id', $id);
 
             $medicosReferencia = $query->getResult();

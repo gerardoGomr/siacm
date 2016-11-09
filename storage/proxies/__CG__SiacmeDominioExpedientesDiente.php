@@ -64,10 +64,10 @@ class Diente extends \Siacme\Dominio\Expedientes\Diente implements \Doctrine\ORM
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'numero', 'padecimientos', 'tratamientos', 'existe'];
+            return ['__isInitialized__', 'numero'];
         }
 
-        return ['__isInitialized__', 'numero', 'padecimientos', 'tratamientos', 'existe'];
+        return ['__isInitialized__', 'numero'];
     }
 
     /**
@@ -186,116 +186,6 @@ class Diente extends \Siacme\Dominio\Expedientes\Diente implements \Doctrine\ORM
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNumero', []);
 
         return parent::getNumero();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getPadecimientos()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPadecimientos', []);
-
-        return parent::getPadecimientos();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function removerPadecimientos()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerPadecimientos', []);
-
-        return parent::removerPadecimientos();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function agregarPadecimiento(\Siacme\Dominio\Expedientes\DientePadecimiento $padecimiento)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarPadecimiento', [$padecimiento]);
-
-        return parent::agregarPadecimiento($padecimiento);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getTratamientos()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTratamientos', []);
-
-        return parent::getTratamientos();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function agregarTratamiento(\Siacme\Dominio\Expedientes\DienteTratamiento $tratamiento)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarTratamiento', [$tratamiento]);
-
-        return parent::agregarTratamiento($tratamiento);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function removerTratamientos()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerTratamientos', []);
-
-        return parent::removerTratamientos();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function tieneElTratamientoAsignado(\Siacme\Dominio\Expedientes\DienteTratamiento $dienteTratamiento)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneElTratamientoAsignado', [$dienteTratamiento]);
-
-        return parent::tieneElTratamientoAsignado($dienteTratamiento);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function eliminarTratamiento(\Siacme\Dominio\Expedientes\DienteTratamiento $dienteTratamiento)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'eliminarTratamiento', [$dienteTratamiento]);
-
-        return parent::eliminarTratamiento($dienteTratamiento);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function tieneTratamientos()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneTratamientos', []);
-
-        return parent::tieneTratamientos();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function tienePadecimientos()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tienePadecimientos', []);
-
-        return parent::tienePadecimientos();
     }
 
 }

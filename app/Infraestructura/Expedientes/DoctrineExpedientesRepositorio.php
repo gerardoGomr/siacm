@@ -65,8 +65,8 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 		// TODO: Implement obtenerPorId() method.
 		try {
 
-			$query = $this->entityManager->createQuery("SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.expedienteEspecialidad ee WHERE e.id = :id")
-					->setParameter('id', $id);
+			$query = $this->entityManager->createQuery("SELECT e, p, c, ee, o, oo, t, ta FROM Expedientes:Expediente e JOIN e.paciente p JOIN e.consultas c LEFT JOIN e.expedienteEspecialidad ee LEFT JOIN ee.odontogramas o LEFT JOIN o.odontogramaDientes oo LEFT JOIN oo.padecimientos pa LEFT JOIN oo.tratamientos t LEFT JOIN t.dienteTratamiento ta WHERE e.id = :id")
+                ->setParameter('id', $id);
 
 			$expediente = $query->getResult();
 
@@ -82,6 +82,40 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 			return null;
 		}
 	}
+
+    /**
+     * buscar expedientes que coincidan con el parametro
+     * @param array $dato
+     * @return array|null
+     */
+    public function obtenerPor(array $dato)
+    {
+        $subquery = '';
+
+        if (array_key_exists('dato', $dato)) {
+            $dato['dato'] = str_replace(' ', '', $dato['dato']);
+            $subquery .= " AND (CONCAT(p.nombre, p.paterno, p.materno) LIKE :dato OR CONCAT(p.paterno, p.materno, p.nombre) = :dato)";
+        }
+
+        try {
+            $query = $this->entityManager->createQuery("SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.expedienteEspecialidad ee WHERE e.id IS NOT NULL" . $subquery);
+            if (array_key_exists('dato', $dato)) {
+                $query->setParameter('dato', '%' . $dato['dato'] . '%');
+            }
+            $expedientes = $query->getResult();
+
+            if (count($expedientes) === 0) {
+                return null;
+            }
+
+            return $expedientes;
+
+        } catch (PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
+    }
 
 	/**
 	 * @return array

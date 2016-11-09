@@ -78,5 +78,5 @@
 @stop
 
 @section('js')
-	<script src="{{ asset('public/js/expedientes/expediente_ver.js') }}"></script>
+	<script src="{{ asset('js/expedientes/expediente_ver.js') }}"></script>
 @stop

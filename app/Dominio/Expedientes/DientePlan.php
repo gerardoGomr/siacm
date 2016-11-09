@@ -25,9 +25,9 @@ class DientePlan
 	private $atendido;
 
     /**
-     * @var Diente
+     * @var OdontogramaDiente
      */
-    private $diente;
+    private $odontogramaDiente;
 
     /**
      * constructor
@@ -73,10 +73,11 @@ class DientePlan
 	}
 
     /**
-     * @return Diente
+     * asignar odontograma diente
+     * @param OdontogramaDiente $odontogramaDiente
      */
-    public function getDiente()
+    public function asignarOdontogramaDiente(OdontogramaDiente $odontogramaDiente)
     {
-        return $this->diente;
+        $this->odontogramaDiente = $odontogramaDiente;
     }
 }

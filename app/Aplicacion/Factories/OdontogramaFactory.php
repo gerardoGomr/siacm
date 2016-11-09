@@ -4,6 +4,7 @@ namespace Siacme\Aplicacion\Factories;
 use Siacme\Dominio\Expedientes\Odontograma;
 use Siacme\Dominio\Expedientes\Diente;
 use Siacme\Aplicacion\ColeccionArray;
+use Siacme\Dominio\Expedientes\OdontogramaDiente;
 
 /**
  * Class OdontogramaFactory
@@ -21,14 +22,14 @@ class OdontogramaFactory
 	{
 		$odontograma = new Odontograma(new ColeccionArray(), new ColeccionArray());
 
-		self::agregarDientes(11, 18, $odontograma);
-        self::agregarDientes(21, 28, $odontograma);
-        self::agregarDientes(31, 38, $odontograma);
-        self::agregarDientes(41, 48, $odontograma);
-        self::agregarDientes(51, 55, $odontograma);
-        self::agregarDientes(61, 65, $odontograma);
-        self::agregarDientes(71, 75, $odontograma);
-        self::agregarDientes(81, 85, $odontograma);
+		self::agregarOdontogramaDientes(11, 18, $odontograma);
+        self::agregarOdontogramaDientes(21, 28, $odontograma);
+        self::agregarOdontogramaDientes(31, 38, $odontograma);
+        self::agregarOdontogramaDientes(41, 48, $odontograma);
+        self::agregarOdontogramaDientes(51, 55, $odontograma);
+        self::agregarOdontogramaDientes(61, 65, $odontograma);
+        self::agregarOdontogramaDientes(71, 75, $odontograma);
+        self::agregarOdontogramaDientes(81, 85, $odontograma);
 
         return $odontograma;
 	}
@@ -39,11 +40,12 @@ class OdontogramaFactory
 	 * @param int $fin
 	 * @param Odontograma $odontograma
 	 */
-	private static function agregarDientes($inicio, $fin, Odontograma $odontograma)
+	private static function agregarOdontogramaDientes($inicio, $fin, Odontograma $odontograma)
 	{
 		for ($numero = $inicio; $numero <= $fin; $numero++) {
 			// se agrega un nuevo diente con sus características por default
-			$odontograma->agregarDiente(new Diente($numero, new ColeccionArray(), new ColeccionArray()));
+            $odontogramaDiente = new OdontogramaDiente($odontograma, new Diente($numero), new ColeccionArray(), new ColeccionArray());
+			$odontograma->agregarOdontogramaDiente($odontogramaDiente);
 		}
 	}
 }

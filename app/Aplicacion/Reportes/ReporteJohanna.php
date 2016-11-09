@@ -1,7 +1,7 @@
 <?php
 namespace Siacme\Aplicacion\Reportes;
 
-use \TCPDF;
+use TCPDF;
 
 /**
  * Class ReporteJohanna
@@ -26,8 +26,8 @@ abstract class ReporteJohanna extends TCPDF
         $this->Cell(0, 10, '16 poniente norte, Médica Diamante', false, true, 'R');
 
         // imagen
-        $this->Image(asset('public/img/boka2.jpg'), 10, 10, 30);
-        $this->Image(asset('public/img/mascota.jpg'), 10, 25, 20);
+        $this->Image(asset('img/boka2.jpg'), 10, 10, 30);
+        $this->Image(asset('img/mascota.jpg'), 10, 25, 20);
         $this->Line(10, 50, 200, 50);
         $this->Ln(25);
     }

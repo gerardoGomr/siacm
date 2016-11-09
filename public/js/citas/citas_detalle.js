@@ -29,6 +29,21 @@ $(document).ready(function($) {
         });
     });
 
+    // registrar llegada
+    $('#citaDetalle').on('click', 'button.registrarLlegada', function () {
+        var accion = $(this).data('accion'),
+            url    = $('#citaDetalle').find('#urlEstatus').val(),
+            citaId = $('#citaDetalle').find('#citaId').val(),
+            _token = $('#citaDetalle').find('#_token').val();
+
+        bootbox.confirm('Se registrará la llegada del paciente, ¿desea continuar?', function(eleccion) {
+            if(eleccion) {
+                // actualizar
+                actualizarCitas(url, citaId, _token, accion);
+            }
+        });
+    });
+
     // reprogramar cita
     $('#citaDetalle').on('click', 'button.reprogramar', function(event) {
         var url    = $('#citaDetalle').find('#urlReprogramar').val(),
@@ -80,24 +95,6 @@ $(document).ready(function($) {
             window.location.href = url;
         });
     });
-    //
-    //// ver expediente una vez capturado
-    //$dvOpciones.on('click', 'a.verExpediente', function(event) {
-    //    var especialidad = '';
-    //    // 2 = odontopediatria
-    //    if($especialidad.val() === '3') {
-    //        especialidad = '/odont/';
-    //    }
-    //    // 3 = otorrinolaringología
-    //    if($especialidad.val() === '4') {
-    //        especialidad = '/otorr/';
-    //    }
-    //
-    //    // redirigir
-    //    //window.location.href = $('#urlVerExpediente').val() + especialidad + $('#idPaciente').val() + '/' + $('#userMedico').val();
-    //    window.open($('#urlVerExpediente').val() + especialidad + $('#idPaciente').val() + '/' + $('#userMedico').val(), '_blank', 'scrollbars=yes')
-    //});
-    //
 
     /**
      * actualizar estatus de cita

@@ -1,11 +1,21 @@
 @extends('app')
 
 @section('contenido')
-	<div class="widget">
-		<div class="widget-body padding-none">
-			<div class="jumbotron margin-none bg-white">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac dictum mauris. Vivamus blandit, odio et suscipit dictum, nisl velit rhoncus est, at elementum urna sapien ac nisi. Nulla sit amet odio vestibulum quam commodo egestas.</p>
-			</div>
-		</div>
-	</div>
+    <div class="row row-app">
+        <div class="col-md-12">
+            <div class="col-separator col-unscrollable box col-separator-first">
+                <div class="col-table">
+                    <div class="col-table-row">
+                        <div class="col-app col-unscrollable">
+                            <div class="col-app">
+                                <div class="jumbotron margin-none bg-white">
+                                    <p>SISTEMA INTEGRAL PARA LA ADMINISTRACIÓN DEL CONSULTORIO MÉDICO.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop

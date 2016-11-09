@@ -112,9 +112,9 @@
 @stop
 
 @section('js')
-	<script type="text/javascript" src="{{ asset('public/assets/components/common/forms/validator/assets/lib/jquery-validation/dist/jquery.validate.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('public/assets/components/common/forms/validator/assets/lib/jquery-validation/dist/additional-methods.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('public/assets/components/modules/admin/modals/assets/js/jquery.fancybox.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('public/js/validaciones.js') }}"></script>
-	<script src="{{ asset('public/js/usuarios/usuarios_agregar.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/components/common/forms/validator/assets/lib/jquery-validation/dist/jquery.validate.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/components/common/forms/validator/assets/lib/jquery-validation/dist/additional-methods.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/components/modules/admin/modals/assets/js/jquery.fancybox.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/validaciones.js') }}"></script>
+	<script src="{{ asset('js/usuarios/usuarios_agregar.js') }}"></script>
 @stop

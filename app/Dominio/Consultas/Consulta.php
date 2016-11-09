@@ -2,9 +2,12 @@
 namespace Siacme\Dominio\Consultas;
 
 use DateTime;
+use Exception;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ComportamientoFrankl;
+use Siacme\Dominio\Listas\IColeccion;
 use Siacme\Dominio\Usuarios\Usuario;
+use Siacme\Exceptions\CostoYaHaSidoAgregadoAConsultaException;
 
 /**
  * Class Consulta
@@ -50,6 +53,22 @@ class Consulta
     private $costo;
 
     /**
+     * @var bool
+     */
+    private $pagada;
+
+    /**
+     * @var string
+     */
+    private $comentario;
+
+    /**
+     * los costos que se asignan al momento de atender
+     * @var IColeccion
+     */
+    private $costos;
+
+    /**
      * @var RecetaConsulta
      */
     private $receta;
@@ -75,6 +94,16 @@ class Consulta
     private $medico;
 
     /**
+     * @var CobroConsulta
+     */
+    private $cobroConsulta;
+
+    /**
+     * @var string
+     */
+    private $otrosCostos;
+
+    /**
      * Consulta constructor.
      * @param string $padecimientoActual
      * @param string $interrogatorioAparatosSistemas
@@ -83,9 +112,10 @@ class Consulta
      * @param ComportamientoFrankl $comportamientoFrankl
      * @param double $costo
      * @param DateTime $fecha
+     * @param IColeccion $costos
      * @param Usuario $medico
      */
-    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $fecha, $medico)
+    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $fecha, IColeccion $costos, Usuario $medico)
     {
         $this->padecimientoActual             = $padecimientoActual;
         $this->interrogatorioAparatosSistemas = $interrogatorioAparatosSistemas;
@@ -94,6 +124,7 @@ class Consulta
         $this->comportamientoFrankl           = $comportamientoFrankl;
         $this->costo                          = $costo;
         $this->fecha                          = $fecha;
+        $this->costos                         = $costos;
         $this->medico                         = $medico;
     }
 
@@ -146,6 +177,22 @@ class Consulta
     }
 
     /**
+     * @return boolean
+     */
+    public function pagada()
+    {
+        return $this->pagada;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComentario()
+    {
+        return $this->comentario;
+    }
+
+    /**
      * @return float
      */
     public function getCosto()
@@ -167,18 +214,6 @@ class Consulta
     public function getReceta()
     {
         return $this->receta;
-    }
-
-    /**
-     * indica si la consulta es nueva o ya existe
-     * @return string
-     */
-    public function nuevaOSubsecuente() {
-        if ($this->id === 0 || is_null($this->id)) {
-            return 'Nueva';
-        }
-
-        return 'Existente';
     }
 
     /**
@@ -242,5 +277,147 @@ class Consulta
     public function generadaPara(Expediente $expediente)
     {
         $this->expediente = $expediente;
+    }
+
+    /**
+     * agregar un costo a la consulta
+     * @param ConsultaCosto $consultaCosto
+     * @throws CostoYaHaSidoAgregadoAConsultaException
+     */
+    public function agregarCosto(ConsultaCosto $consultaCosto)
+    {
+        if ($this->costos->count() > 0) {
+            foreach ($this->costos as $costo) {
+                if ($costo->getId() === $consultaCosto) {
+                    throw new CostoYaHaSidoAgregadoAConsultaException('Este costo ya fue asignado a la consulta actual.');
+                }
+            }
+        }
+
+        $this->costos->add($consultaCosto);
+    }
+
+    /**
+     * devuelve el costo real de la consulta
+     * @return float
+     */
+    public function costoReal()
+    {
+        $costoReal = 0.0;
+        foreach ($this->costos as $costo) {
+            $costoReal += $costo->getCosto();
+        }
+
+        return $costoReal;
+    }
+
+    /**
+     * obtener el desglose del costo
+     * @return string
+     */
+    public function desgloseCosto()
+    {
+        $desglose = '';
+        foreach ($this->costos as $costo) {
+            $desglose .= $costo->getConcepto() . ':  ' . $costo->costo() . "\n\r";
+        }
+
+        if (strlen($this->otrosCostos) > 0) {
+            $desglose .= $this->otrosCostos;
+        }
+
+        return nl2br($desglose);
+    }
+
+    /**
+     * se agrega un comentario a la consulta
+     * @param string $comentario
+     */
+    public function agregarComentario($comentario = '')
+    {
+        $comentarioAAgregar = '';
+
+        if (strlen($comentario)) {
+            $comentarioAAgregar .= $comentario . "\n\n";
+        }
+
+        $costo = $this->costoReal();
+        if ($this->costo < $costo) {
+            $comentarioAAgregar .= 'Se cobró menos del costo real, el cual es: $' . (string)number_format($costo, 2);
+        }
+
+        $this->comentario = $comentarioAAgregar;
+    }
+
+    /**
+     * registrar el pago de la consulta mediante CobroConsulta
+     * se cambia estatus a pagada
+     * @param CobroConsulta $cobroConsulta
+     * @throws Exception
+     */
+    public function registrarPago(CobroConsulta $cobroConsulta)
+    {
+        $this->cobroConsulta = $cobroConsulta;
+        $this->pagada        = true;
+
+        if ($this->cobroConsulta->enEfectivo()) {
+            try {
+                $this->cobroConsulta->calcularCambio($this->costo);
+
+            } catch (Exception $e) {
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * costo formateado
+     * @return string
+     */
+    public function costoFormateado()
+    {
+        return '$' . number_format($this->costo, 2);
+    }
+
+    /**
+     * costo formateado
+     * @return string
+     */
+    public function costoRealFormateado()
+    {
+        return '$' . number_format($this->costoReal(), 2);
+    }
+
+    /**
+     * @return CobroConsulta
+     */
+    public function getCobroConsulta()
+    {
+        return $this->cobroConsulta;
+    }
+
+    /**
+     * @return IColeccion
+     */
+    public function getCostos()
+    {
+        return $this->costos;
+    }
+
+    /**
+     * se agrega descripción de otros costos
+     * @param string $otroCosto
+     */
+    public function agregarOtrosCostos($otroCosto)
+    {
+        $this->otrosCostos .= $otroCosto;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOtrosCostos()
+    {
+        return nl2br($this->otrosCostos);
     }
 }

@@ -59,4 +59,13 @@ class OtroTratamiento
     {
         return $this->costo;
     }
+
+    /**
+     * costo a dos decimales
+     * @return string
+     */
+    public function costo()
+    {
+        return '$' . number_format($this->costo, 2);
+    }
 }

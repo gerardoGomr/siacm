@@ -140,26 +140,41 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	Route::get('consultas/interconsulta/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarInterconsultaEnPDF');
 
 	/////////////////////////////////////////// PACIENTES //////////////////////////////////////////////
-	Route::get('pacientes/{med}', 'Pacientes\PacientesController@index');
+    // generar vista de búsqueda de expedientes
+	Route::get('pacientes/{medicoId}', 'Pacientes\PacientesController@index');
+
 	// buscar pacientes
 	Route::post('pacientes/buscar', 'Pacientes\PacientesController@buscar');
+
 	// detalles de un paciente
 	Route::post('pacientes/detalle', 'Pacientes\PacientesController@detalle');
+
 	// agregar anexos al expediente del paciente
-	Route::post('pacientes/anexo/agregar', 'Pacientes\PacientesController@agregarAnexo');
+	Route::post('pacientes/anexos/agregar', 'Pacientes\PacientesController@agregarAnexo');
+
+    // ver anexo
+    Route::get('pacientes/anexos/ver/{expedienteId}/{nombre}', 'Pacientes\PacientesController@verAnexo');
+
 	// borrar anexos
-	Route::post('pacientes/anexo/eliminar', 'Pacientes\PacientesController@eliminarAnexo');
+	Route::post('pacientes/anexos/eliminar', 'Pacientes\PacientesController@eliminarAnexo');
+
 	// generar tratamientos ortopedia - ortodoncia
 	Route::post('pacientes/tratamiento/agregar', 'Pacientes\PacientesController@agregarTratamiento');
 
 	// generar receta en PDF
-	Route::get('pacientes/receta/{id}/{idPaciente}/{med}', 'Pacientes\PacientesController@generarReceta');
+	Route::get('pacientes/receta/{recetaId}/{expedienteId}', 'Pacientes\PacientesController@generarReceta');
 
 	// generar interconsulta PDF
-	Route::get('pacientes/interconsulta/{id}/{idPaciente}/{med}', 'Pacientes\PacientesController@generarInterconsulta');
+	Route::get('pacientes/interconsulta/{interconsultaId}/{expedienteId}', 'Pacientes\PacientesController@generarInterconsulta');
 
 	// generar plan de tratamiento PDF
-	Route::get('pacientes/plan/{id}/{idPaciente}/{med}', 'Pacientes\PacientesController@generarPlan');
+	Route::get('pacientes/plan/{odontogramaId}/{expedienteId}', 'Pacientes\PacientesController@generarPlan');
+
+    // cobrar consulta
+    Route::post('pacientes/consulta/cobrar', 'Pacientes\PacientesController@cobrarConsulta');
+
+    // generar PDF de comprobante de pago
+    Route::get('pacientes/consulta/recibo/{consultaId}/{expedienteId}', 'Pacientes\PacientesController@generarReciboPago');
 
 	/////////////////////////////////////////// USUARIOS /////////////////////////////////////////////////////
 	Route::get('usuarios', 'Usuarios\UsuariosController@index');

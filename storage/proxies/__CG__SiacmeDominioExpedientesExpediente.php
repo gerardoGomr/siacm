@@ -848,4 +848,15 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
         return parent::agregarInterconsulta($interconsulta);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function inicializarInterconsulta(\Siacme\Dominio\Listas\IColeccion $consultas, \Siacme\Dominio\Listas\IColeccion $interconsultas)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'inicializarInterconsulta', [$consultas, $interconsultas]);
+
+        return parent::inicializarInterconsulta($consultas, $interconsultas);
+    }
+
 }

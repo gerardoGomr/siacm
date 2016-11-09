@@ -1100,23 +1100,23 @@ class ExpedienteJohanna extends \Siacme\Dominio\Expedientes\ExpedienteJohanna im
     /**
      * {@inheritDoc}
      */
-    public function obtenerPlanActivo()
+    public function obtenerOdontogramaActivo()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'obtenerPlanActivo', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'obtenerOdontogramaActivo', []);
 
-        return parent::obtenerPlanActivo();
+        return parent::obtenerOdontogramaActivo();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function inicializarTemp(\Siacme\Dominio\Listas\IColeccion $odontogramas, \Siacme\Dominio\Listas\IColeccion $planesTratamiento)
+    public function inicializarTemp(\Siacme\Dominio\Listas\IColeccion $odontogramas)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'inicializarTemp', [$odontogramas, $planesTratamiento]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'inicializarTemp', [$odontogramas]);
 
-        return parent::inicializarTemp($odontogramas, $planesTratamiento);
+        return parent::inicializarTemp($odontogramas);
     }
 
     /**

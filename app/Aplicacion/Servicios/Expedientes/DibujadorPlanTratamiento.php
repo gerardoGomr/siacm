@@ -2,6 +2,7 @@
 namespace Siacme\Aplicacion\Servicios\Expedientes;
 
 use Siacme\Dominio\Expedientes\Odontograma;
+use Siacme\Dominio\Expedientes\OdontogramaDiente;
 use Siacme\Dominio\Expedientes\PlanTratamiento;
 use Siacme\Dominio\Expedientes\Diente;
 use Siacme\Dominio\Listas\IColeccion;
@@ -32,7 +33,7 @@ class DibujadorPlanTratamiento implements DibujadorInterface
      */
     public function __construct(Odontograma $odontograma, array $dienteTratamientos)
     {
-        $this->planTratamiento    = $odontograma;
+        $this->odontograma        = $odontograma;
         $this->dienteTratamientos = $dienteTratamientos;
     }
 
@@ -44,11 +45,11 @@ class DibujadorPlanTratamiento implements DibujadorInterface
     {
         // TODO: Implement dibujar() method.
         $otrosTratamientos = '';
-        foreach ($this->planTratamiento->getOtrosTratamientos() as $otroTratamiento) {
-            $otrosTratamientos .= $otroTratamiento->getTratamiento() . ' ($' . (string)number_format($otroTratamiento->getCosto(), 2) . ') <button type="button" class="btn btn-danger btn-xs eliminarOtroTratamiento" data-id="'.$otroTratamiento->getId().'" data-toggle="tooltip" data-original-title="Quitar de plan" data-placement="top"><i class="fa fa-times"></i></button> ----- ';
+        foreach ($this->odontograma->getOtrosTratamientos() as $otroTratamiento) {
+            $otrosTratamientos .= $otroTratamiento->getOtroTratamiento()->getTratamiento() . '<b>(' . $otroTratamiento->getOtroTratamiento()->costo() . ')</b> <button type="button" class="btn btn-danger btn-xs eliminarOtroTratamiento" data-id="'.$otroTratamiento->getOtroTratamiento()->getId().'" data-toggle="tooltip" data-original-title="Quitar de plan" data-placement="top"><i class="fa fa-times"></i></button> ----- ';
         }
         $html = '
-            <p class="text-medium"><span class="strong">Costo total:</span> <span>$ '.(string) number_format($this->planTratamiento->costo(), 2).'</span></p>
+            <p class="text-medium"><span class="strong">Costo total:</span> <span>' . $this->odontograma->costo() . '</span></p>
             <p><span class="strong">Otros:</span> <em>' . $otrosTratamientos . '</em></p>
             <table class="table table-bordered tablaPlan text-small">
                 <thead class="bg-primary">
@@ -61,14 +62,14 @@ class DibujadorPlanTratamiento implements DibujadorInterface
                 </thead>
                 <tbody>';
 
-        foreach ($this->planTratamiento->getDientes() as $diente) {
+        foreach ($this->odontograma->getOdontogramaDientes() as $odontogramaDiente) {
 
             $html .= '
                 <tr>
-                    <td class="diente">' . $diente->getNumero() . '</td>
-                    <td>' . $this->dibujarPadecimientos($diente->getPadecimientos()) . '</td>
-                    <td>' . $this->dibujarComboTratamientos($diente, $this->dienteTratamientos) . '</td>
-                    <td>' . $this->dibujarCostosTratamientos($diente->getTratamientos()) . '</td>
+                    <td class="diente">' . $odontogramaDiente->getDiente()->getNumero() . '</td>
+                    <td>' . $this->dibujarPadecimientos($odontogramaDiente->getPadecimientos()) . '</td>
+                    <td>' . $this->dibujarComboTratamientos($odontogramaDiente, $this->dienteTratamientos) . '</td>
+                    <td>' . $this->dibujarCostosTratamientos($odontogramaDiente->getTratamientos()) . '</td>
                 </tr>
             ';
         }
@@ -83,10 +84,10 @@ class DibujadorPlanTratamiento implements DibujadorInterface
      * @param IColeccion $padecimientos
      * @return string
      */
-    private function dibujarPadecimientos($padecimientos)
+    private function dibujarPadecimientos(IColeccion $padecimientos)
     {
         $indice   = 1;
-        $longitud = count($padecimientos);
+        $longitud = $padecimientos->count();
 
         $html = '<ul>';
         foreach ($padecimientos as $padecimiento) {
@@ -106,13 +107,13 @@ class DibujadorPlanTratamiento implements DibujadorInterface
 
     /**
      * dibuja un combo de tratamientos
-     * @param Diente $diente
+     * @param OdontogramaDiente $odontogramaDiente
      * @param array $dienteTratamientos
      * @return string
      */
-    private function dibujarComboTratamientos(Diente $diente, array $dienteTratamientos)
+    private function dibujarComboTratamientos(OdontogramaDiente $odontogramaDiente, array $dienteTratamientos)
     {
-        if (!$diente->tienePadecimientos()) {
+        if (!$odontogramaDiente->tienePadecimientos()) {
             return '';
         }
 
@@ -144,14 +145,14 @@ class DibujadorPlanTratamiento implements DibujadorInterface
      */
     private function dibujarCostosTratamientos(IColeccion $dienteTratamientos = null)
     {
-        $total = count($dienteTratamientos);
-        if ($total === 0 || is_null($dienteTratamientos)) {
+        $total = $dienteTratamientos->count();
+        if ($total === 0) {
             return '';
         }
 
         $html = '<ul>';
         foreach ($dienteTratamientos as $dienteTratamiento) {
-            $html .= '<li><button type="button" class="btn btn-danger btn-xs eliminarTratamiento" data-toggle="tooltip" data-original-title="Quitar de plan" data-placement="top" data-id="' . $dienteTratamiento->getDienteTratamiento()->getId() . '"><i class="fa fa-times"></i></button> ' . $dienteTratamiento->getDienteTratamiento()->getTratamiento() . ' $' . (string) number_format($dienteTratamiento->getDienteTratamiento()->getCosto(), 2) . '</li>';
+            $html .= '<li><button type="button" class="btn btn-danger btn-xs eliminarTratamiento" data-toggle="tooltip" data-original-title="Quitar de plan" data-placement="top" data-id="' . $dienteTratamiento->getDienteTratamiento()->getId() . '"><i class="fa fa-times"></i></button> ' . $dienteTratamiento->getDienteTratamiento()->getTratamiento() . $dienteTratamiento->getDienteTratamiento()->costo() . '</li>';
         }
 
         $html .= '</ul>';

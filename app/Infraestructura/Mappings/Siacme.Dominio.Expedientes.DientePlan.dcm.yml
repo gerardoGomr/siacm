@@ -1,6 +1,6 @@
 Siacme\Dominio\Expedientes\DientePlan:
   type: entity
-  table: odontograma_diente_tratamiento
+  table: diente_plan
   id:
     id:
       type: integer
@@ -18,10 +18,10 @@ Siacme\Dominio\Expedientes\DientePlan:
         referencedColumnName: id
       cascade: [persist]
   manyToOne:
-    diente:
-      targetEntity: Diente
+    odontogramaDiente:
+      targetEntity: OdontogramaDiente
       inversedBy: tratamientos
       joinColumn:
-        name: Numero
-        referencedColumnName: Numero
+        name: OdontogramaDienteId
+        referencedColumnName: id
       cascade: [persist]

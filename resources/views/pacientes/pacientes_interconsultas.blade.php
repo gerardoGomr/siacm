@@ -10,12 +10,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach ($expediente->getListaInterconsultas() as $interconsulta)
+				@foreach ($expediente->getInterconsultas() as $interconsulta)
 					<tr>
 						<td>Fecha</td>
-						<td>{{ $interconsulta->getMedico()->getNombreCompleto() }}</td>
+						<td>{{ $interconsulta->getMedico()->nombreCompleto() }}</td>
 						<td>{{ $interconsulta->getReferencia() }}</td>
-						<td><a href="{{ url('pacientes/interconsulta/' . base64_encode($interconsulta->getId()) . '/' . base64_encode($expediente->getPaciente()->getId()) . '/' . base64_encode($expediente->getMedico()->getUsername())) }}" data-toggle="tooltip" data-original-title="generar PDF" data-placement="top" target="_blank"><i class="fa fa-print fa-2x"></i></a></td>
+						<td><a href="{{ url('pacientes/interconsulta/' . base64_encode($interconsulta->getId()) . '/' . base64_encode($expediente->getId())) }}" data-toggle="tooltip" data-original-title="Imprimir orden de interconsulta" data-placement="top" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i></a></td>
 					</tr>
 				@endforeach
 			</tbody>

@@ -59,4 +59,13 @@ class DienteTratamiento
     {
         return $this->costo;
     }
+
+    /**
+     * costo formateado
+     * @return string
+     */
+    public function costo()
+    {
+        return '$' . number_format($this->costo, 2);
+    }
 }

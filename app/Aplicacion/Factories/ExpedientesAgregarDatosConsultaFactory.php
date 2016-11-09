@@ -184,6 +184,9 @@ class ExpedientesAgregarDatosConsultaFactory
                 $alteracionColor         = new AlteracionColor($alteracionColor, $medidaAlteracionColor);
 
                 $expediente->getExpedienteEspecialidad()->agregarMordidas($mordidaBordeBorde, $sobremordidaVertical, $sobremordidaHorizontal, $mordidaAbiertaAnterior, $mordidaCruzadaAnterior, $mordidaCruzadaPosterior, $lineaMediaDental, $lineaMediaEsqueletica, $alteracionTamanio, $alteracionForma, $alteracionNumero, $alteracionEstructura, $alteracionTextura, $alteracionColor);
+
+                // marcar primera vez = false
+                $expediente->getExpedienteEspecialidad()->marcarComoSubsecuente();
                 break;
         }
     }

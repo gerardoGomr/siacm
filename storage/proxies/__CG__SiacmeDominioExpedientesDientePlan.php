@@ -64,10 +64,10 @@ class DientePlan extends \Siacme\Dominio\Expedientes\DientePlan implements \Doct
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'atendido'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'dienteTratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'odontogramaDiente'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'atendido'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'dienteTratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DientePlan' . "\0" . 'odontogramaDiente'];
     }
 
     /**
@@ -173,6 +173,32 @@ class DientePlan extends \Siacme\Dominio\Expedientes\DientePlan implements \Doct
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function getId()
+    {
+        if ($this->__isInitialized__ === false) {
+            return (int)  parent::getId();
+        }
+
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', []);
+
+        return parent::getId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDienteTratamiento()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDienteTratamiento', []);
+
+        return parent::getDienteTratamiento();
+    }
+
     /**
      * {@inheritDoc}
      */

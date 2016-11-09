@@ -59,5 +59,5 @@
 @stop
 
 @section('js')
-	<script src="{{ asset('public/js/usuarios/usuarios.js') }}"></script>
+	<script src="{{ asset('js/usuarios/usuarios.js') }}"></script>
 @stop

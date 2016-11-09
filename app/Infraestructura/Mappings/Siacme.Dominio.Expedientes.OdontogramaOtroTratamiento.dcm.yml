@@ -1,0 +1,26 @@
+Siacme\Dominio\Expedientes\OdontogramaOtroTratamiento:
+  type: entity
+  table: odontograma_otro_tratamiento
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    atendido:
+      type: boolean
+      column: Atendido
+  oneToOne:
+    otroTratamiento:
+      targetEntity: OtroTratamiento
+      joinColumn:
+        name: OtroTratamientoId
+        referencedColumnName: id
+      cascade: [persist]
+  manyToOne:
+    odontograma:
+      targetEntity: Odontograma
+      inversedBy: otrosTratamientos
+      joinColumn:
+        name: OdontogramaId
+        referencedColumnName: id

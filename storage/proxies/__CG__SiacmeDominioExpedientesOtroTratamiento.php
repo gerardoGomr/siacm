@@ -210,4 +210,15 @@ class OtroTratamiento extends \Siacme\Dominio\Expedientes\OtroTratamiento implem
         return parent::getCosto();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function costo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'costo', []);
+
+        return parent::costo();
+    }
+
 }

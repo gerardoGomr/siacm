@@ -1,11 +1,14 @@
 <?php
-namespace Siacme\Servicios\Expedientes;
-use Siacme\Dominio\Pacientes\Anexo;
+namespace Siacme\Aplicacion\Servicios\Expedientes;
+
+use Siacme\Dominio\Expedientes\Anexo;
+use Siacme\Exceptions\GuardarArchivoEnDirectorioException;
 
 /**
  * Class AnexosUploader
  * @package Siacme\Servicios\Expedientes
  * @author Gerardo Adrián Gómez Ruiz
+ * @version  1.0
  */
 class AnexosUploader
 {
@@ -16,30 +19,28 @@ class AnexosUploader
 
     /**
      * AnexosUploader constructor.
-     * @param string $medicoUsername
-     * @param string $idPaciente
+     * @param string $expedienteId
      */
-    public function __construct($medicoUsername, $idPaciente)
+    public function __construct($expedienteId)
     {
-        $this->rutaBase = 'storage/app/pacientes/' . $medicoUsername . '/'.$idPaciente . '/';
+        $this->rutaBase = storage_path() . '/app/public/pacientes/' . $expedienteId . '/';
     }
 
     /**
      * guardar el anexo en el directorio especificado
      * @param string $ubicacionTemporal
      * @param Anexo $anexo
-     * @throws \Exception
+     * @throws GuardarArchivoEnDirectorioException
      */
     public function guardar($ubicacionTemporal, Anexo $anexo)
     {
         $nombre = $anexo->preparar();
-
         if (!file_exists($this->rutaBase)) {
             mkdir($this->rutaBase, 0777);
         }
 
         if (!move_uploaded_file($ubicacionTemporal, $this->rutaBase . $nombre . '.pdf')) {
-            throw new \Exception('Imposible guardar el anexo en el directorio \"' . $this->rutaBase . '\"');
+            throw new GuardarArchivoEnDirectorioException('Imposible guardar el anexo en el directorio \"' . $this->rutaBase . '\"');
         }
     }
 
@@ -59,7 +60,7 @@ class AnexosUploader
             return null;
         }
 
-        $archivosReales = array();
+        $archivosReales = [];
 
         foreach ($archivos as $indice => $valor) {
             if ($valor !== '.' && $valor !== '..') {

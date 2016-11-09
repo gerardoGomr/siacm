@@ -1,8 +1,9 @@
 <?php
 namespace Siacme\Dominio\Expedientes;
 
+use Exception;
 use Siacme\Dominio\Listas\IColeccion;
-use Siacme\Exceptions\MasDeDosPadecimientosPorDienteException;
+use Siacme\Exceptions\ElOtroTratamientoNoEstaAsignadoAlOdontogramaException;
 use Siacme\Exceptions\OtroTratamientoNoExisteEnPlanActualException;
 use Siacme\Exceptions\OtroTratamientoYaHaSidoAgregadoAPlanActualException;
 
@@ -17,13 +18,13 @@ class Odontograma
 	/**
 	 * @var int
 	 */
-	protected $id;
+	private $id;
 
 	/**
 	 * lista de dientes
 	 * @var IColeccion
 	 */
-	protected $dientes;
+	private $odontogramaDientes;
 
     /**
      * @var IColeccion
@@ -33,26 +34,31 @@ class Odontograma
 	/**
 	 * @var boolean
 	 */
-	protected $revisado;
+	private $atendido;
+
+    /**
+     * @var float
+     */
+    private $costo;
 
     /**
      * @var ExpedienteJohanna
      */
-    protected $expedienteEspecialidad;
+    private $expedienteEspecialidad;
 
     /**
      * construir el odontograma con una lista de dientes
      * si la lista no se proporciona, se asignan todos los diente
      * caso contrario, se asigna el que se pasa como parámetro
-     * @param IColeccion $dientes
+     * @param IColeccion $odontogramaDientes
      * @param IColeccion $otrosTratamientos
-     * @param bool $revisado
+     * @param bool $atendido
      */
-	public function __construct(IColeccion $dientes, IColeccion $otrosTratamientos, $revisado = false)
+	public function __construct(IColeccion $odontogramaDientes, IColeccion $otrosTratamientos, $atendido = false)
 	{
-        $this->revisado          = $revisado;
-        $this->dientes           = $dientes;
-        $this->otrosTratamientos = $otrosTratamientos;
+        $this->atendido           = $atendido;
+        $this->odontogramaDientes = $odontogramaDientes;
+        $this->otrosTratamientos  = $otrosTratamientos;
 	}
 
 	/**
@@ -63,92 +69,12 @@ class Odontograma
 		return $this->id;
 	}
 
-	/**
-	 * agregar nuevo diente
-	 * @param  Diente $diente
-	 */
-	public function agregarDiente(Diente $diente)
-	{
-		$this->dientes->add($diente);
-	}
-
-	/**
-	 * remover los padecimientos al diente
-	 * @param int $numeroDiente
-	 */
-	public function removerPadecimientosADiente($numeroDiente)
-	{
-		$this->diente($numeroDiente)->removerPadecimientos();
-	}
-
-	/**
-	 * agregar un padecimiento al diente
-	 * @param int $numeroDiente
-	 * @param DientePadecimiento $dientePadecimiento
-	 * @return bool
-	 * @throws MasDeDosPadecimientosPorDienteException
-	 */
-	public function agregarPadecimientoADiente($numeroDiente, DientePadecimiento $dientePadecimiento)
-	{
-		try {
-			$this->diente($numeroDiente)->agregarPadecimiento($dientePadecimiento);
-
-		} catch(MasDeDosPadecimientosPorDienteException $e) {
-			// log the error onto file
-			return false;
-		}
-	}
-
-	/**
-	 * devolver un diente dependiendo el numero
-	 * @param $numero
-	 * @return Diente|null
-	 */
-	public function diente($numero)
-	{
-		foreach ($this->dientes->getValues() as $diente) {
-
-			if($diente->getNumero() === $numero) {
-				return $diente;
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function revisado()
-	{
-		return $this->revisado;
-	}
-
-	/**
-	 * @return IColeccion
-	 */
-	public function getDientes()
-	{
-		return $this->dientes;
-	}
-
-	/**
-	 * borrar los tratamientos asignados a sus dientes
-	 */
-	public function borrarDientesTratamientos()
-	{
-		foreach ($this->dientes as $diente) {
-			$diente->removerTratamientos();
-		}
-	}
-
     /**
-     * asignar para expediente especialidad
-     * @param ExpedienteJohanna $expedienteJohanna
+     * @return IColeccion
      */
-    public function generarPara(ExpedienteJohanna $expedienteJohanna)
+    public function getOdontogramaDientes()
     {
-        $this->expedienteEspecialidad = $expedienteJohanna;
+        return $this->odontogramaDientes;
     }
 
     /**
@@ -160,72 +86,145 @@ class Odontograma
     }
 
     /**
-     * verifica si tiene otros tratamientos
+     * @return boolean
+     */
+    public function atendido()
+    {
+        return $this->atendido;
+    }
+
+    /**
+     * @return ExpedienteJohanna
+     */
+    public function getExpedienteEspecialidad()
+    {
+        return $this->expedienteEspecialidad;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCosto()
+    {
+        return $this->costo;
+    }
+
+    /**
+     * agregar un odontograma diente
+     * @param OdontogramaDiente $odontogramaDiente
+     */
+    public function agregarOdontogramaDiente(OdontogramaDiente $odontogramaDiente)
+    {
+        $this->odontogramaDientes->add($odontogramaDiente);
+    }
+
+    /**
+     * @param OdontogramaDiente $odontogramaDiente
+     */
+    public function removerOdontogramaDiente(OdontogramaDiente $odontogramaDiente)
+    {
+        foreach ($this->odontogramaDientes as $odontogramaDienteAsignado) {
+            if ($odontogramaDienteAsignado->getDiente()->getNumero() === $odontogramaDiente->getDiente()->getNumero()) {
+                $this->odontogramaDientes->removeElement($odontogramaDienteAsignado);
+            }
+        }
+    }
+
+    /**
+     * devuelve el odontogramaDiente por el numero especificado
+     * @param int $numero
+     * @return OdontogramaDiente
+     * @throws Exception
+     */
+    public function getOdontogramaDiente($numero)
+    {
+        return $this->obtenerOdontogramaDiente($numero);
+    }
+
+    /**
+     * se remueven padecimientos
+     * @param int $numero
+     */
+    public function removerPadecimientosADiente($numero)
+    {
+        $odontogramaDiente = $this->obtenerOdontogramaDiente($numero);
+        $odontogramaDiente->removerPadecimientos();
+    }
+
+    /**
+     * agregar un padecimiento al diente
+     * @param int $numero
+     * @param DientePadecimiento $dientePadecimiento
+     * @throws Exception
+     */
+    public function agregarPadecimientoADiente($numero, DientePadecimiento $dientePadecimiento)
+    {
+        $odontogramaDiente = $this->obtenerOdontogramaDiente($numero);
+
+        try {
+            $odontogramaDiente->agregarPadecimiento($dientePadecimiento);
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * verificar si tiene asignados otros tratamientos
      * @return bool
      */
     public function tieneOtrosTratamientos()
     {
-        return $this->otrosTratamientos->count() > 0 ? true : false;
+        return $this->otrosTratamientos->count() > 0;
     }
 
     /**
-     * agregar nuevo "otro" tratamiento al plan
-     * @param OtroTratamiento $tratamiento
+     * asignar otro tratamiento
+     * @param OdontogramaOtroTratamiento $otroTratamiento
      * @throws OtroTratamientoYaHaSidoAgregadoAPlanActualException
      */
-    public function agregarOtroTratamiento(OtroTratamiento $tratamiento)
+    public function agregarOtroTratamiento(OdontogramaOtroTratamiento $otroTratamiento)
     {
-        $encontrado = false;
-        foreach ($this->otrosTratamientos as $otroTratamiento) {
-            if ($otroTratamiento->getId() === $tratamiento->getId()) {
-                $encontrado = true;
+        foreach ($this->otrosTratamientos as $otroTratamientoAsignado) {
+            if ($otroTratamientoAsignado->getOtroTratamiento()->getId() === $otroTratamiento->getOtroTratamiento()->getId()) {
+                throw new OtroTratamientoYaHaSidoAgregadoAPlanActualException('Este tratamiento ya ha sido agregado al odontograma');
             }
         }
 
-        if ($encontrado) {
-            throw new OtroTratamientoYaHaSidoAgregadoAPlanActualException('El tratamiento especificado ya se ha agregado al plan actual.');
-        }
-
-        $this->otrosTratamientos->add($tratamiento);
+        $this->otrosTratamientos->add($otroTratamiento);
     }
 
     /**
-     * quitar el tratamiento especificado del plan
-     * @param OtroTratamiento $tratamiento
+     * remover otro tratamiento del odontograma
+     * @param OtroTratamiento $otroTratamiento
      * @throws OtroTratamientoNoExisteEnPlanActualException
      */
-    public function quitarOtroTratamiento(OtroTratamiento $tratamiento)
+    public function quitarOtroTratamiento(OtroTratamiento $otroTratamiento)
     {
         $encontrado = false;
-        foreach ($this->otrosTratamientos as $otroTratamiento) {
-            if ($otroTratamiento->getId() === $tratamiento->getId()) {
-                $this->otrosTratamientos->removeElement($otroTratamiento);
+
+        foreach ($this->otrosTratamientos as $otroTratamientoAsignado) {
+            if ($otroTratamientoAsignado->getOtroTratamiento()->getId() === $otroTratamiento->getId()) {
+                $this->otrosTratamientos->removeElement($otroTratamientoAsignado);
+
                 $encontrado = true;
             }
         }
 
         if (!$encontrado) {
-            throw new OtroTratamientoNoExisteEnPlanActualException('El tratamiento especificado no existe en el plan actual.');
+            throw new OtroTratamientoNoExisteEnPlanActualException('El tratamiento especificado no existe en el odontograma actual');
         }
     }
 
     /**
-     * remover todos los "otros" tratamientos del plan
-     */
-    public function removerOtrosTratamientos()
-    {
-        $this->otrosTratamientos = null;
-    }
-
-    /**
-     * validar que todos los dientes tengan tratamientos
+     * verifica todos los dientes. Si el diente actual tiene padecimientos, debe tener tratamientos
      * @return bool
      */
     public function todosLosDientesTienenTratamientos()
     {
-        foreach ($this->dientes as $diente) {
-            if ($diente->tienePadecimientos()) {
-                if (!$diente->tieneTratamientos()) {
+        foreach ($this->odontogramaDientes as $odontogramaDiente) {
+            if ($odontogramaDiente->tienePadecimientos()) {
+                if (!$odontogramaDiente->tieneTratamientos()) {
                     return false;
                 }
             }
@@ -235,27 +234,36 @@ class Odontograma
     }
 
     /**
-     * devuelve el costo total del tratamiento
-     * @return double
+     * devuelve el costo del odontograma
+     * @return float
      */
     public function costo()
     {
         $this->calcularCosto();
-        return $this->costo;
+
+        return $this->costoFormato();
     }
 
     /**
-     * calcular el costo en base a la lista de tratamientos de los dientes
-     * y en base al costo de otros tratamientos
+     * costo a 2 decimales
+     * @return string
+     */
+    public function costoFormato()
+    {
+        return '$' . number_format($this->costo, 2);
+    }
+
+    /**
+     * obtiene el costo en base a sus tratamientos y otros tratamientos
      */
     private function calcularCosto()
     {
         $this->costo = 0;
-        if($this->dientes->count() > 0) {
+        if($this->odontogramaDientes->count() > 0) {
             // hay dientes
-            foreach ($this->dientes as $diente) {
-                if ($diente->tieneTratamientos()) {
-                    foreach ($diente->getTratamientos() as $tratamiento) {
+            foreach ($this->odontogramaDientes as $odontogramaDiente) {
+                if ($odontogramaDiente->tieneTratamientos()) {
+                    foreach ($odontogramaDiente->getTratamientos() as $tratamiento) {
                         $this->costo += $tratamiento->getDienteTratamiento()->getCosto();
                     }
                 }
@@ -264,39 +272,117 @@ class Odontograma
 
         if ($this->tieneOtrosTratamientos()) {
             foreach ($this->otrosTratamientos as $otroTratamiento) {
-                $this->costo += $otroTratamiento->getCosto();
+                $this->costo += $otroTratamiento->getOtroTratamiento()->getCosto();
             }
         }
     }
 
     /**
-     * agregar un tratamiento al diente
-     * @param int $numeroDiente
+     * agregar un tratamiento al diente especificado
+     * @param int $numero
      * @param DientePlan $dientePlan
-     * @throws \Siacme\Exceptions\SoloSePermitenDosTratamientosException
+     * @throws Exception
      */
-    public function agregarTratamiento($numeroDiente, DientePlan $dientePlan)
+    public function agregarTratamiento($numero, DientePlan $dientePlan)
     {
-        $this->diente($numeroDiente)->agregarTratamiento($dientePlan);
+        $odontogramaDiente = $this->obtenerOdontogramaDiente($numero);
+
+        try {
+            $odontogramaDiente->agregarTratamiento($dientePlan);
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     /**
-     * eliminar el tratamiento del diente seleccionado
-     * @param int $numeroDiente
+     * elimina un tratamiento del diente
+     * @param $numero
      * @param DienteTratamiento $dienteTratamiento
-     * @throws \Siacme\Exceptions\TratamientoNoExisteEnPlanActualException
+     * @throws Exception
      */
-    public function eliminarTratamiento($numeroDiente, DienteTratamiento $dienteTratamiento)
+    public function eliminarTratamiento($numero, DienteTratamiento $dienteTratamiento)
     {
-        $this->diente($numeroDiente)->eliminarTratamiento($dienteTratamiento);
+        $odontogramaDiente = $this->obtenerOdontogramaDiente($numero);
+
+        try {
+            $odontogramaDiente->eliminarTratamiento($dienteTratamiento);
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     /**
-     * se asigna el presente odontograma a johanna
+     * obtener un odontograma diente de la colección
+     * @param int $numero
+     * @return OdontogramaDiente
+     * @throws Exception
+     */
+    public function obtenerOdontogramaDiente($numero)
+    {
+        $encontrado = false;
+
+        foreach ($this->odontogramaDientes as $odontogramaDiente) {
+            if ($odontogramaDiente->getDiente()->getNumero() === $numero) {
+                return $odontogramaDiente;
+            }
+        }
+
+        if (!$encontrado) {
+            throw new Exception('No existe el odontograma diente');
+        }
+    }
+
+    /**
+     * asignar expediente
      * @param ExpedienteJohanna $expedienteJohanna
      */
     public function asignadoA(ExpedienteJohanna $expedienteJohanna)
     {
         $this->expedienteEspecialidad = $expedienteJohanna;
+    }
+
+    /**
+     * devolver el otro tratamiento
+     * @param OtroTratamiento $otroTratamiento
+     * @return OdontogramaOtroTratamiento
+     * @throws ElOtroTratamientoNoEstaAsignadoAlOdontogramaException
+     */
+    public function obtenerOtroTratamiento(OtroTratamiento $otroTratamiento)
+    {
+        foreach ($this->otrosTratamientos as $odontogramaOtroTratamiento) {
+            if ($odontogramaOtroTratamiento->getOtroTratamiento()->getId() === $otroTratamiento->getId()) {
+                return $odontogramaOtroTratamiento;
+            }
+        }
+
+        throw new ElOtroTratamientoNoEstaAsignadoAlOdontogramaException('El otro tratamiento especificado no está asignado al odontograma');
+    }
+
+    /**
+     * verifica si ya esta todo atendido y de estarlo, marca al odontograma
+     * como atendido
+     * @return bool
+     */
+    public function verificarSiYaEstaTodoAtendido()
+    {
+        if ($this->tieneOtrosTratamientos()) {
+            foreach ($this->otrosTratamientos as $odontogramaOtroTratamiento) {
+                if (!$odontogramaOtroTratamiento->atendido()) {
+                    return false;
+                }
+            }
+        }
+
+        foreach ($this->odontogramaDientes as $odontogramaDiente) {
+            if ($odontogramaDiente->tieneTratamientos()) {
+                foreach ($odontogramaDiente->getTratamientos() as $tratamiento) {
+                    if (!$tratamiento->atendido()) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        $this->atendido = true;
     }
 }

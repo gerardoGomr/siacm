@@ -5,20 +5,3 @@ Siacme\Dominio\Expedientes\Diente:
     numero:
       type: integer
       column: Numero
-  manyToMany:
-    padecimientos:
-      targetEntity: DientePadecimiento
-      joinTable:
-        name: odontograma_diente_padecimiento
-        joinColumns:
-          Numero:
-            referencedColumnName: Numero
-        inverseJoinColumns:
-          DientePadecimientoId:
-            referencedColumnName: id
-      cascade: [persist]
-  oneToMany:
-    tratamientos:
-      targetEntity: DientePlan
-      mappedBy: diente
-      cascade: [persist]

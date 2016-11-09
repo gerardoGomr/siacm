@@ -167,7 +167,10 @@ return [
         Siacme\Providers\DienteTratamientosRepositorioServiceProvider::class,
         Siacme\Providers\RecetasRepositorioServiceProvider::class,
         Siacme\Providers\MedicosReferenciaRepositorioServiceProvider::class,
-        Siacme\Providers\ComportamientosFranklRepositorioServiceProvider::class
+        Siacme\Providers\ComportamientosFranklRepositorioServiceProvider::class,
+        Siacme\Providers\DientesRepositorioServiceProvider::class,
+        Siacme\Providers\InterconsultasRepositorioServiceProvider::class,
+        Siacme\Providers\ConsultaCostosRepositorioServiceProvider::class
     ],
 
     /*

@@ -28,7 +28,7 @@ class InterconsultaJohanna extends ReporteJohanna
      * @param Interconsulta $interconsulta
      * @param Expediente $expediente
      */
-    public function __construct($interconsulta, $expediente)
+    public function __construct(Interconsulta $interconsulta, Expediente $expediente)
     {
         $this->interconsulta = $interconsulta;
         $this->expediente    = $expediente;
@@ -41,7 +41,7 @@ class InterconsultaJohanna extends ReporteJohanna
         $this->SetTitle('Interconsulta');
         $this->AddPage();
         $this->SetFont('helvetica', '', 12);
-        $this->Cell(0, 10, $this->interconsulta->fechaInterconsulta(date('Y-m-d')), 0, 1, 'R');
+        $this->Cell(0, 10, $this->interconsulta->getFechaInterconsulta(date('Y-m-d')), 0, 1, 'R');
         $this->Ln(5);
         $html = '<p><strong>Nombre:</strong> ' . $this->interconsulta->getMedico()->nombreCompleto() . '</p>
                 <p><strong>Dirección:</strong> ' . $this->interconsulta->getMedico()->getDireccion() . '</p>';

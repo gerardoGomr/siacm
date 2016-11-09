@@ -4,6 +4,9 @@ Siacme\Dominio\Consultas\Consulta:
     exploracionFisica:
       class: ExploracionFisica
       columnPrefix: false
+    cobroConsulta:
+      class: CobroConsulta
+      columnPrefix: false
   table: consulta
   id:
     id:
@@ -26,6 +29,15 @@ Siacme\Dominio\Consultas\Consulta:
     costo:
       type: float
       column: Costo
+    comentario:
+      type: string
+      column: Comentario
+    pagada:
+      type: boolean
+      column: Pagada
+    otrosCostos:
+      type: string
+      column: OtrosCostos
   oneToOne:
     comportamientoFrankl:
       targetEntity: Siacme\Dominio\Expedientes\ComportamientoFrankl
@@ -52,3 +64,15 @@ Siacme\Dominio\Consultas\Consulta:
       joinColumn:
         name: ExpedienteId
         referencedColumnName: id
+  manyToMany:
+    costos:
+      targetEntity: ConsultaCosto
+      joinTable:
+        name: consulta_consulta_costo
+        joinColumns:
+          ConsultaId:
+            referencedColumnName: id
+        inverseJoinColumns:
+          ConsultaCostoId:
+            referencedColumnName: id
+      cascade: [persist]

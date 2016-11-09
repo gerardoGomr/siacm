@@ -70,7 +70,7 @@ class ExpedientesFactory
                 $otroHabito                = !is_null($request->get('otroHabito')) ? true : false;
                 $especifiqueHabito         = $request->get('especifiqueHabito');
 
-                // crear expediente y detalle
+                // crear expediente y detalle - odontograma - planes tratamiento
                 $expedienteJohanna = new ExpedienteJohanna(new ColeccionArray(), new ColeccionArray());
                 $expedienteJohanna->agregarDatosPersonales($nombrePadre, $ocupacionPadre, $nombreMadre, $ocupacionMadre);
                 $expedienteJohanna->agregarAntecedentesOdontopatologicos($dolorBoca, $sangradoEncias, $malOlor, $dienteFlojo);

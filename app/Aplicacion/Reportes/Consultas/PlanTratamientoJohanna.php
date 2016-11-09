@@ -4,7 +4,6 @@ namespace Siacme\Aplicacion\Reportes\Consultas;
 use Siacme\Aplicacion\Reportes\ReporteJohanna;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\Odontograma;
-use Siacme\Dominio\Expedientes\PlanTratamiento;
 use Siacme\Dominio\Listas\IColeccion;
 
 class PlanTratamientoJohanna extends ReporteJohanna
@@ -19,7 +18,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
      */
     private $odontograma;
 
-    public function __construct($odontograma, $expediente)
+    public function __construct(Odontograma $odontograma, Expediente $expediente)
     {
         $this->expediente  = $expediente;
         $this->odontograma = $odontograma;
@@ -47,7 +46,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
 
         $otrosTratamientos = '';
         foreach ($this->odontograma->getOtrosTratamientos() as $otroTratamiento) {
-            $otrosTratamientos .= $otroTratamiento->getTratamiento() . ' ($' . (string)number_format($otroTratamiento->getCosto(), 2) . ') - ';
+            $otrosTratamientos .= $otroTratamiento->getOtroTratamiento()->getTratamiento() . '(' . $otroTratamiento->getOtroTratamiento()->costo() . ') - ';
         }
 
         $html = '
@@ -61,7 +60,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
                 padding: 3px;
             }
             </style>
-            <p style="font-size: 13pt;"><strong>Costo total:</strong> <span style="color: #ff0000">$ '.(string) number_format($this->odontograma->costo(), 2).'</span></p>
+            <p style="font-size: 13pt;"><strong>Costo total:</strong> <span style="color: #ff0000">'.$this->odontograma->costo().'</span></p>
             <p style="font-size: 13pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>
             <table>
                 <thead>
@@ -73,13 +72,13 @@ class PlanTratamientoJohanna extends ReporteJohanna
                 </thead>
                 <tbody>';
 
-        foreach ($this->odontograma->getDientes() as $diente) {
+        foreach ($this->odontograma->getOdontogramaDientes() as $odontogramaDiente) {
 
             $html .= '
                 <tr>
-                    <td>' . $diente->getNumero() . '</td>
-                    <td>' . $this->dibujarPadecimientos($diente->getPadecimientos()) . '</td>
-                    <td>' . $this->dibujarCostosTratamientos($diente->getTratamientos()) . '</td>
+                    <td>' . $odontogramaDiente->getDiente()->getNumero() . '</td>
+                    <td>' . $this->dibujarPadecimientos($odontogramaDiente->getPadecimientos()) . '</td>
+                    <td>' . $this->dibujarCostosTratamientos($odontogramaDiente->getTratamientos()) . '</td>
                 </tr>
             ';
         }
@@ -96,7 +95,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
      * @param IColeccion $padecimientos
      * @return string
      */
-    private function dibujarPadecimientos(IColeccion $padecimientos)
+    private function dibujarPadecimientos($padecimientos)
     {
         $html     = '<ul>';
 
@@ -114,7 +113,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
      * @param IColeccion $tratamientos
      * @return string
      */
-    private function dibujarCostosTratamientos(IColeccion $tratamientos = null)
+    private function dibujarCostosTratamientos($tratamientos = null)
     {
         if ($tratamientos->count() === 0) {
             return '';

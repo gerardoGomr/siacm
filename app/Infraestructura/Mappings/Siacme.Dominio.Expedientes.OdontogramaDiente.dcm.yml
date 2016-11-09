@@ -1,0 +1,41 @@
+Siacme\Dominio\Expedientes\OdontogramaDiente:
+  type: entity
+  table: odontograma_diente
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  oneToOne:
+    diente:
+      targetEntity: Diente
+      joinColumn:
+        name: Numero
+        referencedColumnName: Numero
+      cascade: [persist]
+  manyToOne:
+    odontograma:
+      targetEntity: Odontograma
+      inversedBy: odontogramaDientes
+      joinColumn:
+        name: OdontogramaId
+        referencedColumnName: id
+  manyToMany:
+    padecimientos:
+      targetEntity: DientePadecimiento
+      joinTable:
+        name: odontograma_diente_padecimiento
+        joinColumns:
+          OdontogramaDienteId:
+            referencedColumnName: id
+        inverseJoinColumns:
+          DientePadecimientoId:
+            referencedColumnName: id
+      cascade: [persist]
+      fetch: EAGER
+  oneToMany:
+    tratamientos:
+      targetEntity: DientePlan
+      mappedBy: odontogramaDiente
+      cascade: [persist]
+      fetch: EAGER

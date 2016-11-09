@@ -2,7 +2,6 @@
 namespace Siacme\Http\Controllers\Consultas;
 
 use DateTime;
-use EntityManager;
 use Exception;
 use Illuminate\Http\Request;
 use Siacme\Aplicacion\ColeccionArray;
@@ -16,11 +15,13 @@ use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
 use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Consultas\ExploracionFisica;
 use Siacme\Dominio\Consultas\RecetaConsulta;
+use Siacme\Dominio\Consultas\Repositorios\ConsultaCostosRepositorio;
 use Siacme\Dominio\Expedientes\DientePlan;
 use Siacme\Dominio\Expedientes\Odontograma;
-use Siacme\Dominio\Expedientes\PlanTratamiento;
+use Siacme\Dominio\Expedientes\OdontogramaOtroTratamiento;
 use Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
+use Siacme\Dominio\Expedientes\Repositorios\DientesRepositorio;
 use Siacme\Dominio\Interconsultas\Interconsulta;
 use Siacme\Dominio\Expedientes\Repositorios\DienteTratamientosRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\OtrosTratamientosRepositorio;
@@ -174,7 +175,6 @@ class ConsultasController extends Controller
     {
         $numeroDiente = (int)$request->get('diente');
         $odontograma  = $request->session()->get('odontograma');
-        $odontograma  = $request->session()->get('odontograma');
         $respuesta    = [];
 
         $odontograma->removerPadecimientosADiente($numeroDiente);
@@ -189,6 +189,8 @@ class ConsultasController extends Controller
             } catch (Exception $e) {
                 $respuesta['estatus'] = 'fail';
                 $respuesta['error']   = $e->getMessage();
+
+                return response()->json($respuesta);
             }
         }
 
@@ -211,7 +213,6 @@ class ConsultasController extends Controller
     {
         $respuesta   = [];
         $odontograma = $request->session()->get('odontograma');
-
         if (!$odontograma->tieneOtrosTratamientos()) {
             // obtener primeros dos otros tratamientos para el plan
             $otroTratamiento1 = $otrosTratamientosRepositorio->obtenerPorId(1);
@@ -219,8 +220,8 @@ class ConsultasController extends Controller
 
             // obtener plan
             // se inicializan los otros tratamientos
-            $odontograma->agregarOtroTratamiento($otroTratamiento1);
-            $odontograma->agregarOtroTratamiento($otroTratamiento2);
+            $odontograma->agregarOtroTratamiento(new OdontogramaOtroTratamiento($odontograma, $otroTratamiento1));
+            $odontograma->agregarOtroTratamiento(new OdontogramaOtroTratamiento($odontograma, $otroTratamiento2));
         }
 
         $respuesta['estatus']    = 'OK';
@@ -245,7 +246,7 @@ class ConsultasController extends Controller
         $otroTratamiento    = $otrosTratamientosRepositorio->obtenerPorId($otroTratamientoId);
 
         try {
-            $odontograma->agregarOtroTratamiento($otroTratamiento);
+            $odontograma->agregarOtroTratamiento(new OdontogramaOtroTratamiento($odontograma, $otroTratamiento));
             $respuesta['estatus'] = 'OK';
             $respuesta['html']    = $this->dibujarPlan($odontograma, $dienteTratamientosRepositorio);
 
@@ -279,12 +280,11 @@ class ConsultasController extends Controller
             $respuesta['estatus'] = 'OK';
             $respuesta['html']    = $this->dibujarPlan($odontograma, $dienteTratamientosRepositorio);
 
-            return response()->json($respuesta);
-
         } catch(OtroTratamientoNoExisteEnPlanActualException $e) {
             $respuesta['estatus'] = 'fail';
             $respuesta['mensaje'] = $e->getMessage();
 
+        } finally {
             return response()->json($respuesta);
         }
     }
@@ -478,9 +478,13 @@ class ConsultasController extends Controller
      * @param DientePadecimientosRepositorio $dientePadecimientosRepositorio
      * @param DienteTratamientosRepositorio $dienteTratamientosRepositorio
      * @param OtrosTratamientosRepositorio $otrosTratamientosRepositorio
+     * @param DientesRepositorio $dientesRepositorio
+     * @param MedicosReferenciaRepositorio $medicosReferenciaRepositorio
+     * @param ConsultaCostosRepositorio $consultaCostosRepositorio
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Siacme\Exceptions\CostoYaHaSidoAgregadoAConsultaException
      */
-    public function guardarConsulta(RegistrarConsultaRequest $request, ComportamientosFranklRepositorio $comportamientosFranklRepositorio, PacientesRepositorio $pacientesRepositorio, DientePadecimientosRepositorio $dientePadecimientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio, OtrosTratamientosRepositorio $otrosTratamientosRepositorio)
+    public function guardarConsulta(RegistrarConsultaRequest $request, ComportamientosFranklRepositorio $comportamientosFranklRepositorio, PacientesRepositorio $pacientesRepositorio, DientePadecimientosRepositorio $dientePadecimientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DientesRepositorio $dientesRepositorio, MedicosReferenciaRepositorio $medicosReferenciaRepositorio, ConsultaCostosRepositorio $consultaCostosRepositorio)
     {
         $respuesta = [];
         // como se va a almacenar la consulta
@@ -495,7 +499,7 @@ class ConsultasController extends Controller
         $tensionArterial                = $request->get('tension');
         $notaMedica                     = $request->get('nota');
         $comportamientoFranklId         = (int)$request->get('comportamientoFrankl');
-        $costoConsulta                  = $request->get('costoAsignadoConsulta');
+        $costoConsulta                  = (double)$request->get('costoAsignadoConsulta');
         $comportamiento                 = $comportamientosFranklRepositorio->obtenerPorId($comportamientoFranklId);
         $medico                         = $this->usuariosRepositorio->obtenerPorId($medicoId);
         $paciente                       = $pacientesRepositorio->obtenerPorId($pacienteId);
@@ -505,20 +509,24 @@ class ConsultasController extends Controller
 
         // objetos de consulta
         $exploracion = new ExploracionFisica($peso, $talla, $pulso, $temperatura, $tensionArterial);
-        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, new DateTime(), $medico);
+        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, new DateTime(), new ColeccionArray(), $medico);
 
         // atender cita
         $cita->atender();
 
         // crear objetos propios de cada especialidad
         // si es de johanna se deben crear plan de tratamiento, odontograma
-        ExpedientesAgregarElementosConsulta::crear($medico, $expediente, $request, $dientePadecimientosRepositorio, $dienteTratamientosRepositorio, $otrosTratamientosRepositorio);
+        ExpedientesAgregarElementosConsulta::crear($medico, $expediente, $request, $dientePadecimientosRepositorio, $dienteTratamientosRepositorio, $otrosTratamientosRepositorio, $dientesRepositorio, $consulta);
 
         // verificar si se mandaron a crear receta e interconsulta
         // interconsulta es propio de expediente
         if ($request->session()->has('interconsulta')) {
             $interconsulta = $request->session()->get('interconsulta');
-            $interconsulta = EntityManager::merge($interconsulta);
+
+            $medicoReferencia = $interconsulta->getMedico();
+            $interconsulta->removerMedico();
+            $medicoReferencia = $medicosReferenciaRepositorio->obtenerPorId($medicoReferencia->getId());
+            $interconsulta->agregarMedico($medicoReferencia);
 
             // asignación bilateral
             $expediente->inicializarInterconsulta(new ColeccionArray(), new ColeccionArray());
@@ -529,9 +537,19 @@ class ConsultasController extends Controller
         // receta es propio de consulta
         if ($request->session()->has('receta')) {
             $receta = $request->session()->get('receta');
-            $receta = EntityManager::merge($receta);
             $consulta->agregarReceta($receta);
         }
+
+        // agregar los rubros a cobrar
+        foreach ($request->get('consultaCosto') as $consultaCostoId) {
+            $consultaCostoId = (int)$consultaCostoId;
+            $consultaCosto   = $consultaCostosRepositorio->obtenerPorId($consultaCostoId);
+
+            $consulta->agregarCosto($consultaCosto);
+        }
+
+        // agrega un comentario de costo
+        $consulta->agregarComentario();
 
         // si es de primera vez se debe considerar la creación del complemento al expediente
         // dependiendo del médico

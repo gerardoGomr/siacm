@@ -3,6 +3,7 @@ namespace Siacme\Aplicacion\Factories;
 
 use App;
 use EntityManager;
+use Siacme\Aplicacion\Servicios\Consultas\DibujadorOdontogramasAtencion;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Pacientes\Paciente;
@@ -67,14 +68,18 @@ class VistasConsultasFactory
                     $odontograma = OdontogramaFactory::crear();
 
                     $dibujadorOdontograma  = new DibujadorOdontogramas($odontograma);
+
+                    if (!request()->session()->has('odontograma')) {
+                        //EntityManager::detach($odontograma);
+                        request()->session()->put('odontograma', $odontograma);
+                    }
+                } else {
+                    // odontograma activo
+                    $odontograma = $expediente->getExpedienteEspecialidad()->obtenerOdontogramaActivo();
+                    !is_null($odontograma) ? $dibujadorOdontograma = new DibujadorOdontogramasAtencion($odontograma) : $dibujadorOdontograma = null;
                 }
 
-                if (!request()->session()->has('odontograma')) {
-                    EntityManager::detach($odontograma);
-                    request()->session()->put('odontograma', $odontograma);
-                }
-
-                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'consultaCostos'));
+                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'consultaCostos', 'dibujadorOdontograma'));
                 break;
         }
 

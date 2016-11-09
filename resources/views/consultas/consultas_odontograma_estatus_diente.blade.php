@@ -30,6 +30,6 @@
 @stop
 
 @section('js')
-	<script type="text/javascript" src="{{ asset('public/js/ajax.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('public/js/consultas/consultas_odontograma_estatus_diente.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/ajax.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/consultas/consultas_odontograma_estatus_diente.js') }}"></script>
 @stop

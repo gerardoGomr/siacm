@@ -14,6 +14,6 @@
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{ asset('public/js/webcam/webcam.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('public/js/expedientes/expediente_paciente_camara.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/webcam/webcam.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/expedientes/expediente_paciente_camara.js') }}"></script>
 @stop

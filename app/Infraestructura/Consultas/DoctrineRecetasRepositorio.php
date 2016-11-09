@@ -1,6 +1,7 @@
 <?php
 namespace Siacme\Infraestructura\Consultas;
 
+use Siacme\Dominio\Consultas\Receta;
 use Siacme\Dominio\Consultas\Repositorios\RecetasRepositorio;
 use Siacme\Exceptions\PDO\PDOLogger;
 use Doctrine\ORM\EntityManager;
@@ -26,11 +27,28 @@ class DoctrineRecetasRepositorio implements RecetasRepositorio
 
     /**
      * @param int $id
-     * @return mixed
+     * @return Receta|null
      */
     public function obtenerPorId($id)
     {
         // TODO: Implement obtenerPorId() method.
+        try {
+            $query   = $this->entityManager->createQuery("SELECT r FROM Consultas:RecetaConsulta r WHERE r.id = :id")
+                ->setParameter('id', $id);
+
+            $recetas = $query->getResult();
+
+            if (count($recetas) === 0) {
+                return null;
+            }
+
+            return $recetas[0];
+
+        } catch (PDOException $e) {
+            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
     }
 
     /**

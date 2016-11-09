@@ -108,7 +108,7 @@
 							@endif
 							<div class="checkbox">
 								<label>
-									<input type="checkbox" name="consultaCosto[]" class="consultaCosto" data-id="{{ $consultaCosto->getId() }}" {!! $checked . ' ' . $disabled !!} data-value="{{ $consultaCosto->getCosto() }}"> {{  $consultaCosto->getConcepto() . ' - ' . $consultaCosto->costo() }}
+									<input type="checkbox" name="consultaCosto[]" class="consultaCosto" data-id="{{ $consultaCosto->getId() }}" {!! $checked . ' ' . $disabled !!} data-value="{{ $consultaCosto->getCosto() }}" value="{{ $consultaCosto->getId() }}"> {{  $consultaCosto->getConcepto() . ' - ' . $consultaCosto->costo() }}
 								</label>
 							</div>
 						@endforeach

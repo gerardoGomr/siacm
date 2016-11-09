@@ -312,7 +312,7 @@ class PlanTratamiento extends \Siacme\Dominio\Expedientes\PlanTratamiento implem
     /**
      * {@inheritDoc}
      */
-    public function agregarTratamiento($numeroDiente, \Siacme\Dominio\Expedientes\DienteTratamiento $dientePlan)
+    public function agregarTratamiento($numeroDiente, \Siacme\Dominio\Expedientes\DientePlan $dientePlan)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarTratamiento', [$numeroDiente, $dientePlan]);

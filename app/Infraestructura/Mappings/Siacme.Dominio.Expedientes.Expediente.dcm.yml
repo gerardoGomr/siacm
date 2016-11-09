@@ -224,3 +224,7 @@ Siacme\Dominio\Expedientes\Expediente:
       targetEntity: Siacme\Dominio\Consultas\Consulta
       mappedBy: expediente
       cascade: [persist]
+    interconsultas:
+      targetEntity: Siacme\Dominio\Interconsultas\Interconsulta
+      mappedBy: expediente
+      cascade: [persist]

@@ -1181,15 +1181,15 @@ class ExpedienteJohanna extends AbstractExpediente
      * obtener al plan de tratamiento que esté marcado como activo
      * @return PlanTratamiento|null
      */
-    public function obtenerPlanActivo()
+    public function obtenerOdontogramaActivo()
     {
-        if ($this->planesTratamiento->count() === 0) {
+        if ($this->odontogramas->count() === 0) {
             return null;
         }
 
-        foreach ( $this->planesTratamiento as $plan ) {
-            if (!$plan->atendido()) {
-                return $plan;
+        foreach ( $this->odontogramas as $odontograma ) {
+            if (!$odontograma->atendido()) {
+                return $odontograma;
             }
         }
 
@@ -1197,15 +1197,31 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
+     * devolver los odontogramas
+     * @return IColeccion
+     */
+    public function odontogramas()
+    {
+        return $this->odontogramas;
+    }
+
+    /**
+     * verifica si tiene odontogramas
+     * @return bool
+     */
+    public function tieneOdontogramas()
+    {
+        return $this->odontogramas->count() > 0;
+    }
+
+    /**
      * una vez se genere de manera correcta la consulta, eliminar este metodo e inicializar
      * las colecciones al generar el expediente
      *
      * @param IColeccion $odontogramas
-     * @param IColeccion $planesTratamiento
      */
-    public function inicializarTemp(IColeccion $odontogramas, IColeccion $planesTratamiento)
+    public function inicializarTemp(IColeccion $odontogramas)
     {
-        $this->odontogramas      = $odontogramas;
-        $this->planesTratamiento = $planesTratamiento;
+        $this->odontogramas = $odontogramas;
     }
 }

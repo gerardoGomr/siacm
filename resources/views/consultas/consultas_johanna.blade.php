@@ -33,10 +33,10 @@
 													<li>
 														<a href="#expediente" data-toggle="tab"><i class="fa fa-folder-open"></i> Expediente</a>
 													</li>
+                                                    <li>
+                                                        <a href="#odontograma" data-toggle="tab"><i class="fa fa-search"></i> Odontograma</a>
+                                                    </li>
 												@endif
-												<li>
-													<a href="#odontograma" data-toggle="tab"><i class="fa fa-search"></i> Odontograma</a>
-												</li>
 												@if(!$expediente->getExpedienteEspecialidad()->primeraVez())
 													<li>
 														<a href="#plan" data-toggle="tab"><i class="fa fa-search"></i> Plan Tratamiento</a>
@@ -60,11 +60,12 @@
 													@include('consultas.consultas_johanna_datos')
 													@if($expediente->getExpedienteEspecialidad()->primeraVez())
 														@include('consultas.consultas_johanna_expediente_agregar')
+                                                        @include('consultas.consultas_johanna_odontograma')
+                                                    @else
+                                                        @include('consultas.consultas_odontopediatria_plan_atencion')
 													@endif
 
-													@include('consultas.consultas_johanna_odontograma')
-
-													{{--@include('pacientes.pacientes_consultas')--}}
+													@include('pacientes.pacientes_consultas')
 												</div>
 												<input type="hidden" name="medicoId" id="medicoId" value="{{ base64_encode($medico->getId()) }}">
 												<input type="hidden" name="pacienteId" id="pacienteId" value="{{ base64_encode($paciente->getId()) }}">
@@ -94,6 +95,6 @@
 @include('consultas.consultas_johanna_interconsulta')
 
 @section('js')
-	<script src="{{ asset('public/js/consultas/consultas_plan_tratamiento.js') }}"></script>
-	<script src="{{ asset('public/js/consultas/consultas_johanna_capturar.js') }}"></script>
+	<script src="{{ asset('js/consultas/consultas_plan_tratamiento.js') }}"></script>
+	<script src="{{ asset('js/consultas/consultas_johanna_capturar.js') }}"></script>
 @stop

@@ -226,20 +226,6 @@ $(function() {
 							var datos 		   = $formConsulta.serialize(),
 								tipoEncontrado = false;
 
-							// agregando valor de anestesia general si asi procede
-							//$formConsulta.find('input.costoConsulta').each(function() {
-							//	if ($(this).attr('checked') === 'checked') {
-							//		if ($(this).data('id') === 7) {
-							//			/*bootbox.confirm('Se marcó el cobro de tratamiento por anestesia general y se inhabilitará el plan de tratamiento actual si está aún activo. ¿Desea continuar?', function(e){
-							//				if (e === true) {
-							//					tipoEncontrado = true;
-							//				}
-							//			});*/
-							//			datos += '&tipoCostoConsulta=7';
-							//		}
-							//	}
-							//});
-
 							$.ajax({
 								url:        $formConsulta.attr('action'),
 								type:       'post',
@@ -273,10 +259,10 @@ $(function() {
 				}
 			} else {
 				// guardar form
-				//var datos 		   = $formConsulta.serialize(),
-				//	tipoEncontrado = false;
-                //
-				//// agregando valor de anestesia general si asi procede
+				var datos 		   = $formConsulta.serialize(),
+					tipoEncontrado = false;
+
+				// agregando valor de anestesia general si asi procede
 				//$formConsulta.find('input.costoConsulta').each(function() {
 				//	if ($(this).attr('checked') === 'checked') {
 				//		if ($(this).data('id') === 7) {
@@ -289,25 +275,38 @@ $(function() {
 				//		}
 				//	}
 				//});
-                //
-				//var respuesta = ajax($formConsulta.attr('action'), 'post', 'json', datos, 'guardar');
-				//respuesta.done(function(resultado) {
-				//	console.log(resultado);
-                //
-				//	if(resultado.respuesta === '0') {
-				//		bootbox.alert('Ocurrió un error al generar la consulta.');
-				//		return false;
-				//	}
-                //
-				//	bootbox.alert('Consulta generada con éxito', function() {
-				//		// se guardó con éxito, retornar a pantalla de consultas agendadas
-				//		window.location.href = $('#url').val();
-				//	});
-				//})
-				//.fail(function(XMLHttpRequest, textStatus, errorThrown) {
-				//	console.log(textStatus + ': ' + errorThrown);
-				//	bootbox.alert('Imposible realizar la operación solicitada');
-				//});
+
+                var datos 		   = $formConsulta.serialize(),
+                    tipoEncontrado = false;
+
+                $.ajax({
+                    url:        $formConsulta.attr('action'),
+                    type:       'post',
+                    dataType:   'json',
+                    data:       datos,
+                    beforeSend: function () {
+                        $('#modalLoading').modal('show');
+                    }
+
+                }).done(function (respuesta) {
+                    $('#modalLoading').modal('hide');
+
+                    if (respuesta.estatus === 'fail') {
+                        bootbox.alert('Ocurrió un error al generar la consulta. Por favor, intente de nuevo.');
+                    }
+
+                    if (respuesta.estatus === 'OK') {
+                        bootbox.alert('La consulta se guardó exitósamente.', function () {
+                            // redirigir a pantalla principal
+                            window.location.href = $('#url').val();
+                        });
+                    }
+
+                }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(textStatus + ': ' + errorThrown);
+                    $('#modalLoading').modal('hide');
+                    bootbox.alert('Ocurrió un error al generar la consulta. Por favor, intente de nuevo.');
+                });
 			}
 		}
 	});
@@ -315,23 +314,37 @@ $(function() {
 	// costos de consulta
 	$formConsulta.on('click', 'input.consultaCosto', function(event) {
 		if($(this).attr('checked') === 'checked') {
-			costoTotalConsulta += Number($(this).val());
+			costoTotalConsulta += Number($(this).data('value'));
 		} else {
-			costoTotalConsulta -= Number($(this).val());
+			costoTotalConsulta -= Number($(this).data('value'));
 		}
 
 		$('#costoAsignadoConsulta').val(costoTotalConsulta);
 	});
 
-	// agregar costos de tratamientos a costos de consulta
-	$('#dvPlanTratamiento').on('click', 'input.tratamiento', function(event) {
-		var costoTratamiento   = $(this).siblings('input[type="hidden"]').val(),
-		  	costoConsulta      = $('#costoAsignadoConsulta').val();
+    // agregar costos de otros tratamientos a costo de consulta
+    $formConsulta.on('click', 'input.otroTratamiento', function(event) {
+        var costoTratamiento = Number($(this).data('costo')),
+            costoConsulta    = Number($('#costoAsignadoConsulta').val());
 
-		if($(this).attr('checked') === 'checked') {
-			costoTotalConsulta = Number(costoTratamiento) + Number(costoConsulta);
+        if ($(this).attr('checked') === 'checked') {
+            costoTotalConsulta = costoTratamiento + costoConsulta;
+        } else {
+            costoTotalConsulta = costoConsulta - costoTratamiento;
+        }
+
+        $('#costoAsignadoConsulta').val(costoTotalConsulta);
+    });
+
+	// agregar costos de tratamientos a costos de consulta
+    $formConsulta.on('click', 'input.tratamiento', function(event) {
+		var costoTratamiento = Number($(this).data('costo')),
+		  	costoConsulta    = Number($('#costoAsignadoConsulta').val());
+
+		if ($(this).attr('checked') === 'checked') {
+			costoTotalConsulta = costoTratamiento + costoConsulta;
 		} else {
-			costoTotalConsulta = Number(costoConsulta) - Number(costoTratamiento);
+			costoTotalConsulta = costoConsulta - costoTratamiento;
 		}
 
 		$('#costoAsignadoConsulta').val(costoTotalConsulta);

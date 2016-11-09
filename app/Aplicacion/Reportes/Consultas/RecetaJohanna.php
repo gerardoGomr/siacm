@@ -2,6 +2,7 @@
 namespace Siacme\Aplicacion\Reportes\Consultas;
 
 use DateTime;
+use Siacme\Aplicacion\Fecha;
 use Siacme\Aplicacion\Reportes\ReporteJohanna;
 use Siacme\Dominio\Consultas\RecetaConsulta;
 use Siacme\Dominio\Expedientes\Expediente;
@@ -41,11 +42,12 @@ class RecetaJohanna extends ReporteJohanna
      */
     public function generar()
     {
+        $fecha = (new DateTime())->format('Y-m-d');
         // TODO: Implement generar() method.
         $this->SetTitle('Receta');
         $this->AddPage();
         $this->SetFont('helvetica', '', 12);
-        $this->Cell(0, 10, (new DateTime())->format('Y-m-d'), 0, 1, 'R');
+        $this->Cell(0, 10, Fecha::convertir($fecha), 0, 1, 'R');
         $this->Ln(5);
 
         $html = '<p><strong>Nombre:</strong> ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>

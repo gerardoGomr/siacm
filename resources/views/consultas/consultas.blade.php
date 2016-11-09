@@ -59,5 +59,5 @@
 @include('modal_loading')
 
 @section('js')
-	<script src="{{ asset('public/js/consultas/consultas.js') }}"></script>
+	<script src="{{ asset('js/consultas/consultas.js') }}"></script>
 @stop

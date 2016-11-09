@@ -64,10 +64,10 @@ class DienteTratamiento extends \Siacme\Dominio\Expedientes\DienteTratamiento im
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'tratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'dientePlan'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'tratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'costo'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'tratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'dientePlan'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'tratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\DienteTratamiento' . "\0" . 'costo'];
     }
 
     /**
@@ -213,12 +213,12 @@ class DienteTratamiento extends \Siacme\Dominio\Expedientes\DienteTratamiento im
     /**
      * {@inheritDoc}
      */
-    public function getDientePlan()
+    public function costo()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDientePlan', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'costo', []);
 
-        return parent::getDientePlan();
+        return parent::costo();
     }
 
 }

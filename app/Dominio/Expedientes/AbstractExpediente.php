@@ -90,4 +90,12 @@ abstract class AbstractExpediente
 
         return $numero;
     }
+
+    /**
+     * se marca como subsecuente
+     */
+    public function marcarComoSubsecuente()
+    {
+        $this->primeraVez = false;
+    }
 }

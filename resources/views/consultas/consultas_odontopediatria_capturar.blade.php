@@ -138,5 +138,5 @@
 @stop
 
 @section('js')
-	<script src="{{ asset('public/js/consultas/consultas_odontopediatria_capturar.js') }}"></script>
+	<script src="{{ asset('js/consultas/consultas_odontopediatria_capturar.js') }}"></script>
 @stop

@@ -6,28 +6,22 @@ Siacme\Dominio\Expedientes\Odontograma:
       type: integer
       generator:
         strategy: AUTO
-  manyToMany:
-    dientes:
-      targetEntity: Diente
-      joinTable:
-        name: odontograma_diente
-        joinColumns:
-          OdontogramaId:
-            referencedColumnName: id
-        inverseJoinColumns:
-          Numero:
-            referencedColumnName: Numero
+  fields:
+    costo:
+      type: float
+      column: Costo
+    atendido:
+      type: boolean
+      column: Atendido
+  oneToMany:
+    odontogramaDientes:
+      targetEntity: OdontogramaDiente
+      mappedBy: odontograma
       cascade: [persist]
+      fetch: EAGER
     otrosTratamientos:
-      targetEntity: OtroTratamiento
-      joinTable:
-        name: odontograma_otro_tratamiento
-        joinColumns:
-          OdontogramaId:
-            referencedColumnName: id
-        inverseJoinColumns:
-          OtroTratamientoId:
-            referencedColumnName: id
+      targetEntity: OdontogramaOtroTratamiento
+      mappedBy: odontograma
       cascade: [persist]
   manyToOne:
     expedienteEspecialidad:
@@ -36,3 +30,5 @@ Siacme\Dominio\Expedientes\Odontograma:
       joinColumn:
         name: ExpedienteJohannaId
         referencedColumnName: id
+      cascade: [persist]
+      fetch: EAGER

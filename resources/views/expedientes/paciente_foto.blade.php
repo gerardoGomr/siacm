@@ -11,7 +11,7 @@
 	<a href="javascript:;" id="btnAceptarRecorte" class="btn btn-info aceptarRecorte" style="display:none"><i class="fa fa-check-square"></i> Aceptar</a>
 	<a href="javascript:;" id="btnCancelarRecorte" class="btn btn-info cancelarRecorte" style="display:none"><i class="fa fa-times"></i> Cancelar recorte</a>
 @else
-	<img src="{{ asset('public/img/avatar5.png') }}" id="fotoCapturada" class="text-center" />
+	<img src="{{ asset('img/avatar5.png') }}" id="fotoCapturada" class="text-center" />
 	<p class="strong">Sin fotografía</p>
 	<input type="hidden" name="x" id="x" value="" />
 	<input type="hidden" name="y" id="y" value="" />

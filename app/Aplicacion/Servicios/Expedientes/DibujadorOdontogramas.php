@@ -122,39 +122,33 @@ class DibujadorOdontogramas implements DibujadorInterface
 
 		if($inicio > $fin) {
 			for ($i = $inicio; $i >= $fin; $i--) {
+                $strImagen = '';
+                if ($this->odontograma->getOdontogramaDiente($i)->tienePadecimientos()) {
+                    foreach ($this->odontograma->getOdontogramaDiente($i)->getPadecimientos()->getValues() as $dientePadecimiento) {
+                        $strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
+                    }
+                } else {
+                    $strImagen .= '<img src="' . asset('img/dientes/x.png') . '" />';
+                }
 
-				if(!is_null($this->odontograma->diente($i))) {
-					$strImagen = '';
+                $html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal" data-id="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '"></a></td>';
 
-					if (!is_null($this->odontograma->diente($i)->getPadecimientos()) && $this->odontograma->diente($i)->getPadecimientos()->count() > 0) {
-						foreach ($this->odontograma->diente($i)->getPadecimientos()->getValues() as $dientePadecimiento) {
-							$strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
-						}
-					} else {
-						$strImagen .= '<img src="' . asset('public/img/dientes/x.png') . '" />';
-					}
-
-					$html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->diente($i)->getNumero() . '" /></a></td>';
-				}
 			}
 
 		} else {
 
 			for ($i = $inicio; $i <= $fin; $i++) {
+                $strImagen = '';
+                if ($this->odontograma->getOdontogramaDiente($i)->tienePadecimientos()) {
+                    foreach ($this->odontograma->getOdontogramaDiente($i)->getPadecimientos()->getValues() as $dientePadecimiento) {
+                        $strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
+                    }
+                } else {
+                    $strImagen .= '<img src="' . asset('img/dientes/x.png') . '" />';
+                }
 
-				if(!is_null($this->odontograma->diente($i))) {
+                $html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal" data-id="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '"></a></td>';
 
-					$strImagen = '';
-					if (!is_null($this->odontograma->diente($i)->getPadecimientos()) && $this->odontograma->diente($i)->getPadecimientos()->count() > 0) {
-						foreach ($this->odontograma->diente($i)->getPadecimientos()->getValues() as $dientePadecimiento) {
-							$strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
-						}
-					} else {
-						$strImagen .= '<img src="' . asset('public/img/dientes/x.png') . '" />';
-					}
-
-					$html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal" data-id="' . $this->odontograma->diente($i)->getNumero() . '">' . $strImagen . '</a></td>';
-				}
 			}
 		}
 
@@ -173,21 +167,12 @@ class DibujadorOdontogramas implements DibujadorInterface
 
 		if($inicio > $fin) {
 			for ($i = $inicio; $i >= $fin; $i--) {
-
-				if(!is_null($this->odontograma->diente($i))) {
-
-					$html .= '<td>' . $this->odontograma->diente($i)->getNumero() . '</td>';
-				}
+				$html .= '<td>' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '</td>';
 			}
 
 		} else {
-
 			for ($i = $inicio; $i <= $fin; $i++) {
-
-				if(!is_null($this->odontograma->diente($i))) {
-
-					$html .= '<td>' . $this->odontograma->diente($i)->getNumero() . '</td>';
-				}
+				$html .= '<td>' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '</td>';
 			}
 		}
 

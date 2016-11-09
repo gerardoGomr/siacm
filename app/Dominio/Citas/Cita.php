@@ -184,6 +184,10 @@ class Cita
 			case CitaEstatus::EN_ESPERA_CONSULTA:
 				$estatus = 'En espera de consulta';
 				break;
+
+            case CitaEstatus::ATENDIDA:
+                $estatus = 'Atendida';
+                break;
 		}
 
 		return $estatus;
@@ -220,10 +224,34 @@ class Cita
 		$this->estatus = CitaEstatus::CANCELADA;
 	}
 
+    /**
+     * marcar como espera de consulta
+     */
 	public function enEsperaDeConsulta()
 	{
 		$this->estatus = CitaEstatus::EN_ESPERA_CONSULTA;
 	}
+
+    /**
+     * se registra el estatus
+     * @param int $accion
+     */
+    public function registrarEstatus($accion)
+    {
+        switch ($accion) {
+            case CitaEstatus::CONFIRMADA:
+                $this->confirmar();
+                break;
+
+            case CitaEstatus::CANCELADA:
+                $this->cancelar();
+                break;
+
+            case CitaEstatus::EN_ESPERA_CONSULTA:
+                $this->enEsperaDeConsulta();
+                break;
+        }
+    }
 
 	/**
 	 * reprogramar la fecha y hora de cita

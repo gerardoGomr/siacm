@@ -5,6 +5,7 @@ use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Interconsultas\Interconsulta;
 use Siacme\Dominio\Listas\IColeccion;
 use Siacme\Dominio\Pacientes\Paciente;
+use Siacme\Exceptions\ConsultaNoEncontradaException;
 
 /**
  * Class Expediente
@@ -270,18 +271,24 @@ class Expediente
     protected $interconsultas;
 
     /**
+     * @var IColeccion
+     */
+    protected $anexos;
+
+    /**
      * Expediente constructor.
      * @param Paciente $paciente
      * @param IColeccion $consultas
      * @param IColeccion $interconsultas
      * @param AbstractExpediente $expedienteEspecialidad
      */
-	public function __construct(Paciente $paciente = null, IColeccion $consultas, IColeccion $interconsultas, AbstractExpediente $expedienteEspecialidad = null)
+	public function __construct(Paciente $paciente = null, IColeccion $consultas, IColeccion $interconsultas, AbstractExpediente $expedienteEspecialidad = null, IColeccion $anexos)
 	{
         $this->paciente               = $paciente;
         $this->expedienteEspecialidad = $expedienteEspecialidad;
         $this->consultas              = $consultas;
         $this->interconsultas         = $interconsultas;
+        $this->anexos                 = $anexos;
 	}
 
 	/**
@@ -685,6 +692,14 @@ class Expediente
     }
 
     /**
+     * @return IColeccion
+     */
+    public function getInterconsultas()
+    {
+        return $this->interconsultas;
+    }
+
+    /**
      * verificar si tiene foto
      * @return bool
      */
@@ -857,9 +872,84 @@ class Expediente
         $this->interconsultas->add($interconsulta);
     }
 
+    /**
+     * inicializar las interconsultas
+     * @param IColeccion $consultas
+     * @param IColeccion $interconsultas
+     */
     public function inicializarInterconsulta(IColeccion $consultas, IColeccion $interconsultas)
     {
         $this->consultas      = $consultas;
         $this->interconsultas = $interconsultas;
+    }
+
+    /**
+     * checa si se han generado consultas
+     * @return bool
+     */
+    public function tieneConsultas()
+    {
+        return $this->consultas->count() > 0;
+    }
+
+    /**
+     * checa si se han generado interconsultas
+     * @return bool
+     */
+    public function tieneInterconsultas()
+    {
+        return $this->interconsultas->count() > 0;
+    }
+
+    /**
+     * obtener una consulta por su número
+     * @param int $id
+     * @return Consulta
+     * @throws ConsultaNoEncontradaException
+     */
+    public function obtenerConsulta($id)
+    {
+        foreach ($this->consultas as $consulta) {
+            if ($consulta->getId() === $id) {
+                return $consulta;
+            }
+        }
+
+        throw new ConsultaNoEncontradaException('No existe la consulta identificada por ' . (string)$id);
+    }
+
+    /**
+     * @param IColeccion $listaAnexos
+     */
+    public function asignarAnexos($listaAnexos, $anexos = null)
+    {
+        if (is_null($this->anexos)) {
+            // hack para inicializar lista, se debe inicializar cuando se construye el objeto
+            $this->anexos = $anexos;
+        }
+
+        if(!is_null($listaAnexos)) {
+            foreach ($listaAnexos as $anexo) {
+                $this->anexos->add(new Anexo($anexo));
+            }
+        }
+    }
+
+    /**
+     * devuelve la lista de anexos
+     * @return IColeccion
+     */
+    public function anexos()
+    {
+        return $this->anexos;
+    }
+
+    /**
+     * verifica si el expediente actual tiene anexos asignados
+     * @return bool
+     */
+    public function tieneAnexos()
+    {
+        return $this->anexos->count() > 0;
     }
 }

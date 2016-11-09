@@ -100,7 +100,7 @@
 @stop
 
 @section('js')
-	<script src="{{ asset('public/js/webcam/webcam.js') }}"></script>
-	<script src="{{ asset('public/js/expedientes/expediente_paciente_camara.js') }}"></script>
-	<script src="{{ asset('public/js/expedientes/expediente.js') }}"></script>
+	<script src="{{ asset('js/webcam/webcam.js') }}"></script>
+	<script src="{{ asset('js/expedientes/expediente_paciente_camara.js') }}"></script>
+	<script src="{{ asset('js/expedientes/expediente.js') }}"></script>
 @stop

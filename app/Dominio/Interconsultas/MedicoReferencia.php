@@ -38,8 +38,6 @@ class MedicoReferencia extends Persona
         $this->id           = $id;
         $this->direccion    = $direccion;
         $this->especialidad = $especialidad;
-
-        parent::__construct();
     }
 
     /**
