@@ -1,5 +1,6 @@
 <?php
 namespace Siacme\Dominio\Expedientes;
+use Exception;
 
 /**
  * Class Fotografia
@@ -84,12 +85,12 @@ abstract class Fotografia
 	/**
 	 * Fotografia constructor.
 	 * @param string $ruta
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct($ruta)
 	{
 		if(!file_exists($ruta)) {
-			throw new \Exception("No existe esta imagen.");
+			throw new Exception("No existe esta imagen.");
 
 		}
 

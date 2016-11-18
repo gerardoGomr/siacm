@@ -1,7 +1,9 @@
 <?php
 namespace Siacme\Http\Controllers\Expedientes;
 
+use Exception;
 use Illuminate\Http\Request;
+use Siacme\Aplicacion\Factories\ExpedientesAgregarDatosConsultaFactory;
 use Siacme\Aplicacion\Factories\ExpedientesFactory;
 use Siacme\Aplicacion\Factories\ExpedientesEditarFactory;
 use Siacme\Aplicacion\Factories\VistasExpedientesGenerarFactory;
@@ -118,12 +120,14 @@ class ExpedienteController extends Controller
 
 		$respuesta  = [];
 
-		$fotografia = new FotografiaPaciente($url);
-
-		if(!$fotografia->cambiarTamanio($x, $y, $ancho, $alto)) {
-			$respuesta['estatus'] = 'fail';
-			return response()->json($respuesta);
-		}
+        try {
+            $fotografia = new FotografiaPaciente($url);
+            $fotografia->cambiarTamanio($x, $y, $ancho, $alto);
+        } catch (Exception $e) {
+            $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = $e->getMessage();
+            return response()->json($respuesta);
+        }
 
 		$respuesta['estatus'] = 'OK';
 		$respuesta['html']    = view('expedientes.paciente_foto_temporal', compact('fotografia'))->render();
@@ -148,12 +152,15 @@ class ExpedienteController extends Controller
 			return response()->json($respuesta);
 		}
 
-		$fotografia = new FotografiaPaciente($_FILES['fotoAdjuntada']['tmp_name']);
+        try {
+            $fotografia = new FotografiaPaciente($_FILES['fotoAdjuntada']['tmp_name']);
+            $fotografia->moverATemporal($request->session()->getId());
 
-		if(!$fotografia->moverATemporal($request->session()->getId())) {
-			$respuesta['estatus'] = 'fail';
-			return response()->json($respuesta);
-		}
+        } catch (Exception $e) {
+            $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = $e->getMessage();
+            return response()->json($respuesta);
+        }
 
 		$respuesta['estatus'] = 'OK';
 		$respuesta['html']    = view('expedientes.paciente_foto_temporal', compact('fotografia'))->render();
@@ -179,8 +186,10 @@ class ExpedienteController extends Controller
 		// intentar obtener el expediente
 		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
 
-		// si existe, actualizar datos
 		if (!is_null($expediente)) {
+            // si existe, actualizar datos
+            // actualizar también los otros datos que se capturan en la consulta
+            ExpedientesAgregarDatosConsultaFactory::agregar($medico, $expediente, $request);
 			ExpedientesEditarFactory::update($medico, $expediente, $request);
 
 		} else {

@@ -1,5 +1,5 @@
 @if(isset($expediente) && $expediente->tieneFoto())
-	<img src="{{ url($expediente->getFotografia()->getRuta()) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
+	<img src="{{ url('expedientes/foto/mostrar/' . base64_encode($expediente->getFotografia()->getRuta())) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
 	<input type="hidden" name="x" id="x" value="" />
 	<input type="hidden" name="y" id="y" value="" />
 	<input type="hidden" name="w" id="w" value="{{ $expediente->getFotografia()->getAncho() }}" />

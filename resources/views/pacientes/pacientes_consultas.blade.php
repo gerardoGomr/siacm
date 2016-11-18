@@ -20,10 +20,11 @@
                     <td>
                         {!! $consulta->tieneReceta() ? '<a href="'. url('pacientes/receta/' . base64_encode($consulta->getReceta()->getId()) . '/' . base64_encode($expediente->getId())) .'" data-toggle="tooltip" data-original-title="Imprimir receta" data-placement="top" target="_blank" class="btn btn-info btn-sm"><i class="fa fa-print"></i></a>' : '-' !!}
                         @if($consulta->pagada())
-                            <button class="btn btn-success btn-sm imprimirRecibo" data-toggle="tooltip" data-original-title="Imprimir recibo" data-placement="top" data-id="{{ base64_encode($consulta->getId()) }}" data-expediente="{{ base64_encode($expediente->getId()) }}"><i class="fa fa-check"></i></button>
+                            <button class="btn btn-success btn-sm imprimirRecibo" data-toggle="tooltip" data-original-title="Imprimir recibo" data-placement="top" data-id="{{ base64_encode($consulta->getId()) }}" data-expediente="{{ base64_encode($expediente->getId()) }}"><i class="fa fa-dollar"></i></button>
                         @else
                             <button class="btn btn-danger btn-sm cobrar" data-expediente="{{ base64_encode($expediente->getId()) }}" data-costo="{{ $consulta->getCosto() }}" data-id="{{ base64_encode($consulta->getId()) }}" data-toggle="tooltip" data-original-title="Cobrar consulta" data-placement="top"><i class="fa fa-dollar"></i></button>
                         @endif
+                        <a href="{{ url('consultas/nota/' . base64_encode($consulta->getId()) . '/' . base64_encode($expediente->getId())) }}" class="btn btn-warning btn-sm" data-toggle="tooltip" data-original-title="Imprimir nota médica" target="_blank"><i class="fa fa-print"></i></a>
                         <input type="hidden" class="desgloseCosto" value="{{ $consulta->desgloseCosto() }}">
                     </td>
                 </tr>

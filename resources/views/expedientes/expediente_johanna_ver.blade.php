@@ -14,7 +14,7 @@
 									<div class="col-md-1">
 										@if(isset($expediente) && $expediente->tieneFoto())
 											<div class="innerAll">
-												<img src="{{ url($expediente->getFotografia()->getRuta()) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
+												<img src="{{ url('expedientes/foto/mostrar/' . base64_encode($expediente->getFotografia()->getRuta())) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
 											</div>
 										@endif
 									</div>
@@ -61,6 +61,9 @@
 													@include('expedientes.expediente_johanna_ver_antecedentes_odontalgicos')
 													@include('expedientes.expediente_johanna_ver_higiene_bucodental')
 													@include('expedientes.expediente_johanna_ver_habitos_orales')
+                                                    @if($expediente->tieneConsultas())
+                                                        @include('consultas.consultas_johanna_expediente_ver')
+                                                    @endif
 												</div>
 											{!! Form::close() !!}
 										</div>

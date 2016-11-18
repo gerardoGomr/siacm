@@ -1,5 +1,6 @@
 <?php
 namespace Siacme\Dominio\Expedientes;
+use Exception;
 
 /**
  * Class FotografiaPaciente
@@ -9,7 +10,7 @@ namespace Siacme\Dominio\Expedientes;
  */
 class FotografiaPaciente extends Fotografia
 {
-	/**
+    /**
 	 * indica si la foto ha sido o no recortada
 	 * @var bool
 	 */
@@ -18,19 +19,19 @@ class FotografiaPaciente extends Fotografia
 	/**
 	 * FotografiaPaciente constructor.
 	 * @param string $ruta
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct($ruta)
 	{
-		$this->rutaTemporal = 'storage/pacientesFotografiasTemp/';
-		$this->rutaAGuardar = 'storage/pacientesFotografias/';
+		$this->rutaTemporal = storage_path() . '\pacientesFotografiasTemp\\';
+		$this->rutaAGuardar = storage_path() . '\pacientesFotografias\\';
 
 		parent::__construct($ruta);
 
 		list($ancho, $alto, $tipo) = getimagesize($this->ruta);
 
 		if($tipo !== IMAGETYPE_JPEG) {
-			throw new \Exception("No es imagen JPG");
+			throw new Exception("No es imagen JPG");
 		}
 
 		// inicializar
@@ -41,12 +42,13 @@ class FotografiaPaciente extends Fotografia
 		$this->haSidoRecortada = false;
 	}
 
-	/**
-	 * @param string $nombre
-	 * @param int    $anchoNuevo
-	 * @param int    $altoNuevo
-	 * @return bool
-	 */
+    /**
+     * @param string $nombre
+     * @param int $anchoNuevo
+     * @param int $altoNuevo
+     * @return bool
+     * @throws Exception
+     */
 	public function moverATemporal($nombre, $anchoNuevo = 200, $altoNuevo = 250)
 	{
 		// en pixeles
@@ -59,19 +61,18 @@ class FotografiaPaciente extends Fotografia
 			imagecopyresampled($this->imgDestino, $this->imgOrigen, 0, 0, 0, 0, $anchoNuevo, $altoNuevo, $this->ancho, $this->alto);
 
 			// guardar
-			imagejpeg($this->imgDestino, $this->rutaTemporal.$nombre.'.jpg', 100);
+			imagejpeg($this->imgDestino, $this->rutaTemporal . $nombre . '.jpg', 100);
 
-			$this->ancho = $anchoNuevo;
-			$this->alto  = $altoNuevo;
-			$this->ruta  = $this->rutaTemporal.$nombre.'.jpg';
+            $this->ancho          = $anchoNuevo;
+            $this->alto           = $altoNuevo;
+            $this->ruta           = $this->rutaTemporal . $nombre . '.jpg';
 
 			$this->imgOrigen = imagecreatefromjpeg($this->ruta);
 
 			return true;
 
-		} catch(\Exception $e) {
-			echo $e->getMessage();
-			return false;
+		} catch(Exception $e) {
+			throw $e;
 		}
 	}
 
@@ -84,13 +85,14 @@ class FotografiaPaciente extends Fotografia
 		return $this->haSidoRecortada;
 	}
 
-	/**
+    /**
      * cambiar el tamaño de la imagen
      * @param  int $posX
      * @param  int $posY
      * @param  int $nuevoAncho
      * @param  int $nuevoAlto
      * @return bool
+     * @throws Exception
      */
     public function cambiarTamanio($posX, $posY, $nuevoAncho, $nuevoAlto)
     {
@@ -109,9 +111,8 @@ class FotografiaPaciente extends Fotografia
 
 	    	return true;
 
-	    } catch(\Exception $e) {
-			echo $e->getMessage();
-			return false;
+	    } catch(Exception $e) {
+			throw $e;
 		}
     }
 
@@ -124,11 +125,11 @@ class FotografiaPaciente extends Fotografia
 	{
         $nombre = (string)$nombre;
 
-		if(!rename($this->ruta, $this->rutaAGuardar.$nombre.'.jpg')) {
+		if(!rename($this->ruta, $this->rutaAGuardar . $nombre . '.jpg')) {
 			return false;
 		}
 
-		$this->ruta = $this->rutaAGuardar.$nombre.'.jpg';
+        $this->ruta = $this->rutaAGuardar . $nombre . '.jpg';
 
 		return true;
 	}

@@ -70,9 +70,6 @@ elixir(function(mix) {
 			'components/common/forms/elements/select2/assets/lib/css/select2.css',
 			'components/modules/admin/calendar/assets/lib/css/fullcalendar.css',
 			'components/common/gallery/image-crop/assets/lib/css/jquery.JCrop.css',
-			'components/library/icons/glyphicons/assets/css/glyphicons_filetypes.css',
-			'components/library/icons/glyphicons/assets/css/glyphicons_regular.css',
-			'components/library/icons/glyphicons/assets/css/glyphicons_social.css',
 			'components/library/icons/pictoicons/css/picto.css',
 			'components/library/icons/pictoicons/css/picto-foundry-general.css',
 			], 'public/css/base-styles.css', 'resources/assets')

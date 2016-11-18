@@ -280,9 +280,10 @@ class Expediente
      * @param Paciente $paciente
      * @param IColeccion $consultas
      * @param IColeccion $interconsultas
+     * @param IColeccion $anexos
      * @param AbstractExpediente $expedienteEspecialidad
      */
-	public function __construct(Paciente $paciente = null, IColeccion $consultas, IColeccion $interconsultas, AbstractExpediente $expedienteEspecialidad = null, IColeccion $anexos)
+	public function __construct(Paciente $paciente = null, IColeccion $consultas, IColeccion $interconsultas, IColeccion $anexos, AbstractExpediente $expedienteEspecialidad = null)
 	{
         $this->paciente               = $paciente;
         $this->expedienteEspecialidad = $expedienteEspecialidad;
@@ -729,8 +730,8 @@ class Expediente
     public function revisaFoto()
     {
         $id = (string)$this->id;
-        if(file_exists("storage/pacientesFotografias/$id.jpg")) {
-            $this->asignarFoto(new FotografiaPaciente("storage/pacientesFotografias/$id.jpg"));
+        if(file_exists("../storage/pacientesFotografias/$id.jpg")) {
+            $this->asignarFoto(new FotografiaPaciente("../storage/pacientesFotografias/$id.jpg"));
         }
     }
 

@@ -21,5 +21,10 @@
 		<li class="innerAll">
 			<a href="#habitosOrales" data-toggle="tab"><i class="fa fa-edit"></i> Hábitos orales</a>
 		</li>
+        @if(isset($expediente) && $expediente->tieneConsultas())
+            <li class="innerAll">
+                <a href="#expedienteConsulta" data-toggle="tab"><i class="fa fa-folder-open"></i> Expediente</a>
+            </li>
+        @endif
 	</ul>
 </div>

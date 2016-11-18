@@ -104,6 +104,11 @@ $(document).ready(function () {
         window.open($('#consultas').data('url') + '/' + $(this).data('id') + '/' + $(this).data('expediente'));
     });
 
+    // otros tratamientos
+    $('#dvDetalles').on('click', '#generarOtroTratamiento', function () {
+         $('#dvOtroTratamiento').appendTo('body').modal('show');
+    });
+
     // forma pago de consulta
     $('#dvCobroConsulta').on('click', 'input.formaPago', function(event) {
         if ($(this).val() === '1') {

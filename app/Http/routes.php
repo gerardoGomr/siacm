@@ -75,6 +75,17 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// guardar foto capturada por camara
 	Route::post('expedientes/foto/guardar', 'Expedientes\ExpedienteController@capturarFoto');
 
+    // desplegar una foto anexada-capturada
+    Route::get('expedientes/foto/mostrar/{imagen}', function ($imagen) {
+        $imagen   = base64_decode($imagen);
+        $archivo  = File::get($imagen);
+        $response = Response::make($archivo, 200);
+
+        $response->header('Content-Type', File::mimeType($imagen));
+
+        return $response;
+    });
+
 	/////////////////////////////////////////// CONSULTAS //////////////////////////////////////////////
 	// principal consultas
 	Route::get('consultas/{medicoId}', 'Consultas\ConsultasController@index');
@@ -139,6 +150,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// imprimir interconsulta
 	Route::get('consultas/interconsulta/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarInterconsultaEnPDF');
 
+    // imprimir la nota médica PDF
+    Route::get('consultas/nota/{consultaId}/{expedienteId}', 'Consultas\ConsultasController@notaMedicaPDF');
+
 	/////////////////////////////////////////// PACIENTES //////////////////////////////////////////////
     // generar vista de búsqueda de expedientes
 	Route::get('pacientes/{medicoId}', 'Pacientes\PacientesController@index');
@@ -159,7 +173,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	Route::post('pacientes/anexos/eliminar', 'Pacientes\PacientesController@eliminarAnexo');
 
 	// generar tratamientos ortopedia - ortodoncia
-	Route::post('pacientes/tratamiento/agregar', 'Pacientes\PacientesController@agregarTratamiento');
+	Route::post('pacientes/tratamiento/otros/agregar', 'Pacientes\PacientesController@agregarTratamiento');
 
 	// generar receta en PDF
 	Route::get('pacientes/receta/{recetaId}/{expedienteId}', 'Pacientes\PacientesController@generarReceta');

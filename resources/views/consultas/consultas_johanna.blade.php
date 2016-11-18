@@ -36,11 +36,16 @@
                                                     <li>
                                                         <a href="#odontograma" data-toggle="tab"><i class="fa fa-search"></i> Odontograma</a>
                                                     </li>
-												@endif
-												@if(!$expediente->getExpedienteEspecialidad()->primeraVez())
-													<li>
-														<a href="#plan" data-toggle="tab"><i class="fa fa-search"></i> Plan Tratamiento</a>
-													</li>
+												@else
+                                                    @if($expediente->getExpedienteEspecialidad()->dadoDeAlta())
+                                                        <li>
+                                                            <a href="#odontograma" data-toggle="tab"><i class="fa fa-search"></i> Odontograma</a>
+                                                        </li>
+                                                    @else
+                                                        <li>
+                                                            <a href="#plan" data-toggle="tab"><i class="fa fa-search"></i> Plan Tratamiento</a>
+                                                        </li>
+                                                    @endif
 												@endif
 
 												<li>
@@ -62,7 +67,11 @@
 														@include('consultas.consultas_johanna_expediente_agregar')
                                                         @include('consultas.consultas_johanna_odontograma')
                                                     @else
-                                                        @include('consultas.consultas_odontopediatria_plan_atencion')
+                                                        @if($expediente->getExpedienteEspecialidad()->dadoDeAlta())
+                                                            @include('consultas.consultas_johanna_odontograma')
+                                                        @else
+                                                            @include('consultas.consultas_odontopediatria_plan_atencion')
+                                                        @endif
 													@endif
 
 													@include('pacientes.pacientes_consultas')

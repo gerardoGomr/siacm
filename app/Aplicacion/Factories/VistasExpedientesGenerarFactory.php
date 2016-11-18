@@ -5,6 +5,11 @@ use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Pacientes\Paciente;
 use Siacme\Dominio\Usuarios\Usuario;
 use App;
+use Siacme\Infraestructura\Expedientes\DoctrineAtmsRepositorio;
+use Siacme\Infraestructura\Expedientes\DoctrineComportamientosFranklRepositorio;
+use Siacme\Infraestructura\Expedientes\DoctrineConvexividadesFacialesRepositorio;
+use Siacme\Infraestructura\Expedientes\DoctrineMorfologiasCraneofacialesRepositorio;
+use Siacme\Infraestructura\Expedientes\DoctrineMorfologiasFacialesRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrinePadecimientosRepositorio;
 
 /**
@@ -29,14 +34,26 @@ class VistasExpedientesGenerarFactory
         switch($medico->getId()) {
             // johanna
             case Usuario::JOHANNA:
-                // repositorios
                 $padecimientoRepositorio = new DoctrinePadecimientosRepositorio(App::getInstance()['em']);
-                //$trastornosRepositorio   = new DoctrineTrastornosRepositorio(App::make('Doctrine\ORM\EntityManagerInterface'));
-
-                // catálogos
                 $padecimientos = $padecimientoRepositorio->obtenerTodos();
 
-                $vista = view('expedientes.expediente_johanna_registrar', compact('paciente', 'medico', 'padecimientos', 'expediente'));
+                if (isset($expediente) && $expediente->tieneConsultas()) {
+                    $morfologiasCraneofacialesRepositorio = new DoctrineMorfologiasCraneofacialesRepositorio(App::getInstance()['em']);
+                    $morfologiasFacialesRepositorio       = new DoctrineMorfologiasFacialesRepositorio(App::getInstance()['em']);
+                    $convexividadesFacialesRepositorio    = new DoctrineConvexividadesFacialesRepositorio(App::getInstance()['em']);
+                    $atmsRepositorio                      = new DoctrineAtmsRepositorio(App::getInstance()['em']);
+
+                    $morfologiasCraneofaciales = $morfologiasCraneofacialesRepositorio->obtenerTodos();
+                    $morfologiasFaciales       = $morfologiasFacialesRepositorio->obtenerTodos();
+                    $convexividadesFaciales    = $convexividadesFacialesRepositorio->obtenerTodos();
+                    $atms                      = $atmsRepositorio->obtenerTodos();
+
+                    $vista = view('expedientes.expediente_johanna_registrar', compact('paciente', 'medico', 'padecimientos', 'expediente', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms'));
+
+                } else {
+                    $vista = view('expedientes.expediente_johanna_registrar', compact('paciente', 'medico', 'padecimientos', 'expediente'));
+                }
+
                 break;
         }
 

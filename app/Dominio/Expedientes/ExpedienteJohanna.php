@@ -363,6 +363,11 @@ class ExpedienteJohanna extends AbstractExpediente
     private $atm;
 
     /**
+     * @var IColeccion
+     */
+    private $otrosTratamientos;
+
+    /**
      * ExpedienteJohanna constructor.
      * @param IColeccion $odontogramas
      * @param IColeccion $planesTratamiento
@@ -371,6 +376,7 @@ class ExpedienteJohanna extends AbstractExpediente
     {
         $this->odontogramas      = $odontogramas;
         $this->planesTratamiento = $planesTratamiento;
+        $this->primeraVez        = true;
     }
 
     /**
@@ -688,7 +694,7 @@ class ExpedienteJohanna extends AbstractExpediente
     /**
      * @return Mordida
      */
-    public function getMobremordidaVertical()
+    public function getSobremordidaVertical()
     {
         return $this->sobremordidaVertical;
     }
@@ -696,7 +702,7 @@ class ExpedienteJohanna extends AbstractExpediente
     /**
      * @return Mordida
      */
-    public function getMobremordidaHorizontal()
+    public function getSobremordidaHorizontal()
     {
         return $this->sobremordidaHorizontal;
     }
@@ -999,29 +1005,17 @@ class ExpedienteJohanna extends AbstractExpediente
      */
     public function tipoArco()
     {
+        $arcos = '';
+
         if ($this->tipoArcoI) {
-            return 'Tipo Arco I';
+            $arcos .= 'Tipo Arco I';
         }
 
         if ($this->tipoArcoII) {
-            return 'Tipo Arco II';
+            strlen($arcos) ? $arcos .= ' -- Tipo Arco II' : $arcos .= 'Tipo Arco II';
         }
-    }
 
-    /**
-     * @return Mordida
-     */
-    public function getSobremordidaVertical()
-    {
-        return $this->sobremordidaVertical;
-    }
-
-    /**
-     * @return Mordida
-     */
-    public function getSobremordidaHorizontal()
-    {
-        return $this->sobremordidaHorizontal;
+        return $arcos;
     }
 
     /**
@@ -1223,5 +1217,56 @@ class ExpedienteJohanna extends AbstractExpediente
     public function inicializarTemp(IColeccion $odontogramas)
     {
         $this->odontogramas = $odontogramas;
+    }
+
+    /**
+     * @return IColeccion
+     */
+    public function getOtrosTratamientos()
+    {
+        return $this->otrosTratamientos;
+    }
+
+    /**
+     * inicializar otros tratamientos
+     * @param IColeccion $otrosTratamientos
+     */
+    public function inicializarOtrosTratamientos(IColeccion $otrosTratamientos)
+    {
+        $this->otrosTratamientos = $otrosTratamientos;
+    }
+
+    /**
+     * agregar otro tratamiento
+     * @param TratamientoOdontologia $tratamientoOdontologia
+     */
+    public function asignarOtroTratamiento(TratamientoOdontologia $tratamientoOdontologia)
+    {
+        $this->otrosTratamientos->add($tratamientoOdontologia);
+    }
+
+    /**
+     * verifica si tiene asignados otros tratamientos
+     * @return bool
+     */
+    public function tieneOtrosTratamientos()
+    {
+        return $this->otrosTratamientos->count() > 0;
+    }
+
+    /**
+     * recorre los otros tratamientos y evaluda si ya estan todos atendidos o no
+     * con al menos uno no atendido, retornar false
+     * @return bool
+     */
+    public function otrosTratamientosAtendidos()
+    {
+        foreach ($this->otrosTratamientos as $tratamientoOdontologia) {
+            if (!$tratamientoOdontologia->atendido()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

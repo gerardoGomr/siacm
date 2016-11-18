@@ -65,6 +65,9 @@
 																		@include('expedientes.expediente_johanna_editar_antecedentes_odontalgicos')
 																		@include('expedientes.expediente_johanna_editar_higiene_bucodental')
 																		@include('expedientes.expediente_johanna_editar_habitos_orales')
+                                                                        @if($expediente->tieneConsultas())
+                                                                            @include('consultas.consultas_johanna_expediente_editar')
+                                                                        @endif
 																	@endif
 
 																	<div class="form-group">

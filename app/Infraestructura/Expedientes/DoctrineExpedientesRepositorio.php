@@ -65,7 +65,7 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 		// TODO: Implement obtenerPorId() method.
 		try {
 
-			$query = $this->entityManager->createQuery("SELECT e, p, c, ee, o, oo, t, ta FROM Expedientes:Expediente e JOIN e.paciente p JOIN e.consultas c LEFT JOIN e.expedienteEspecialidad ee LEFT JOIN ee.odontogramas o LEFT JOIN o.odontogramaDientes oo LEFT JOIN oo.padecimientos pa LEFT JOIN oo.tratamientos t LEFT JOIN t.dienteTratamiento ta WHERE e.id = :id")
+			$query = $this->entityManager->createQuery("SELECT e, p, c, ee, o, oo, t, ta FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.consultas c LEFT JOIN e.expedienteEspecialidad ee LEFT JOIN ee.odontogramas o LEFT JOIN o.odontogramaDientes oo LEFT JOIN oo.padecimientos pa LEFT JOIN oo.tratamientos t LEFT JOIN t.dienteTratamiento ta WHERE e.id = :id")
                 ->setParameter('id', $id);
 
 			$expediente = $query->getResult();

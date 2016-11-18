@@ -1,0 +1,48 @@
+Siacme\Dominio\Expedientes\TratamientoOdontologia:
+  type: entity
+  table: tratamiento_ortopedia_ortodoncia
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    ortopedia:
+      type: boolean
+      column: Ortopedia
+    ortodoncia:
+      type: boolean
+      column: Ortodoncia
+    dx:
+      type: string
+      column: DX
+    costo:
+      type: float
+      column: Costo
+    saldo:
+      type: float
+      column: Saldo
+    duracion:
+      type: integer
+      column: Duracion
+    mensualidades:
+      type: integer
+      column: Mensualidades
+    atendido:
+      type: boolean
+      column: Atendido
+  oneToMany:
+    pagos:
+      targetEntity: TratamientoOdontologiaPago
+      mappedBy: tratamientoOdontologia
+      cascade: [persist]
+      fetch: EAGER
+  manyToOne:
+    expedienteEspecialidad:
+      targetEntity: ExpedienteJohanna
+      inversedBy: otrosTratamientos
+      joinColumn:
+        name: ExpedienteJohannaId
+        referencedColumnName: id
+      cascade: [persist]
+      fetch: EAGER

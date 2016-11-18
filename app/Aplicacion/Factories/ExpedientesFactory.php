@@ -91,7 +91,7 @@ class ExpedientesFactory
      */
     private static function crearExpediente(Request $request, Paciente $paciente)
     {
-        $expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente, new ColeccionArray(), new ColeccionArray());
+        $expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente, new ColeccionArray(), new ColeccionArray(), new ColeccionArray());
 
         $fotoCapturada               = $request->get('capturada');
         $nombre                      = $request->get('nombre');

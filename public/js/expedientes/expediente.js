@@ -79,7 +79,8 @@ $(document).ready(function() {
 			$('#modalLoading').modal('hide');
 
 			if (respuesta.estatus === 'fail') {
-				bootbox.alert("Ocurrió un error al anexar la fotografía del paciente. Intente de nuevo.");
+                var mensaje = respuesta.mensaje !== '' ? respuesta.mensaje : '';
+				bootbox.alert("Ocurrió un error al anexar la fotografía del paciente. Intente de nuevo." + mensaje);
 			}
 
 			if (respuesta.estatus === 'OK') {
@@ -177,9 +178,11 @@ $(document).ready(function() {
 			$('#modalLoading').modal('hide');
 			console.log(resultado.estatus);
 
+            var mensaje = resultado.mensaje !== '' ? resultado.mensaje : '';
+
 			if(resultado.estatus === 'fail') {
 				console.log(resultado.mensaje);
-				bootbox.alert('Ocurrió un error al guardar la fotografía recortada. Intente de nuevo');
+				bootbox.alert('Ocurrió un error al guardar la fotografía recortada. Intente de nuevo.' + mensaje);
 			}
 
 			if (resultado.estatus === 'OK') {
@@ -385,6 +388,7 @@ $(document).ready(function() {
 		}
 	});
 
+    // registrar expediente
 	function guardarExpediente() {
 		$.ajax({
 			url:      $formExpediente.attr('action'),
@@ -399,7 +403,7 @@ $(document).ready(function() {
 			$('#modalLoading').modal('hide');
 			
 			if(resultado.estatus === 'fail') {
-				bootbox.alert('Ocurrió un error al generar el expediente. Intente de nuevo. Si persiste el error, consulte al administrador del sistema');
+				bootbox.alert('Ocurrió un error al generar el expediente. Intente de nuevo.');
 			}
 
 			if (resultado.estatus === 'OK') {
@@ -415,6 +419,18 @@ $(document).ready(function() {
 			bootbox.alert('Ocurrió un error al generar el expediente. Intente de nuevo');
 		});
 	}
+
+    // activar y desactivar elementos de medida
+    $formExpediente.find('input.medidas').on('click', function(event) {
+        var idInputText = $(this).data('id');
+
+        if ($(this).is(':checked')) {
+            $('#' + idInputText).attr('readonly', false);
+        } else {
+            $('#' + idInputText).attr('readonly', true);
+            $('#' + idInputText).val('');
+        }
+    });
 });
 
 /**

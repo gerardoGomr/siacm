@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Response;
+use Siacme\Aplicacion\Factories\PacientesVistaFactory;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\ReciboPago;
@@ -90,15 +91,16 @@ class PacientesController extends Controller
      */
     public function detalle(Request $request)
     {
-        $medicoId     = $request->get('medicoId');
+        $medicoId     = (int)base64_decode($request->get('medicoId'));
         $expedienteId = (int)base64_decode($request->get('expedienteId'));
+        $medico       = $this->usuariosRepositorio->obtenerPorId($medicoId);
         $expediente   = $this->expedientesRepositorio->obtenerPorId($expedienteId);
 
         $anexoUploader = new AnexosUploader((string)$expediente->getId());
         $expediente->asignarAnexos($anexoUploader->asignar(), new ColeccionArray());
 
         return response()->json([
-            'html' => view('pacientes.pacientes_detalle', compact('expediente', 'medicoId', 'anexoUploader'))->render()
+            'html' => PacientesVistaFactory::make($medico, $expediente, $anexoUploader)->render()
         ]);
     }
 
@@ -170,31 +172,32 @@ class PacientesController extends Controller
     }
 
     /**
-     * generar nuevo tratamiento de ortopedia - ortodoncia
+     * anexar un nuevo tratamiento de odontología
      * @param Request $request
-     * @param ExpedientesRepositorioInterface $expedientesRepositorio
-     * @param ITratamientoOrtopediaOrtodonciaRepositorio $tratamientosRepositorio
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @param ExpedientesRepositorio $expedientesRepositorio
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function agregarTratamiento(Request $request, ExpedientesRepositorioInterface $expedientesRepositorio, ITratamientoOrtopediaOrtodonciaRepositorio $tratamientosRepositorio)
+    public function agregarTratamiento(Request $request, ExpedientesRepositorio $expedientesRepositorio)
     {
-        $ortopedia            = $request->get('ortopedia') ? true : false;
-        $ortodoncia           = $request->get('ortodoncia') ? true : false;
-        $idPaciente           = (int)base64_decode($request->get('idPaciente'));
-        $username             = base64_decode($request->get('username'));
-        $medico               = $this->usuariosRepositorio->obtenerUsuarioPorUsername($username);
-        $pacientesRepositorio = PacientesRepositorioFactory::crear($medico);
-        $paciente             = $pacientesRepositorio->obtenerPacientePorId($idPaciente);
-        $expediente           = $expedientesRepositorio->obtenerExpedientePorPacienteMedico($paciente, $medico);
+        $ortopedia    = $request->get('ortopedia') ? true : false;
+        $ortodoncia   = $request->get('ortodoncia') ? true : false;
+        $expedienteId = (int)base64_decode($request->get('expedienteId'));
+        $expediente   = $expedientesRepositorio->obtenerPorId($expedienteId);
 
-        $tratamiento = new TratamientoOdontologia($request->get('dx'), $request->get('costo'), $request->get('duracion'), $request->get('mensualidades'));
+        $tratamiento = new TratamientoOdontologia($request->get('dx'), (double)$request->get('costo'), (int)$request->get('duracion'), (int)$request->get('mensualidades'), $expediente->getExpedienteEspecialidad(), new ColeccionArray());
         $tratamiento->generarTratamientos($ortopedia, $ortodoncia);
 
-        if (!$tratamientosRepositorio->guardar($tratamiento, $expediente)) {
-            return response('0');
+        if (is_null($expediente->getExpedienteEspecialidad()->getOtrosTratamientos())) {
+            $expediente->getExpedienteEspecialidad()->inicializarOtrosTratamientos(new ColeccionArray());
+        }
+        $expediente->getExpedienteEspecialidad()->asignarOtroTratamiento($tratamiento);
+
+        $respuesta = ['estatus' => 'OK'];
+        if (!$expedientesRepositorio->persistir($expediente)) {
+            $respuesta['estatus'] = 'fail';
         }
 
-        return response('1');
+        return response()->json($respuesta);
     }
 
     /**

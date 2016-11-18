@@ -45,4 +45,13 @@ abstract class Mordida
     {
         return $this->medida;
     }
+
+    /**
+     * valor formateado de la modida
+     * @return string
+     */
+    public function medidaMordida()
+    {
+        return (string)$this->medida . ' mm';
+    }
 }

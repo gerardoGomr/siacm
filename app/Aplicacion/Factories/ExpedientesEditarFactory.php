@@ -18,6 +18,12 @@ use Siacme\Dominio\Usuarios\Usuario;
  */
 class ExpedientesEditarFactory
 {
+    /**
+     * crear el objeto de acuerdo a los datos que se envían
+     * @param Usuario $medico
+     * @param Expediente $expediente
+     * @param Request $request
+     */
     public static function update(Usuario $medico, Expediente $expediente, Request $request)
     {
         self::updateBasicData($request, $expediente);
@@ -72,6 +78,11 @@ class ExpedientesEditarFactory
         }
     }
 
+    /**
+     * datos básicos de todos los expedientes
+     * @param Request $request
+     * @param Expediente $expediente
+     */
     private static function updateBasicData(Request $request, Expediente $expediente)
     {
         $fotoCapturada               = $request->get('capturada');

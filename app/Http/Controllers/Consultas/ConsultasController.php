@@ -11,6 +11,7 @@ use Siacme\Aplicacion\Factories\VistasConsultasFactory;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
+use Siacme\Aplicacion\Reportes\Interconsultas\NotaMedicaJohanna;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
 use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Consultas\ExploracionFisica;
@@ -568,5 +569,22 @@ class ConsultasController extends Controller
         $respuesta['estatus'] = 'OK';
 
         return response()->json($respuesta);
+    }
+
+    /**
+     * generar la nota médica en PDF
+     * @param string $consultaId
+     * @param string $expedienteId
+     */
+    public function notaMedicaPDF($consultaId, $expedienteId)
+    {
+        $expediente = $this->expedientesRepositorio->obtenerPorId((int)base64_decode($expedienteId));
+        $consulta   = $expediente->obtenerConsulta((int)base64_decode($consultaId));
+
+        $reporte = new NotaMedicaJohanna($consulta, $expediente);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 50);
+        $reporte->generar();
     }
 }

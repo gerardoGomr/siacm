@@ -263,3 +263,8 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       mappedBy: expedienteEspecialidad
       cascade: [persist, merge]
       fetch: EAGER
+    otrosTratamientos:
+      targetEntity: TratamientoOdontologia
+      mappedBy: expedienteEspecialidad
+      cascade: [persist]
+      fetch: EAGER
