@@ -13,6 +13,7 @@ use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\ReciboPago;
 use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
+use Siacme\Dominio\Cobros\CobroTratamientoOdontologia;
 use Siacme\Dominio\Consultas\CobroConsulta;
 use Siacme\Dominio\Consultas\Repositorios\RecetasRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
@@ -296,10 +297,7 @@ class PacientesController extends Controller
             return response()->json($respuesta);
         }
 
-        $cobroConsulta = new CobroConsulta($formaPago, new DateTime());
-        if ($cobroConsulta->enEfectivo()) {
-            $cobroConsulta->montoPago($pago);
-        }
+        $cobroConsulta = new CobroConsulta($consulta->costoReal(), $pago, $formaPago, new DateTime());
 
         try {
             $consulta->registrarPago($cobroConsulta);
@@ -346,7 +344,7 @@ class PacientesController extends Controller
             $logger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/exceptions/exc_' . date('Y-m-d') . '.log', Logger::ERROR));
             $logger->log($e);
 
-            return response()->json([]);
+            return;
         }
 
         $reporte = new ReciboPago($expediente, $consulta);
@@ -354,5 +352,48 @@ class PacientesController extends Controller
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 60);
         $reporte->generar();
+    }
+
+    /**
+     * registrar el cobro del tratamiento odontologia
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cobrarOtroTratamiento(Request $request)
+    {
+        $respuesta                = [];
+        $expedienteId             = (int)$request->get('expedienteId');
+        $tratamientoOdontologiaId = (int)$request->get('otroTratamientoId');
+        $formaPago                = (int)$request->get('formaPago');
+        $abono                    = (double)$request->get('abono');
+        $pago                     = (double)$request->get('pago');
+
+        $expediente      = $this->expedientesRepositorio->obtenerPorId($expedienteId);
+        $otroTratamiento = $expediente->getExpedienteEspecialidad()->obtenerOtroTratamiento($tratamientoOdontologiaId);
+
+        $cobroOtroTratamiento = new CobroTratamientoOdontologia($abono, $pago, $formaPago, new DateTime(), $otroTratamiento);
+
+        try {
+            $otroTratamiento->registrarPago($cobroOtroTratamiento);
+
+        } catch (Exception $e) {
+            if (!isset($logger)) {
+                $logger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/exceptions/exc_' . date('Y-m-d') . '.log', Logger::ERROR));
+            }
+
+            $logger->log($e);
+
+            $respuesta['mensaje'] = $e->getMessage();
+            $respuesta['estatus'] = 'fail';
+
+            return response()->json($respuesta);
+        }
+
+        $respuesta['estatus'] = 'OK';
+        if (!$this->expedientesRepositorio->persistir($expediente)) {
+            $respuesta['estatus'] = 'fail';
+        }
+
+        return response()->json($respuesta);
     }
 }

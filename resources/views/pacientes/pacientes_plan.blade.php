@@ -1,19 +1,19 @@
 <div class="tab-pane" id="plan">
     @if($expediente->getExpedienteEspecialidad()->tieneOdontogramas())
         <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Atendido</th>
-                <th>Costo</th>
-                <th>&nbsp;</th>
-            </tr>
+            <thead class="bg-gray">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Atendido</th>
+                    <th>Costo</th>
+                    <th>&nbsp;</th>
+                </tr>
             </thead>
             <tbody>
             @foreach($expediente->getExpedienteEspecialidad()->odontogramas() as $odontograma)
                 <tr>
                     <td>-</td>
-                    <td>{{ $odontograma->atendido() ? 'Atendido' : 'Activo' }}</td>
+                    <td><span class="label {{ $odontograma->atendido() ? 'label-success' : 'label-danger' }}">{{ $odontograma->atendido() ? 'Atendido' : 'Activo' }}</span></td>
                     <td>{{ $odontograma->costo() }}</td>
                     <td><a href="{{ url('pacientes/plan/' . base64_encode($odontograma->getId()) . '/' . base64_encode($expediente->getId())) }}" data-toggle="tooltip" data-original-title="Imprimir plan" data-placement="top" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i></a></td>
                 </tr>

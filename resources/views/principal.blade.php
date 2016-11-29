@@ -10,6 +10,8 @@
                             <div class="col-app">
                                 <div class="jumbotron margin-none bg-white">
                                     <p>SISTEMA INTEGRAL PARA LA ADMINISTRACIÓN DEL CONSULTORIO MÉDICO.</p>
+
+                                    <div id="grafica" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                                 </div>
                             </div>
                         </div>
@@ -18,4 +20,9 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('js')
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="{{ asset('js/principal.js') }}"></script>
 @stop

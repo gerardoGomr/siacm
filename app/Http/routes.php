@@ -190,6 +190,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
     // generar PDF de comprobante de pago
     Route::get('pacientes/consulta/recibo/{consultaId}/{expedienteId}', 'Pacientes\PacientesController@generarReciboPago');
 
+    // cobrar otros tratamientos
+    Route::post('pacientes/otrosTratamientos/cobrar', 'Pacientes\PacientesController@cobrarOtroTratamiento');
+
 	/////////////////////////////////////////// USUARIOS /////////////////////////////////////////////////////
 	Route::get('usuarios', 'Usuarios\UsuariosController@index');
 	Route::get('usuarios/agregar', 'Usuarios\UsuariosController@agregar');

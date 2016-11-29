@@ -1269,4 +1269,67 @@ class ExpedienteJohanna extends AbstractExpediente
 
         return true;
     }
+
+    /**
+     * obtener otro tratamiento en base a su id
+     * @param int $tratamientoOdontologiaId
+     * @return TratamientoOdontologia
+     */
+    public function obtenerOtroTratamiento($tratamientoOdontologiaId)
+    {
+        foreach ($this->otrosTratamientos as $otroTratamiento) {
+            if ($otroTratamiento->getId() === $tratamientoOdontologiaId) {
+                return $otroTratamiento;
+            }
+        }
+    }
+
+    /**
+     * obtener otro tratamiento en base a que esté activo
+     * @return TratamientoOdontologia
+     */
+    public function obtenerOtroTratamientoActivo()
+    {
+        foreach ($this->otrosTratamientos as $otroTratamiento) {
+            if (!$otroTratamiento->atendido()) {
+                return $otroTratamiento;
+            }
+        }
+    }
+
+    /**
+     * verifica que todos los tratamientos y odontogramas estén atendidos
+     * @return bool
+     */
+    public function dadoDeAlta()
+    {
+        if ($this->tieneOdontogramas()) {
+            if ($this->tieneOtrosTratamientos()) {
+                return $this->otrosTratamientosAtendidos() && $this->odontogramasAtendidos();
+
+            } else {
+                return $this->odontogramasAtendidos();
+            }
+        } elseif ($this->tieneOtrosTratamientos()) {
+            return $this->otrosTratamientosAtendidos();
+
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * verifica que todos los odontogramas estén atendidos
+     * @return bool
+     */
+    public function odontogramasAtendidos()
+    {
+        foreach ($this->odontogramas as $odontograma) {
+            if (!$odontograma->atendido()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

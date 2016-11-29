@@ -3,11 +3,11 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Fecha</th>
-                    <th>Padecimiento</th>
-                    <th>Nota médica</th>
-                    <th>Comentario</th>
-                    <th>&nbsp;</th>
+                    <th class="col-md-2">Fecha</th>
+                    <th class="col-md-2">Padecimiento</th>
+                    <th class="col-md-3">Nota médica</th>
+                    <th class="col-md-3">Comentario</th>
+                    <th class="col-md-1">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>

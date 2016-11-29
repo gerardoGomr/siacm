@@ -4,7 +4,9 @@ use Siacme\Dominio\Usuarios\Usuario;
 <div id="menu" class="hidden-print hidden-xs sidebar-blue sidebar-brand-primary">
 	<div id="sidebar-fusion-wrapper">
 		<div id="brandWrapper">
-			<a href="index.html?lang=en" class="display-block-inline pull-left logo"><img src="{{ asset('img/boka.jpg') }}" width="100"><img src="{{ asset('img/orl.jpg') }}" width="150"></a>
+			<a href="{{ url('/') }}" class="display-block-inline pull-left logo">
+				<img src="{{ asset('img/BokaOto.jpg') }}">
+			</a>
 			<a href="{{ url('/') }}"><span class="text">SIACME</span></a>
 		</div>
 		<div id="logoWrapper">
@@ -19,7 +21,7 @@ use Siacme\Dominio\Usuarios\Usuario;
 				<a href="#ulJohanna" data-toggle="collapse" class="glyphicons girl"><i></i><span>Dra. Johanna Vázquez</span></a>
 				<ul class="collapse" id="ulJohanna">
 					<li><a href="{{ url('citas/' . base64_encode(Usuario::JOHANNA)) }}" class="glyphicons calendar"><i></i><span> Citas</span></a></li>
-					<li><a href="{{ url('consultas/' . base64_encode(Usuario::JOHANNA)) }}" class="glyphicons hospital_h"><i></i><span> Consultas</span></a></li>
+					<li><a href="{{ url('consultas/' . base64_encode(Usuario::JOHANNA)) }}" class="glyphicons hospital"><i></i><span> Consultas</span></a></li>
 					<li><a href="{{ url('pacientes/' . base64_encode(Usuario::JOHANNA)) }}" class="glyphicons nameplate_alt"><i></i><span>Expedientes</span></a></li>
 				</ul>
 			</li>

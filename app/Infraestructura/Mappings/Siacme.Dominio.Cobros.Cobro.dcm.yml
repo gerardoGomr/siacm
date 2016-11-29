@@ -1,0 +1,15 @@
+Siacme\Dominio\Cobros\Cobro:
+  type: mappedSuperclass
+  fields:
+    pago:
+      type: float
+      column: Pago
+    cambio:
+      type: float
+      column: Cambio
+    formaPago:
+      type: integer
+      column: FormaPago
+    fechaPago:
+      type: datetime
+      column: FechaPago

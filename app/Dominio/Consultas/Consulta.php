@@ -3,6 +3,7 @@ namespace Siacme\Dominio\Consultas;
 
 use DateTime;
 use Exception;
+use Siacme\Dominio\Cobros\Cobro;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ComportamientoFrankl;
 use Siacme\Dominio\Listas\IColeccion;
@@ -94,7 +95,7 @@ class Consulta
     private $medico;
 
     /**
-     * @var CobroConsulta
+     * @var Cobro
      */
     private $cobroConsulta;
 
@@ -350,23 +351,21 @@ class Consulta
     }
 
     /**
-     * registrar el pago de la consulta mediante CobroConsulta
+     * registrar el pago de la consulta mediante Cobro
      * se cambia estatus a pagada
-     * @param CobroConsulta $cobroConsulta
+     * @param Cobro $cobroConsulta
      * @throws Exception
      */
-    public function registrarPago(CobroConsulta $cobroConsulta)
+    public function registrarPago(Cobro $cobroConsulta)
     {
         $this->cobroConsulta = $cobroConsulta;
         $this->pagada        = true;
 
-        if ($this->cobroConsulta->enEfectivo()) {
-            try {
-                $this->cobroConsulta->calcularCambio($this->costo);
+        try {
+            $this->cobroConsulta->registrarPago();
 
-            } catch (Exception $e) {
-                throw $e;
-            }
+        } catch (Exception $e) {
+            throw $e;
         }
     }
 
@@ -389,7 +388,7 @@ class Consulta
     }
 
     /**
-     * @return CobroConsulta
+     * @return Cobro
      */
     public function getCobroConsulta()
     {

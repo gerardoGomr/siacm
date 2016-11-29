@@ -14,7 +14,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
 
 		<!-- CSS DEFINITION -->
-		<link rel="shortcut icon" href="{{ asset('img/logo.png') }}">
+		<link rel="shortcut icon" href="{{ asset('img/logo.ico') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/base-styles.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}" />
 
@@ -54,21 +54,19 @@
 
 		<script data-id="App.Config">
 			var basePath           = '',
-					commonPath             = '/assets/',
-					rootPath               = '',
-					DEV                    = false,
-					componentsPath         = '/assets/components/',
-					layoutApp              = false,
-					module                 = 'admin';
-
-			var primaryColor       = '#013f78',
-					dangerColor            = '#b55151',
-					successColor           = '#609450',
-					infoColor              = '#4a8bc2',
-					warningColor           = '#ab7a4b',
-					inverseColor           = '#45484d';
-
-			var themerPrimaryColor = primaryColor;
+				commonPath         = '/assets/',
+				rootPath           = '',
+				DEV                = false,
+				componentsPath     = '/assets/components/',
+				layoutApp          = false,
+				module             = 'admin',
+				primaryColor       = '#013f78',
+				dangerColor        = '#b55151',
+				successColor       = '#609450',
+				infoColor          = '#4a8bc2',
+				warningColor       = '#ab7a4b',
+				inverseColor       = '#45484d',
+				themerPrimaryColor = primaryColor;
 		</script>
 
 		<script src="{{ asset('js/base-scripts.js') }}"></script>

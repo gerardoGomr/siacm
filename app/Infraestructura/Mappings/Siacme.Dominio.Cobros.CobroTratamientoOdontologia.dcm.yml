@@ -1,0 +1,22 @@
+Siacme\Dominio\Cobros\CobroTratamientoOdontologia:
+  type: entity
+  extends: Cobro
+  table: tratamiento_ortopedia_ortodoncia_pago
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    abono:
+      type: float
+      column: Abono
+  manyToOne:
+    tratamientoOdontologia:
+      targetEntity: Siacme\Dominio\Expedientes\TratamientoOdontologia
+      inversedBy: pagos
+      joinColumn:
+        name: TratamientoOrtopediaOrtodonciaId
+        referencedColumnName: id
+      cascade: [persist]
+      fetch: EAGER

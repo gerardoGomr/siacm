@@ -7,7 +7,9 @@
 				<div class="col-table">
 					<div class="innerAll">
 						<div class="media">
-							<img src="{{ $expediente->tieneFoto() ? asset($expediente->getFotografia()->getRuta()) : '' }}" class="thumb pull-left" alt="" width="100">
+                            @if(isset($expediente) && $expediente->tieneFoto())
+                                <img src="{{ url('expedientes/foto/mostrar/' . base64_encode($expediente->getFotografia()->getRuta())) . '?' . rand() }}" id="fotoCapturada" class="pull-left"  width="">
+                            @endif
 							<div class="media-body innerAll half">
 								<h4 class="media-heading">{{ $expediente->getPaciente()->nombreCompleto() }}</h4>
 								<p>{{ $expediente->getPaciente()->getEdadAnios() }} años<br/>Vive en: {{ $expediente->getPaciente()->getLugarNacimiento() }}<br/>Expediente {{ $expediente->getExpedienteEspecialidad()->numero() }}</p>
@@ -42,11 +44,19 @@
                                                             <a href="#odontograma" data-toggle="tab"><i class="fa fa-search"></i> Odontograma</a>
                                                         </li>
                                                     @else
-                                                        <li>
-                                                            <a href="#plan" data-toggle="tab"><i class="fa fa-search"></i> Plan Tratamiento</a>
-                                                        </li>
+                                                        @if(!$expediente->getExpedienteEspecialidad()->odontogramasAtendidos())
+                                                            <li>
+                                                                <a href="#plan" data-toggle="tab"><i class="fa fa-search"></i> Plan Tratamiento</a>
+                                                            </li>
+                                                        @endif
                                                     @endif
 												@endif
+
+                                                @if($expediente->getExpedienteEspecialidad()->tieneOtrosTratamientos())
+                                                    <li>
+                                                        <a href="#otrosTratamientosOdont" data-toggle="tab"><i class="fa fa-list"></i> Otro Tratamiento Odontología</a>
+                                                    </li>
+                                                @endif
 
 												<li>
 													<a href="#consultas" data-toggle="tab"><i class="fa fa-stethoscope"></i> Historial de consultas</a>
@@ -70,9 +80,15 @@
                                                         @if($expediente->getExpedienteEspecialidad()->dadoDeAlta())
                                                             @include('consultas.consultas_johanna_odontograma')
                                                         @else
-                                                            @include('consultas.consultas_odontopediatria_plan_atencion')
+                                                            @if(!$expediente->getExpedienteEspecialidad()->odontogramasAtendidos())
+                                                                @include('consultas.consultas_odontopediatria_plan_atencion')
+                                                            @endif
                                                         @endif
 													@endif
+
+                                                    @if($expediente->getExpedienteEspecialidad()->tieneOtrosTratamientos())
+                                                        @include('consultas.consultas_johanna_otros_tratamientos')
+                                                    @endif
 
 													@include('pacientes.pacientes_consultas')
 												</div>

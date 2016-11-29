@@ -30,17 +30,17 @@
                     </div>
                 </div>
 
-                <div id="efectivoOtroTratamiento" class="hide">
-                    <div class="form-group">
-                        <label for="pago" class="control-label col-md-3">Abono:</label>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                <input type="text" name="abono" id="abono" class="form-control" placeholder="">
-                            </div>
+                <div class="form-group">
+                    <label for="pago" class="control-label col-md-3">Abono:</label>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                            <input type="text" name="abono" id="abono" class="form-control required" placeholder="">
                         </div>
                     </div>
+                </div>
 
+                <div id="efectivoOtroTratamiento" class="hide">
                     <div class="form-group">
                         <label for="pago" class="control-label col-md-3">Pago:</label>
                         <div class="col-md-3">
@@ -64,9 +64,9 @@
 
                 <div class="form-group">
                     <div class="col-md-9 col-md-offset-3">
-                        <input type="button" id="Registrar pago" class="btn btn-primary" value="Guardar&raquo;">
-                        <input type="hidden" name="expedienteId" id="expedienteId">
-                        <input type="hidden" name="consultaId" id="consultaId">
+                        <input type="button" id="registrarPagoOtroTratamiento" class="btn btn-primary" value="Guardar pago&raquo;">
+                        <input type="hidden" name="expedienteId" id="expedienteId" value="{{ $expediente->getId() }}">
+                        <input type="hidden" name="otroTratamientoId" id="otroTratamientoId" value="">
                     </div>
                 </div>
                 {!! Form::close() !!}

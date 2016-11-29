@@ -1,11 +1,11 @@
 <div class="innerAll">
-    <div class="row">
-        <div class="col-md-3">
-            @if(isset($expediente) && $expediente->tieneFoto())
-                <img src="{{ url('expedientes/foto/mostrar/' . base64_encode($expediente->getFotografia()->getRuta())) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
-            @endif
-        </div>
-        <div class="col-md-6">
+    <div class="media">
+        @if(isset($expediente) && $expediente->tieneFoto())
+            <img src="{{ url('expedientes/foto/mostrar/' . base64_encode($expediente->getFotografia()->getRuta())) . '?' . rand() }}" id="fotoCapturada" class="pull-left"  width="">
+        @endif
+        <div class="media-body innerAll half">
+            <h4 class="media-heading">{{ $expediente->getPaciente()->nombreCompleto() }}</h4>
+            <p>{{ $expediente->getPaciente()->getEdadAnios() }} años<br/>Vive en: {{ $expediente->getPaciente()->getLugarNacimiento() }}<br/>Expediente {{ $expediente->getExpedienteEspecialidad()->numero() }}</p>
             <a href="{{ url('expedientes/ver/' . base64_encode($expediente->getPaciente()->getId()) . '/' . base64_encode($medico->getId())) }}" class="btn btn-success btn-md" target="_blank"><i class="fa fa-eye"></i> Ver expediente completo</a>
             @if(!$expediente->getExpedienteEspecialidad()->primeraVez())
                 @if($expediente->getExpedienteEspecialidad()->tieneOtrosTratamientos())

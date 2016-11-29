@@ -1,7 +1,10 @@
 <?php
 namespace Siacme\Dominio\Expedientes;
 
+use Exception;
+use Siacme\Dominio\Cobros\Cobro;
 use Siacme\Dominio\Listas\IColeccion;
+use Siacme\Exceptions\AbonoATratamientoDeOdontologiaEsMenorAlAbonoMinimoException;
 
 /**
  * Class TratamientoOdontologia
@@ -66,12 +69,18 @@ class TratamientoOdontologia
     private $pagos;
 
     /**
+     * @var bool
+     */
+    private $pagado;
+
+    /**
      * TratamientoOdontologia constructor.
      * @param string $dx
      * @param string $costo
      * @param string $duracion
      * @param int $mensualidades
      * @param ExpedienteJohanna $expedienteEspecialidad
+     * @param IColeccion $pagos
      */
     public function __construct($dx, $costo, $duracion, $mensualidades, ExpedienteJohanna $expedienteEspecialidad, IColeccion $pagos)
     {
@@ -232,5 +241,72 @@ class TratamientoOdontologia
     public function abonoMinimo()
     {
         return round($this->costo / $this->mensualidades, 2);
+    }
+
+    /**
+     * verifica si el tratamiento está pagado o no
+     * @return bool
+     */
+    public function estaPagado()
+    {
+        return $this->pagado;
+    }
+
+    /**
+     * devuelve el saldo del tratamiento
+     * @return float
+     */
+    public function obtenerSaldo()
+    {
+        $saldo = $this->costo;
+
+        foreach ($this->pagos as $pago) {
+            $saldo -= $pago->getAbono();
+        }
+
+        return $saldo;
+    }
+
+    /**
+     * saldo formateado a 2 decimales
+     * @return string
+     */
+    public function saldoFormateado()
+    {
+        return '$' . number_format($this->obtenerSaldo(), 2);
+    }
+
+    /**
+     * registrar un nuevo abono al total del tratamiento
+     * verifica si el tratamiento ya no tiene saldo y cambia su estatus a pagado
+     * @param Cobro $cobroTratamientoOdontologia
+     * @throws Exception
+     */
+    public function registrarPago(Cobro $cobroTratamientoOdontologia)
+    {
+        try {
+            if ($cobroTratamientoOdontologia->getAbono() < $this->abonoMinimo()) {
+                throw new AbonoATratamientoDeOdontologiaEsMenorAlAbonoMinimoException('El abono mínimo a realizar al tratamiento es de ' . $this->abonoMinimo());
+            }
+
+            $cobroTratamientoOdontologia->registrarPago();
+
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+        $this->pagos->add($cobroTratamientoOdontologia);
+
+        if ($this->obtenerSaldo() === 0) {
+            $this->pagado = true;
+        }
+    }
+
+    /**
+     * se marca el tratamiento como atendido
+     */
+    public function finalizarAtencion()
+    {
+        $this->atendido = true;
     }
 }

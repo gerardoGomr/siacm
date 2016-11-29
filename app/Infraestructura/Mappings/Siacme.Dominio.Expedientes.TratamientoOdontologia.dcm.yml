@@ -33,7 +33,7 @@ Siacme\Dominio\Expedientes\TratamientoOdontologia:
       column: Atendido
   oneToMany:
     pagos:
-      targetEntity: TratamientoOdontologiaPago
+      targetEntity: Siacme\Dominio\Cobros\CobroTratamientoOdontologia
       mappedBy: tratamientoOdontologia
       cascade: [persist]
       fetch: EAGER

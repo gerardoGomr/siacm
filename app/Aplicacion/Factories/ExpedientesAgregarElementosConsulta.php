@@ -79,32 +79,47 @@ class ExpedientesAgregarElementosConsulta
                     }
 
                 } else {
-                    // se obtiene el odontograma activo
-                    $odontograma = $expediente->getExpedienteEspecialidad()->obtenerOdontogramaActivo();
+                    // se verifica que tenga un odontograma activo
+                    if (!$expediente->getExpedienteEspecialidad()->odontogramasAtendidos()) {
+                        // se obtiene el odontograma activo
+                        $odontograma = $expediente->getExpedienteEspecialidad()->obtenerOdontogramaActivo();
 
-                    // checar los tratamientos atendidos y marcarlos
-                    foreach ($request->get('otroTratamientoAtendido') as $otroTratamientoAtendido) {
-                        $otroTratamiento = $otrosTratamientosRepositorio->obtenerPorId((int)$otroTratamientoAtendido);
+                        // checar los tratamientos atendidos y marcarlos
+                        foreach ($request->get('otroTratamientoAtendido') as $otroTratamientoAtendido) {
+                            $otroTratamiento = $otrosTratamientosRepositorio->obtenerPorId((int)$otroTratamientoAtendido);
 
-                        $odontogramaOtroTratamiento = $odontograma->obtenerOtroTratamiento($otroTratamiento);
+                            $odontogramaOtroTratamiento = $odontograma->obtenerOtroTratamiento($otroTratamiento);
 
-                        $odontogramaOtroTratamiento->atender();
+                            $odontogramaOtroTratamiento->atender();
 
-                        $otroCosto = $otroTratamiento->getTratamiento() . ':  ' . $otroTratamiento->costo() . "\n";
-                        $consulta->agregarOtrosCostos($otroCosto);
+                            $otroCosto = $otroTratamiento->getTratamiento() . ':  ' . $otroTratamiento->costo() . "\n";
+                            $consulta->agregarOtrosCostos($otroCosto);
+                        }
+
+                        // checar los tratamientos por diente y marcarlos
+                        foreach ($request->get('dienteAtendido') as $dienteAtendido) {
+                            $odontogramaDiente = $odontograma->obtenerOdontogramaDiente((int)$dienteAtendido);
+
+                            $odontogramaDiente->atenderTratamientos();
+
+                            $otroCosto = $odontogramaDiente->descripcionTratamientos();
+                            $consulta->agregarOtrosCostos($otroCosto);
+                        }
+
+                        $odontograma->verificarSiYaEstaTodoAtendido();
                     }
+                }
 
-                    // checar los tratamientos por diente y marcarlos
-                    foreach ($request->get('dienteAtendido') as $dienteAtendido) {
-                        $odontogramaDiente = $odontograma->obtenerOdontogramaDiente((int)$dienteAtendido);
+                // se verifica que no tenga otros tratamientos
+                if ($expediente->getExpedienteEspecialidad()->tieneOtrosTratamientos()) {
+                    if (!$expediente->getExpedienteEspecialidad()->otrosTratamientosAtendidos()) {
+                        if ($request->has('otroTratamientoAtendido')) {
+                            // marcar al otro tratamiento como atendido
+                            $otroTratamiento = $expediente->getExpedienteEspecialidad()->obtenerOtroTratamientoActivo();
 
-                        $odontogramaDiente->atenderTratamientos();
-
-                        $otroCosto = $odontogramaDiente->descripcionTratamientos();
-                        $consulta->agregarOtrosCostos($otroCosto);
+                            $otroTratamiento->finalizarAtencion();
+                        }
                     }
-
-                    $odontograma->verificarSiYaEstaTodoAtendido();
                 }
 
                 break;
