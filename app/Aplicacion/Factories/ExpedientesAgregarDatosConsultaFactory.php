@@ -115,18 +115,12 @@ class ExpedientesAgregarDatosConsultaFactory
                 $medidaLineaMediaDental        = (double)$request->get('medidaLineaMediaDental');
                 $lineaMediaEsqueletica         = $request->get('lineaMediaEsqueletica') === 'on' ? true : false;
                 $medidaLineaMediaEsqueletica   = (double)$request->get('medidaLineaMediaEsqueletica');
-                $alteracionTamanio             = $request->get('alteracionTamanio') === 'on' ? true : false;
-                $medidaAlteracionTamanio       = (double)$request->get('medidaAlteracionTamanio');
-                $alteracionForma               = $request->get('alteracionForma') === 'on' ? true : false;
-                $medidaAlteracionForma         = (double)$request->get('medidaAlteracionForma');
-                $alteracionNumero              = $request->get('alteracionNumero') === 'on' ? true : false;
-                $medidaAlteracionNumero        = (double)$request->get('medidaAlteracionNumero');
-                $alteracionEstructura          = $request->get('alteracionEstructura') === 'on' ? true : false;
-                $medidaAlteracionEstructura    = (double)$request->get('medidaAlteracionEstructura');
-                $alteracionTextura             = $request->get('alteracionTextura') === 'on' ? true : false;
-                $medidaAlteracionTextura       = (double)$request->get('medidaAlteracionTextura');
-                $alteracionColor               = $request->get('alteracionColor') === 'on' ? true : false;
-                $medidaAlteracionColor         = (double)$request->get('medidaAlteracionColor');
+                $alteracionTamanio             = $request->get('alteracionTamanio');
+                $alteracionForma               = $request->get('alteracionForma');
+                $alteracionNumero              = $request->get('alteracionNumero');
+                $alteracionEstructura          = $request->get('alteracionEstructura');
+                $alteracionTextura             = $request->get('alteracionTextura');
+                $alteracionColor               = $request->get('alteracionColor');
 
                 // repositorios
                 $morfologiasCraneofacialesRepositorio = new DoctrineMorfologiasCraneofacialesRepositorio(App::getInstance()['em']);
@@ -176,12 +170,12 @@ class ExpedientesAgregarDatosConsultaFactory
                 $mordidaCruzadaPosterior = new MordidaCruzadaPosterior($mordidaCruzadaPosterior, $medidaMordidaCruzadaPosterior);
                 $lineaMediaDental        = new LineaMediaDental($lineaMediaDental, $medidaLineaMediaDental);
                 $lineaMediaEsqueletica   = new LineaMediaEsqueletica($lineaMediaEsqueletica, $medidaLineaMediaEsqueletica);
-                $alteracionTamanio       = new AlteracionTamanio($alteracionTamanio, $medidaAlteracionTamanio);
-                $alteracionForma         = new AlteracionForma($alteracionForma, $medidaAlteracionForma);
-                $alteracionNumero        = new AlteracionNumero($alteracionNumero, $medidaAlteracionNumero);
-                $alteracionEstructura    = new AlteracionEstructura($alteracionEstructura, $medidaAlteracionEstructura);
-                $alteracionTextura       = new AlteracionTextura($alteracionTextura, $medidaAlteracionTextura);
-                $alteracionColor         = new AlteracionColor($alteracionColor, $medidaAlteracionColor);
+                //$alteracionTamanio       = new AlteracionTamanio($alteracionTamanio, $medidaAlteracionTamanio);
+                //$alteracionForma         = new AlteracionForma($alteracionForma, $medidaAlteracionForma);
+                //$alteracionNumero        = new AlteracionNumero($alteracionNumero, $medidaAlteracionNumero);
+                //$alteracionEstructura    = new AlteracionEstructura($alteracionEstructura, $medidaAlteracionEstructura);
+                //$alteracionTextura       = new AlteracionTextura($alteracionTextura, $medidaAlteracionTextura);
+                //$alteracionColor         = new AlteracionColor($alteracionColor, $medidaAlteracionColor);
 
                 $expediente->getExpedienteEspecialidad()->agregarMordidas($mordidaBordeBorde, $sobremordidaVertical, $sobremordidaHorizontal, $mordidaAbiertaAnterior, $mordidaCruzadaAnterior, $mordidaCruzadaPosterior, $lineaMediaDental, $lineaMediaEsqueletica, $alteracionTamanio, $alteracionForma, $alteracionNumero, $alteracionEstructura, $alteracionTextura, $alteracionColor);
 

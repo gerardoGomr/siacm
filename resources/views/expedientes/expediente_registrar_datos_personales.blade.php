@@ -155,11 +155,5 @@
 				{!! Form::text('motivoConsulta', null, ['class' => 'required form-control']) !!}
 			</div>
 		</div>
-		<div class="form-group">
-			{!! Form::label('historiaEnfermedad', '*Historia de la enfermedad actual:', ['class' => 'control-label col-md-3']) !!}
-			<div class="col-md-8">
-				{!! Form::textarea('historiaEnfermedad', null, ['class' => 'required form-control', 'rows' => '6']) !!}
-			</div>
-		</div>
 	</div>
 </div>

@@ -351,86 +351,44 @@
 
                             <div class="col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <div class="col-md-8 col-md-offset-1">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="alteracionTamanio" class="medidas" data-id="medidaAlteracionTamanio" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesTamanio()->activa() ? 'checked' : '' !!}> Alteraciones de tamaño
-                                            </label>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" name="medidaAlteracionTamanio" id="medidaAlteracionTamanio" class="form-control" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesTamanio()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesTamanio()->getMedida() : '' !!}" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesTamanio()->activa() ? '' : 'readonly' !!}>
-                                            <span class="input-group-addon">mm</span>
-                                        </div>
+                                    <label class="control-label col-md-12">Alteraciones de tamaño:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="alteracionTamanio" id="alteracionTamanio" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesTamanio() !!}" placeholder="" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-8 col-md-offset-1">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="alteracionForma" class="medidas" data-id="medidaAlteracionForma" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesForma()->activa() ? 'checked' : '' !!}> Alteraciones de forma
-                                            </label>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" name="medidaAlteracionForma" id="medidaAlteracionForma" class="form-control" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesForma()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesForma()->getMedida() : '' !!}" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesForma()->activa() ? '' : 'readonly' !!}>
-                                            <span class="input-group-addon">mm</span>
-                                        </div>
+                                    <label class="control-label col-md-12">Alteraciones de forma:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="alteracionForma" id="alteracionForma" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesForma() !!}" placeholder="" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-8 col-md-offset-1">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="alteracionNumero" class="medidas" data-id="medidaAlteracionNumero" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesNumero()->activa() ? 'checked' : '' !!}> Alteraciones de número
-                                            </label>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" name="medidaAlteracionNumero" id="medidaAlteracionNumero" class="form-control" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesNumero()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesNumero()->getMedida() : '' !!}" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesNumero()->activa() ? '' : 'readonly' !!}>
-                                            <span class="input-group-addon">mm</span>
-                                        </div>
+                                    <label class="control-label col-md-12">Alteraciones de número:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="alteracionNumero" id="alteracionNumero" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesNumero() !!}" placeholder="" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-8 col-md-offset-1">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="alteracionEstructura" class="medidas" data-id="medidaAlteracionEstructura" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesEstructura()->activa() ? 'checked' : '' !!}> Alteraciones de estructura
-                                            </label>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" name="medidaAlteracionEstructura" id="medidaAlteracionEstructura" class="form-control" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesEstructura()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesEstructura()->getMedida() : '' !!}" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesEstructura()->activa() ? '' : 'readonly' !!}>
-                                            <span class="input-group-addon">mm</span>
-                                        </div>
+                                    <label class="control-label col-md-12">Alteraciones de estructura:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="alteracionEstructura" id="alteracionEstructura" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesEstructura() !!}" placeholder="" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-8 col-md-offset-1">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="alteracionTextura" class="medidas" data-id="medidaAlteracionTextura" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesTextura()->activa() ? 'checked' : '' !!}> Alteraciones de textura
-                                            </label>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" name="medidaAlteracionTextura" id="medidaAlteracionTextura" class="form-control" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesTextura()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesTextura()->getMedida() : '' !!}" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesTextura()->activa() ? '' : 'readonly' !!}>
-                                            <span class="input-group-addon">mm</span>
-                                        </div>
+                                    <label class="control-label col-md-12">Alteraciones de textura:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="alteracionTextura" id="alteracionTextura" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesTextura() !!}" placeholder="" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col-md-8 col-md-offset-1">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="alteracionColor" class="medidas" data-id="medidaAlteracionColor" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesColor()->activa() ? 'checked' : '' !!}> Alteraciones de color
-                                            </label>
-                                        </div>
-                                        <div class="input-group">
-                                            <input type="text" name="medidaAlteracionColor" id="medidaAlteracionColor" class="form-control" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesColor()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesColor()->getMedida() : '' !!}" {!! $expediente->getExpedienteEspecialidad()->getAlteracionesColor()->activa() ? '' : 'readonly' !!}>
-                                            <span class="input-group-addon">mm</span>
-                                        </div>
+                                    <label class="control-label col-md-12">Alteraciones de color:</label>
+                                    <div class="col-md-12">
+                                        <input type="text" name="alteracionColor" id="alteracionColor" value="{!! $expediente->getExpedienteEspecialidad()->getAlteracionesColor() !!}" placeholder="" class="form-control">
                                     </div>
                                 </div>
                             </div>

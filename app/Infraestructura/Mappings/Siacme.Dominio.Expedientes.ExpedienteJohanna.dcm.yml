@@ -37,24 +37,6 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
     lineaMediaEsqueletica:
       class: LineaMediaEsqueletica
       columnPrefix: false
-    alteracionesTamanio:
-      class: AlteracionTamanio
-      columnPrefix: false
-    alteracionesForma:
-      class: AlteracionForma
-      columnPrefix: false
-    alteracionesNumero:
-      class: AlteracionNumero
-      columnPrefix: false
-    alteracionesEstructura:
-      class: AlteracionEstructura
-      columnPrefix: false
-    alteracionesTextura:
-      class: AlteracionTextura
-      columnPrefix: false
-    alteracionesColor:
-      class: AlteracionColor
-      columnPrefix: false
   table: expediente_johanna
   id:
     id:
@@ -226,6 +208,24 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
     tipoArcoII:
       type: boolean
       column: TipoArcoII
+    alteracionesTamanio:
+      type: string
+      column: AlteracionesTamanio
+    alteracionesForma:
+      type: string
+      column: AlteracionesForma
+    alteracionesNumero:
+      type: string
+      column: AlteracionesNumero
+    alteracionesEstructura:
+      type: string
+      column: AlteracionesEstructura
+    alteracionesTextura:
+      type: string
+      column: AlteracionesTextura
+    alteracionesColor:
+      type: string
+      column: AlteracionesColor
   oneToOne:
     expediente:
       targetEntity: Expediente

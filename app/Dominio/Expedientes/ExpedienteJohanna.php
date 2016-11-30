@@ -243,32 +243,32 @@ class ExpedienteJohanna extends AbstractExpediente
     protected $lineaMediaEsqueletica;
 
     /**
-     * @var Mordida
+     * @var string
      */
     protected $alteracionesTamanio;
 
     /**
-     * @var Mordida
+     * @var string
      */
     protected $alteracionesForma;
 
     /**
-     * @var Mordida
+     * @var string
      */
     protected $alteracionesNumero;
 
     /**
-     * @var Mordida
+     * @var string
      */
     protected $alteracionesEstructura;
 
     /**
-     * @var Mordida
+     * @var string
      */
     protected $alteracionesTextura;
 
     /**
-     * @var Mordida
+     * @var string
      */
     protected $alteracionesColor;
 
@@ -748,7 +748,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return Mordida
+     * @return string
      */
     public function getAlteracionesTamanio()
     {
@@ -756,7 +756,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return Mordida
+     * @return string
      */
     public function getAlteracionesForma()
     {
@@ -764,7 +764,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return Mordida
+     * @return string
      */
     public function getAlteracionesNumero()
     {
@@ -772,7 +772,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return Mordida
+     * @return string
      */
     public function getAlteracionesEstructura()
     {
@@ -780,7 +780,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return Mordida
+     * @return string
      */
     public function getAlteracionesTextura()
     {
@@ -788,7 +788,7 @@ class ExpedienteJohanna extends AbstractExpediente
     }
 
     /**
-     * @return Mordida
+     * @return string
      */
     public function getAlteracionesColor()
     {
@@ -1128,14 +1128,14 @@ class ExpedienteJohanna extends AbstractExpediente
      * @param Mordida $mordidaCruzadaPosterior
      * @param Mordida $lineaMediaDental
      * @param Mordida $lineaMediaEsqueletica
-     * @param Mordida $alteracionTamanio
-     * @param Mordida $alteracionForma
-     * @param Mordida $alteracionNumero
-     * @param Mordida $alteracionEstructura
-     * @param Mordida $alteracionTextura
-     * @param Mordida $alteracionColor
+     * @param string $alteracionTamanio
+     * @param string $alteracionForma
+     * @param string $alteracionNumero
+     * @param string $alteracionEstructura
+     * @param string $alteracionTextura
+     * @param string $alteracionColor
      */
-    public function agregarMordidas(Mordida $mordidaBordeBorde, Mordida $sobremordidaVertical, Mordida $sobremordidaHorizontal, Mordida $mordidaAbiertaAnterior, Mordida $mordidaCruzadaAnterior, Mordida $mordidaCruzadaPosterior, Mordida $lineaMediaDental, Mordida $lineaMediaEsqueletica, Mordida $alteracionTamanio, Mordida $alteracionForma, Mordida $alteracionNumero, Mordida $alteracionEstructura, Mordida $alteracionTextura, Mordida $alteracionColor)
+    public function agregarMordidas(Mordida $mordidaBordeBorde, Mordida $sobremordidaVertical, Mordida $sobremordidaHorizontal, Mordida $mordidaAbiertaAnterior, Mordida $mordidaCruzadaAnterior, Mordida $mordidaCruzadaPosterior, Mordida $lineaMediaDental, Mordida $lineaMediaEsqueletica, $alteracionTamanio, $alteracionForma, $alteracionNumero, $alteracionEstructura, $alteracionTextura, $alteracionColor)
     {
         $this->mordidaBordeBorde       = $mordidaBordeBorde;
         $this->sobremordidaVertical    = $sobremordidaVertical;

@@ -214,49 +214,49 @@
                         <div class="row">
                             <div class="col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Mordida borde a borde:</label>
+                                    <label class="control-label col-md-5">Mordida borde a borde:</label>
                                     <div class="col-md-6">
                                         <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getMordidaBordeBorde()->activa() ? $expediente->getExpedienteEspecialidad()->getSobremordidaVertical()->medidaMordida() : '-' !!}</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Sobremordida vertical (overbite):</label>
+                                    <label class="control-label col-md-5">Sobremordida vertical (overbite):</label>
                                     <div class="col-md-6">
                                         <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getSobremordidaVertical()->activa() ? $expediente->getExpedienteEspecialidad()->getSobremordidaVertical()->medidaMordida() : '-' !!}</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Sobremordida horizontal (overjet):</label>
+                                    <label class="control-label col-md-5">Sobremordida horizontal (overjet):</label>
                                     <div class="col-md-6">
                                         <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getSobremordidaHorizontal()->activa() ? $expediente->getExpedienteEspecialidad()->getSobremordidaHorizontal()->medidaMordida() : '-' !!}</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Mordida abierta anterior:</label>
+                                    <label class="control-label col-md-5">Mordida abierta anterior:</label>
                                     <div class="col-md-6">
                                         <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getMordidaAbiertaAnterior()->activa() ? $expediente->getExpedienteEspecialidad()->getMordidaAbiertaAnterior()->medidaMordida() : '-' !!}</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Mordida cruzada anterior:</label>
+                                    <label class="control-label col-md-5">Mordida cruzada anterior:</label>
                                     <div class="col-md-6">
                                         <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getMordidaCruzadaAnterior()->activa() ? $expediente->getExpedienteEspecialidad()->getMordidaCruzadaAnterior()->medidaMordida() : '-' !!}</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Mordida cruzada posterior:</label>
+                                    <label class="control-label col-md-5">Mordida cruzada posterior:</label>
                                     <div class="col-md-6">
                                         <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getMordidaCruzadaPosterior()->activa() ? $expediente->getExpedienteEspecialidad()->getMordidaCruzadaPosterior()->medidaMordida() : '-' !!}</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Línea media dental:</label>
+                                    <label class="control-label col-md-5">Línea media dental:</label>
                                     <div class="col-md-6">
                                         <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getLineaMediaDental()->activa() ? $expediente->getExpedienteEspecialidad()->getLineaMediaDental()->medidaMordida() : '-' !!}</p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Línea media esquelética:</label>
+                                    <label class="control-label col-md-5">Línea media esquelética:</label>
                                     <div class="col-md-6">
                                         <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getLineaMediaEsqueletica()->activa() ? $expediente->getExpedienteEspecialidad()->getLineaMediaEsqueletica()->medidaMordida() : '-' !!}</p>
                                     </div>
@@ -265,44 +265,44 @@
 
                             <div class="col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Alteraciones de tamaño:</label>
+                                    <label class="control-label col-md-5">Alteraciones de tamaño:</label>
                                     <div class="col-md-6">
-                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesTamanio()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesTamanio()->medidaMordida() : '-' !!}</p>
+                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesTamanio() !!}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Alteraciones de forma:</label>
+                                    <label class="control-label col-md-5">Alteraciones de forma:</label>
                                     <div class="col-md-6">
-                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesForma()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesForma()->medidaMordida() : '-' !!}</p>
+                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesForma() !!}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Alteraciones de número:</label>
+                                    <label class="control-label col-md-5">Alteraciones de número:</label>
                                     <div class="col-md-6">
-                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesNumero()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesNumero()->medidaMordida() : '-' !!}</p>
+                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesNumero() !!}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Alteraciones de estructura:</label>
+                                    <label class="control-label col-md-5">Alteraciones de estructura:</label>
                                     <div class="col-md-6">
-                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesEstructura()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesEstructura()->medidaMordida() : '-' !!}</p>
+                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesEstructura() !!}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Alteraciones de textura:</label>
+                                    <label class="control-label col-md-5">Alteraciones de textura:</label>
                                     <div class="col-md-6">
-                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesTextura()->activa()  ? $expediente->getExpedienteEspecialidad()->getAlteracionesTextura()->medidaMordida() : '-' !!}</p>
+                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesTextura() !!}</p>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label col-md-4">Alteraciones de color:</label>
+                                    <label class="control-label col-md-5">Alteraciones de color:</label>
                                     <div class="col-md-6">
-                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesColor()->activa() ? $expediente->getExpedienteEspecialidad()->getAlteracionesColor()->medidaMordida() : '-' !!}</p>
+                                        <p class="form-control-static">{!! $expediente->getExpedienteEspecialidad()->getAlteracionesColor() !!}</p>
                                     </div>
                                 </div>
                             </div>

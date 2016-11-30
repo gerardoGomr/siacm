@@ -180,10 +180,6 @@ Siacme\Dominio\Expedientes\Expediente:
       type: string
       nullable: true
       column: MotivoConsulta
-    historiaEnfermedad:
-      type: string
-      nullable: true
-      column: HistoriaEnfermedad
   oneToOne:
     paciente:
       targetEntity: Siacme\Dominio\Pacientes\Paciente

@@ -37,7 +37,7 @@ $formCobroOtroTratamiento.on('click', 'input.formaPagoOtroTratamiento', function
         $('#abono').rules('add', {
             required: true,
             number:   true,
-            min:      abono,
+            min:      1,
             messages: {
                 required: 'Campo obligatorio',
                 number:   'Ingrese solo números',

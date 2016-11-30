@@ -30,7 +30,11 @@ class DibujadorOdontogramasAtencion implements DibujadorInterface
         // TODO: Implement dibujar() method.
         $otrosTratamientos = '';
         foreach ($this->odontograma->getOtrosTratamientos() as $otroTratamiento) {
-            $otrosTratamientos .= '<tr><td>' . $otroTratamiento->getOtroTratamiento()->getTratamiento() . '</td><td>' . $otroTratamiento->getOtroTratamiento()->costo() . '</td><td><input type="checkbox" name="otroTratamientoAtendido[]" value="' . $otroTratamiento->getOtroTratamiento()->getId() . '" class="otroTratamiento" data-costo="' . $otroTratamiento->getOtroTratamiento()->getCosto() . '"> Atendido</td></tr>';
+            if (!$otroTratamiento->atendido()) {
+                $otrosTratamientos .= '<tr><td>' . $otroTratamiento->getOtroTratamiento()->getTratamiento() . '</td><td>' . $otroTratamiento->getOtroTratamiento()->costo() . '</td><td><input type="checkbox" name="otroTratamientoAtendido[]" value="' . $otroTratamiento->getOtroTratamiento()->getId() . '" class="otroTratamiento" data-costo="' . $otroTratamiento->getOtroTratamiento()->getCosto() . '">  Marcar como atendido</td></tr>';
+            } else {
+                $otrosTratamientos .= '<tr><td>' . $otroTratamiento->getOtroTratamiento()->getTratamiento() . '</td><td>' . $otroTratamiento->getOtroTratamiento()->costo() . '</td><td><i class="fa fa-check"></i> Atendido</td></tr>';
+            }
         }
         $html = '
             <p class="text-medium"><span class="strong">Costo total:</span> <span>' . $this->odontograma->costo() . '</span></p>
@@ -58,7 +62,11 @@ class DibujadorOdontogramasAtencion implements DibujadorInterface
             $accion = '-';
 
             if ($odontogramaDiente->tieneTratamientos()) {
-                $accion = '<label><input type="checkbox" name="dienteAtendido[]" value="'. $odontogramaDiente->getDiente()->getNumero() .'" class="tratamiento" data-costo="'. $odontogramaDiente->costoTratamientos() .'"> Atendido</label>';
+                if (!$odontogramaDiente->tratamientosAtendidos()) {
+                    $accion = '<label><input type="checkbox" name="dienteAtendido[]" value="' . $odontogramaDiente->getDiente()->getNumero() . '" class="tratamiento" data-costo="' . $odontogramaDiente->costoTratamientos() . '"> Marcar como atendido</label>';
+                } else {
+                    $accion = '<i class="fa fa-check"></i> Atendido';
+                }
             }
 
             $html .= '

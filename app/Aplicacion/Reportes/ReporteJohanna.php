@@ -16,18 +16,18 @@ abstract class ReporteJohanna extends TCPDF
      */
     public function Header() {
         // Set font
-        $this->SetFont('helvetica', 'BI', 20);
-        $this->SetTextColor(72, 190, 206);
-        $this->Cell(0, 10, 'Dra. Johanna Joselyn Vázquez Hernández', false, true, 'R');
-        $this->SetFont('helvetica', 'BI', 18);
-        $this->SetTextColor(153, 162, 163);
-        $this->Cell(0, 10, 'Odontopediatría', false, true, 'R');
-        $this->SetFont('helvetica', 'I', 12);
-        $this->Cell(0, 10, '16 poniente norte, Médica Diamante', false, true, 'R');
+        //$this->SetFont('helvetica', 'BI', 20);
+        //$this->SetTextColor(72, 190, 206);
+        //$this->Cell(0, 10, 'Dra. Johanna Joselyn Vázquez Hernández', false, true, 'R');
+        //$this->SetFont('helvetica', 'BI', 18);
+        //$this->SetTextColor(153, 162, 163);
+        //$this->Cell(0, 10, 'Odontopediatría', false, true, 'R');
+        //$this->SetFont('helvetica', 'I', 12);
+        //$this->Cell(0, 10, '16 poniente norte, Médica Diamante', false, true, 'R');
 
         // imagen
-        $this->Image(asset('img/boka2.jpg'), 10, 10, 30);
-        $this->Image(asset('img/mascota.jpg'), 10, 25, 20);
+        //$this->Image(asset('img/boka2.jpg'), 10, 10, 30);
+        //$this->Image(asset('img/mascota.jpg'), 10, 25, 20);
         $this->Line(10, 50, 200, 50);
         $this->Ln(25);
     }

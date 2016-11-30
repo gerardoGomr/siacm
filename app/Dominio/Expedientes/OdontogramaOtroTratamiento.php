@@ -40,6 +40,11 @@ class OdontogramaOtroTratamiento
         $this->otroTratamiento = $otroTratamiento;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * @return Odontograma
      */

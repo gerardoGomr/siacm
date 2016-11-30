@@ -346,86 +346,44 @@
 
 						<div class="col-md-12 col-lg-6">
 							<div class="form-group">
-								<div class="col-md-8 col-md-offset-1">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" name="alteracionTamanio" class="medidas" data-id="medidaAlteracionTamanio"> Alteraciones de tamaño
-										</label>
-									</div>
-									<div class="input-group">
-										<input type="text" name="medidaAlteracionTamanio" id="medidaAlteracionTamanio" class="form-control" readonly="readonly">
-										<span class="input-group-addon">mm</span>
-									</div>
+								<label class="control-label col-md-12">Alteraciones de tamaño:</label>
+								<div class="col-md-12">
+									<input type="text" name="alteracionTamanio" id="alteracionTamanio" value="" placeholder="" class="form-control">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<div class="col-md-8 col-md-offset-1">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" name="alteracionForma" class="medidas" data-id="medidaAlteracionForma"> Alteraciones de forma
-										</label>
-									</div>
-									<div class="input-group">
-										<input type="text" name="medidaAlteracionForma" id="medidaAlteracionForma" class="form-control" readonly="readonly">
-										<span class="input-group-addon">mm</span>
-									</div>
+								<label class="control-label col-md-12">Alteraciones de forma:</label>
+								<div class="col-md-12">
+									<input type="text" name="alteracionForma" id="alteracionForma" value="" placeholder="" class="form-control">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<div class="col-md-8 col-md-offset-1">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" name="alteracionNumero" class="medidas" data-id="medidaAlteracionNumero"> Alteraciones de número
-										</label>
-									</div>
-									<div class="input-group">
-										<input type="text" name="medidaAlteracionNumero" id="medidaAlteracionNumero" class="form-control" readonly="readonly">
-										<span class="input-group-addon">mm</span>
-									</div>
+								<label class="control-label col-md-12">Alteraciones de número:</label>
+								<div class="col-md-12">
+									<input type="text" name="alteracionNumero" id="alteracionNumero" value="" placeholder="" class="form-control">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<div class="col-md-8 col-md-offset-1">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" name="alteracionEstructura" class="medidas" data-id="medidaAlteracionEstructura"> Alteraciones de estructura
-										</label>
-									</div>
-									<div class="input-group">
-										<input type="text" name="medidaAlteracionEstructura" id="medidaAlteracionEstructura" class="form-control" readonly="readonly">
-										<span class="input-group-addon">mm</span>
-									</div>
+								<label class="control-label col-md-12">Alteraciones de estructura:</label>
+								<div class="col-md-12">
+									<input type="text" name="alteracionEstructura" id="alteracionEstructura" value="" placeholder="" class="form-control">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<div class="col-md-8 col-md-offset-1">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" name="alteracionTextura" class="medidas" data-id="medidaAlteracionTextura"> Alteraciones de textura
-										</label>
-									</div>
-									<div class="input-group">
-										<input type="text" name="medidaAlteracionTextura" id="medidaAlteracionTextura" class="form-control" readonly="readonly">
-										<span class="input-group-addon">mm</span>
-									</div>
+								<label class="control-label col-md-12">Alteraciones de textura:</label>
+								<div class="col-md-12">
+									<input type="text" name="alteracionTextura" id="alteracionTextura" value="" placeholder="" class="form-control">
 								</div>
 							</div>
 
 							<div class="form-group">
-								<div class="col-md-8 col-md-offset-1">
-									<div class="checkbox">
-										<label>
-											<input type="checkbox" name="alteracionColor" class="medidas" data-id="medidaAlteracionColor"> Alteraciones de color
-										</label>
-									</div>
-									<div class="input-group">
-										<input type="text" name="medidaAlteracionColor" id="medidaAlteracionColor" class="form-control" readonly="readonly">
-										<span class="input-group-addon">mm</span>
-									</div>
+								<label class="control-label col-md-12">Alteraciones de color:</label>
+								<div class="col-md-12">
+									<input type="text" name="alteracionColor" id="alteracionColor" value="" placeholder="" class="form-control">
 								</div>
 							</div>
 						</div>

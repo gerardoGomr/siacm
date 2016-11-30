@@ -13,7 +13,7 @@
 						<label class="control-label col-md-3" for="peso">Peso:</label>
 						<div class="col-md-3">
 							<div class="input-group">
-								<input type="text" name="peso" id="peso" value="" placeholder="" class="required numerosFlotantes form-control">
+								<input type="text" name="peso" id="peso" value="" placeholder="" class="numerosFlotantes form-control">
 								<span class="input-group-addon">Kg.</span>
 							</div>
 						</div>
@@ -22,7 +22,7 @@
 						<label class="control-label col-md-3" for="talla">Talla:</label>
 						<div class="col-md-3">
 							<div class="input-group">
-								<input type="text" name="talla" id="talla" value="" placeholder="" class="required numerosFlotantes form-control">
+								<input type="text" name="talla" id="talla" value="" placeholder="" class="numerosFlotantes form-control">
 								<span class="input-group-addon">m.</span>
 							</div>
 						</div>
@@ -37,7 +37,7 @@
 						<label class="control-label col-md-3" for="temperatura">Temperatura:</label>
 						<div class="col-md-3">
 							<div class="input-group">
-								<input type="text" name="temperatura" id="temperatura" value="" placeholder="" class="required numerosFlotantes form-control">
+								<input type="text" name="temperatura" id="temperatura" value="" placeholder="" class="numerosFlotantes form-control">
 								<span class="input-group-addon">°C</span>
 							</div>
 						</div>

@@ -243,6 +243,21 @@ class OdontogramaDiente
     }
 
     /**
+     * verifica que el diente tenga todos sus tratamientos atendidos
+     * @return bool
+     */
+    public function tratamientosAtendidos()
+    {
+        foreach ($this->tratamientos as $dientePlan) {
+            if (!$dientePlan->atendido()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * devolver la descripcion de costos
      * @return string
      */

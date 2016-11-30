@@ -188,8 +188,11 @@ class ExpedienteController extends Controller
 
 		if (!is_null($expediente)) {
             // si existe, actualizar datos
-            // actualizar también los otros datos que se capturan en la consulta
-            ExpedientesAgregarDatosConsultaFactory::agregar($medico, $expediente, $request);
+            // actualizar también los otros datos que se capturan en la consulta siempre y cuando el expediente
+			// no sea de primera vez
+            if (!$expediente->getExpedienteEspecialidad()->primeraVez()) {
+				ExpedientesAgregarDatosConsultaFactory::agregar($medico, $expediente, $request);
+			}
 			ExpedientesEditarFactory::update($medico, $expediente, $request);
 
 		} else {

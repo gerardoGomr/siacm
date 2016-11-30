@@ -26,7 +26,6 @@ class RegistrarExpedienteRequest extends Request
         'nombreMadre'                 => 'required',
         'ocupacionMadre'              => 'required',
         'motivoConsulta'              => 'required',
-        'historiaEnfermedad'          => 'required',
         'viveMadre'                   => 'required',
         'enfermedadesMadre'           => 'required',
         'vivePadre'                   => 'required',
