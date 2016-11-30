@@ -86,6 +86,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
         return $response;
     });
 
+    // generar el expediente en PDF
+    Route::get('expedientes/pdf/{expedienteId}/{medicoId}', 'Expedientes\ExpedienteController@generarExpedientePDF');
+
 	/////////////////////////////////////////// CONSULTAS //////////////////////////////////////////////
 	// principal consultas
 	Route::get('consultas/{medicoId}', 'Consultas\ConsultasController@index');

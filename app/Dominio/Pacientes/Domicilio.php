@@ -75,4 +75,13 @@ class Domicilio
     {
         return $this->municipio;
     }
+
+    /**
+     * dirección completa
+     * @return string
+     */
+    public function direccionCompleta()
+    {
+        return $this->direccion . ' CP ' . $this->cp . ' - ' . $this->municipio;
+    }
 }

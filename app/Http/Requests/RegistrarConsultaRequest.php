@@ -16,9 +16,9 @@ class RegistrarConsultaRequest extends Request
      * @var array
      */
     protected $rules = [
-        'peso'                  => 'required|numeric',
-        'talla'                 => 'required|numeric',
-        'temperatura'           => 'required|numeric',
+        'peso'                  => 'numeric',
+        'talla'                 => 'numeric',
+        'temperatura'           => 'numeric',
         'padecimiento'          => 'required',
         'interrogatorio'        => 'required',
         'nota'                  => 'required',

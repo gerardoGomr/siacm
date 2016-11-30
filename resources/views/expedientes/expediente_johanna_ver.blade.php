@@ -10,26 +10,17 @@
 					<div class="col-table-row">
 						<div class="col-app col-unscrollable">
 							<div class="col-app">
-								<div class="row">
-									<div class="col-md-1">
-										@if(isset($expediente) && $expediente->tieneFoto())
-											<div class="innerAll">
-												<img src="{{ url('expedientes/foto/mostrar/' . base64_encode($expediente->getFotografia()->getRuta())) . '?' . rand() }}" id="fotoCapturada" class="text-center" />
-											</div>
-										@endif
-									</div>
-									<div class="col-md-6">
-										<div class="innerAll">
-											<dl class="dl-horizontal">
-												<dt>Paciente:</dt>
-												<dd>{{ $expediente->getPaciente()->nombreCompleto() }}</dd>
-
-												<dt>Expediente:</dt>
-												<dd>{{ $expediente->getExpedienteEspecialidad()->numero() }}</dd>
-											</dl>
-										</div>
-									</div>
-								</div>
+                                <div class="innerAll">
+                                    <div class="media">
+                                        @if(isset($expediente) && $expediente->tieneFoto())
+                                            <img src="{{ url('expedientes/foto/mostrar/' . base64_encode($expediente->getFotografia()->getRuta())) . '?' . rand() }}" id="fotoCapturada" class="pull-left"  width="">
+                                        @endif
+                                        <div class="media-body innerAll half">
+                                            <h4 class="media-heading">{{ $expediente->getPaciente()->nombreCompleto() }}</h4>
+                                            <p>{{ $expediente->getPaciente()->edadCompleta() }}<br/>Vive en: {{ $expediente->getPaciente()->getLugarNacimiento() }}<br/>Expediente {{ $expediente->getExpedienteEspecialidad()->numero() }}</p>
+                                        </div>
+                                    </div>
+                                </div>
 								<div class="col-separator-h"></div>
 								<div class="innerAll">
 									<div class="wizard">
@@ -48,6 +39,7 @@
 														<button type="button" id="firmar" class="btn btn-primary"><i class="fa fa-check"></i> Los datos del expediente están correctos</button>
 													@endif
 													<a href="{{ url('expedientes/registrar/'.base64_encode($expediente->getPaciente()->getId()).'/'.base64_encode($medico->getId())) }}" class="btn btn-danger"><i class="fa fa-edit"></i> Editar expediente</a>
+                                                        <a href="{{ url('expedientes/pdf/' . base64_encode($expediente->getId()) . '/' . base64_encode($medico->getId())) }}" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Imprimir expediente</a>
 													{!! csrf_field() !!}
 													{!! Form::hidden('pacienteId', base64_encode($expediente->getPaciente()->getId()), ['id' => 'pacienteId']) !!}
 													{!! Form::hidden('medicoId', base64_encode($medico->getId()), ['id' => 'medicoId']) !!}

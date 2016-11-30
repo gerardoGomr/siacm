@@ -119,7 +119,7 @@ class Paciente extends Persona
         }
 
         $this->calcularEdad();
-        return $this->edadAnios > 1 ? (string)$this->edadAnios . ' años, ' . (string)$this->edadMeses. ' meses' : (string)$this->edadAnios . ' año, ' . (string)$this->edadMeses. ' meses';
+        return $this->edadAnios > 1 || $this->edadAnios === 0 ? (string)$this->edadAnios . ' años, ' . (string)$this->edadMeses. ' meses' : (string)$this->edadAnios . ' año, ' . (string)$this->edadMeses. ' meses';
     }
 
     /**

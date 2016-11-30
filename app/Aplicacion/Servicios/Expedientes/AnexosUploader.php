@@ -23,7 +23,7 @@ class AnexosUploader
      */
     public function __construct($expedienteId)
     {
-        $this->rutaBase = storage_path() . '/app/public/pacientes/' . $expedienteId . '/';
+        $this->rutaBase = storage_path() . '\app\public\pacientes\\' . $expedienteId . '\\';
     }
 
     /**

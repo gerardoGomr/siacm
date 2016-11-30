@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Siacme\Aplicacion\Factories\ExpedientesAgregarDatosConsultaFactory;
 use Siacme\Aplicacion\Factories\ExpedientesFactory;
 use Siacme\Aplicacion\Factories\ExpedientesEditarFactory;
+use Siacme\Aplicacion\Factories\ExpedientesPDFFactoy;
 use Siacme\Aplicacion\Factories\VistasExpedientesGenerarFactory;
 use Siacme\Aplicacion\Factories\VistasExpedientesMostrarFactory;
 use Siacme\Dominio\Expedientes\FotografiaPaciente;
@@ -272,4 +273,23 @@ class ExpedienteController extends Controller
 
 		return response()->json($respuesta);
 	}
+
+    /**
+     * generar expediente en PDF
+     * @param string $expedienteId
+     * @param string $medicoId
+     */
+    public function generarExpedientePDF($expedienteId, $medicoId)
+    {
+        $expedienteId = (int)base64_decode($expedienteId);
+        $medicoId     = (int)base64_decode($medicoId);
+        $expediente   = $this->expedientesRepositorio->obtenerPorId($expedienteId);
+        $medico       = $this->usuariosRepositorio->obtenerPorId($medicoId);
+
+        $reporte = ExpedientesPDFFactoy::make($medico, $expediente);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 50);
+        $reporte->generar();
+    }
 }

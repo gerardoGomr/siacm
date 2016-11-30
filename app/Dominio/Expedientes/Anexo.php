@@ -24,13 +24,16 @@ class Anexo
     }
 
     /**
-     * convierte cualquier espacio en blanco del nombre del anexo
-     * en guión bajo
+     * elimina espacios en blanco y diagonales del nombre
      * @return string
      */
     public function preparar()
     {
-        return str_replace(' ', '_', $this->nombre);
+        $this->nombre = str_replace('/', '_', $this->nombre);
+        $this->nombre = str_replace(' ', '_', $this->nombre);
+        $this->nombre = str_replace('\\', '_', $this->nombre);
+
+        return $this->nombre;
     }
 
     /**
