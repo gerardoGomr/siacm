@@ -45,7 +45,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
 
         // sección superior para la foto y nombre del paciente
         if($this->expediente->tieneFoto()) {
-            $this->Image($this->expediente->getFotografia()->getRuta(), 80, 60, 20);
+            $this->Image($this->expediente->getFotografia()->getRuta(), 120, 60, 30);
         }
 
         $html .= '<h2>' . $this->expediente->getPaciente()->nombreCompleto() . '</h2>
@@ -89,7 +89,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
 
         if (!$this->expediente->getExpedienteEspecialidad()->primeraVez()) {
             $html = $this->generarDatosComplementarios();
-            $this->WriteHTML($html, true);
+            $this->WriteHTML($html, true, false, false, false, '');
         }
 
         $this->Output('Expediente', 'I');
@@ -475,5 +475,183 @@ class ExpedienteJohannaPDF extends ReporteJohanna
 
     private function generarDatosComplementarios()
     {
+        $escalonMesialDerecho         = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getEscalonMesial()->derecho() ? 'Sí' : 'No';
+        $escalonMesialIzquierdo       = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getEscalonMesial()->izquierdo() ? 'Sí' : 'No';
+        $escalonDistalDerecho         = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getEscalonDistal()->derecho() ? 'Sí' : 'No';
+        $escalonDistalIzquierdo       = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getEscalonDistal()->izquierdo() ? 'Sí' : 'No';
+        $escalonRectoDerecho          = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getEscalonRecto()->derecho() ? 'Sí' : 'No';
+        $escalonRectoIzquierdo        = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getEscalonRecto()->izquierdo() ? 'Sí' : 'No';
+        $mesialExageradoDerecho       = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getMesialExagerado()->derecho() ? 'Sí' : 'No';
+        $mesialExageradoIzquierdo     = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getMesialExagerado()->izquierdo() ? 'Sí' : 'No';
+        $mesialNoDeterminadoDerecho   = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getMesialNoDeterminado()->derecho() ? 'Sí' : 'No';
+        $mesialNoDeterminadoIzquierdo = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getMesialNoDeterminado()->izquierdo() ? 'Sí' : 'No';
+        $relacionCaninaDerecha        = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getRelacionCanina()->derecho() ? 'Sí' : 'No';
+        $relacionCaninaIzquierda      = $this->expediente->getExpedienteEspecialidad()->getDentincionTemporal()->getRelacionCanina()->izquierdo() ? 'Sí' : 'No';
+
+        $relacionMolarDerechaI      = $this->expediente->getExpedienteEspecialidad()->getRelacionMolar()->derechaI() ? 'Sí' : 'No';
+        $relacionMolarDerechaII     = $this->expediente->getExpedienteEspecialidad()->getRelacionMolar()->derechaII() ? 'Sí' : 'No';
+        $relacionMolarDerechaIII    = $this->expediente->getExpedienteEspecialidad()->getRelacionMolar()->derechaIII() ? 'Sí' : 'No';
+        $relacionMolarIzquierdaI    = $this->expediente->getExpedienteEspecialidad()->getRelacionMolar()->izquierdaI() ? 'Sí' : 'No';
+        $relacionMolarIzquierdaII   = $this->expediente->getExpedienteEspecialidad()->getRelacionMolar()->izquierdaII() ? 'Sí' : 'No';
+        $relacionMolarIzquierdaIII  = $this->expediente->getExpedienteEspecialidad()->getRelacionMolar()->izquierdaIII() ? 'Sí' : 'No';
+
+        $relacionCaninaDerechaI     = $this->expediente->getExpedienteEspecialidad()->getRelacionCanina()->derechaI() ? 'Sí' : 'No';
+        $relacionCaninaDerechaII    = $this->expediente->getExpedienteEspecialidad()->getRelacionCanina()->derechaII() ? 'Sí' : 'No';
+        $relacionCaninaDerechaIII   = $this->expediente->getExpedienteEspecialidad()->getRelacionCanina()->derechaIII() ? 'Sí' : 'No';
+        $relacionCaninaIzquierdaI   = $this->expediente->getExpedienteEspecialidad()->getRelacionCanina()->izquierdaI() ? 'Sí' : 'No';
+        $relacionCaninaIzquierdaII  = $this->expediente->getExpedienteEspecialidad()->getRelacionCanina()->izquierdaII() ? 'Sí' : 'No';
+        $relacionCaninaIzquierdaIII = $this->expediente->getExpedienteEspecialidad()->getRelacionCanina()->izquierdaIII() ? 'Sí' : 'No';
+
+        $html = '<h3>Examen extraoral</h3>
+            <hr>
+            <table>
+                <tr>
+                    <td width="150"><b>Morfología craneofacial:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getMorfologiaCraneofacial()->getMorfologiaCraneofacial() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Morfología facial:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getMorfologiaFacial()->getMorfologiaFacial() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Convexividad facial:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getConvexividadFacial()->getConvexividadFacial() . '</td>
+                </tr>
+                <tr>
+                    <td><b>ATM:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getATM()->getATM() . '</td>
+                </tr>
+            </table>
+            <br>
+            <h3>Examen intraoral</h3>
+            <hr>
+            <table>
+                <tr>
+                    <td width="150"><b>Labios:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getExamenIntraoral()->getLabios() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Carrillos:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getExamenIntraoral()->getCarrillos() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Frenillos:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getExamenIntraoral()->getPaladar() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Lengua:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getExamenIntraoral()->getLengua() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Piso de boca:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getExamenIntraoral()->getPisoDeBoca() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Parodonto:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getExamenIntraoral()->getParodonto() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Úvula:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getExamenIntraoral()->getUvula() . '</td>
+                </tr>
+                <tr>
+                    <td><b>Orofaringe:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->getExamenIntraoral()->getOrofaringe() . '</td>
+                </tr>
+            </table>
+            <br>
+            <h3>Tejidos duros</h3>
+            <hr>
+            <table>
+                <tr>
+                    <td width="150"><b>Tipo de arco:</b></td>
+                    <td>' . $this->expediente->getExpedienteEspecialidad()->tipoArco() . '</td>
+                </tr>
+            </table>
+            <br>
+            <h4>Dentinción temporal</h4>
+            <table cellspacing="0" cellpadding="2" border="1">
+                <thead>
+                    <tr>
+                        <th><b>Planos terminales</b></th>
+                        <th><b>Derecha</b></th>
+                        <th><b>Izquierda</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Escalon mesial</b></td>
+                        <td>' . $escalonMesialDerecho . '</td>
+                        <td>' . $escalonMesialIzquierdo . '</td>
+                    </tr>
+                    <tr>
+                        <td><b>Escalon distal</b></td>
+                        <td>' . $escalonMesialDerecho . '</td>
+                        <td>' . $escalonMesialIzquierdo . '</td>
+                    </tr>
+                    <tr>
+                        <td><b>Escalon recto</b></td>
+                        <td>' . $escalonRectoDerecho . '</td>
+                        <td>' . $escalonRectoIzquierdo . '</td>
+                    </tr>
+                    <tr>
+                        <td><b>Mesial exagerado</b></td>
+                        <td>' . $mesialExageradoDerecho . '</td>
+                        <td>' . $mesialExageradoIzquierdo . '</td>
+                    </tr>
+                    <tr>
+                        <td><b>No determinado</b></td>
+                        <td>' . $mesialNoDeterminadoDerecho . '</td>
+                        <td>' . $mesialNoDeterminadoIzquierdo . '</td>
+                    </tr>
+                    <tr>
+                        <td><b>Relación canina</b></td>
+                        <td>' . $relacionCaninaDerecha . '</td>
+                        <td>' . $relacionCaninaIzquierda . '</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <h4>Dentinción mixta o permanente</h4>
+            <table cellspacing="0" cellpadding="1" border="1">
+                <thead>
+                    <tr>
+                        <th rowspan="2">&nbsp;</th>
+                        <th colspan="3"><b>Derecha</b></th>
+                        <th colspan="3"><b>Izquierda</b></th>
+                    </tr>
+                    <tr>
+                        <th><b>I</b></th>
+                        <th><b>II</b></th>
+                        <th><b>III</b></th>
+                        <th><b>I</b></th>
+                        <th><b>II</b></th>
+                        <th><b>III</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Relación molar</b></td>
+                        <td>' . $relacionMolarDerechaI . '</td>
+                        <td>' . $relacionMolarDerechaII . '</td>
+                        <td>' . $relacionMolarDerechaIII . '</td>
+                        <td>' . $relacionMolarIzquierdaI . '</td>
+                        <td>' . $relacionMolarIzquierdaII . '</td>
+                        <td>' . $relacionMolarIzquierdaIII . '</td>
+                    </tr>
+                    <tr>
+                        <td><b>Relación molar</b></td>
+                        <td>' . $relacionCaninaDerechaI . '</td>
+                        <td>' . $relacionCaninaDerechaII . '</td>
+                        <td>' . $relacionCaninaDerechaIII . '</td>
+                        <td>' . $relacionCaninaIzquierdaI . '</td>
+                        <td>' . $relacionCaninaIzquierdaII . '</td>
+                        <td>' . $relacionCaninaIzquierdaIII . '</td>
+                    </tr>
+                </tbody>
+            </table>
+            ';
+
+        return $html;
     }
 }

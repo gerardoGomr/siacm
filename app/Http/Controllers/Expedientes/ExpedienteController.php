@@ -174,7 +174,7 @@ class ExpedienteController extends Controller
 	 * @param RegistrarExpedienteRequest $request
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function registrarExpediente(RegistrarExpedienteRequest $request) 
+	public function registrarExpediente(RegistrarExpedienteRequest $request)
 	{
 		$respuesta = [];
 
@@ -289,7 +289,7 @@ class ExpedienteController extends Controller
         $reporte = ExpedientesPDFFactoy::make($medico, $expediente);
         $reporte->SetHeaderMargin(10);
         $reporte->SetAutoPageBreak(true, 20);
-        $reporte->SetMargins(15, 50);
+        $reporte->SetMargins(15, 55);
         $reporte->generar();
     }
 }
