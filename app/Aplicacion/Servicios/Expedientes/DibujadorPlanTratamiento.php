@@ -49,7 +49,6 @@ class DibujadorPlanTratamiento implements DibujadorInterface
             $otrosTratamientos .= $otroTratamiento->getOtroTratamiento()->getTratamiento() . '<b>(' . $otroTratamiento->getOtroTratamiento()->costo() . ')</b> <button type="button" class="btn btn-danger btn-xs eliminarOtroTratamiento" data-id="'.$otroTratamiento->getOtroTratamiento()->getId().'" data-toggle="tooltip" data-original-title="Quitar de plan" data-placement="top"><i class="fa fa-times"></i></button> ----- ';
         }
         $html = '
-            <p class="text-medium"><span class="strong">Costo total:</span> <span>' . $this->odontograma->costo() . '</span></p>
             <p><span class="strong">Otros:</span> <em>' . $otrosTratamientos . '</em></p>
             <table class="table table-bordered tablaPlan text-small">
                 <thead class="bg-primary">

@@ -49,13 +49,13 @@
 			</div>
 		</div>
 		<div class="form-group">
-			{!! Form::label('especifiqueHospitalizado', '¿De qué?:', ['class' => 'control-label col-md-3']) !!}
+			{!! Form::label('especifiqueHospitalizado', '¿Por qué?:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
 				<p class="form-control-static">{{ $expediente->haSidoHospitalizado() ? $expediente->getEspecifiqueHospitalizacion() : '-' }}</p>
 			</div>
 		</div>
 		<div class="form-group">
-			{!! Form::label('', 'Está bajo tratamiento:', ['class' => 'control-label col-md-3']) !!}
+			{!! Form::label('', 'Está bajo tratamiento médico:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-4">
 				<p class="form-control-static">{{ $expediente->estaBajoTratamiento() ? 'Sí' : 'No' }}</p>
 			</div>

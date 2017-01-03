@@ -40,6 +40,7 @@ class ExpedientesAgregarElementosConsulta
                     // odontograma y plan de tratamiento
                     if ($request->session()->has('odontograma')) {
                         $odontograma = $request->session()->get('odontograma');
+                        $dirigidoA   = $request->get('dirigidoA');
 
                         $odontogramaDientes = $odontograma->getOdontogramaDientes();
 
@@ -77,6 +78,7 @@ class ExpedientesAgregarElementosConsulta
 
                         $expediente->getExpedienteEspecialidad()->agregarOdontograma($odontograma);
                         $odontograma->asignadoA($expediente->getExpedienteEspecialidad());
+                        $odontograma->establecerAQuienVaDirigido($dirigidoA);
                     }
 
                 } else {

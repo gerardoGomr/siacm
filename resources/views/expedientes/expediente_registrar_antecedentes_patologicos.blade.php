@@ -83,7 +83,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			{!! Form::label('especifiqueHospitalizado', '¿De qué?:', ['class' => 'control-label col-md-3']) !!}
+			{!! Form::label('especifiqueHospitalizado', '¿Por qué?:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
 				{!! Form::text('especifiqueHospitalizado', null, ['class' => 'form-control']) !!}
 			</div>
@@ -92,7 +92,7 @@
 			<div class="col-md-4 col-md-offset-3">
 				<div class="checkbox">
 					<label>
-						{!! Form::checkbox('tratamiento', null, null, []) !!}	Está bajo tratamiento
+						{!! Form::checkbox('tratamiento', null, null, []) !!}	Está bajo tratamiento médico
 					</label>
 				</div>
 			</div>

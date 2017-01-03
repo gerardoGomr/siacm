@@ -63,7 +63,7 @@ class VistasConsultasFactory
                 $medicosReferencia         = $medicosReferenciaRepositorio->obtenerTodos();
                 $consultaCostos            = $consultaCostosRepositorio->obtenerTodos();
 
-                if ($expediente->getExpedienteEspecialidad()->primeraVez()) {
+                if ($expediente->getExpedienteEspecialidad()->primeraVez() || $expediente->getExpedienteEspecialidad()->dadoDeAlta()) {
                     // construir y generar odontograma
                     $odontograma = OdontogramaFactory::crear();
 

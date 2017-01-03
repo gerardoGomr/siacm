@@ -92,6 +92,11 @@ class ExpedienteJohannaPDF extends ReporteJohanna
             $this->WriteHTML($html, true, false, false, false, '');
         }
 
+        $this->Ln(5);
+        $this->SetFont('helvetica', 'B', 12);
+        $this->Cell(0, 5, 'Certifico la veracidad de los datos aportados.', false, true);
+        $this->Cell(0, 5, 'Nombre y firma del padre o tutor:  ___________________________', false, true);
+
         $this->Output('Expediente', 'I');
     }
 

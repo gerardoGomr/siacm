@@ -567,6 +567,7 @@ class ConsultasController extends Controller
         }
 
         $respuesta['estatus'] = 'OK';
+        $request->session()->forget('citaId');
 
         return response()->json($respuesta);
     }

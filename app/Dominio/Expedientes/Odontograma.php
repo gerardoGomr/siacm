@@ -42,6 +42,11 @@ class Odontograma
     private $costo;
 
     /**
+     * @var string
+     */
+    private $dirigidoA;
+
+    /**
      * @var ExpedienteJohanna
      */
     private $expedienteEspecialidad;
@@ -139,6 +144,23 @@ class Odontograma
     public function getOdontogramaDiente($numero)
     {
         return $this->obtenerOdontogramaDiente($numero);
+    }
+
+    /**
+     * @return string
+     */
+    public function dirigidoA()
+    {
+        return $this->dirigidoA;
+    }
+
+    /**
+     * establecer a quien va dirigido el odontograma
+     * @param $dirigidoA
+     */
+    public function establecerAQuienVaDirigido($dirigidoA)
+    {
+        $this->dirigidoA = $dirigidoA;
     }
 
     /**

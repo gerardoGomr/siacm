@@ -9,6 +9,10 @@
                 <a href="{{ url('consultas/plan/pdf/' . base64_encode($paciente->getId())) }}" id="generarPlan" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Generar PDF</a>
                 <div class="separator"></div>
                 <div class="form-group">
+                    <label for="" class="control-label">Dirigido a:</label>
+                    <input type="text" name="dirigidoA" id="dirigidoA" class="form-control required">
+                </div>
+                <div class="form-group">
                     <label for="otrosTratamientos" class="control-label">Otros tratamientos:</label>
                     <div class="row">
                         <div class="col-md-7">

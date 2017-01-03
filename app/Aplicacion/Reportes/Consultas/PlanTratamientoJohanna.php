@@ -18,6 +18,11 @@ class PlanTratamientoJohanna extends ReporteJohanna
      */
     private $odontograma;
 
+    /**
+     * PlanTratamientoJohanna constructor.
+     * @param Odontograma $odontograma
+     * @param Expediente $expediente
+     */
     public function __construct(Odontograma $odontograma, Expediente $expediente)
     {
         $this->expediente  = $expediente;
@@ -38,6 +43,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $this->SetFillColor(178, 178, 178);
         $this->Cell(0, 10, 'Plan de tratamiento', 0, 1, '',1);
         $this->Ln(5);
+        $this->Cell(0, 5, 'Yo, '. $this->odontograma->dirigidoA(), 0, 1);
         $this->Cell(0, 5, 'Legal o familiar del niño (a): '. $this->expediente->getPaciente()->nombreCompleto(), 0, 1);
         $this->Ln(5);
         $this->MultiCell(0, 5, ('DECLARO: Que la E. OP Johanna Joselyn Vázquez Hernández me ha explicado que necesito los siguientes tratamientos especificados en la historia clínica y su respectivo costo'), 'L', 0, 1, 1);
@@ -60,8 +66,6 @@ class PlanTratamientoJohanna extends ReporteJohanna
                 padding: 3px;
             }
             </style>
-            <p style="font-size: 13pt;"><strong>Costo total:</strong> <span style="color: #ff0000">'.$this->odontograma->costo().'</span></p>
-            <p style="font-size: 13pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>
             <table>
                 <thead>
                     <tr style="text-align: center">
@@ -83,7 +87,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
             ';
         }
 
-        $html .= '</tbody></table>';
+        $html .= '</tbody></table><br><br><p style="font-size: 13pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
 
         $this->writeHTML($html, true, 0, true, 0);
 

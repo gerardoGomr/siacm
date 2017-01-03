@@ -13,6 +13,9 @@ Siacme\Dominio\Expedientes\Odontograma:
     atendido:
       type: boolean
       column: Atendido
+    dirigidoA:
+      type: string
+      column: DirigidoA
   oneToMany:
     odontogramaDientes:
       targetEntity: OdontogramaDiente
