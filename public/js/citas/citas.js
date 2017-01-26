@@ -37,14 +37,14 @@ $(document).ready(function($) {
         events:          rutaCitas,
 		allDaySlot:      false,
 		dayClick: function(date, allDay, jsEvent, view) {
-			var month = (date.getMonth() + 1);
+			var month  = (date.getMonth() + 1),
+				fecha  = date.getFullYear() + "-" + month + "-" + date.getDate(),
+				hora   = date.getHours() + ":" + date.getMinutes();
 
 			if (month < 10) {
 				month = '0' + month;
 			}
 
-			var fecha = date.getFullYear() + "-" + month + "-" + date.getDate(),
-				hora  = date.getHours() + ":" + date.getMinutes();
 			//verificarEventos();
             //prevenir la seleccion en el horario de comida
             if(date.getHours() >= "14:0" && date.getHours() < "17:0") {
@@ -176,7 +176,7 @@ $(document).ready(function($) {
 			$calendario.fullCalendar('addEventSource', rutaCitas);
 			$calendario.fullCalendar('refetchEvents');
 
-			setTimeout(activarDesactivarLinkALista, 500);
+			setTimeout(activarDesactivarLinkALista, 700);
 
 		} else {
 			$calendario.fullCalendar('removeEventSource', rutaCitas);
@@ -213,6 +213,21 @@ $(document).ready(function($) {
 
 		// por default no se puede
 		$('#generarLista').attr('href', $('#rutaPdf').val() + '/' + $('#medicoId').val() + '/' + btoa(fecha));
+	}
+
+	function getIdOrFilter () {
+		var view  = $calendario.fullCalendar('getView');
+		var start = view.intervalStart;
+		var end   = view.intervalEnd;
+		return function (e) {
+			// this is our event filter
+			if (e.start >= start && e.end <= end) {
+				// event e is within the view interval
+				return true;
+			}
+			// event e is not within the current displayed interval
+			return false;
+		};
 	}
 });
 

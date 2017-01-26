@@ -83,7 +83,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			{!! Form::label('especifiqueHospitalizado', '¿Por qué?:', ['class' => 'control-label col-md-3']) !!}
+			{!! Form::label('especifiqueHospitalizado', 'Motivo:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
 				{!! Form::text('especifiqueHospitalizado', $expediente->haSidoHospitalizado() ? $expediente->getEspecifiqueHospitalizacion() : '', ['class' => 'form-control']) !!}
 			</div>

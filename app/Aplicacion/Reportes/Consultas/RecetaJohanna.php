@@ -52,7 +52,7 @@ class RecetaJohanna extends ReporteJohanna
 
         $html = '<p><strong>Nombre:</strong> ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>
                 <p><strong>Edad:</strong> ' . $this->expediente->getPaciente()->edadCompleta() . '</p>
-                <p><strong>Peso:</strong> ' . $this->expediente->getConsultas()->last()->getExploracionFisica()->getPeso() . ' Kg.</p><hr>';
+                <p><strong>Peso:</strong> ' . $this->expediente->tieneConsultas() ? $this->expediente->getConsultas()->last()->getExploracionFisica()->getPeso() : '' . ' Kg.</p><hr>';
 
         $this->WriteHTML($html, true);
 
