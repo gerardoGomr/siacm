@@ -1,4 +1,4 @@
-<div class="tab-pane active" id="consultas" data-url="{{ url('pacientes/consulta/recibo') }}">
+<div class="tab-pane" id="consultas" data-url="{{ url('pacientes/consulta/recibo') }}">
     @if($expediente->tieneConsultas())
         <table class="table table-bordered table-striped text-small">
             <thead>

@@ -322,34 +322,6 @@ $(function() {
 		$('#costoAsignadoConsulta').val(costoTotalConsulta);
 	});
 
-    // agregar costos de otros tratamientos a costo de consulta
-    $formConsulta.on('click', 'input.otroTratamiento', function(event) {
-        var costoTratamiento = Number($(this).data('costo')),
-            costoConsulta    = Number($('#costoAsignadoConsulta').val());
-
-        if ($(this).attr('checked') === 'checked') {
-            costoTotalConsulta = costoTratamiento + costoConsulta;
-        } else {
-            costoTotalConsulta = costoConsulta - costoTratamiento;
-        }
-
-        $('#costoAsignadoConsulta').val(costoTotalConsulta);
-    });
-
-	// agregar costos de tratamientos a costos de consulta
-    $formConsulta.on('click', 'input.tratamiento', function(event) {
-		var costoTratamiento = Number($(this).data('costo')),
-		  	costoConsulta    = Number($('#costoAsignadoConsulta').val());
-
-		if ($(this).attr('checked') === 'checked') {
-			costoTotalConsulta = costoTratamiento + costoConsulta;
-		} else {
-			costoTotalConsulta = costoConsulta - costoTratamiento;
-		}
-
-		$('#costoAsignadoConsulta').val(costoTotalConsulta);
-	});
-
 	/**
 	 * se ejecuta una sola vez
 	 */

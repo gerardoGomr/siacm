@@ -36,7 +36,7 @@ class AnexosUploader
     {
         $nombre = $anexo->preparar();
         if (!file_exists($this->rutaBase)) {
-            mkdir($this->rutaBase, 0777);
+            mkdir($this->rutaBase, 0777, true);
         }
 
         if (!move_uploaded_file($ubicacionTemporal, $this->rutaBase . $nombre . '.pdf')) {

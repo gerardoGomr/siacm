@@ -90,7 +90,7 @@
                                                         @include('consultas.consultas_johanna_otros_tratamientos')
                                                     @endif
 
-													@include('pacientes.pacientes_consultas')
+													@include('consultas.pacientes_consultas')
 												</div>
 												<input type="hidden" name="medicoId" id="medicoId" value="{{ base64_encode($medico->getId()) }}">
 												<input type="hidden" name="pacienteId" id="pacienteId" value="{{ base64_encode($paciente->getId()) }}">

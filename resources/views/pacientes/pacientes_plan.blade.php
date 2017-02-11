@@ -1,6 +1,6 @@
 <div class="tab-pane" id="plan">
     @if($expediente->getExpedienteEspecialidad()->tieneOdontogramas())
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped text-small">
             <thead class="bg-gray">
                 <tr>
                     <th>Fecha</th>

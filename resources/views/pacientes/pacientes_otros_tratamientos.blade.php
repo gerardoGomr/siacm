@@ -1,6 +1,6 @@
 <div class="tab-pane" id="otros">
 	@if($expediente->getExpedienteEspecialidad()->tieneOtrosTratamientos())
-		<table class="table table-bordered">
+		<table class="table table-bordered text-small">
 			<thead class="bg-gray">
 				<tr>
 					<th>Tratamiento</th>

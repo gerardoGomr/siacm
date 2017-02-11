@@ -61,7 +61,6 @@ class VistasConsultasFactory
                 $otrosTratamientos         = $otrosTratamientosRepositorio->obtenerTodos();
                 $recetas                   = $recetasRepositorio->obtenerTodos();
                 $medicosReferencia         = $medicosReferenciaRepositorio->obtenerTodos();
-                $consultaCostos            = $consultaCostosRepositorio->obtenerTodos();
 
                 if ($expediente->getExpedienteEspecialidad()->primeraVez() || $expediente->getExpedienteEspecialidad()->dadoDeAlta()) {
                     // construir y generar odontograma
@@ -79,7 +78,7 @@ class VistasConsultasFactory
                     !is_null($odontograma) ? $dibujadorOdontograma = new DibujadorOdontogramasAtencion($odontograma) : $dibujadorOdontograma = null;
                 }
 
-                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'consultaCostos', 'dibujadorOdontograma'));
+                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'dibujadorOdontograma'));
                 break;
         }
 

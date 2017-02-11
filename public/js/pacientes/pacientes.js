@@ -260,6 +260,13 @@ $(document).ready(function () {
 
 	// guardar formulario otros tratamientos
 	$('#guardarFormOtros').on('click', function(event) {
+        var url   = $('#resultadoPacientes').data('url'),
+            datos = {
+                expedienteId: $('#expedienteId').val(),
+                medicoId:     $('#medicoId').val(),
+                _token:       $formPaciente.find('input[name="_token"]').val()
+            };
+
 		if ($formOtroTratamiento.valid() === true) {
 			if (!$formOtroTratamiento.find('input[name="ortodoncia"]').is(':checked') && !$formOtroTratamiento.find('input[name="ortopedia"]').is(':checked')) {
 				bootbox.alert('Por favor, seleccione al menos un tipo de tratamiento');
@@ -267,24 +274,33 @@ $(document).ready(function () {
 			}
 
 			// guardar
-			var respuesta = ajax($formOtroTratamiento.attr('action'), 'post', 'html', $formOtroTratamiento.serialize(), 'guardar');
-			respuesta.done(function(respuesta){
-				if(respuesta === '0') {
-					bootbox.alert('Ocurrió un error al generar el tratamiento. Intente de nuevo');
-					return false;
-				}
+            $.ajax({
+                url:        $formOtroTratamiento.attr('action'),
+                type:       'post',
+                dataType:   'json',
+                data:       $formOtroTratamiento.serialize(),
+                beforeSend: function () {
+                    $('#modalLoading').modal('show');
+                }
 
-				var idForm     = $('#dvDetalles').find('form').attr('id'),
-					idPaciente = $('#' + idForm).find('input[name="idPaciente"]').val();
+            }).done(function (respuesta) {
+                $('#modalLoading').modal('hide');
+                if (respuesta.estatus === 'OK') {
+                    bootbox.alert('Tratamiento generado con éxito', function () {
+                        // refrescar detalles del paciente seleccionado
+                        mostrarExpediente(url, datos);
+                    });
+                }
 
-				bootbox.alert('Tratamiento generado con éxito', function () {
-					// refrescar detalles del paciente seleccionado
-					recargarDetalles(idPaciente);
-				});
-			})
-			.fail(function(XMLHttpRequest, textStatus, errorThrown){
-				console.log(textStatus + ': ' + errorThrown);
-			});
+                if (respuesta.estatus === 'fail') {
+                    bootbox.alert('Ocurrió un error al generar el tratamiento. Intente de nuevo');
+                }
+
+            }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#modalLoading').modal('hide');
+                console.log(textStatus + ': ' + errorThrown);
+                bootbox.alert('Ocurrió un error al generar el tratamiento. Intente de nuevo');
+            });
 		}
 	});
 

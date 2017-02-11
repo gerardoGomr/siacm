@@ -542,12 +542,12 @@ class ConsultasController extends Controller
         }
 
         // agregar los rubros a cobrar
-        foreach ($request->get('consultaCosto') as $consultaCostoId) {
+        /*foreach ($request->get('consultaCosto') as $consultaCostoId) {
             $consultaCostoId = (int)$consultaCostoId;
             $consultaCosto   = $consultaCostosRepositorio->obtenerPorId($consultaCostoId);
 
             $consulta->agregarCosto($consultaCosto);
-        }
+        }*/
 
         // agrega un comentario de costo
         $consulta->agregarComentario();
