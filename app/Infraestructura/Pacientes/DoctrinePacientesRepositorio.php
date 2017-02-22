@@ -32,10 +32,10 @@ class DoctrinePacientesRepositorio implements PacientesRepositorio
 	 */
 	public function obtenerPorNombre($nombre)
 	{
-		$nombre = str_replace(' ', '', $nombre);
+		//$nombre = str_replace(' ', '', $nombre);
 		// TODO: Implement obtenerPorNombre() method.
 		try {
-			$query = $this->entityManager->createQuery("SELECT p, d FROM Pacientes:Paciente p LEFT JOIN p.domicilio d WHERE CONCAT(p.nombre, p.paterno, p.materno) LIKE :nombre OR CONCAT(p.paterno, p.materno, p.nombre) LIKE :nombre")
+			$query = $this->entityManager->createQuery("SELECT p, d FROM Pacientes:Paciente p LEFT JOIN p.domicilio d WHERE CONCAT(p.nombre, p.paterno, p.materno) LIKE :nombre OR CONCAT(p.paterno, p.materno, p.nombre) LIKE :nombre OR p.nombre LIKE :nombre")
 					->setParameter('nombre', "%$nombre%");
 
 			$pacientes = $query->getResult();

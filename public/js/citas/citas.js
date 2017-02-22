@@ -176,7 +176,7 @@ $(document).ready(function($) {
 			$calendario.fullCalendar('addEventSource', rutaCitas);
 			$calendario.fullCalendar('refetchEvents');
 
-			setTimeout(activarDesactivarLinkALista, 700);
+			setTimeout(activarDesactivarLinkALista, 1500);
 
 		} else {
 			$calendario.fullCalendar('removeEventSource', rutaCitas);
