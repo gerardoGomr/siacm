@@ -87,7 +87,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
         $this->WriteHTML($html, true);
         $this->Ln(5);
 
-        if (!$this->expediente->getExpedienteEspecialidad()->primeraVez()) {
+        if ($this->expediente->tieneConsultas()) {
             $html = $this->generarDatosComplementarios();
             $this->WriteHTML($html, true, false, false, false, '');
         }
@@ -108,6 +108,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
     {
         $seHaAutomedicado = $this->expediente->seHaAutomedicado() ? 'Sí: ' . $this->expediente->getConQueSeHaAutomedicado() : '-';
         $esAlergico       = $this->expediente->esAlergico() ? $this->expediente->getAQueMedicamentoEsAlergico() : '-';
+        $domicilio        = !is_null($this->expediente->getPaciente()->getDomicilio()) ? $this->expediente->getPaciente()->getDomicilio()->direccionCompleta() : '';
 
         $html = '<h3>Datos Personales</h3>
             <hr>
@@ -130,7 +131,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
                 </tr>
                 <tr>
                     <td><b>Dirección:</b></td>
-                    <td>' . $this->expediente->getPaciente()->getDomicilio()->direccionCompleta() . '</td>
+                    <td>' . $domicilio . '</td>
                 </tr>
                 <tr>
                     <td><b>Teléfono:</b></td>
@@ -313,7 +314,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
     private function generarAntecedentesOdontalgicos()
     {
         $primeraVisita           = $this->expediente->getExpedienteEspecialidad()->primeraVisitaDentista() ? 'Sí' : 'No';
-        $fechaUltimoExamen       = !$this->expediente->getExpedienteEspecialidad()->primeraVisitaDentista() ? Fecha::convertir($this->expediente->getExpedienteEspecialidad()->getFechaUltimoExamenBucal()) . ' - ' . $this->expediente->getExpedienteEspecialidad()->getMotivoVisitaDentista() : '-';
+        $fechaUltimoExamen       = !$this->expediente->getExpedienteEspecialidad()->primeraVisitaDentista() && $this->expediente->getExpedienteEspecialidad()->getFechaUltimoExamenBucal() !== '' ? Fecha::convertir($this->expediente->getExpedienteEspecialidad()->getFechaUltimoExamenBucal()) . ' - ' . $this->expediente->getExpedienteEspecialidad()->getMotivoVisitaDentista() : '-';
         $leHanColocadoAnestesico = $this->expediente->getExpedienteEspecialidad()->leHanColocadoAnestesico() ? 'Sí' : 'No';
         $tuvoMalaReaccion        = $this->expediente->getExpedienteEspecialidad()->leHanColocadoAnestesico() && $this->expediente->getExpedienteEspecialidad()->tuvoMalaReaccionAnestesico() ? 'Sí' : 'No';
         $queReaccionTuvo         = $this->expediente->getExpedienteEspecialidad()->leHanColocadoAnestesico() && $this->expediente->getExpedienteEspecialidad()->tuvoMalaReaccionAnestesico() ? $this->expediente->getExpedienteEspecialidad()->getReaccionAnestesico() : '-';

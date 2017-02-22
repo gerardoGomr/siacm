@@ -12,7 +12,7 @@ use Siacme\Aplicacion\Fecha;
 		<div class="form-group">
 			{!! Form::label('fechaUltimoExamen', 'Fecha de último examen bucal:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-3">
-				<p class="form-control-static">{{ !$expediente->getExpedienteEspecialidad()->primeraVisitaDentista() ? Fecha::convertir($expediente->getExpedienteEspecialidad()->getFechaUltimoExamenBucal()) : '-' }}</p>
+				<p class="form-control-static">{{ !$expediente->getExpedienteEspecialidad()->primeraVisitaDentista() && $expediente->getExpedienteEspecialidad()->getFechaUltimoExamenBucal() !== '' ? Fecha::convertir($expediente->getExpedienteEspecialidad()->getFechaUltimoExamenBucal()) : '-' }}</p>
 			</div>
 		</div>
 		<div class="form-group">

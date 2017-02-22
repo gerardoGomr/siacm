@@ -416,7 +416,7 @@ class ExpedienteJohanna extends AbstractExpediente
      */
     public function getFechaUltimoExamenBucal()
     {
-        return $this->fechaUltimoExamenBucal->format('Y-m-d');
+        return !is_null($this->fechaUltimoExamenBucal) ? $this->fechaUltimoExamenBucal->format('Y-m-d') : '';
     }
 
     /**

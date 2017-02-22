@@ -46,19 +46,19 @@ use Siacme\Aplicacion\Fecha;
 				<div class="form-group">
 					{!! Form::label('direccion', 'Dirección:', ['class' => 'control-label col-md-3']) !!}
 					<div class="col-md-8">
-						<p class="form-control-static">{{ $expediente->getPaciente()->getDomicilio()->getDireccion() }}</p>
+						<p class="form-control-static">{{ !is_null($expediente->getPaciente()->getDomicilio()) ? $expediente->getPaciente()->getDomicilio()->getDireccion() : '-' }}</p>
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('cp', 'C. P.:', ['class' => 'control-label col-md-3']) !!}
 					<div class="col-md-2">
-						<p class="form-control-static">{{ $expediente->getPaciente()->getDomicilio()->getCp() }}</p>
+						<p class="form-control-static">{{ !is_null($expediente->getPaciente()->getDomicilio()) ? $expediente->getPaciente()->getDomicilio()->getCp() : '-' }}</p>
 					</div>
 				</div>
 				<div class="form-group">
 					{!! Form::label('municipio', 'Municipio:', ['class' => 'control-label col-md-3']) !!}
 					<div class="col-md-8">
-						<p class="form-control-static">{{ $expediente->getPaciente()->getDomicilio()->getMunicipio() }}</p>
+						<p class="form-control-static">{{ !is_null($expediente->getPaciente()->getDomicilio()) ? $expediente->getPaciente()->getDomicilio()->getMunicipio() : '-' }}</p>
 					</div>
 				</div>
 				<div class="form-group">
