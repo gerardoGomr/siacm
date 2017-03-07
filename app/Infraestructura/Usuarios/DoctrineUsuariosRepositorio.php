@@ -1,15 +1,16 @@
 <?php
 namespace Siacme\Infraestructura\Usuarios;
 
+use PDOException;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Doctrine\ORM\EntityManager;
 use Siacme\Dominio\Usuarios\Usuario;
-use Siacme\Exceptions\PDO\PDOLogger;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Siacme\Exceptions\SiacmeLogger;
 
 /**
- * Class UsuariosRepositorioMySQL
+ * Class DoctrineUsuariosRepositorio
  * @package Siacme\Infraestructura\Usuarios
  * @author  Gerardo Adrián Gómez Ruiz
  */
@@ -38,10 +39,9 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 	{
 		// TODO: Implement obtenerPorUsername() method.
 		try {
-			$query = $this->entityManager->createQuery('SELECT u, us, e FROM Usuarios:Usuario u JOIN u.usuarioTipo us JOIN u.especialidad e WHERE u.username = :username')
-				->setParameter('username', $username);
-
-			$usuario = $query->getResult();
+            $usuario = $this->entityManager->createQuery('SELECT u, e FROM Usuarios:Usuario u JOIN u.especialidad e WHERE u.username = :username')
+				->setParameter('username', $username)
+                ->getResult();
 
 			if (count($usuario) > 0) {
 				return $usuario[0];
@@ -49,8 +49,8 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 
 			return null;
 
-		} catch (\PDOException $e) {
-            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+		} catch (PDOException $e) {
+            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
             $pdoLogger->log($e);
             return null;
         }
@@ -64,10 +64,9 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 	{
 		// TODO: Implement obtenerPorId() method.
 		try {
-			$query = $this->entityManager->createQuery('SELECT u, us, e FROM Usuarios:Usuario u JOIN u.usuarioTipo us JOIN u.especialidad e WHERE u.id = :id')
-					->setParameter('id', $id);
-
-			$usuario = $query->getResult();
+            $usuario = $this->entityManager->createQuery('SELECT u, e FROM Usuarios:Usuario u JOIN u.especialidad e WHERE u.id = :id')
+                ->setParameter('id', $id)
+                ->getResult();
 
 			if (count($usuario) > 0) {
 				return $usuario[0];
@@ -75,18 +74,61 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 
 			return null;
 
-		} catch (\PDOException $e) {
-			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+		} catch (PDOException $e) {
+			$pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return null;
 		}
 	}
 
 	/**
+     * obtener una lista de usuarios
+     *
 	 * @return array
 	 */
 	public function obtenerTodos()
 	{
 		// TODO: Implement obtenerTodos() method.
+        try {
+            $usuarios = $this->entityManager->createQuery('SELECT u, e FROM Usuarios:Usuario u JOIN u.especialidad e ORDER BY u.paterno')
+                ->setMaxResults(50)
+                ->getResult();
+
+            if (count($usuarios) > 0) {
+                return $usuarios;
+            }
+
+            return null;
+
+        } catch (PDOException $e) {
+            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
+        }
 	}
+
+    /**
+     * persistir un usuario
+     *
+     * @param Usuario $usuario
+     * @return bool
+     */
+    public function persistir(Usuario $usuario)
+    {
+        // TODO: Implement persistir() method.
+        try {
+            if (is_null($usuario->getId())) {
+                $this->entityManager->persist($usuario);
+            }
+
+            $this->entityManager->flush();
+
+            return true;
+
+        } catch (PDOException $e) {
+            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return false;
+        }
+    }
 }

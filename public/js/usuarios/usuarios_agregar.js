@@ -1,7 +1,7 @@
 $(function() {
 	// espacios para variables
 	var $formUsuario = $('#formUsuario'),
-	    $guardarForm = $('#guardarForm');
+	    $crearUsuario = $('#crearUsuario');
 	
 	setTimeout(function () {
 		$('#clave').focus();
@@ -9,35 +9,41 @@ $(function() {
 
 	// inicializar form
 	init();
-
-	// validación básica
 	$formUsuario.validate();
-
-	// validar formulario
 	agregaValidacionesElementos($formUsuario);
 
 	// guardar form
-	$guardarForm.on('click', function () {
+	$crearUsuario.on('click', function () {
 		if ($formUsuario.valid()) {
 			$.ajax({
-				type:     'post',
-				url:      $formUsuario.attr('action'),
+                url:      $formUsuario.attr('action'),
+				type:     'POST',
 				data: 	  $formUsuario.serialize(),
-				dataType: 'json'
-			})
-			.done(function(resultado) {
+				dataType: 'json',
+				beforeSend: function () {
+                	$('#loadingAgregarUsuario').removeClass('hide');
+                	$crearUsuario.addClass('hide');
+				}
+
+			}).done(function(resultado) {
+                $('#loadingAgregarUsuario').addClass('hide');
+                $crearUsuario.removeClass('hide');
+
 				if (resultado.respuesta === 'fail') {
 					bootbox.alert('Ocurrió un error al generar al usuario. Intente de nuevo.');
 					return false;
 				}
 
 				bootbox.alert('Usuario generado con éxito.', function() {
-					window.location.href = '';
+					window.location.href = '/usuarios';
 				});
-			})
-			.fail(function (xQr, textStatus, errorThrown) {
+
+			}).fail(function (jqHXR, textStatus, errorThrown) {
+                $('#loadingAgregarUsuario').addClass('hide');
+                $crearUsuario.removeClass('hide');
+
 				console.log(textStatus + ': ' + errorThrown);
-				bootbox.alert('Imposible realizar la operación solicitada.');
+				bootbox.alert('Ocurrió un error al generar al usuario. Intente de nuevo.');
 			});
 		}
 	});
