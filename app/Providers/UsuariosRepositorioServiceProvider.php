@@ -2,6 +2,7 @@
 namespace Siacme\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Siacme\Infraestructura\Usuarios\DoctrineUsuariosRepositorio;
 
 class UsuariosRepositorioServiceProvider extends ServiceProvider
@@ -23,7 +24,7 @@ class UsuariosRepositorioServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio', function($app) {
+        $this->app->bind(UsuariosRepositorio::class, function($app) {
             return new DoctrineUsuariosRepositorio($app['em']);
         });
     }

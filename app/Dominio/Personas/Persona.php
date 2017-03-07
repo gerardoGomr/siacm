@@ -145,4 +145,32 @@ abstract class Persona
     {
         return $this->email;
     }
+
+    /**
+     * asignar datos personales de la persona
+     *
+     * @param string $nombre
+     * @param string $paterno
+     * @param string $materno
+     */
+    public function asignarDatosPersonales($nombre, $paterno, $materno)
+    {
+        $this->nombre  = $nombre;
+        $this->paterno = $paterno;
+        $this->materno = $materno;
+    }
+
+    /**
+     * asignar datos de contacto de la persona
+     *
+     * @param string $telefono
+     * @param string $celular
+     * @param string $email
+     */
+    public function asignarDatosDeContacto($telefono, $celular, $email)
+    {
+        $this->telefono = $telefono;
+        $this->celular  = $celular;
+        $this->email    = $email;
+    }
 }

@@ -170,7 +170,8 @@ return [
         Siacme\Providers\ComportamientosFranklRepositorioServiceProvider::class,
         Siacme\Providers\DientesRepositorioServiceProvider::class,
         Siacme\Providers\InterconsultasRepositorioServiceProvider::class,
-        Siacme\Providers\ConsultaCostosRepositorioServiceProvider::class
+        Siacme\Providers\ConsultaCostosRepositorioServiceProvider::class,
+        Siacme\Providers\EspecialidadesRepositorioServiceProvider::class
     ],
 
     /*

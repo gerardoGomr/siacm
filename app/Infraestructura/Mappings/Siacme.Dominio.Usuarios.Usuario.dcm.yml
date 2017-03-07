@@ -1,5 +1,6 @@
 Siacme\Dominio\Usuarios\Usuario:
   type: entity
+  extends: Siacme\Dominio\Personas\Persona
   table: usuario
   id:
     id:
@@ -17,45 +18,23 @@ Siacme\Dominio\Usuarios\Usuario:
       length: 100
       nullable: false
       column: Passwd
-    nombre:
-      type: string
-      length: 80
-      nullable: false
-      column: Nombre
-    paterno:
-      type: string
-      length: 80
-      nullable: false
-      column: Paterno
-    materno:
-      type: string
-      length: 80
-      nullable: false
-      column: Materno
     activo:
       type: boolean
       nullable: false
       column: Activo
-    telefono:
-      type: string
-      length: 20
-      nullable: true
-      column: Telefono
-    celular:
-      type: string
-      length: 20
-      nullable: true
-      column: celular
-  oneToOne:
-    usuarioTipo:
-      targetEntity: UsuarioTipo
-      joinColumn:
-        name: UsuarioTipoId
-        referencedColumnName: id
-      cascade: ["persist"]
+    rol:
+      type: smallint
+      column: Rol
+    fechaAlta:
+      type: datetime
+      column: FechaAlta
+    fechaBaja:
+      type: datetime
+      column: FechaBaja
+  manyToOne:
     especialidad:
       targetEntity: Especialidad
       joinColumn:
         name: EspecialidadId
         referencedColumnName: id
-      cascade: ["persist"]
+      cascade: [persist]

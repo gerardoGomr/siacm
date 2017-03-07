@@ -1,0 +1,33 @@
+Siacme\Dominio\Personas\Persona:
+  type: mappedSuperclass
+  fields:
+    nombre:
+      type: string
+      length: 80
+      nullable: false
+      column: Nombre
+    paterno:
+      type: string
+      length: 80
+      nullable: false
+      column: Paterno
+    materno:
+      type: string
+      length: 80
+      nullable: false
+      column: Materno
+    telefono:
+      type: string
+      length: 20
+      nullable: true
+      column: Telefono
+    celular:
+      type: string
+      length: 20
+      nullable: true
+      column: Celular
+    email:
+      type: string
+      length: 100
+      nullable: true
+      column: Email

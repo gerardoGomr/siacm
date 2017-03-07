@@ -174,6 +174,12 @@ function agregaValidacionesElementos($form)
 		});
 	});
 
+    $form.find('.email').each(function() {
+        $(this).rules('add', {
+            email: true
+        });
+    });
+
 	$form.find('.pdf').each(function() {
 		$(this).rules('add', {
 			extension: 'pdf'

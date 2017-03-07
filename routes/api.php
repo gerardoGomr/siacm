@@ -197,9 +197,16 @@ Route::group(['middleware' => 'checaLogin'], function() {
     Route::post('pacientes/otrosTratamientos/cobrar', 'Pacientes\PacientesController@cobrarOtroTratamiento');
 
 	/////////////////////////////////////////// USUARIOS /////////////////////////////////////////////////////
+    // ruta para mostrar listado de usuarios
 	Route::get('usuarios', 'Usuarios\UsuariosController@index');
+
+	// ruta para agregar nuevo usuario
 	Route::get('usuarios/agregar', 'Usuarios\UsuariosController@agregar');
+
+	// ruta para buscar usuarios
 	Route::post('usuarios/buscar', 'Usuarios\UsuariosController@buscar');
+
+	//ruta para guardar usuario
 	Route::post('usuarios/agregar', [
 		'as'  => 'usuarios-agregar',
 		'uses' =>'Usuarios\UsuariosController@guardarUsuario'
