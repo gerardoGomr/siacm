@@ -349,9 +349,11 @@ class Odontograma
             }
         }
 
-        if (!$encontrado) {
+        return null;
+
+        /*if (!$encontrado) {
             throw new Exception('No existe el odontograma diente');
-        }
+        }*/
     }
 
     /**

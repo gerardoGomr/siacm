@@ -53,13 +53,11 @@ class Cita
 	 * Cita constructor.
 	 * @param string $comentario
 	 * @param Paciente $paciente
-	 * @param null $id
 	 */
-	public function __construct($comentario = null, Paciente $paciente = null, $id = null)
+	public function __construct($comentario = null, Paciente $paciente = null)
 	{
 		$this->comentario = $comentario;
 		$this->paciente   = $paciente;
-		$this->id         = $id;
 	}
 
 	/**
@@ -95,7 +93,7 @@ class Cita
 	}
 
 	/**
-	 * @return CitaEstatus
+	 * @return int
 	 */
 	public function getEstatus()
 	{

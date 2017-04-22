@@ -12,11 +12,14 @@ use Siacme\Aplicacion\Factories\PacientesVistaFactory;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\ReciboPago;
+use Siacme\Aplicacion\Reportes\Consultas\ReporteTratamientoOdontologia;
 use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
 use Siacme\Dominio\Cobros\CobroTratamientoOdontologia;
 use Siacme\Dominio\Consultas\CobroConsulta;
+use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
 use Siacme\Dominio\Consultas\Repositorios\RecetasRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
+use Siacme\Dominio\Expedientes\Repositorios\TratamientosOdontologiaRepositorio;
 use Siacme\Dominio\Expedientes\TratamientoOdontologia;
 use Siacme\Dominio\Interconsultas\Repositorios\InterconsultasRepositorio;
 use Siacme\Dominio\Expedientes\Anexo;
@@ -180,12 +183,14 @@ class PacientesController extends Controller
      */
     public function agregarTratamiento(Request $request, ExpedientesRepositorio $expedientesRepositorio)
     {
-        $ortopedia    = $request->get('ortopedia') ? true : false;
-        $ortodoncia   = $request->get('ortodoncia') ? true : false;
-        $expedienteId = (int)base64_decode($request->get('expedienteId'));
-        $expediente   = $expedientesRepositorio->obtenerPorId($expedienteId);
+        $ortopedia     = $request->get('ortopedia') ? true : false;
+        $ortodoncia    = $request->get('ortodoncia') ? true : false;
+        $observaciones = $request->get('observaciones');
+        $tx            = $request->get('tx');
+        $expedienteId  = (int)base64_decode($request->get('expedienteId'));
+        $expediente    = $expedientesRepositorio->obtenerPorId($expedienteId);
 
-        $tratamiento = new TratamientoOdontologia($request->get('dx'), (double)$request->get('costo'), (int)$request->get('duracion'), (int)$request->get('mensualidades'), $expediente->getExpedienteEspecialidad(), new ColeccionArray());
+        $tratamiento = new TratamientoOdontologia($request->get('dx'), $tx, $observaciones, (double)$request->get('costo'), (int)$request->get('duracion'), (int)$request->get('mensualidades'), $expediente->getExpedienteEspecialidad(), new ColeccionArray());
         $tratamiento->generarTratamientos($ortopedia, $ortodoncia);
 
         if (is_null($expediente->getExpedienteEspecialidad()->getOtrosTratamientos())) {
@@ -199,6 +204,42 @@ class PacientesController extends Controller
         }
 
         return response()->json($respuesta);
+    }
+
+    public function editarTratamiento(Request $request, TratamientosOdontologiaRepositorio $tratamientosOdontologiaRepositorio)
+    {
+        $respuesta     = ['estatus' => 'OK'];
+        $ortopedia     = $request->get('ortopedia') ? true : false;
+        $ortodoncia    = $request->get('ortodoncia') ? true : false;
+        $observaciones = $request->get('observaciones');
+        $tx            = $request->get('tx');
+
+        $tratamientoOdontologia = $tratamientosOdontologiaRepositorio->obtenerPorId((int) $request->get('otroTratamientoId'));
+        $tratamientoOdontologia->actualizar($request->get('dx'), $observaciones, $tx, (double)$request->get('costo'), (int)$request->get('duracion'), (int)$request->get('mensualidades'));
+        $tratamientoOdontologia->generarTratamientos($ortopedia, $ortodoncia);
+
+        if (!$tratamientosOdontologiaRepositorio->persistir($tratamientoOdontologia)) {
+            $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = 'Error al actualizar en la base de datos';
+        }
+
+        return response()->json($respuesta);
+    }
+
+    /**
+     * abrir reporte de tratamiento de ortopedia ortodoncia en pdf
+     *
+     * @param string $otroTratamientoId
+     * @param TratamientosOdontologiaRepositorio $tratamientosOdontologiaRepositorio
+     */
+    public function otroTratamientoPdf($otroTratamientoId, TratamientosOdontologiaRepositorio $tratamientosOdontologiaRepositorio)
+    {
+        $tratamientoOdontologia = $tratamientosOdontologiaRepositorio->obtenerPorId((int) base64_decode($otroTratamientoId));
+        $reporte = new ReporteTratamientoOdontologia($tratamientoOdontologia);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
     }
 
     /**
@@ -271,33 +312,21 @@ class PacientesController extends Controller
 
     /**
      * se marca la consulta como pagada y se especifica la forma de pago
+     *
      * @param Request $request
+     * @param ConsultasRepositorio $consultasRepositorio
      * @return \Illuminate\Http\JsonResponse
      */
-    public function cobrarConsulta(Request $request)
+    public function cobrarConsulta(Request $request, ConsultasRepositorio $consultasRepositorio)
     {
         $respuesta    = [];
         $consultaId   = (int)base64_decode($request->get('consultaId'));
-        $expedienteId = (int)base64_decode($request->get('expedienteId'));
         $formaPago    = (int)$request->get('formaPago');
         $pago         = (double)$request->get('pago');
 
-        $expediente = $this->expedientesRepositorio->obtenerPorId($expedienteId);
+        $consulta = $consultasRepositorio->obtenerPorId($consultaId);
 
-        try {
-            $consulta = $expediente->obtenerConsulta($consultaId);
-
-        } catch (Exception $e) {
-            $logger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/exceptions/exc_' . date('Y-m-d') . '.log', Logger::ERROR));
-            $logger->log($e);
-
-            $respuesta['mensaje'] = $e->getMessage();
-            $respuesta['estatus'] = 'fail';
-
-            return response()->json($respuesta);
-        }
-
-        $cobroConsulta = new CobroConsulta($consulta->costoReal(), $pago, $formaPago, new DateTime());
+        $cobroConsulta = new CobroConsulta($consulta->getCosto(), $pago, $formaPago, new DateTime());
 
         try {
             $consulta->registrarPago($cobroConsulta);
@@ -316,8 +345,9 @@ class PacientesController extends Controller
         }
 
         $respuesta['estatus'] = 'OK';
-        if (!$this->expedientesRepositorio->persistir($expediente)) {
+        if (!$consultasRepositorio->persistir($consulta)) {
             $respuesta['estatus'] = 'fail';
+            $respuesta['mensaje'] = 'Ocurrió un error al persistir en la base de datos';
         }
 
         return response()->json($respuesta);
@@ -330,24 +360,14 @@ class PacientesController extends Controller
      * @param string $expedienteId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function generarReciboPago($consultaId, $expedienteId)
+    public function generarReciboPago($consultaId = null, ConsultasRepositorio $consultasRepositorio)
     {
-        $consultaId   = (int)base64_decode($consultaId);
-        $expedienteId = (int)base64_decode($expedienteId);
+        $this->validarQueryString($consultaId);
 
-        $expediente = $this->expedientesRepositorio->obtenerPorId($expedienteId);
+        $consultaId = (int)base64_decode($consultaId);
+        $consulta   = $consultasRepositorio->obtenerPorId($consultaId);
 
-        try {
-            $consulta = $expediente->obtenerConsulta($consultaId);
-
-        } catch (Exception $e) {
-            $logger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/exceptions/exc_' . date('Y-m-d') . '.log', Logger::ERROR));
-            $logger->log($e);
-
-            return;
-        }
-
-        $reporte = new ReciboPago($expediente, $consulta);
+        $reporte = new ReciboPago($consulta);
         $reporte->SetHeaderMargin(10);
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 60);

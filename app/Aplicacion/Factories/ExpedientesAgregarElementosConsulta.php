@@ -46,6 +46,11 @@ class ExpedientesAgregarElementosConsulta
 
                         // refetch para que doctrine los tome como ya existentes
                         foreach ($odontogramaDientes as $odontogramaDiente) {
+                            if (!$odontogramaDiente->tienePadecimientos()) {
+                                $odontograma->removerOdontogramaDiente($odontogramaDiente);
+                                break;
+                            }
+
                             $diente = $odontogramaDiente->getDiente();
 
                             $odontogramaDiente->removerDiente();

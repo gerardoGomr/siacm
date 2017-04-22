@@ -50,7 +50,6 @@ class VistasConsultasFactory
                 $otrosTratamientosRepositorio         = new DoctrineOtrosTratamientosRepositorio(App::getInstance()['em']);
                 $recetasRepositorio                   = new DoctrineRecetasRepositorio(App::getInstance()['em']);
                 $medicosReferenciaRepositorio         = new DoctrineMedicosReferenciaRepositorio(App::getInstance()['em']);
-                $consultaCostosRepositorio            = new DoctrineConsultaCostosRepositorio(App::getInstance()['em']);
 
                 $comportamientosFrankl     = $comportamientosFranklRepositorio->obtenerTodos();
                 $morfologiasCraneofaciales = $morfologiasCraneofacialesRepositorio->obtenerTodos();

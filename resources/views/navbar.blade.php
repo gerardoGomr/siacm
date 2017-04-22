@@ -3,15 +3,6 @@
 		<button class="btn btn-sm btn-navbar btn-primary btn-stroke"><i class="fa fa-bars fa-2x"></i></button>
 	</div>
 
-  	<div class="col-md-3 padding-none visible-md visible-lg">
-    	<div class="input-group innerLR">
-      		<input type="text" class="form-control input-sm" placeholder="Search stories ...">
-      		<span class="input-group-btn">
-        		<button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
-      		</span>
-    	</div><!-- /input-group -->
-  	</div>
-
 	<div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs">
 		<div class="dropdown username hidden-xs pull-left">
 			<a class="dropdown-toggle dropdown-hover" data-toggle="dropdown" href="#">

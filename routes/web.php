@@ -178,6 +178,12 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// generar tratamientos ortopedia - ortodoncia
 	Route::post('pacientes/tratamiento/otros/agregar', 'Pacientes\PacientesController@agregarTratamiento');
 
+	// editar tratamientos ortopedia - ortodoncia
+    Route::post('pacientes/tratamiento/otros/editar', 'Pacientes\PacientesController@editarTratamiento');
+
+    // tratamientos ortopedia - ortodoncia
+    Route::get('pacientes/tratamientos/otros/pdf/{tratamientoId?}', 'Pacientes\PacientesController@otroTratamientoPdf');
+
 	// generar receta en PDF
 	Route::get('pacientes/receta/{recetaId}/{expedienteId}', 'Pacientes\PacientesController@generarReceta');
 
@@ -188,10 +194,10 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	Route::get('pacientes/plan/{odontogramaId}/{expedienteId}', 'Pacientes\PacientesController@generarPlan');
 
     // cobrar consulta
-    Route::post('pacientes/consulta/cobrar', 'Pacientes\PacientesController@cobrarConsulta');
+    Route::post('pacientes/consultas/cobrar', 'Pacientes\PacientesController@cobrarConsulta');
 
     // generar PDF de comprobante de pago
-    Route::get('pacientes/consulta/recibo/{consultaId}/{expedienteId}', 'Pacientes\PacientesController@generarReciboPago');
+    Route::get('pacientes/consulta/recibo/{consultaId?}', 'Pacientes\PacientesController@generarReciboPago');
 
     // cobrar otros tratamientos
     Route::post('pacientes/otrosTratamientos/cobrar', 'Pacientes\PacientesController@cobrarOtroTratamiento');
@@ -223,4 +229,10 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
     // ruta para cambiar la contraseña de usuario
     Route::post('usuarios/cambiar-contrasenia', 'Usuarios\UsuariosController@cambiarContrasenia');
+
+    // ruta para pago de consultas
+    Route::get('consultas/pago/{medicoId?}', 'Pagos\ConsultasPagosController@index');
+
+    // ruta para buscar no pagadas
+    Route::post('consultas/buscar/no-pagadas', 'Pagos\ConsultasPagosController@buscarNoPagadas');
 });

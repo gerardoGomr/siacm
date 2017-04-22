@@ -187,6 +187,19 @@ class ConsultasController extends Controller
             try {
                 $odontograma->agregarPadecimientoADiente($numeroDiente, $padecimiento);
 
+                $odontogramaDiente = $odontograma->obtenerOdontogramaDiente($numeroDiente);
+
+                if ($padecimiento->getNombre() === 'Sano') {
+                    // si ya hay un elemento y se especifica sano, solo se queda con sano
+                    if ($odontogramaDiente->tienePadecimientos()) {
+                        $odontogramaDiente->removerPadecimientos();
+                        // agregando sano nuevamente
+                        $odontograma->agregarPadecimientoADiente($numeroDiente, $padecimiento);
+                    } else {
+                        break;
+                    }
+                }
+
             } catch (Exception $e) {
                 $respuesta['estatus'] = 'fail';
                 $respuesta['error']   = $e->getMessage();
@@ -481,11 +494,10 @@ class ConsultasController extends Controller
      * @param OtrosTratamientosRepositorio $otrosTratamientosRepositorio
      * @param DientesRepositorio $dientesRepositorio
      * @param MedicosReferenciaRepositorio $medicosReferenciaRepositorio
-     * @param ConsultaCostosRepositorio $consultaCostosRepositorio
      * @return \Illuminate\Http\JsonResponse
      * @throws \Siacme\Exceptions\CostoYaHaSidoAgregadoAConsultaException
      */
-    public function guardarConsulta(RegistrarConsultaRequest $request, ComportamientosFranklRepositorio $comportamientosFranklRepositorio, PacientesRepositorio $pacientesRepositorio, DientePadecimientosRepositorio $dientePadecimientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DientesRepositorio $dientesRepositorio, MedicosReferenciaRepositorio $medicosReferenciaRepositorio, ConsultaCostosRepositorio $consultaCostosRepositorio)
+    public function guardarConsulta(RegistrarConsultaRequest $request, ComportamientosFranklRepositorio $comportamientosFranklRepositorio, PacientesRepositorio $pacientesRepositorio, DientePadecimientosRepositorio $dientePadecimientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DientesRepositorio $dientesRepositorio, MedicosReferenciaRepositorio $medicosReferenciaRepositorio)
     {
         $respuesta = [];
         // como se va a almacenar la consulta
@@ -567,6 +579,11 @@ class ConsultasController extends Controller
         }
 
         $respuesta['estatus'] = 'OK';
+        if ($request->session()->has('odontograma')) {
+            $respuesta['odontogramaId'] = base64_encode($expediente->getExpedienteEspecialidad()->getOdontogramas()->last()->getId());
+            $respuesta['expedienteId']  = base64_encode($expediente->getId());
+        }
+
         $request->session()->forget('citaId');
 
         return response()->json($respuesta);

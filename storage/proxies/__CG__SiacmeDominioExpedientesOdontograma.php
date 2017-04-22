@@ -64,10 +64,10 @@ class Odontograma extends \Siacme\Dominio\Expedientes\Odontograma implements \Do
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'odontogramaDientes', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'otrosTratamientos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'expedienteEspecialidad'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'odontogramaDientes', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'otrosTratamientos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'dirigidoA', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'expedienteEspecialidad'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'odontogramaDientes', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'otrosTratamientos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'expedienteEspecialidad'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'odontogramaDientes', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'otrosTratamientos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'dirigidoA', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\Odontograma' . "\0" . 'expedienteEspecialidad'];
     }
 
     /**
@@ -257,12 +257,45 @@ class Odontograma extends \Siacme\Dominio\Expedientes\Odontograma implements \Do
     /**
      * {@inheritDoc}
      */
+    public function removerOdontogramaDiente(\Siacme\Dominio\Expedientes\OdontogramaDiente $odontogramaDiente)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerOdontogramaDiente', [$odontogramaDiente]);
+
+        return parent::removerOdontogramaDiente($odontogramaDiente);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getOdontogramaDiente($numero)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOdontogramaDiente', [$numero]);
 
         return parent::getOdontogramaDiente($numero);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function dirigidoA()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'dirigidoA', []);
+
+        return parent::dirigidoA();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function establecerAQuienVaDirigido($dirigidoA)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'establecerAQuienVaDirigido', [$dirigidoA]);
+
+        return parent::establecerAQuienVaDirigido($dirigidoA);
     }
 
     /**
@@ -301,7 +334,7 @@ class Odontograma extends \Siacme\Dominio\Expedientes\Odontograma implements \Do
     /**
      * {@inheritDoc}
      */
-    public function agregarOtroTratamiento(\Siacme\Dominio\Expedientes\OtroTratamiento $otroTratamiento)
+    public function agregarOtroTratamiento(\Siacme\Dominio\Expedientes\OdontogramaOtroTratamiento $otroTratamiento)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarOtroTratamiento', [$otroTratamiento]);
@@ -378,12 +411,45 @@ class Odontograma extends \Siacme\Dominio\Expedientes\Odontograma implements \Do
     /**
      * {@inheritDoc}
      */
+    public function obtenerOdontogramaDiente($numero)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'obtenerOdontogramaDiente', [$numero]);
+
+        return parent::obtenerOdontogramaDiente($numero);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function asignadoA(\Siacme\Dominio\Expedientes\ExpedienteJohanna $expedienteJohanna)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignadoA', [$expedienteJohanna]);
 
         return parent::asignadoA($expedienteJohanna);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function obtenerOtroTratamiento(\Siacme\Dominio\Expedientes\OtroTratamiento $otroTratamiento)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'obtenerOtroTratamiento', [$otroTratamiento]);
+
+        return parent::obtenerOtroTratamiento($otroTratamiento);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function verificarSiYaEstaTodoAtendido()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'verificarSiYaEstaTodoAtendido', []);
+
+        return parent::verificarSiYaEstaTodoAtendido();
     }
 
 }

@@ -16,6 +16,12 @@ Siacme\Dominio\Expedientes\TratamientoOdontologia:
     dx:
       type: string
       column: DX
+    tx:
+      type: string
+      column: TX
+    observaciones:
+      type: string
+      column: Observaciones
     costo:
       type: float
       column: Costo

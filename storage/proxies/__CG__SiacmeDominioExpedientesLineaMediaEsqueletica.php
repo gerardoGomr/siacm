@@ -195,4 +195,15 @@ class LineaMediaEsqueletica extends \Siacme\Dominio\Expedientes\LineaMediaEsquel
         return parent::getMedida();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function medidaMordida()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'medidaMordida', []);
+
+        return parent::medidaMordida();
+    }
+
 }

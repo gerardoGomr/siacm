@@ -298,4 +298,26 @@ class MedicoReferencia extends \Siacme\Dominio\Interconsultas\MedicoReferencia i
         return parent::getEmail();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function asignarDatosPersonales($nombre, $paterno, $materno)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignarDatosPersonales', [$nombre, $paterno, $materno]);
+
+        return parent::asignarDatosPersonales($nombre, $paterno, $materno);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function asignarDatosDeContacto($telefono, $celular, $email)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignarDatosDeContacto', [$telefono, $celular, $email]);
+
+        return parent::asignarDatosDeContacto($telefono, $celular, $email);
+    }
+
 }

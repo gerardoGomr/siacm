@@ -64,10 +64,10 @@ class Usuario extends \Siacme\Dominio\Usuarios\Usuario implements \Doctrine\ORM\
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'username', 'passwd', 'activo', 'usuarioTipo', 'especialidad', 'nombre', 'paterno', 'materno', 'sexo', 'telefono', 'celular', 'email'];
+            return ['__isInitialized__', 'id', 'username', 'passwd', 'activo', 'rol', 'especialidad', 'fechaAlta', 'fechaBaja', 'nombre', 'paterno', 'materno', 'sexo', 'telefono', 'celular', 'email'];
         }
 
-        return ['__isInitialized__', 'id', 'username', 'passwd', 'activo', 'usuarioTipo', 'especialidad', 'nombre', 'paterno', 'materno', 'sexo', 'telefono', 'celular', 'email'];
+        return ['__isInitialized__', 'id', 'username', 'passwd', 'activo', 'rol', 'especialidad', 'fechaAlta', 'fechaBaja', 'nombre', 'paterno', 'materno', 'sexo', 'telefono', 'celular', 'email'];
     }
 
     /**
@@ -246,12 +246,23 @@ class Usuario extends \Siacme\Dominio\Usuarios\Usuario implements \Doctrine\ORM\
     /**
      * {@inheritDoc}
      */
-    public function getUsuarioTipo()
+    public function getRol()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getUsuarioTipo', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRol', []);
 
-        return parent::getUsuarioTipo();
+        return parent::getRol();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function rol()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'rol', []);
+
+        return parent::rol();
     }
 
     /**
@@ -263,6 +274,72 @@ class Usuario extends \Siacme\Dominio\Usuarios\Usuario implements \Doctrine\ORM\
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEspecialidad', []);
 
         return parent::getEspecialidad();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFechaAlta(): \DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFechaAlta', []);
+
+        return parent::getFechaAlta();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFechaBaja(): \DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFechaBaja', []);
+
+        return parent::getFechaBaja();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function asignarDatosDeNivel(\Siacme\Dominio\Usuarios\Especialidad $especialidad, $rol)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignarDatosDeNivel', [$especialidad, $rol]);
+
+        return parent::asignarDatosDeNivel($especialidad, $rol);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function desactivar(\DateTime $fechaBaja)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'desactivar', [$fechaBaja]);
+
+        return parent::desactivar($fechaBaja);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function activar()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'activar', []);
+
+        return parent::activar();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function cambiarContrasenia($nuevaContrasenia)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'cambiarContrasenia', [$nuevaContrasenia]);
+
+        return parent::cambiarContrasenia($nuevaContrasenia);
     }
 
     /**
@@ -351,6 +428,28 @@ class Usuario extends \Siacme\Dominio\Usuarios\Usuario implements \Doctrine\ORM\
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getEmail', []);
 
         return parent::getEmail();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function asignarDatosPersonales($nombre, $paterno, $materno)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignarDatosPersonales', [$nombre, $paterno, $materno]);
+
+        return parent::asignarDatosPersonales($nombre, $paterno, $materno);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function asignarDatosDeContacto($telefono, $celular, $email)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignarDatosDeContacto', [$telefono, $celular, $email]);
+
+        return parent::asignarDatosDeContacto($telefono, $celular, $email);
     }
 
 }

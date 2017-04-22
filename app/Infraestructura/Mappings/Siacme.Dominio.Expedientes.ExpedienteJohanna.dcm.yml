@@ -96,8 +96,9 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       nullable: true
       column: Notas
     edadErupcionoPrimerDiente:
-      type: integer
+      type: string
       nullable: true
+      length: 50
       column: EdadErupcionoPrimerDiente
     haPresentadoDolorBoca:
       type: boolean

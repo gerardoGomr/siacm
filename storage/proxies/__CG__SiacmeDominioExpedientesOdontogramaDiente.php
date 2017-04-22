@@ -279,6 +279,17 @@ class OdontogramaDiente extends \Siacme\Dominio\Expedientes\OdontogramaDiente im
     /**
      * {@inheritDoc}
      */
+    public function removerPadecimiento(\Siacme\Dominio\Expedientes\DientePadecimiento $dientePadecimiento)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerPadecimiento', [$dientePadecimiento]);
+
+        return parent::removerPadecimiento($dientePadecimiento);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function agregarTratamiento(\Siacme\Dominio\Expedientes\DientePlan $dientePlan)
     {
 
@@ -296,6 +307,94 @@ class OdontogramaDiente extends \Siacme\Dominio\Expedientes\OdontogramaDiente im
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'eliminarTratamiento', [$dienteTratamiento]);
 
         return parent::eliminarTratamiento($dienteTratamiento);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removerDiente()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerDiente', []);
+
+        return parent::removerDiente();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarDiente(\Siacme\Dominio\Expedientes\Diente $diente)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarDiente', [$diente]);
+
+        return parent::agregarDiente($diente);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removerOdontograma()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerOdontograma', []);
+
+        return parent::removerOdontograma();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarOdontograma(\Siacme\Dominio\Expedientes\Odontograma $odontograma)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarOdontograma', [$odontograma]);
+
+        return parent::agregarOdontograma($odontograma);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function costoTratamientos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'costoTratamientos', []);
+
+        return parent::costoTratamientos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function atenderTratamientos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'atenderTratamientos', []);
+
+        return parent::atenderTratamientos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function tratamientosAtendidos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tratamientosAtendidos', []);
+
+        return parent::tratamientosAtendidos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function descripcionTratamientos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'descripcionTratamientos', []);
+
+        return parent::descripcionTratamientos();
     }
 
 }

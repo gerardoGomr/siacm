@@ -17,6 +17,11 @@ use PDOException;
 class DoctrineDienteTratamientosRepositorio implements DienteTratamientosRepositorio
 {
     /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
      * DoctrinePadecimientosRepositorio constructor.
      * @param EntityManager $em
      */

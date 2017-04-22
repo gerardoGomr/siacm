@@ -98,4 +98,12 @@ abstract class AbstractExpediente
     {
         $this->primeraVez = false;
     }
+
+    /**
+     * @return Expediente
+     */
+    public function getExpediente()
+    {
+        return $this->expediente;
+    }
 }

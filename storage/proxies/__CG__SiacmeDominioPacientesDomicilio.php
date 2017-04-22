@@ -221,4 +221,15 @@ class Domicilio extends \Siacme\Dominio\Pacientes\Domicilio implements \Doctrine
         return parent::getMunicipio();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function direccionCompleta()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'direccionCompleta', []);
+
+        return parent::direccionCompleta();
+    }
+
 }

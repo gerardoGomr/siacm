@@ -64,10 +64,10 @@ class Diente extends \Siacme\Dominio\Expedientes\Diente implements \Doctrine\ORM
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'numero'];
+            return ['__isInitialized__', 'numero', 'tipo'];
         }
 
-        return ['__isInitialized__', 'numero'];
+        return ['__isInitialized__', 'numero', 'tipo'];
     }
 
     /**
@@ -186,6 +186,50 @@ class Diente extends \Siacme\Dominio\Expedientes\Diente implements \Doctrine\ORM
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNumero', []);
 
         return parent::getNumero();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTipo(): int
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTipo', []);
+
+        return parent::getTipo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function esTemporal()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'esTemporal', []);
+
+        return parent::esTemporal();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function esPermanente()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'esPermanente', []);
+
+        return parent::esPermanente();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function tipo(): string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tipo', []);
+
+        return parent::tipo();
     }
 
 }

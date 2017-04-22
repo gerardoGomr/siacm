@@ -2,10 +2,11 @@
 namespace Siacme\Infraestructura\Citas;
 
 use Doctrine\ORM\EntityManager;
+use PDOException;
 use Siacme\Dominio\Citas\Cita;
 use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Dominio\Usuarios\Usuario;
-use Siacme\Exceptions\PDO\PDOLogger;
+use Siacme\Exceptions\PDO\SiacmeLogger;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -16,6 +17,11 @@ use Monolog\Handler\StreamHandler;
  */
 class DoctrineCitasRepositorio implements CitasRepositorio
 {
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
 	/**
 	 * DoctrineCitasRepositorio constructor.
 	 * @param EntityManager $em
@@ -44,8 +50,8 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 
 			return $citas[0];
 
-		} catch (\PDOException $e) {
-			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+		} catch (PDOException $e) {
+			$pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return null;
 		}
@@ -64,8 +70,8 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 			$this->entityManager->flush();
 			return true;
 
-		} catch (\PDOException $e) {
-			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+		} catch (PDOException $e) {
+			$pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return false;
 		}
@@ -73,6 +79,7 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 
 	/**
 	 * obtener citas por el medico
+     *
 	 * @param Usuario $medico
 	 * @param string|null $fecha
 	 * @return array|null
@@ -83,11 +90,11 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 		try {
 
 			if (!is_null($fecha)) {
-				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id AND c.fecha = :fecha")
-						->setParameter('id', $medico->getId())->setParameter('fecha', $fecha);
+				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id AND c.fecha = :fecha AND c.estatus != 5")
+                    ->setParameter('id', $medico->getId())->setParameter('fecha', $fecha);
 			} else {
-				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id")
-						->setParameter('id', $medico->getId());
+				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id AND c.estatus != 5")
+                    ->setParameter('id', $medico->getId());
 			}
 
 			$citas = $query->getResult();
@@ -98,8 +105,8 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 
 			return $citas;
 
-		} catch (\PDOException $e) {
-			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+		} catch (PDOException $e) {
+			$pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return null;
 		}
@@ -117,8 +124,8 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 			$this->entityManager->flush();
 			return true;
 
-		} catch (\PDOException $e) {
-			$pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+		} catch (PDOException $e) {
+			$pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
 			$pdoLogger->log($e);
 			return false;
 		}

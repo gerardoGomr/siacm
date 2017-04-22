@@ -64,10 +64,10 @@ class Consulta extends \Siacme\Dominio\Consultas\Consulta implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'padecimientoActual', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'interrogatorioAparatosSistemas', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'exploracionFisica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'notaMedica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comportamientoFrankl', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'receta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'consultaCosto', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'fecha', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'medico'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'padecimientoActual', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'interrogatorioAparatosSistemas', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'exploracionFisica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'notaMedica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comportamientoFrankl', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'pagada', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comentario', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costos', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'receta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'consultaCosto', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'fecha', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'cobroConsulta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'otrosCostos'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'padecimientoActual', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'interrogatorioAparatosSistemas', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'exploracionFisica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'notaMedica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comportamientoFrankl', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'receta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'consultaCosto', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'fecha', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'medico'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'padecimientoActual', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'interrogatorioAparatosSistemas', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'exploracionFisica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'notaMedica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comportamientoFrankl', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'pagada', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comentario', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costos', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'receta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'consultaCosto', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'fecha', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'cobroConsulta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'otrosCostos'];
     }
 
     /**
@@ -246,6 +246,28 @@ class Consulta extends \Siacme\Dominio\Consultas\Consulta implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
+    public function pagada()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'pagada', []);
+
+        return parent::pagada();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getComentario()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getComentario', []);
+
+        return parent::getComentario();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getCosto()
     {
 
@@ -274,17 +296,6 @@ class Consulta extends \Siacme\Dominio\Consultas\Consulta implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReceta', []);
 
         return parent::getReceta();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function nuevaOSubsecuente()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'nuevaOSubsecuente', []);
-
-        return parent::nuevaOSubsecuente();
     }
 
     /**
@@ -362,6 +373,127 @@ class Consulta extends \Siacme\Dominio\Consultas\Consulta implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'generadaPara', [$expediente]);
 
         return parent::generadaPara($expediente);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarCosto(\Siacme\Dominio\Consultas\ConsultaCosto $consultaCosto)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarCosto', [$consultaCosto]);
+
+        return parent::agregarCosto($consultaCosto);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function costoReal()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'costoReal', []);
+
+        return parent::costoReal();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function desgloseCosto()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'desgloseCosto', []);
+
+        return parent::desgloseCosto();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarComentario($comentario = '')
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarComentario', [$comentario]);
+
+        return parent::agregarComentario($comentario);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function registrarPago(\Siacme\Dominio\Cobros\Cobro $cobroConsulta)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'registrarPago', [$cobroConsulta]);
+
+        return parent::registrarPago($cobroConsulta);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function costoFormateado()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'costoFormateado', []);
+
+        return parent::costoFormateado();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function costoRealFormateado()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'costoRealFormateado', []);
+
+        return parent::costoRealFormateado();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCobroConsulta()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCobroConsulta', []);
+
+        return parent::getCobroConsulta();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCostos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCostos', []);
+
+        return parent::getCostos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarOtrosCostos($otroCosto)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarOtrosCostos', [$otroCosto]);
+
+        return parent::agregarOtrosCostos($otroCosto);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOtrosCostos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOtrosCostos', []);
+
+        return parent::getOtrosCostos();
     }
 
 }

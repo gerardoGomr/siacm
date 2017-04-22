@@ -62,15 +62,16 @@ class DibujadorPlanTratamiento implements DibujadorInterface
                 <tbody>';
 
         foreach ($this->odontograma->getOdontogramaDientes() as $odontogramaDiente) {
-
-            $html .= '
-                <tr>
-                    <td class="diente">' . $odontogramaDiente->getDiente()->getNumero() . '</td>
-                    <td>' . $this->dibujarPadecimientos($odontogramaDiente->getPadecimientos()) . '</td>
-                    <td>' . $this->dibujarComboTratamientos($odontogramaDiente, $this->dienteTratamientos) . '</td>
-                    <td>' . $this->dibujarCostosTratamientos($odontogramaDiente->getTratamientos()) . '</td>
-                </tr>
-            ';
+            if ($odontogramaDiente->tienePadecimientos()) {
+                $html .= '
+                    <tr>
+                        <td class="diente">' . $odontogramaDiente->getDiente()->getNumero() . '</td>
+                        <td>' . $this->dibujarPadecimientos($odontogramaDiente->getPadecimientos()) . '</td>
+                        <td>' . $this->dibujarComboTratamientos($odontogramaDiente, $this->dienteTratamientos) . '</td>
+                        <td>' . $this->dibujarCostosTratamientos($odontogramaDiente->getTratamientos()) . '</td>
+                    </tr>
+                ';
+            }
         }
 
         $html .= '</tbody></table>';

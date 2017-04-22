@@ -28,7 +28,9 @@ $('#formOtroTratamiento').on('click', '#guardarFormOtros', function () {
             }
 
             if (respuesta.estatus === 'OK') {
-                bootbox.alert('Tratamiento asignado con éxito.');
+                bootbox.alert('Tratamiento asignado/actualizado con éxito.', function () {
+                    $('#dvOtroTratamiento').modal('hide');
+                });
 
                 var url   = $('#resultadoPacientes').data('url'),
                     datos = {

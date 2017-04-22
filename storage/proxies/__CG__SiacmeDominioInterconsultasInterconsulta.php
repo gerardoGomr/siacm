@@ -64,10 +64,10 @@ class Interconsulta extends \Siacme\Dominio\Interconsultas\Interconsulta impleme
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'referencia', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'respuesta', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'respondida', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'expediente'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'referencia', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'respuesta', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'respondida', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'fechaInterconsulta'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'referencia', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'respuesta', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'respondida', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'expediente'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'referencia', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'respuesta', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'respondida', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Interconsultas\\Interconsulta' . "\0" . 'fechaInterconsulta'];
     }
 
     /**
@@ -252,6 +252,39 @@ class Interconsulta extends \Siacme\Dominio\Interconsultas\Interconsulta impleme
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'generadaPara', [$expediente]);
 
         return parent::generadaPara($expediente);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removerMedico()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removerMedico', []);
+
+        return parent::removerMedico();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarMedico(\Siacme\Dominio\Interconsultas\MedicoReferencia $medicoReferencia)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarMedico', [$medicoReferencia]);
+
+        return parent::agregarMedico($medicoReferencia);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFechaInterconsulta()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFechaInterconsulta', []);
+
+        return parent::getFechaInterconsulta();
     }
 
 }

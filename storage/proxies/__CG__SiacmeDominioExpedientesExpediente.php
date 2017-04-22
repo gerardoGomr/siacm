@@ -64,10 +64,10 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'numero', 'firma', 'expedienteEspecialidad', 'paciente', 'fechaCreacion', 'fotografia', 'nombrePediatra', 'nombreRecomienda', 'seHaAutomedicado', 'esAlergico', 'viveMadre', 'vivePadre', 'numHermanos', 'numHermanosVivos', 'numHermanosFinados', 'nombresEdadesHermanos', 'seLeHacenMoretones', 'haRequeridoTransfusion', 'haTenidoFracturas', 'haSidoIntervenido', 'haSidoHospitalizado', 'exFumador', 'exAlcoholico', 'exAdicto', 'estaBajoTratamiento', 'conQueSeHaAutomedicado', 'aQueMedicamentoEsAlergico', 'causaMuerteMadre', 'enfermedadesMadre', 'causaMuertePadre', 'enfermedadesPadre', 'causaMuerteHermanos', 'enfermedadesHermanos', 'enfermedadesAbuelosPaternos', 'enfermedadesAbuelosMaternos', 'especifiqueFracturas', 'especifiqueIntervencion', 'especifiqueHospitalizacion', 'especifiqueTratamiento', 'nombreRepresentante', 'nombreTutor', 'ocupacionTutor', 'motivoConsulta', 'historiaEnfermedad', 'estadoCivil', 'religion', 'escolaridad', 'institucionMedica', 'consultas', 'interconsultas'];
+            return ['__isInitialized__', 'id', 'numero', 'firma', 'expedienteEspecialidad', 'paciente', 'fechaCreacion', 'fotografia', 'nombrePediatra', 'nombreRecomienda', 'seHaAutomedicado', 'esAlergico', 'viveMadre', 'vivePadre', 'numHermanos', 'numHermanosVivos', 'numHermanosFinados', 'nombresEdadesHermanos', 'seLeHacenMoretones', 'haRequeridoTransfusion', 'haTenidoFracturas', 'haSidoIntervenido', 'haSidoHospitalizado', 'exFumador', 'exAlcoholico', 'exAdicto', 'estaBajoTratamiento', 'conQueSeHaAutomedicado', 'aQueMedicamentoEsAlergico', 'causaMuerteMadre', 'enfermedadesMadre', 'causaMuertePadre', 'enfermedadesPadre', 'causaMuerteHermanos', 'enfermedadesHermanos', 'enfermedadesAbuelosPaternos', 'enfermedadesAbuelosMaternos', 'especifiqueFracturas', 'especifiqueIntervencion', 'especifiqueHospitalizacion', 'especifiqueTratamiento', 'nombreRepresentante', 'nombreTutor', 'ocupacionTutor', 'motivoConsulta', 'historiaEnfermedad', 'estadoCivil', 'religion', 'escolaridad', 'institucionMedica', 'consultas', 'interconsultas', 'anexos'];
         }
 
-        return ['__isInitialized__', 'id', 'numero', 'firma', 'expedienteEspecialidad', 'paciente', 'fechaCreacion', 'fotografia', 'nombrePediatra', 'nombreRecomienda', 'seHaAutomedicado', 'esAlergico', 'viveMadre', 'vivePadre', 'numHermanos', 'numHermanosVivos', 'numHermanosFinados', 'nombresEdadesHermanos', 'seLeHacenMoretones', 'haRequeridoTransfusion', 'haTenidoFracturas', 'haSidoIntervenido', 'haSidoHospitalizado', 'exFumador', 'exAlcoholico', 'exAdicto', 'estaBajoTratamiento', 'conQueSeHaAutomedicado', 'aQueMedicamentoEsAlergico', 'causaMuerteMadre', 'enfermedadesMadre', 'causaMuertePadre', 'enfermedadesPadre', 'causaMuerteHermanos', 'enfermedadesHermanos', 'enfermedadesAbuelosPaternos', 'enfermedadesAbuelosMaternos', 'especifiqueFracturas', 'especifiqueIntervencion', 'especifiqueHospitalizacion', 'especifiqueTratamiento', 'nombreRepresentante', 'nombreTutor', 'ocupacionTutor', 'motivoConsulta', 'historiaEnfermedad', 'estadoCivil', 'religion', 'escolaridad', 'institucionMedica', 'consultas', 'interconsultas'];
+        return ['__isInitialized__', 'id', 'numero', 'firma', 'expedienteEspecialidad', 'paciente', 'fechaCreacion', 'fotografia', 'nombrePediatra', 'nombreRecomienda', 'seHaAutomedicado', 'esAlergico', 'viveMadre', 'vivePadre', 'numHermanos', 'numHermanosVivos', 'numHermanosFinados', 'nombresEdadesHermanos', 'seLeHacenMoretones', 'haRequeridoTransfusion', 'haTenidoFracturas', 'haSidoIntervenido', 'haSidoHospitalizado', 'exFumador', 'exAlcoholico', 'exAdicto', 'estaBajoTratamiento', 'conQueSeHaAutomedicado', 'aQueMedicamentoEsAlergico', 'causaMuerteMadre', 'enfermedadesMadre', 'causaMuertePadre', 'enfermedadesPadre', 'causaMuerteHermanos', 'enfermedadesHermanos', 'enfermedadesAbuelosPaternos', 'enfermedadesAbuelosMaternos', 'especifiqueFracturas', 'especifiqueIntervencion', 'especifiqueHospitalizacion', 'especifiqueTratamiento', 'nombreRepresentante', 'nombreTutor', 'ocupacionTutor', 'motivoConsulta', 'historiaEnfermedad', 'estadoCivil', 'religion', 'escolaridad', 'institucionMedica', 'consultas', 'interconsultas', 'anexos'];
     }
 
     /**
@@ -730,6 +730,17 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
     /**
      * {@inheritDoc}
      */
+    public function getInterconsultas()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getInterconsultas', []);
+
+        return parent::getInterconsultas();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function tieneFoto()
     {
 
@@ -857,6 +868,72 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'inicializarInterconsulta', [$consultas, $interconsultas]);
 
         return parent::inicializarInterconsulta($consultas, $interconsultas);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function tieneConsultas()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneConsultas', []);
+
+        return parent::tieneConsultas();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function tieneInterconsultas()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneInterconsultas', []);
+
+        return parent::tieneInterconsultas();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function obtenerConsulta($id)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'obtenerConsulta', [$id]);
+
+        return parent::obtenerConsulta($id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function asignarAnexos($listaAnexos, $anexos = NULL)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignarAnexos', [$listaAnexos, $anexos]);
+
+        return parent::asignarAnexos($listaAnexos, $anexos);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function anexos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'anexos', []);
+
+        return parent::anexos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function tieneAnexos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneAnexos', []);
+
+        return parent::tieneAnexos();
     }
 
 }

@@ -195,4 +195,15 @@ class LineaMediaDental extends \Siacme\Dominio\Expedientes\LineaMediaDental impl
         return parent::getMedida();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function medidaMordida()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'medidaMordida', []);
+
+        return parent::medidaMordida();
+    }
+
 }

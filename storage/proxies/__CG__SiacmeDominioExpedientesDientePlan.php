@@ -221,4 +221,15 @@ class DientePlan extends \Siacme\Dominio\Expedientes\DientePlan implements \Doct
         return parent::atender();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function asignarOdontogramaDiente(\Siacme\Dominio\Expedientes\OdontogramaDiente $odontogramaDiente)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignarOdontogramaDiente', [$odontogramaDiente]);
+
+        return parent::asignarOdontogramaDiente($odontogramaDiente);
+    }
+
 }

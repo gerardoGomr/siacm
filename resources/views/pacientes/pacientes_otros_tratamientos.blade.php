@@ -25,6 +25,17 @@
                             @if (!$tratamientoOdontologia->pagado())
                                 <button type="button" class="btn btn-primary btn-sm pagoOtroTratamiento" data-toggle="tooltip" data-original-title="Pagar/abonar" data-saldo="{{ $tratamientoOdontologia->obtenerSaldo() }}" data-abono="{{ $tratamientoOdontologia->abonoMinimo() }}" data-id="{{ $tratamientoOdontologia->getId() }}"><i class="fa fa-dollar"></i></button>
                             @endif
+							<button type="button" class="btn btn-warning btn-sm editar" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></button>
+							<a class="btn btn-success btn-sm" href="/pacientes/tratamientos/otros/pdf/{{ base64_encode($tratamientoOdontologia->getId()) }}" data-toggle="tooltip" title="Abrir PDF" target="_blank"><i class="fa fa-file"></i></a>
+							<input type="hidden" class="otroTratamientoId" value="{{ $tratamientoOdontologia->getId() }}">
+							<input type="hidden" class="ortopedia" value="{{ $tratamientoOdontologia->ortopedia() ? '1' : '0' }}">
+							<input type="hidden" class="ortodoncia" value="{{ $tratamientoOdontologia->ortodoncia() ? '1' : '0' }}">
+							<input type="hidden" class="dx" value="{{ $tratamientoOdontologia->getDX() }}">
+							<input type="hidden" class="observaciones" value="{{ $tratamientoOdontologia->getObservaciones() }}">
+							<input type="hidden" class="tx" value="{{ $tratamientoOdontologia->getTX() }}">
+							<input type="hidden" class="costo" value="{{ $tratamientoOdontologia->getCosto() }}">
+							<input type="hidden" class="duracion" value="{{ $tratamientoOdontologia->getDuracion() }}">
+							<input type="hidden" class="mensualidades" value="{{ $tratamientoOdontologia->getMensualidades() }}">
                         </td>
 					</tr>
 				@endforeach

@@ -18,6 +18,11 @@ use PDOException;
 class DoctrineOtrosTratamientosRepositorio implements OtrosTratamientosRepositorio
 {
     /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    /**
      * DoctrinePadecimientosRepositorio constructor.
      * @param EntityManager $em
      */

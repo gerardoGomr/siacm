@@ -96,11 +96,19 @@ class OdontogramaDiente
     }
 
     /**
-     * indica si tiene padecimientos
+     * indica si tiene padecimientos. Revisa que tenga asignado el padecimiento
+     * sano. Si lo tiene, el diente no tiene padecimientos.
+     *
      * @return bool
      */
     public function tienePadecimientos()
     {
+        foreach ($this->padecimientos as $padecimiento) {
+            if ($padecimiento->getNombre() === 'Sano') {
+                return false;
+            }
+        }
+
         return $this->padecimientos->count() > 0;
     }
 

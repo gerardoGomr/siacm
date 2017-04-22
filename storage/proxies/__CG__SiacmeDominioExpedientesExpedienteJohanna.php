@@ -64,10 +64,10 @@ class ExpedienteJohanna extends \Siacme\Dominio\Expedientes\ExpedienteJohanna im
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'nombrePadre', 'nombreMadre', 'ocupacionPadre', 'ocupacionMadre', 'fechaUltimoExamenBucal', 'motivoVisitaDentista', 'reaccionAnestesico', 'descripcionHabito', 'especifiqueAuxiliar', 'notas', 'edadErupcionoPrimerDiente', 'haPresentadoDolorBoca', 'presentaMalOlorBoca', 'haNotadoSangradoEncias', 'sienteDienteFlojo', 'primeraVisitaDentista', 'leHanColocadoAnestesico', 'tuvoMalaReaccionAnestesico', 'tipoCepillo', 'vecesCepillaDiente', 'alguienAyudaACepillarse', 'vecesComeDia', 'hiloDental', 'enjuagueBucal', 'limpiadorLingual', 'tabletasReveladoras', 'otroAuxiliar', 'succionDigital', 'succionLingual', 'biberon', 'bruxismo', 'succionLabial', 'respiracionBucal', 'onicofagia', 'chupon', 'otroHabito', 'posturaRectaCaminar', 'posturaRectaSentar', 'mordidaBordeBorde', 'sobremordidaVertical', 'sobremordidaHorizontal', 'mordidaAbiertaAnterior', 'mordidaCruzadaAnterior', 'mordidaCruzadaPosterior', 'lineaMediaDental', 'lineaMediaEsqueletica', 'alteracionesTamanio', 'alteracionesForma', 'alteracionesNumero', 'alteracionesEstructura', 'alteracionesTextura', 'alteracionesColor', 'traumatismoBucal', 'marcaPasta', 'comportamientoInicial', 'comportamientoFrankl', 'trastornoLenguaje', 'examenExtraoral', 'examenIntraoral', 'dentincionTemporal', 'relacionMolar', 'relacionCanina', 'tipoArcoI', 'tipoArcoII', 'odontogramas', 'planesTratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'morfologiaCraneofacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'morfologiaFacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'convexividadFacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'atm', 'id', 'primeraVez', 'revisado', 'expediente'];
+            return ['__isInitialized__', 'nombrePadre', 'nombreMadre', 'ocupacionPadre', 'ocupacionMadre', 'fechaUltimoExamenBucal', 'motivoVisitaDentista', 'reaccionAnestesico', 'descripcionHabito', 'especifiqueAuxiliar', 'notas', 'edadErupcionoPrimerDiente', 'haPresentadoDolorBoca', 'presentaMalOlorBoca', 'haNotadoSangradoEncias', 'sienteDienteFlojo', 'primeraVisitaDentista', 'leHanColocadoAnestesico', 'tuvoMalaReaccionAnestesico', 'tipoCepillo', 'vecesCepillaDiente', 'alguienAyudaACepillarse', 'vecesComeDia', 'hiloDental', 'enjuagueBucal', 'limpiadorLingual', 'tabletasReveladoras', 'otroAuxiliar', 'succionDigital', 'succionLingual', 'biberon', 'bruxismo', 'succionLabial', 'respiracionBucal', 'onicofagia', 'chupon', 'otroHabito', 'posturaRectaCaminar', 'posturaRectaSentar', 'mordidaBordeBorde', 'sobremordidaVertical', 'sobremordidaHorizontal', 'mordidaAbiertaAnterior', 'mordidaCruzadaAnterior', 'mordidaCruzadaPosterior', 'lineaMediaDental', 'lineaMediaEsqueletica', 'alteracionesTamanio', 'alteracionesForma', 'alteracionesNumero', 'alteracionesEstructura', 'alteracionesTextura', 'alteracionesColor', 'traumatismoBucal', 'marcaPasta', 'comportamientoInicial', 'comportamientoFrankl', 'trastornoLenguaje', 'examenExtraoral', 'examenIntraoral', 'dentincionTemporal', 'relacionMolar', 'relacionCanina', 'tipoArcoI', 'tipoArcoII', 'odontogramas', 'planesTratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'morfologiaCraneofacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'morfologiaFacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'convexividadFacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'atm', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'otrosTratamientos', 'id', 'primeraVez', 'revisado', 'expediente'];
         }
 
-        return ['__isInitialized__', 'nombrePadre', 'nombreMadre', 'ocupacionPadre', 'ocupacionMadre', 'fechaUltimoExamenBucal', 'motivoVisitaDentista', 'reaccionAnestesico', 'descripcionHabito', 'especifiqueAuxiliar', 'notas', 'edadErupcionoPrimerDiente', 'haPresentadoDolorBoca', 'presentaMalOlorBoca', 'haNotadoSangradoEncias', 'sienteDienteFlojo', 'primeraVisitaDentista', 'leHanColocadoAnestesico', 'tuvoMalaReaccionAnestesico', 'tipoCepillo', 'vecesCepillaDiente', 'alguienAyudaACepillarse', 'vecesComeDia', 'hiloDental', 'enjuagueBucal', 'limpiadorLingual', 'tabletasReveladoras', 'otroAuxiliar', 'succionDigital', 'succionLingual', 'biberon', 'bruxismo', 'succionLabial', 'respiracionBucal', 'onicofagia', 'chupon', 'otroHabito', 'posturaRectaCaminar', 'posturaRectaSentar', 'mordidaBordeBorde', 'sobremordidaVertical', 'sobremordidaHorizontal', 'mordidaAbiertaAnterior', 'mordidaCruzadaAnterior', 'mordidaCruzadaPosterior', 'lineaMediaDental', 'lineaMediaEsqueletica', 'alteracionesTamanio', 'alteracionesForma', 'alteracionesNumero', 'alteracionesEstructura', 'alteracionesTextura', 'alteracionesColor', 'traumatismoBucal', 'marcaPasta', 'comportamientoInicial', 'comportamientoFrankl', 'trastornoLenguaje', 'examenExtraoral', 'examenIntraoral', 'dentincionTemporal', 'relacionMolar', 'relacionCanina', 'tipoArcoI', 'tipoArcoII', 'odontogramas', 'planesTratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'morfologiaCraneofacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'morfologiaFacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'convexividadFacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'atm', 'id', 'primeraVez', 'revisado', 'expediente'];
+        return ['__isInitialized__', 'nombrePadre', 'nombreMadre', 'ocupacionPadre', 'ocupacionMadre', 'fechaUltimoExamenBucal', 'motivoVisitaDentista', 'reaccionAnestesico', 'descripcionHabito', 'especifiqueAuxiliar', 'notas', 'edadErupcionoPrimerDiente', 'haPresentadoDolorBoca', 'presentaMalOlorBoca', 'haNotadoSangradoEncias', 'sienteDienteFlojo', 'primeraVisitaDentista', 'leHanColocadoAnestesico', 'tuvoMalaReaccionAnestesico', 'tipoCepillo', 'vecesCepillaDiente', 'alguienAyudaACepillarse', 'vecesComeDia', 'hiloDental', 'enjuagueBucal', 'limpiadorLingual', 'tabletasReveladoras', 'otroAuxiliar', 'succionDigital', 'succionLingual', 'biberon', 'bruxismo', 'succionLabial', 'respiracionBucal', 'onicofagia', 'chupon', 'otroHabito', 'posturaRectaCaminar', 'posturaRectaSentar', 'mordidaBordeBorde', 'sobremordidaVertical', 'sobremordidaHorizontal', 'mordidaAbiertaAnterior', 'mordidaCruzadaAnterior', 'mordidaCruzadaPosterior', 'lineaMediaDental', 'lineaMediaEsqueletica', 'alteracionesTamanio', 'alteracionesForma', 'alteracionesNumero', 'alteracionesEstructura', 'alteracionesTextura', 'alteracionesColor', 'traumatismoBucal', 'marcaPasta', 'comportamientoInicial', 'comportamientoFrankl', 'trastornoLenguaje', 'examenExtraoral', 'examenIntraoral', 'dentincionTemporal', 'relacionMolar', 'relacionCanina', 'tipoArcoI', 'tipoArcoII', 'odontogramas', 'planesTratamiento', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'morfologiaCraneofacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'morfologiaFacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'convexividadFacial', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'atm', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\ExpedienteJohanna' . "\0" . 'otrosTratamientos', 'id', 'primeraVez', 'revisado', 'expediente'];
     }
 
     /**
@@ -605,23 +605,23 @@ class ExpedienteJohanna extends \Siacme\Dominio\Expedientes\ExpedienteJohanna im
     /**
      * {@inheritDoc}
      */
-    public function getMobremordidaVertical()
+    public function getSobremordidaVertical()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMobremordidaVertical', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSobremordidaVertical', []);
 
-        return parent::getMobremordidaVertical();
+        return parent::getSobremordidaVertical();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getMobremordidaHorizontal()
+    public function getSobremordidaHorizontal()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMobremordidaHorizontal', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSobremordidaHorizontal', []);
 
-        return parent::getMobremordidaHorizontal();
+        return parent::getSobremordidaHorizontal();
     }
 
     /**
@@ -913,28 +913,6 @@ class ExpedienteJohanna extends \Siacme\Dominio\Expedientes\ExpedienteJohanna im
     /**
      * {@inheritDoc}
      */
-    public function getSobremordidaVertical()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSobremordidaVertical', []);
-
-        return parent::getSobremordidaVertical();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getSobremordidaHorizontal()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSobremordidaHorizontal', []);
-
-        return parent::getSobremordidaHorizontal();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getExamenIntraoral()
     {
 
@@ -1067,7 +1045,7 @@ class ExpedienteJohanna extends \Siacme\Dominio\Expedientes\ExpedienteJohanna im
     /**
      * {@inheritDoc}
      */
-    public function agregarMordidas(\Siacme\Dominio\Expedientes\Mordida $mordidaBordeBorde, \Siacme\Dominio\Expedientes\Mordida $sobremordidaVertical, \Siacme\Dominio\Expedientes\Mordida $sobremordidaHorizontal, \Siacme\Dominio\Expedientes\Mordida $mordidaAbiertaAnterior, \Siacme\Dominio\Expedientes\Mordida $mordidaCruzadaAnterior, \Siacme\Dominio\Expedientes\Mordida $mordidaCruzadaPosterior, \Siacme\Dominio\Expedientes\Mordida $lineaMediaDental, \Siacme\Dominio\Expedientes\Mordida $lineaMediaEsqueletica, \Siacme\Dominio\Expedientes\Mordida $alteracionTamanio, \Siacme\Dominio\Expedientes\Mordida $alteracionForma, \Siacme\Dominio\Expedientes\Mordida $alteracionNumero, \Siacme\Dominio\Expedientes\Mordida $alteracionEstructura, \Siacme\Dominio\Expedientes\Mordida $alteracionTextura, \Siacme\Dominio\Expedientes\Mordida $alteracionColor)
+    public function agregarMordidas(\Siacme\Dominio\Expedientes\Mordida $mordidaBordeBorde, \Siacme\Dominio\Expedientes\Mordida $sobremordidaVertical, \Siacme\Dominio\Expedientes\Mordida $sobremordidaHorizontal, \Siacme\Dominio\Expedientes\Mordida $mordidaAbiertaAnterior, \Siacme\Dominio\Expedientes\Mordida $mordidaCruzadaAnterior, \Siacme\Dominio\Expedientes\Mordida $mordidaCruzadaPosterior, \Siacme\Dominio\Expedientes\Mordida $lineaMediaDental, \Siacme\Dominio\Expedientes\Mordida $lineaMediaEsqueletica, $alteracionTamanio, $alteracionForma, $alteracionNumero, $alteracionEstructura, $alteracionTextura, $alteracionColor)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarMordidas', [$mordidaBordeBorde, $sobremordidaVertical, $sobremordidaHorizontal, $mordidaAbiertaAnterior, $mordidaCruzadaAnterior, $mordidaCruzadaPosterior, $lineaMediaDental, $lineaMediaEsqueletica, $alteracionTamanio, $alteracionForma, $alteracionNumero, $alteracionEstructura, $alteracionTextura, $alteracionColor]);
@@ -1111,12 +1089,133 @@ class ExpedienteJohanna extends \Siacme\Dominio\Expedientes\ExpedienteJohanna im
     /**
      * {@inheritDoc}
      */
+    public function odontogramas()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'odontogramas', []);
+
+        return parent::odontogramas();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function tieneOdontogramas()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneOdontogramas', []);
+
+        return parent::tieneOdontogramas();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function inicializarTemp(\Siacme\Dominio\Listas\IColeccion $odontogramas)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'inicializarTemp', [$odontogramas]);
 
         return parent::inicializarTemp($odontogramas);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOtrosTratamientos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOtrosTratamientos', []);
+
+        return parent::getOtrosTratamientos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function inicializarOtrosTratamientos(\Siacme\Dominio\Listas\IColeccion $otrosTratamientos)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'inicializarOtrosTratamientos', [$otrosTratamientos]);
+
+        return parent::inicializarOtrosTratamientos($otrosTratamientos);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function asignarOtroTratamiento(\Siacme\Dominio\Expedientes\TratamientoOdontologia $tratamientoOdontologia)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'asignarOtroTratamiento', [$tratamientoOdontologia]);
+
+        return parent::asignarOtroTratamiento($tratamientoOdontologia);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function tieneOtrosTratamientos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneOtrosTratamientos', []);
+
+        return parent::tieneOtrosTratamientos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function otrosTratamientosAtendidos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'otrosTratamientosAtendidos', []);
+
+        return parent::otrosTratamientosAtendidos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function obtenerOtroTratamiento($tratamientoOdontologiaId)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'obtenerOtroTratamiento', [$tratamientoOdontologiaId]);
+
+        return parent::obtenerOtroTratamiento($tratamientoOdontologiaId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function obtenerOtroTratamientoActivo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'obtenerOtroTratamientoActivo', []);
+
+        return parent::obtenerOtroTratamientoActivo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function dadoDeAlta()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'dadoDeAlta', []);
+
+        return parent::dadoDeAlta();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function odontogramasAtendidos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'odontogramasAtendidos', []);
+
+        return parent::odontogramasAtendidos();
     }
 
     /**
@@ -1187,6 +1286,28 @@ class ExpedienteJohanna extends \Siacme\Dominio\Expedientes\ExpedienteJohanna im
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'numero', []);
 
         return parent::numero();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function marcarComoSubsecuente()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'marcarComoSubsecuente', []);
+
+        return parent::marcarComoSubsecuente();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExpediente()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExpediente', []);
+
+        return parent::getExpediente();
     }
 
 }

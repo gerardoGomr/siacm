@@ -19,9 +19,19 @@ class TratamientoOdontologia
     private $id;
 
     /**
-     * @var string
+     * @var string La descripción del padecimiento
      */
     private $dx;
+
+    /**
+     * @var string Las observaciones posibles
+     */
+    private $observaciones;
+
+    /**
+     * @var string La descripcion de las fases
+     */
+    private $tx;
 
     /**
      * @var double
@@ -75,16 +85,21 @@ class TratamientoOdontologia
 
     /**
      * TratamientoOdontologia constructor.
+     *
      * @param string $dx
+     * @param string $tx
+     * @param string $observaciones
      * @param string $costo
      * @param string $duracion
      * @param int $mensualidades
      * @param ExpedienteJohanna $expedienteEspecialidad
      * @param IColeccion $pagos
      */
-    public function __construct($dx, $costo, $duracion, $mensualidades, ExpedienteJohanna $expedienteEspecialidad, IColeccion $pagos)
+    public function __construct($dx, $tx, $observaciones, $costo, $duracion, $mensualidades, ExpedienteJohanna $expedienteEspecialidad, IColeccion $pagos)
     {
         $this->dx                     = $dx;
+        $this->observaciones          = $observaciones;
+        $this->tx                     = $tx;
         $this->costo                  = $costo;
         $this->duracion               = $duracion;
         $this->mensualidades          = $mensualidades;
@@ -119,6 +134,22 @@ class TratamientoOdontologia
     public function getDx()
     {
         return $this->dx;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTx()
+    {
+        return $this->tx;
     }
 
     /**
@@ -308,5 +339,25 @@ class TratamientoOdontologia
     public function finalizarAtencion()
     {
         $this->atendido = true;
+    }
+
+    /**
+     * actualizar tratamiento
+     *
+     * @param string $dx
+     * @param string $tx
+     * @param string $observaciones
+     * @param float $costo
+     * @param int $duracion
+     * @param int $mensualidades
+     */
+    public function actualizar($dx, $observaciones, $tx, $costo, $duracion, $mensualidades)
+    {
+        $this->dx            = $dx;
+        $this->observaciones = $observaciones;
+        $this->tx            = $tx;
+        $this->costo         = $costo;
+        $this->duracion      = $duracion;
+        $this->mensualidades = $mensualidades;
     }
 }

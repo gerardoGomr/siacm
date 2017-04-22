@@ -1,5 +1,6 @@
 Siacme\Dominio\Pacientes\Paciente:
   type: entity
+  extends: Siacme\Dominio\Personas\Persona
   table: paciente
   id:
     id:
@@ -7,36 +8,6 @@ Siacme\Dominio\Pacientes\Paciente:
       generator:
         strategy: AUTO
   fields:
-    nombre:
-      type: string
-      length: 80
-      nullable: false
-      column: Nombre
-    paterno:
-      type: string
-      length: 80
-      nullable: false
-      column: Paterno
-    materno:
-      type: string
-      length: 80
-      nullable: false
-      column: Materno
-    telefono:
-      type: string
-      length: 20
-      nullable: true
-      column: Telefono
-    celular:
-      type: string
-      length: 20
-      nullable: false
-      column: Celular
-    email:
-      type: string
-      length: 80
-      nullable: true
-      column: Email
     fechaNacimiento:
       type: datetime
       nullable: false

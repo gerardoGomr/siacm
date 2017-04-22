@@ -1,29 +1,11 @@
 Siacme\Dominio\Interconsultas\MedicoReferencia:
   type: entity
+  extends: Siacme\Dominio\Personas\Persona
   table: medico_referencia
   id:
     id:
       type: integer
       column: id
-  fields:
-    direccion:
-      type: string
-      column: Direccion
-    nombre:
-      type: string
-      column: Nombre
-    paterno:
-      type: string
-      column: Paterno
-    materno:
-      type: string
-      column: Materno
-    telefono:
-      type: string
-      column: Telefono
-    celular:
-      type: string
-      column: celular
   oneToOne:
     especialidad:
       targetEntity: Siacme\Dominio\Usuarios\Especialidad

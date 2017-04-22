@@ -2,6 +2,7 @@
 namespace Siacme\Aplicacion\Reportes\Consultas;
 
 use Siacme\Aplicacion\Reportes\ReporteJohanna;
+use Siacme\Dominio\Expedientes\Diente;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\Odontograma;
 use Siacme\Dominio\Listas\IColeccion;
@@ -17,6 +18,41 @@ class PlanTratamientoJohanna extends ReporteJohanna
      * @var Odontograma
      */
     private $odontograma;
+
+    private static $ordenRows = [
+        [18],
+        [17],
+        [16],
+        [15, 55],
+        [14, 54],
+        [13, 53],
+        [12, 52],
+        [11, 51],
+        [21, 61],
+        [22, 62],
+        [23, 63],
+        [24, 64],
+        [25, 65],
+        [26],
+        [27],
+        [28],
+        [38],
+        [37],
+        [36],
+        [35, 75],
+        [34, 74],
+        [33, 73],
+        [32, 72],
+        [31, 71],
+        [41, 81],
+        [42, 82],
+        [43, 83],
+        [44, 84],
+        [45, 85],
+        [46],
+        [47],
+        [48]
+    ];
 
     /**
      * PlanTratamientoJohanna constructor.
@@ -46,7 +82,9 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $this->Cell(0, 5, 'Yo, '. $this->odontograma->dirigidoA(), 0, 1);
         $this->Cell(0, 5, 'Legal o familiar del niño (a): '. $this->expediente->getPaciente()->nombreCompleto(), 0, 1);
         $this->Ln(5);
-        $this->MultiCell(0, 5, ('DECLARO: Que la E. OP Johanna Joselyn Vázquez Hernández me ha explicado que necesito los siguientes tratamientos especificados en la historia clínica y su respectivo costo'), 'L', 0, 1, 1);
+        $this->SetFillColor(206, 235, 226);
+        $this->SetFont('helvetica', '', 10);
+        $this->MultiCell(0, 10, ('DECLARO: Que la E. OP Johanna Joselyn Vázquez Hernández me ha explicado que necesito los siguientes tratamientos especificados en la historia clínica y su respectivo costo'), 'L', 0, 1, 1);
         $this->Ln(5);
         $this->SetFont('helvetica', '', 8);
 
@@ -69,22 +107,44 @@ class PlanTratamientoJohanna extends ReporteJohanna
             <table>
                 <thead>
                     <tr style="text-align: center">
-                        <th bgcolor="gray" color="white">Diente</th>
-                        <th bgcolor="gray" color="white">Padecimiento</th>
+                        <th bgcolor="gray" color="white">Región permanente</th>
+                        <th bgcolor="gray" color="white">Región temporal</th>
+                        <th bgcolor="gray" color="white">Diagnóstico</th>
                         <th bgcolor="gray" color="white">Tratamientos</th>
+                        <th bgcolor="gray" color="white">Costo</th>
                     </tr>
                 </thead>
                 <tbody>';
 
-        foreach ($this->odontograma->getOdontogramaDientes() as $odontogramaDiente) {
+        // primer renglón superior vacío
+        $html .= '<tr>
+            <td bgcolor="#dcdcdc">&nbsp;</td>
+            <td bgcolor="#2f4f4f">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>';
 
-            $html .= '
-                <tr>
-                    <td>' . $odontogramaDiente->getDiente()->getNumero() . '</td>
-                    <td>' . $this->dibujarPadecimientos($odontogramaDiente->getPadecimientos()) . '</td>
-                    <td>' . $this->dibujarCostosTratamientos($odontogramaDiente->getTratamientos()) . '</td>
-                </tr>
-            ';
+        foreach (static::$ordenRows as $row) {
+            foreach ($row as $rowActual) {
+                $odontogramaDiente = $this->odontograma->getOdontogramaDiente($rowActual);
+
+                if (!is_null($odontogramaDiente)) {
+                    break;
+                }
+            }
+
+            if (is_null($odontogramaDiente)) {
+                $html .= '<tr>
+                    <td bgcolor="#dcdcdc">&nbsp;</td>
+                    <td bgcolor="#CEEBE2">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>';
+            } else {
+                $html .= $this->dienteEncontrado($odontogramaDiente);
+            }
         }
 
         $html .= '</tbody></table><br><br><p style="font-size: 13pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
@@ -95,7 +155,43 @@ class PlanTratamientoJohanna extends ReporteJohanna
     }
 
     /**
+     * dibujar dientes encontrados
+     *
+     * @param $odontogramaDiente
+     * @return string
+     */
+    private function dienteEncontrado($odontogramaDiente)
+    {
+        $html                   = '';
+        $bgColorTemporal        = '';
+        $numeroDienteTemporal   = '';
+        $numeroDientePermanente = '';
+
+        if ($odontogramaDiente->getDiente()->esTemporal()) {
+            $bgColorTemporal        = '#CEEBE2';
+            $numeroDienteTemporal   = $odontogramaDiente->getDiente()->getNumero();
+        }
+
+        if ($odontogramaDiente->getDiente()->esPermanente()) {
+            $bgColorTemporal        = '#2f4f4f';
+            $numeroDientePermanente = $odontogramaDiente->getDiente()->getNumero();
+        }
+
+        $html .= '
+                <tr>
+                    <td bgcolor="#dcdcdc">' . $numeroDientePermanente . '</td>
+                    <td bgcolor="' . $bgColorTemporal . '">' . $numeroDienteTemporal . '</td>
+                    <td>' . $this->dibujarPadecimientos($odontogramaDiente->getPadecimientos()) . '</td>
+                    <td>' . $this->dibujarTratamientos($odontogramaDiente->getTratamientos()) . '</td>
+                    <td>' . $this->dibujarCostosTratamientos($odontogramaDiente->getTratamientos()) . '</td>
+                </tr>
+            ';
+
+        return $html;
+    }
+    /**
      * dibujar padecimientos
+     *
      * @param IColeccion $padecimientos
      * @return string
      */
@@ -113,7 +209,31 @@ class PlanTratamientoJohanna extends ReporteJohanna
     }
 
     /**
+     * presenta los tratamientos por diente
+     *
+     * @param IColeccion $tratamientos
+     * @return string
+     */
+    private function dibujarTratamientos($tratamientos = null)
+    {
+        if ($tratamientos->count() === 0) {
+            return '';
+        }
+
+        $html = '<ul>';
+
+        foreach ($tratamientos as $dientePlan) {
+            $html .= '<li>' . $dientePlan->getDienteTratamiento()->getTratamiento() . '</li>';
+        }
+
+        $html .= '</ul>';
+
+        return $html;
+    }
+
+    /**
      * presenta los costos de los tratamientos
+     *
      * @param IColeccion $tratamientos
      * @return string
      */
@@ -126,7 +246,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $html = '<ul>';
 
         foreach ($tratamientos as $dientePlan) {
-            $html .= '<li>' . $dientePlan->getDienteTratamiento()->getTratamiento() . '-- $' . (string) number_format($dientePlan->getDienteTratamiento()->getCosto(), 2) . '</li>';
+            $html .= '<li>$' . (string) number_format($dientePlan->getDienteTratamiento()->getCosto(), 2) . '</li>';
         }
 
         $html .= '</ul>';

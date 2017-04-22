@@ -6,7 +6,8 @@
                 <button class="close" aria-hidden="true" data-dismiss="modal" type="button">x</button>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => url('pacientes/tratamiento/otros/agregar'), 'id' => 'formOtroTratamiento', 'class' => 'form-horizontal'])  !!}
+                <form action="" id="formOtroTratamiento" class="form-horizontal">
+                {{ csrf_field() }}
                 <div class="form-group">
                     <label class="control-label col-md-3">Tratamiento:</label>
                     <div class="col-md-9">
@@ -25,14 +26,28 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3">DX:</label>
+                    <label for="dx" class="control-label col-md-3">DX:</label>
                     <div class="col-md-9">
-                        <input type="text" name="dx" id="dx" class="form-control required">
+                        <textarea name="dx" id="dx" class="form-control required" rows="10"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3">Costo:</label>
+                    <label for="observaciones" class="control-label col-md-3">Observaciones:</label>
+                    <div class="col-md-9">
+                        <textarea name="observaciones" id="observaciones" class="form-control required" rows="10"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tx" class="control-label col-md-3">Descripción TX:</label>
+                    <div class="col-md-9">
+                        <textarea name="tx" id="tx" class="form-control required" rows="10"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="costo" class="control-label col-md-3">Costo:</label>
                     <div class="col-md-3">
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
@@ -42,7 +57,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3">Duración aproximada:</label>
+                    <label for="duracion" class="control-label col-md-3">Duración aproximada:</label>
                     <div class="col-md-3">
                         <div class="input-group">
                             <input type="text" name="duracion" id="duracion" class="form-control required numerosEnteros">
@@ -52,9 +67,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-3">Mensualidades:</label>
+                    <label for="mensualidades" class="control-label col-md-3">Mensualidades:</label>
                     <div class="col-md-3">
-                        <input type="text" name="mensualidades" id="mensualidades" class="form-control required numerosEnteros">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="text" name="mensualidades" id="mensualidades" class="form-control required numerosEnteros">
+                        </div>
                     </div>
                 </div>
 
@@ -62,9 +80,10 @@
                     <div class="col-md-9 col-md-offset-3">
                         <input type="button" id="guardarFormOtros" class="btn btn-primary" value="Generar tratamiento">
                         <input type="hidden" name="expedienteId" value="{{ base64_encode($expediente->getId()) }}">
+                        <input type="hidden" name="otroTratamientoId" id="otroTratamientoId">
                     </div>
                 </div>
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>

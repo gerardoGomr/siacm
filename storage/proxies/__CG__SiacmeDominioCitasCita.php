@@ -334,6 +334,17 @@ class Cita extends \Siacme\Dominio\Citas\Cita implements \Doctrine\ORM\Proxy\Pro
     /**
      * {@inheritDoc}
      */
+    public function registrarEstatus($accion)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'registrarEstatus', [$accion]);
+
+        return parent::registrarEstatus($accion);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function reprogramar($fecha, $hora)
     {
 

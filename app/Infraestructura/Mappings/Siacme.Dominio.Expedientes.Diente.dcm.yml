@@ -5,3 +5,7 @@ Siacme\Dominio\Expedientes\Diente:
     numero:
       type: integer
       column: Numero
+  fields:
+    tipo:
+      type: smallint
+      column: Tipo

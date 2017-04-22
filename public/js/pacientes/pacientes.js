@@ -101,12 +101,57 @@ $(document).ready(function () {
 
     // abrir recibo de pago
     $('#dvDetalles').on('click', 'button.imprimirRecibo', function(event) {
-        window.open($('#consultas').data('url') + '/' + $(this).data('id') + '/' + $(this).data('expediente'));
+        window.open($('#consultas').data('url') + '/' + $(this).data('id'));
     });
 
     // otros tratamientos
     $('#dvDetalles').on('click', '#generarOtroTratamiento', function () {
-         $('#dvOtroTratamiento').appendTo('body').modal('show');
+        $('#formOtroTratamiento').attr('action', '/pacientes/tratamiento/otros/agregar');
+        $('#ortopedia').attr('checked', false);
+        $('#ortodoncia').attr('checked', false);
+        $('#dx').val('');
+        $('#observaciones').val('');
+        $('#tx').val('');
+        $('#costo').val('');
+        $('#duracion').val('');
+        $('#mensualidades').val('');
+        $('#otroTratamientoId').val('');
+        $('#dvOtroTratamiento').appendTo('body').modal('show');
+    });
+
+    // editar otro tratamiento
+    $('#dvDetalles').on('click', 'button.editar', function () {
+        $('#formOtroTratamiento').attr('action', '/pacientes/tratamiento/otros/editar');
+
+        var data = {
+            otroTratamientoId: $(this).siblings('input.otroTratamientoId').val(),
+            ortopedia:         $(this).siblings('input.ortopedia').val(),
+            ortodoncia:        $(this).siblings('input.ortodoncia').val(),
+            dx:                $(this).siblings('input.dx').val(),
+            observaciones:     $(this).siblings('input.observaciones').val(),
+            tx:                $(this).siblings('input.tx').val(),
+            costo:             $(this).siblings('input.costo').val(),
+            duracion:          $(this).siblings('input.duracion').val(),
+            mensualidades:     $(this).siblings('input.mensualidades').val(),
+        };
+
+        if (data.ortopedia === '1') {
+            $('#ortopedia').attr('checked', true);
+        }
+
+        if (data.ortodoncia === '1') {
+            $('#ortodoncia').attr('checked', true);
+        }
+
+        $('#dx').val(data.dx);
+        $('#observaciones').val(data.observaciones);
+        $('#tx').val(data.tx);
+        $('#costo').val(data.costo);
+        $('#duracion').val(data.duracion);
+        $('#mensualidades').val(data.mensualidades);
+        $('#otroTratamientoId').val(data.otroTratamientoId);
+
+        $('#dvOtroTratamiento').appendTo('body').modal('show');
     });
 
     // forma pago de consulta
