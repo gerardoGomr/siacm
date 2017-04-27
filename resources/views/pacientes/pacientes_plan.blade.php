@@ -3,7 +3,7 @@
         <table class="table table-bordered table-striped text-small">
             <thead class="bg-gray">
                 <tr>
-                    <th>Fecha</th>
+                    <th>Dirigido A</th>
                     <th>Atendido</th>
                     <th>Costo</th>
                     <th>&nbsp;</th>
@@ -12,7 +12,7 @@
             <tbody>
             @foreach($expediente->getExpedienteEspecialidad()->odontogramas() as $odontograma)
                 <tr>
-                    <td>-</td>
+                    <td>{{ $odontograma->dirigidoA() }}</td>
                     <td><span class="label {{ $odontograma->atendido() ? 'label-success' : 'label-danger' }}">{{ $odontograma->atendido() ? 'Atendido' : 'Activo' }}</span></td>
                     <td>{{ $odontograma->costo() }}</td>
                     <td><a href="{{ url('pacientes/plan/' . base64_encode($odontograma->getId()) . '/' . base64_encode($expediente->getId())) }}" data-toggle="tooltip" data-original-title="Imprimir plan" data-placement="top" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i></a></td>

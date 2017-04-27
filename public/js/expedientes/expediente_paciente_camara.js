@@ -31,9 +31,9 @@ $(document).ready(function() {
 
 	// guardar
 	$guardar.on('click', function(){
-		Webcam.snap( function(data_uri) {
+		Webcam.snap(function(data_uri) {
 			// snap complete, image data is in 'data_uri'
-			Webcam.upload( data_uri, $('#urlCaptura').val(), function(code, text) {
+			Webcam.upload(data_uri, $('#urlCaptura').val(), function(code, text) {
 				$('#fotografiaAgregada').html(text);
 				$('#capturada').val('1');
 				$('#foto').val($('#urlFoto').val());

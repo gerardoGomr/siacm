@@ -8,12 +8,12 @@
 			<div class="col-md-5">
 				<div class="radio">
 					<label>
-						{!! Form::radio('tipoCepillo', 1, $expediente->getExpedienteEspecialidad()->getTipoCepillo() === 1 ? true : false, ['class' => 'required']) !!} Adultos
+						{!! Form::radio('tipoCepillo', 1, $expediente->getExpedienteEspecialidad()->getTipoCepillo() === 1 ? true : false, ['class' => '']) !!} Adultos
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						{!! Form::radio('tipoCepillo', 2, $expediente->getExpedienteEspecialidad()->getTipoCepillo() === 2 ? true : false, ['class' => 'required']) !!} Niños
+						{!! Form::radio('tipoCepillo', 2, $expediente->getExpedienteEspecialidad()->getTipoCepillo() === 2 ? true : false, ['class' => '']) !!} Niños
 					</label>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 		<div class="form-group">
 			{!! Form::label('marcaPasta', 'Marca de pasta dental:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-4">
-				<select name="marcaPasta" id="marcaPasta" class="required form-control">
+				<select name="marcaPasta" id="marcaPasta" class="form-control">
 					<option value="">Seleccione</option>
 					<option value="{{ MarcaPasta::INFANTIL }}" {{ $expediente->getExpedienteEspecialidad()->getMarcaPasta() === MarcaPasta::INFANTIL ? 'selected="selected"' : '' }}>Infantil</option>
 					<option value="{{ MarcaPasta::ADULTO }}" {{ $expediente->getExpedienteEspecialidad()->getMarcaPasta() === MarcaPasta::ADULTO ? 'selected="selected"' : '' }}>Adultos</option>
@@ -32,7 +32,7 @@
 			{!! Form::label('vecesCepilla', '*¿Cuántas veces cepilla los dientes del niño(a) al día?:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-3">
 				<div class="input-group">
-					{!! Form::text('vecesCepilla', $expediente->getExpedienteEspecialidad()->getVecesCepillaDiente(), ['class' => 'required form-control']) !!}
+					{!! Form::text('vecesCepilla', $expediente->getExpedienteEspecialidad()->getVecesCepillaDiente(), ['class' => 'form-control']) !!}
 					<span class="input-group-addon">Veces</span>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 		<div class="form-group">
 			{!! Form::label('edadErupcionaPrimerDiente', '*¿A qué edad erupcionó el primer diente?:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-2">
-				{!! Form::text('edadErupcionaPrimerDiente', $expediente->getExpedienteEspecialidad()->getEdadErupcionoPrimerDiente(), ['class' => 'required form-control']) !!}
+				{!! Form::text('edadErupcionaPrimerDiente', $expediente->getExpedienteEspecialidad()->getEdadErupcionoPrimerDiente(), ['class' => 'form-control']) !!}
 			</div>
 		</div>
 		<div class="form-group">
@@ -56,7 +56,7 @@
 			{!! Form::label('vecesCome', '*¿Cuántas veces come al día?:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-3">
 				<div class="input-group">
-					{!! Form::text('vecesCome', $expediente->getExpedienteEspecialidad()->getVecesComeDia(), ['class' => 'required numerosEnteros form-control']) !!}
+					{!! Form::text('vecesCome', $expediente->getExpedienteEspecialidad()->getVecesComeDia(), ['class' => 'numerosEnteros form-control']) !!}
 					<span class="input-group-addon">Veces</span>
 				</div>
 			</div>

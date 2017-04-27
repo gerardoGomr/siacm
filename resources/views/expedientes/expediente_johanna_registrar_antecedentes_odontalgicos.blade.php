@@ -55,7 +55,7 @@
 		<div class="form-group">
 			{!! Form::label('traumatismo', 'Traumatismo bucal:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
-				{!! Form::text('traumatismo', '', ['class' => 'required form-control']) !!}
+				{!! Form::text('traumatismo', '', ['class' => 'form-control']) !!}
 			</div>
 		</div>
 	</div>

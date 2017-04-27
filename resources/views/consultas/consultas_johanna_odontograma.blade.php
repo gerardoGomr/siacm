@@ -6,5 +6,6 @@
 		{!! $dibujadorOdontograma->dibujar() !!}
 	</div>
 
+    <input type="hidden" name="dirigidoA" id="dirigido" value="">
 	@include('consultas.consultas_johanna_seleccion_diente_padecimiento')
 </div>

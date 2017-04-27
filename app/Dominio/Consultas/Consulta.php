@@ -127,6 +127,7 @@ class Consulta
         $this->fecha                          = $fecha;
         $this->costos                         = $costos;
         $this->medico                         = $medico;
+        $this->pagada                         = false;
     }
 
     /**

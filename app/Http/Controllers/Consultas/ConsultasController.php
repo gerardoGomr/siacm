@@ -190,14 +190,9 @@ class ConsultasController extends Controller
                 $odontogramaDiente = $odontograma->obtenerOdontogramaDiente($numeroDiente);
 
                 if ($padecimiento->getNombre() === 'Sano') {
-                    // si ya hay un elemento y se especifica sano, solo se queda con sano
-                    if ($odontogramaDiente->tienePadecimientos()) {
-                        $odontogramaDiente->removerPadecimientos();
-                        // agregando sano nuevamente
-                        $odontograma->agregarPadecimientoADiente($numeroDiente, $padecimiento);
-                    } else {
-                        break;
-                    }
+                    $odontogramaDiente->removerPadecimientos();
+                    // agregando sano nuevamente
+                    $odontograma->agregarPadecimientoADiente($numeroDiente, $padecimiento);
                 }
 
             } catch (Exception $e) {
@@ -553,14 +548,6 @@ class ConsultasController extends Controller
             $consulta->agregarReceta($receta);
         }
 
-        // agregar los rubros a cobrar
-        /*foreach ($request->get('consultaCosto') as $consultaCostoId) {
-            $consultaCostoId = (int)$consultaCostoId;
-            $consultaCosto   = $consultaCostosRepositorio->obtenerPorId($consultaCostoId);
-
-            $consulta->agregarCosto($consultaCosto);
-        }*/
-
         // agrega un comentario de costo
         $consulta->agregarComentario();
 
@@ -578,9 +565,11 @@ class ConsultasController extends Controller
             $respuesta['estatus'] = 'fail';
         }
 
+        $this->citasRepositorio->persistir($cita);
+
         $respuesta['estatus'] = 'OK';
         if ($request->session()->has('odontograma')) {
-            $respuesta['odontogramaId'] = base64_encode($expediente->getExpedienteEspecialidad()->getOdontogramas()->last()->getId());
+            $respuesta['odontogramaId'] = base64_encode($expediente->getExpedienteEspecialidad()->odontogramas()->last()->getId());
             $respuesta['expedienteId']  = base64_encode($expediente->getId());
         }
 

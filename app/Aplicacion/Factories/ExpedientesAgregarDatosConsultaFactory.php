@@ -170,12 +170,6 @@ class ExpedientesAgregarDatosConsultaFactory
                 $mordidaCruzadaPosterior = new MordidaCruzadaPosterior($mordidaCruzadaPosterior, $medidaMordidaCruzadaPosterior);
                 $lineaMediaDental        = new LineaMediaDental($lineaMediaDental, $medidaLineaMediaDental);
                 $lineaMediaEsqueletica   = new LineaMediaEsqueletica($lineaMediaEsqueletica, $medidaLineaMediaEsqueletica);
-                //$alteracionTamanio       = new AlteracionTamanio($alteracionTamanio, $medidaAlteracionTamanio);
-                //$alteracionForma         = new AlteracionForma($alteracionForma, $medidaAlteracionForma);
-                //$alteracionNumero        = new AlteracionNumero($alteracionNumero, $medidaAlteracionNumero);
-                //$alteracionEstructura    = new AlteracionEstructura($alteracionEstructura, $medidaAlteracionEstructura);
-                //$alteracionTextura       = new AlteracionTextura($alteracionTextura, $medidaAlteracionTextura);
-                //$alteracionColor         = new AlteracionColor($alteracionColor, $medidaAlteracionColor);
 
                 $expediente->getExpedienteEspecialidad()->agregarMordidas($mordidaBordeBorde, $sobremordidaVertical, $sobremordidaHorizontal, $mordidaAbiertaAnterior, $mordidaCruzadaAnterior, $mordidaCruzadaPosterior, $lineaMediaDental, $lineaMediaEsqueletica, $alteracionTamanio, $alteracionForma, $alteracionNumero, $alteracionEstructura, $alteracionTextura, $alteracionColor);
 

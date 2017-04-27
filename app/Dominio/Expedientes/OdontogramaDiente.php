@@ -103,12 +103,6 @@ class OdontogramaDiente
      */
     public function tienePadecimientos()
     {
-        foreach ($this->padecimientos as $padecimiento) {
-            if ($padecimiento->getNombre() === 'Sano') {
-                return false;
-            }
-        }
-
         return $this->padecimientos->count() > 0;
     }
 
@@ -119,6 +113,22 @@ class OdontogramaDiente
     public function tieneTratamientos()
     {
         return $this->tratamientos->count() > 0;
+    }
+
+    /**
+     * buscar por padecimiento sano
+     *
+     * @return bool
+     */
+    public function estaSano()
+    {
+        foreach ($this->padecimientos as $padecimiento) {
+            if ($padecimiento->getNombre() === 'Sano') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -48,30 +48,31 @@ class ExpedientesAgregarElementosConsulta
                         foreach ($odontogramaDientes as $odontogramaDiente) {
                             if (!$odontogramaDiente->tienePadecimientos()) {
                                 $odontograma->removerOdontogramaDiente($odontogramaDiente);
-                                break;
-                            }
 
-                            $diente = $odontogramaDiente->getDiente();
+                            } else {
+                                $numero = $odontogramaDiente->getDiente()->getNumero();
 
-                            $odontogramaDiente->removerDiente();
-                            $diente = $dientesRepositorio->obtenerPorNumero($diente->getNumero());
-                            $odontogramaDiente->agregarDiente($diente);
+                                $odontogramaDiente->removerDiente();
+                                $diente = $dientesRepositorio->obtenerPorNumero($numero);
+                                $odontogramaDiente->agregarDiente($diente);
 
-                            $padecimientos = $odontogramaDiente->getPadecimientos();
-                            foreach ($padecimientos as $padecimiento) {
-                                $odontogramaDiente->removerPadecimiento($padecimiento);
-                                $padecimiento = $dientePadecimientosRepositorio->obtenerPorId($padecimiento->getId());
-                                $odontogramaDiente->agregarPadecimiento($padecimiento);
-                            }
+                                $padecimientos = $odontogramaDiente->getPadecimientos();
 
-                            foreach ($odontogramaDiente->getTratamientos() as $dientePlan) {
-                                $tratamiento = $dientePlan->getDienteTratamiento();
-                                $odontogramaDiente->eliminarTratamiento($tratamiento);
-                                $tratamiento = $dienteTratamientosRepositorio->obtenerPorId($tratamiento->getId());
+                                foreach ($padecimientos as $padecimiento) {
+                                    $odontogramaDiente->removerPadecimiento($padecimiento);
+                                    $padecimiento = $dientePadecimientosRepositorio->obtenerPorId($padecimiento->getId());
+                                    $odontogramaDiente->agregarPadecimiento($padecimiento);
+                                }
 
-                                $dientePlan = new DientePlan($tratamiento);
-                                $dientePlan->asignarOdontogramaDiente($odontogramaDiente);
-                                $odontogramaDiente->agregarTratamiento($dientePlan);
+                                foreach ($odontogramaDiente->getTratamientos() as $dientePlan) {
+                                    $tratamiento = $dientePlan->getDienteTratamiento();
+                                    $odontogramaDiente->eliminarTratamiento($tratamiento);
+                                    $tratamiento = $dienteTratamientosRepositorio->obtenerPorId($tratamiento->getId());
+
+                                    $dientePlan = new DientePlan($tratamiento);
+                                    $dientePlan->asignarOdontogramaDiente($odontogramaDiente);
+                                    $odontogramaDiente->agregarTratamiento($dientePlan);
+                                }
                             }
                         }
 
@@ -91,7 +92,7 @@ class ExpedientesAgregarElementosConsulta
                     if (!$expediente->getExpedienteEspecialidad()->odontogramasAtendidos()) {
                         // se obtiene el odontograma activo
                         $odontograma = $expediente->getExpedienteEspecialidad()->obtenerOdontogramaActivo();
-                        
+
                         // checar los tratamientos atendidos y marcarlos
                         if ($request->has('otroTratamientoAtendido')) {
                             foreach ($request->get('otroTratamientoAtendido') as $otroTratamientoAtendido) {

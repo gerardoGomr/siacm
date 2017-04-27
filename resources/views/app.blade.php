@@ -16,8 +16,8 @@
 
 		<!-- CSS DEFINITION -->
 		<link rel="shortcut icon" href="{{ asset('img/logo.ico') }}">
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/base-styles.css') }}" />
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}" />
+		<link rel="stylesheet" href="{{ asset('css/base-styles.css') }}" />
+		<link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
 
 		@yield('css')
 

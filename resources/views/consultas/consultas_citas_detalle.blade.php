@@ -36,7 +36,7 @@
 
 		<div class="col-xs-4 col-md-3 col-lg-4">
 			<div class="box-generic">
-				@if (!$cita->atendida() && $cita->getEstatus === \Siacme\Dominio\Citas\CitaEstatus::EN_ESPERA_CONSULTA)
+				@if (!$cita->atendida() && $cita->getEstatus() === \Siacme\Dominio\Citas\CitaEstatus::EN_ESPERA_CONSULTA)
 					<a href="{{ url('consultas/capturar/'.base64_encode($cita->getPaciente()->getId()).'/'.base64_encode($cita->getMedico()->getId()) . '/' . base64_encode($cita->getId())) }}" class="generarConsulta btn btn-danger btn-block"><i class="fa fa-plus"></i> Generar consulta</a>
 				@endif
 			</div>

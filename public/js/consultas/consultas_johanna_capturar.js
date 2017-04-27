@@ -264,23 +264,6 @@ $(function() {
 			} else {
 				// guardar form
 				var datos 		   = $formConsulta.serialize(),
-					tipoEncontrado = false;
-
-				// agregando valor de anestesia general si asi procede
-				//$formConsulta.find('input.costoConsulta').each(function() {
-				//	if ($(this).attr('checked') === 'checked') {
-				//		if ($(this).data('id') === 7) {
-				//			/*bootbox.confirm('Se marcó el cobro de tratamiento por anestesia general y se inhabilitará el plan de tratamiento actual si está aún activo. ¿Desea continuar?', function(e){
-				//				if (e === true) {
-				//					tipoEncontrado = true;
-				//				}
-				//			});*/
-				//			datos += '&tipoCostoConsulta=7';
-				//		}
-				//	}
-				//});
-
-                var datos 		   = $formConsulta.serialize(),
                     tipoEncontrado = false;
 
                 $.ajax({

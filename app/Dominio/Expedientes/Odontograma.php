@@ -124,13 +124,17 @@ class Odontograma
     }
 
     /**
+     * remover un odontograma diente del odontograma actual
+     *
      * @param OdontogramaDiente $odontogramaDiente
+     * @return void
      */
     public function removerOdontogramaDiente(OdontogramaDiente $odontogramaDiente)
     {
         foreach ($this->odontogramaDientes as $odontogramaDienteAsignado) {
             if ($odontogramaDienteAsignado->getDiente()->getNumero() === $odontogramaDiente->getDiente()->getNumero()) {
                 $this->odontogramaDientes->removeElement($odontogramaDienteAsignado);
+                return;
             }
         }
     }
@@ -246,8 +250,10 @@ class Odontograma
     {
         foreach ($this->odontogramaDientes as $odontogramaDiente) {
             if ($odontogramaDiente->tienePadecimientos()) {
-                if (!$odontogramaDiente->tieneTratamientos()) {
-                    return false;
+                if (!$odontogramaDiente->estaSano()) {
+                    if (!$odontogramaDiente->tieneTratamientos()) {
+                        return false;
+                    }
                 }
             }
         }

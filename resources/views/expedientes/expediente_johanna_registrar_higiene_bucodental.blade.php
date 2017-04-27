@@ -8,12 +8,12 @@
 			<div class="col-md-5">
 				<div class="radio">
 					<label>
-						{!! Form::radio('tipoCepillo', 1, null, ['class' => 'required']) !!} Adultos
+						{!! Form::radio('tipoCepillo', 1, null, ['class' => '']) !!} Adultos
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						{!! Form::radio('tipoCepillo', 2, null, ['class' => 'required']) !!} Niños
+						{!! Form::radio('tipoCepillo', 2, null, ['class' => '']) !!} Niños
 					</label>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 		<div class="form-group">
 			{!! Form::label('marcaPasta', 'Marca de pasta dental:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-4">
-				<select name="marcaPasta" id="marcaPasta" class="required form-control">
+				<select name="marcaPasta" id="marcaPasta" class="form-control">
 					<option value="">Seleccione</option>
 					<option value="{{ MarcaPasta::INFANTIL }}">Infantil</option>
 					<option value="{{ MarcaPasta::ADULTO }}">Adultos</option>
@@ -32,7 +32,7 @@
 			{!! Form::label('vecesCepilla', '*¿Cuántas veces cepilla los dientes del niño(a) al día?:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-3">
 				<div class="input-group">
-					{!! Form::text('vecesCepilla', '', ['class' => 'required form-control']) !!}
+					{!! Form::text('vecesCepilla', '', ['class' => 'form-control']) !!}
 					<span class="input-group-addon">Veces</span>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 		<div class="form-group">
 			{!! Form::label('edadErupcionaPrimerDiente', '*¿A qué edad erupcionó el primer diente?:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-2">
-				{!! Form::text('edadErupcionaPrimerDiente', '', ['class' => 'required form-control']) !!}
+				{!! Form::text('edadErupcionaPrimerDiente', '', ['class' => 'form-control']) !!}
 			</div>
 		</div>
 		<div class="form-group">
@@ -56,7 +56,7 @@
 			{!! Form::label('vecesCome', '*¿Cuántas veces come al día?:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-3">
 				<div class="input-group">
-					{!! Form::text('vecesCome', '', ['class' => 'required numerosEnteros form-control']) !!}
+					{!! Form::text('vecesCome', '', ['class' => 'numerosEnteros form-control']) !!}
 					<span class="input-group-addon">Veces</span>
 				</div>
 			</div>

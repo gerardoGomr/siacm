@@ -117,6 +117,10 @@ class DibujadorPlanTratamiento implements DibujadorInterface
             return '';
         }
 
+        if ($odontogramaDiente->estaSano()) {
+            return '';
+        }
+
         $html = '<div class="form-group">
             <div class="input-group">
             <select class="tratamientos form-control">

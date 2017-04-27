@@ -78,14 +78,14 @@ $(function() {
 			$('#modalLoading').modal('hide');
 			bootbox.alert('Ocurrió un error al agregar el tratamiento al plan actual.');
 		});
-	});	
+	});
 
 	// eliminar otro tratamiento
 	$('#dvPlanTratamiento').on('click', 'button.eliminarOtroTratamiento', function () {
 		var url = $('#urlEliminarOtroTratamiento').val(),
 			otroTratamientoId = $(this).data('id'),
 			datos = {
-				_token: $formConsulta.find('input[name="_token"]').val(), 
+				_token: $formConsulta.find('input[name="_token"]').val(),
 				otroTratamientoId: otroTratamientoId
 			};
 
@@ -219,6 +219,7 @@ $(function() {
 
 			// colocar la bandera de plan generado en 1
 			$('#generoPlan').val('0');
+			$('#dirigido').val($('#dirigidoA').val());
 		}
 	}
 

@@ -56,8 +56,11 @@
 
                         <div class="col-md-6">
                             <button type="button" class="btn btn-primary" id="capturar"><i class="fa fa-camera"></i> Capturar</button>
+                            <br><br>
                             <button type="button" class="btn btn-default" id="cancelar" style="display: none;"><i class="fa fa-times"></i> Capturar otra</button>
+                            <br><br>
                             <button type="button" class="btn btn-success" id="guardar" style="display: none;"><i class="fa fa-save"></i> Guardar captura</button>
+                            <br><br>
                             <button type="button" class="btn btn-warning" id="terminar"><i class="fa fa-arrow-left"></i> Cancelar captura</button>
                             <input type="hidden" id="urlCaptura" value="{{ url('expedientes/foto/guardar') }}">
                             <input type="hidden" id="_token" value="{{ csrf_token() }}">

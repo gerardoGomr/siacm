@@ -401,7 +401,7 @@ $(document).ready(function() {
 
 		}).done(function(resultado) {
 			$('#modalLoading').modal('hide');
-			
+
 			if(resultado.estatus === 'fail') {
 				bootbox.alert('Ocurrió un error al generar el expediente. Intente de nuevo.');
 			}
@@ -438,8 +438,7 @@ $(document).ready(function() {
  * @param  object c
  * @return
  */
-function actualizaCoordenadas(c)
-{
+function actualizaCoordenadas(c) {
 	$('#x').val(c.x);
 	$('#y').val(c.y);
 	$('#w').val(c.w);

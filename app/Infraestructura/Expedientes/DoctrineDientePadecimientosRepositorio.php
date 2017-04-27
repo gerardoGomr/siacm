@@ -1,11 +1,11 @@
 <?php
 namespace Siacme\Infraestructura\Expedientes;
 
-use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
-use Siacme\Exceptions\PDO\PDOLogger;
 use Doctrine\ORM\EntityManager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
+use Siacme\Exceptions\SiacmeLogger;
 use \PDOException;
 
 /**
@@ -33,10 +33,9 @@ class DoctrineDientePadecimientosRepositorio implements DientePadecimientosRepos
     {
         // TODO: Implement obtenerPorId() method.
         try {
-            $query = $this->entityManager->createQuery("SELECT p FROM Expedientes:DientePadecimiento p WHERE p.id = :id")
-                ->setParameter('id', $id);
-
-            $dientePadecimiento = $query->getResult();
+            $dientePadecimiento = $this->entityManager->createQuery("SELECT p FROM Expedientes:DientePadecimiento p WHERE p.id = :id")
+                ->setParameter('id', $id)
+                ->getResult();
 
             if (count($dientePadecimiento) === 0) {
                 return null;
@@ -45,7 +44,7 @@ class DoctrineDientePadecimientosRepositorio implements DientePadecimientosRepos
             return $dientePadecimiento[0];
 
         } catch (PDOException $e) {
-            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
             $pdoLogger->log($e);
             return null;
         }
@@ -58,8 +57,8 @@ class DoctrineDientePadecimientosRepositorio implements DientePadecimientosRepos
     {
         // TODO: Implement obtenerTodos() method.
         try {
-            $query           = $this->entityManager->createQuery("SELECT p FROM Expedientes:DientePadecimiento p ORDER BY p.nombre");
-            $dientePadecimientos = $query->getResult();
+            $dientePadecimientos = $this->entityManager->createQuery("SELECT p FROM Expedientes:DientePadecimiento p ORDER BY p.nombre")
+                ->getResult();
 
             if (count($dientePadecimientos) === 0) {
                 return null;
@@ -68,7 +67,7 @@ class DoctrineDientePadecimientosRepositorio implements DientePadecimientosRepos
             return $dientePadecimientos;
 
         } catch (PDOException $e) {
-            $pdoLogger = new PDOLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
             $pdoLogger->log($e);
             return null;
         }
