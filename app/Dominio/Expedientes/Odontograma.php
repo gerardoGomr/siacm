@@ -347,8 +347,6 @@ class Odontograma
      */
     public function obtenerOdontogramaDiente($numero)
     {
-        $encontrado = false;
-
         foreach ($this->odontogramaDientes as $odontogramaDiente) {
             if ($odontogramaDiente->getDiente()->getNumero() === $numero) {
                 return $odontogramaDiente;
