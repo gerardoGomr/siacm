@@ -224,3 +224,15 @@ Siacme\Dominio\Expedientes\Expediente:
       targetEntity: Siacme\Dominio\Interconsultas\Interconsulta
       mappedBy: expediente
       cascade: [persist]
+  manyToMany:
+    padecimientos:
+      targetEntity: Padecimiento
+      joinTable:
+        name: expediente_padecimiento
+        joinColumns:
+          ExpedienteId:
+            referencedColumnName: id
+        inverseJoinColumns:
+          PadecimientoId:
+            referencedColumnName: id
+      cascade: [persist]

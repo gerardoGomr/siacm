@@ -3,7 +3,11 @@
 		<div class="form-group">
 			{!! Form::label('', 'Padece:', ['class' => 'control-label col-md-3']) !!}
 			<div class="col-md-8">
-
+				@if($expediente->tienePadecimientos())
+					@foreach($expediente->getPadecimientos() as $padecimiento)
+						<p class="form-control-static">{{ $padecimiento->getPadecimiento() }}</p>
+					@endforeach
+				@endif
 			</div>
 		</div>
 		<div class="form-group">

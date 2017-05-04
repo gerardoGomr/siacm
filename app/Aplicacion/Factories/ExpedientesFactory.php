@@ -3,9 +3,11 @@ namespace Siacme\Aplicacion\Factories;
 
 use DateTime;
 use Illuminate\Http\Request;
+use LaravelDoctrine\ORM\Facades\EntityManager;
 use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ExpedienteJohanna;
+use Siacme\Dominio\Expedientes\Padecimiento;
 use Siacme\Dominio\Pacientes\Domicilio;
 use Siacme\Dominio\Pacientes\Paciente;
 use Siacme\Dominio\Usuarios\Usuario;
@@ -91,7 +93,7 @@ class ExpedientesFactory
      */
     private static function crearExpediente(Request $request, Paciente $paciente)
     {
-        $expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente, new ColeccionArray(), new ColeccionArray(), new ColeccionArray());
+        $expediente = $request->session()->has('expediente') ? $request->session()->get('expediente') : new Expediente($paciente, new ColeccionArray(), new ColeccionArray(), new ColeccionArray(), new ColeccionArray());
 
         $fotoCapturada               = $request->get('capturada');
         $nombre                      = $request->get('nombre');
@@ -131,11 +133,12 @@ class ExpedientesFactory
         $especifiqueTratamiento      = $request->get('especifiqueTratamiento');
         $listaPadecimientos          = null;
 
-        /*if(!is_null($request->get('padecimiento'))) {
+        if($request->has('padecimiento')) {
             foreach ($request->get('padecimiento') as $padecimientos) {
-                $listaPadecimientos[] = new Padecimiento($padecimientos);
+                $padecimiento = EntityManager::find(Padecimiento::class, (int)$padecimientos);
+                $expediente->asignarPadecimientos($padecimiento);
             }
-        }*/
+        }
 
         $moretones     = !is_null($request->get('moretones'))     ? true : false;
         $transfusion   = !is_null($request->get('transfusion'))   ? true : false;

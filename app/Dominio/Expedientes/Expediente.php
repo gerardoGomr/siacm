@@ -276,20 +276,27 @@ class Expediente
     protected $anexos;
 
     /**
+     * @var IColeccion
+     */
+    protected $padecimientos;
+
+    /**
      * Expediente constructor.
      * @param Paciente $paciente
      * @param IColeccion $consultas
      * @param IColeccion $interconsultas
      * @param IColeccion $anexos
+     * @param IColeccion $padecimientos
      * @param AbstractExpediente $expedienteEspecialidad
      */
-	public function __construct(Paciente $paciente = null, IColeccion $consultas, IColeccion $interconsultas, IColeccion $anexos, AbstractExpediente $expedienteEspecialidad = null)
+	public function __construct(Paciente $paciente = null, IColeccion $consultas, IColeccion $interconsultas, IColeccion $anexos, IColeccion $padecimientos, AbstractExpediente $expedienteEspecialidad = null)
 	{
         $this->paciente               = $paciente;
         $this->expedienteEspecialidad = $expedienteEspecialidad;
         $this->consultas              = $consultas;
         $this->interconsultas         = $interconsultas;
         $this->anexos                 = $anexos;
+        $this->padecimientos          = $padecimientos;
 	}
 
 	/**
@@ -924,11 +931,6 @@ class Expediente
      */
     public function asignarAnexos($listaAnexos, $anexos = null)
     {
-        if (is_null($this->anexos)) {
-            // hack para inicializar lista, se debe inicializar cuando se construye el objeto
-            $this->anexos = $anexos;
-        }
-
         if(!is_null($listaAnexos)) {
             foreach ($listaAnexos as $anexo) {
                 $this->anexos->add(new Anexo($anexo));
@@ -952,5 +954,60 @@ class Expediente
     public function tieneAnexos()
     {
         return $this->anexos->count() > 0;
+    }
+
+    /**
+     * verificar si tiene padecimientos
+     *
+     * @return bool
+     */
+    public function tienePadecimientos()
+    {
+        return $this->padecimientos->count() > 0;
+    }
+
+    /**
+     * @param Padecimiento $padecimiento
+     */
+    public function asignarPadecimientos($padecimiento)
+    {
+        $this->padecimientos->add($padecimiento);
+    }
+
+    /**
+     * obtener los padecimientos
+     *
+     * @return IColeccion
+     */
+    public function getPadecimientos()
+    {
+        return $this->padecimientos;
+    }
+
+    /**
+     * verifica que se tenga el padecimiento asignado
+     *
+     * @param  Padecimiento $padecimiento
+     * @return bool
+     */
+    public function tieneElPadecimiento($padecimiento)
+    {
+        foreach ($this->padecimientos as $padecimientoAsignado) {
+            if ($padecimientoAsignado->getId() === $padecimiento->getId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * borrar padecimientos
+     *
+     * @return void
+     */
+    public function eliminarPadecimientos()
+    {
+        $this->padecimientos->clear();
     }
 }

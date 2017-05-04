@@ -233,6 +233,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
      */
     private function generarAntecedentesPatologicos()
     {
+        $padecimientosQueTiene  = '';
         $seLeHacenMoretones     = $this->expediente->seLeHacenMoretones() ? 'Sí' : 'No';
         $haRequeridoTransfusion = $this->expediente->haRequeridoTransfusion() ? 'Sí' : 'No';
         $haTenidoFracturas      = $this->expediente->haTenidoFracturas() ? 'Sí - ' . $this->expediente->getEspecifiqueFracturas() : 'No';
@@ -240,8 +241,18 @@ class ExpedienteJohannaPDF extends ReporteJohanna
         $haSidoHospitalizado    = $this->expediente->haSidoHospitalizado() ? 'Sí - ' . $this->expediente->getEspecifiqueHospitalizacion() : 'No';
         $estaBajoTratamiento    = $this->expediente->estaBajoTratamiento() ? 'Sí - ' . $this->expediente->getEspecifiqueTratamiento() : 'No';
 
+        if ($this->expediente->tienePadecimientos()) {
+            $padecimientosQueTiene  = '<h4>Padecimientos:</h4><ul>';
+            foreach ($this->expediente->getPadecimientos() as $padecimiento) {
+                $padecimientosQueTiene .= '<li>' . $padecimiento->getPadecimiento() . '</li>';
+            }
+
+            $padecimientosQueTiene .= '</ul>';
+        }
+
         $html = '<h3>Antecedentes personales patológicos</h3>
             <hr>
+            ' . $padecimientosQueTiene . '
             <table>
                 <tr>
                     <td width="150"><b>Se le hacen moretones:</b></td>

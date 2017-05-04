@@ -3,8 +3,10 @@ namespace Siacme\Aplicacion\Factories;
 
 use DateTime;
 use Illuminate\Http\Request;
+use LaravelDoctrine\ORM\Facades\EntityManager;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ExpedienteJohanna;
+use Siacme\Dominio\Expedientes\Padecimiento;
 use Siacme\Dominio\Pacientes\Domicilio;
 use Siacme\Dominio\Usuarios\Usuario;
 
@@ -45,12 +47,12 @@ class ExpedientesEditarFactory
                 $malaReaccion              = $request->get('malaReaccion') === '1' ? true : false;
                 $queReaccion               = $request->get('queReaccion');
                 $traumatismo               = $request->get('traumatismo');
-                $tipoCepillo               = $request->get('tipoCepillo');
-                $marcaPasta                = $request->get('marcaPasta');
-                $vecesCepilla              = $request->get('vecesCepilla');
+                $tipoCepillo               = $request->has('tipoCepillo') ? $request->get('tipoCepillo') : null;
+                $marcaPasta                = $request->has('marcaPasta') ? $request->get('marcaPasta') : null;
+                $vecesCepilla              = $request->has('vecesCepilla') ? $request->get('vecesCepilla') : null;
                 $edadErupcionaPrimerDiente = $request->get('edadErupcionaPrimerDiente');
                 $ayudaAlCepillarse         = $request->has('ayudaAlCepillarse') && $request->get('ayudaAlCepillarse') === 'on' ? true : false;
-                $vecesCome                 = $request->get('vecesCome');
+                $vecesCome                 = $request->has('vecesCome') ? $request->get('vecesCome') : null;
                 $especifiqueAuxiliar       = $request->get('especifiqueAuxiliar');
                 $hiloDental                = !is_null($request->get('hiloDental')) ? true : false;
                 $enjuagueBucal             = !is_null($request->get('enjuagueBucal')) ? true : false;
@@ -123,11 +125,13 @@ class ExpedientesEditarFactory
         $especifiqueTratamiento      = $request->get('especifiqueTratamiento');
         $listaPadecimientos          = null;
 
-        /*if(!is_null($request->get('padecimiento'))) {
+        $expediente->eliminarPadecimientos();
+        if($request->has('padecimiento')) {
             foreach ($request->get('padecimiento') as $padecimientos) {
-                $listaPadecimientos[] = new Padecimiento($padecimientos);
+                $padecimiento = EntityManager::find(Padecimiento::class, (int)$padecimientos);
+                $expediente->asignarPadecimientos($padecimiento);
             }
-        }*/
+        }
 
         $moretones     = !is_null($request->get('moretones'))     ? true : false;
         $transfusion   = !is_null($request->get('transfusion'))   ? true : false;

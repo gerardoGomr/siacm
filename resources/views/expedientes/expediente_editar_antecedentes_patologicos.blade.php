@@ -9,7 +9,10 @@
 						@foreach($padecimientos as $padecimiento)
 							<div class="checkbox">
 								<label>
-									{!! Form::checkbox('padecimiento[]', $padecimiento->getId(), null, []) !!} {{ $padecimiento->getPadecimiento() }}
+									@php
+									$checked = $expediente->tieneElPadecimiento($padecimiento) ? 'checked' : '';
+									@endphp
+									{!! Form::checkbox('padecimiento[]', $padecimiento->getId(), $checked, []) !!} {{ $padecimiento->getPadecimiento() }}
 								</label>
 							</div>
 							<?php $i++; ?>
