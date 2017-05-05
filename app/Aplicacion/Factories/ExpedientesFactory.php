@@ -99,7 +99,7 @@ class ExpedientesFactory
         $nombre                      = $request->get('nombre');
         $paterno                     = $request->get('paterno');
         $materno                     = $request->get('materno');
-        $fechaNacimiento             = DateTime::createFromFormat('Y-m-d', $request->get('fechaNacimiento'));
+        $fechaNacimiento             = strlen($request->get('fechaNacimiento')) ? DateTime::createFromFormat('Y-m-d', $request->get('fechaNacimiento')) : new DateTime();
         $lugarNacimiento             = $request->get('lugarNacimiento');
         $pediatra                    = $request->get('pediatra');
         $quienRecomienda             = $request->get('quienRecomienda');
