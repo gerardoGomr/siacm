@@ -23,8 +23,8 @@ class FotografiaPaciente extends Fotografia
 	 */
 	public function __construct($ruta)
 	{
-		$this->rutaTemporal = storage_path() . '\pacientesFotografiasTemp\\';
-		$this->rutaAGuardar = storage_path() . '\pacientesFotografias\\';
+		$this->rutaTemporal = storage_path() . '/pacientesFotografiasTemp/';
+		$this->rutaAGuardar = storage_path() . '/pacientesFotografias/';
 
 		parent::__construct($ruta);
 
