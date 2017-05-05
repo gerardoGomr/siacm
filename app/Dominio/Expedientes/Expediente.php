@@ -931,6 +931,12 @@ class Expediente
      */
     public function asignarAnexos($listaAnexos, $anexos = null)
     {
+        if (!is_null($anexos)) {
+            if (is_null($this->anexos)) {
+                $this->anexos = $anexos;
+            }
+        }
+
         if(!is_null($listaAnexos)) {
             foreach ($listaAnexos as $anexo) {
                 $this->anexos->add(new Anexo($anexo));
