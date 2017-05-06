@@ -32,6 +32,16 @@ class ExpedientesEditarFactory
 
         switch ($medico->getId()) {
             case Usuario::JOHANNA:
+                if ($request->has('primeraVisita') && $request->get('primeraVisita') === 'on') {
+                    $fechaUltimoExamen = null;
+                } else {
+                    if (strlen($request->get('fechaUltimoExamen') > 0)) {
+                        $fechaUltimoExamen = DateTime::createFromFormat('Y-m-d', $request->get('fechaUltimoExamen'));
+                    } else {
+                        $fechaUltimoExamen = new DateTime();
+                    }
+                }
+
                 $nombrePadre               = $request->get('nombrePadre');
                 $nombreMadre               = $request->get('nombreMadre');
                 $ocupacionPadre            = $request->get('ocupacionPadre');
@@ -41,7 +51,6 @@ class ExpedientesEditarFactory
                 $malOlor                   = !is_null($request->get('malOlor')) ? true : false;
                 $dienteFlojo               = !is_null($request->get('dienteFlojo')) ? true : false;
                 $primeraVisita             = $request->has('primeraVisita') && $request->get('primeraVisita') === 'on' ? true : false;
-                $fechaUltimoExamen         = $request->has('primeraVisita') && $request->get('primeraVisita') === 'on' ? null : DateTime::createFromFormat('Y-m-d', $request->get('fechaUltimoExamen'));
                 $motivoUltimoExamen        = $request->has('primeraVisita') && $request->get('primeraVisita') === 'on' ? '' : $request->get('motivoUltimoExamen');
                 $anestesico                = $request->has('anestesico') && $request->get('anestesico') === 'on' ? true : false;
                 $malaReaccion              = $request->get('malaReaccion') === '1' ? true : false;
