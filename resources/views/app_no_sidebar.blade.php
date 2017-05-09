@@ -7,18 +7,18 @@
 <html class="app footer-sticky"><!-- <![endif]-->
 	<!-- HEAD DEFINITION -->
 	<head>
-		<title>SIACME</title>
+		<title>SIAMED</title>
 
 		<!-- Meta -->
 		<meta charset="utf-8" />
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
 
-		<link rel="shortcut icon" href="{{ asset('img/logo.png') }}" />
+		<link rel="shortcut icon" href="{{ elixir('img/logo.png') }}" />
 
 		<!-- CSS DEFINITION -->
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/base-styles.css') }}" />
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ elixir('css/base-styles.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ elixir('css/admin.css') }}" />
 		@yield('css')
 
 		<script>
@@ -72,7 +72,7 @@
 			var themerPrimaryColor = primaryColor;
 		</script>
 
-		<script src="{{ asset('js/base-scripts.js') }}"></script>
+		<script src="{{ elixir('js/base-scripts.js') }}"></script>
 		@yield('js')
 	</body>
 </html>

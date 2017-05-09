@@ -4,7 +4,7 @@
 	<div class="row row-app">
 		<div class="col-md-12">
 			<div class="col-separator col-unscrollable box">
-				<h4 class="innerAll bg-gray text-center"><i class="fa fa-lock"></i> Sistema Integral para la Administración del Consultorio Médico</h4>
+				<h4 class="innerAll bg-gray text-center"><i class="fa fa-lock"></i> Sistema Integral de Administración Médica</h4>
 				<div class="col-table">
 					<div class="col-table-row">
 						<div class="col-app col-unscrollable">
