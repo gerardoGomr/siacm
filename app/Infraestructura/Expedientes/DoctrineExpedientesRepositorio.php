@@ -94,7 +94,7 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 
         if (array_key_exists('dato', $dato)) {
             //$dato['dato'] = str_replace(' ', '', $dato['dato']);
-            $subquery .= " AND (CONCAT(p.nombre, p.paterno, p.materno) LIKE :dato OR CONCAT(p.paterno, p.materno, p.nombre) = :dato) OR p.nombre LIKE :dato";
+            $subquery .= " AND (CONCAT(p.nombre, p.paterno, p.materno) LIKE :dato OR CONCAT(p.paterno, p.materno, p.nombre) = :dato) OR p.nombre LIKE :dato OR ee.id LIKE :dato";
         }
 
         try {
@@ -140,7 +140,7 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 				$this->entityManager->persist($expediente);
 				// $this->entityManager->persist($expediente->getExpedienteEspecialidad());
 			}
-			
+
 			$this->entityManager->flush();
 			return true;
 
