@@ -22,7 +22,7 @@
 
 .navbar {
 	#logo { margin-top: 10px; }
-	
+
 	.rounded();
 	border: none;
 	border-bottom: 1px solid #efefef;
@@ -43,7 +43,7 @@
 			height: 34px;
 			line-height: 34px;
 			padding: 0 10px;
-			border-right: none; 
+			border-right: none;
 			background-color: lighten(#efefef,3%);
 			.rounded(3px, 0, 0, 3px);
 			&:hover, &:active, &:focus {
@@ -53,7 +53,11 @@
 	}
 
 	.badge.badge-primary,
-	img { border: none; }
+	img {
+		border: none;
+		width: 100px;
+		position: relative;
+	}
 
 	.user-action {
 		height: @navbarMainHeight;
@@ -69,7 +73,7 @@
 	}
 
 	.dropdown {
-		&.pull-left { padding-top: 7px; }		
+		&.pull-left { padding-top: 7px; }
 		a.dropdown-toggle {
 			font-size: 14px;
 			color: @inverseColor;
@@ -79,9 +83,9 @@
 				position: relative;
 				top: -5px;
 			}
-			
+
 			&:hover { text-decoration:none; background: none; color:@inverseColor;}
-			&:active, &:focus { color: @primaryColor; text-decoration:none; background: none;} 
+			&:active, &:focus { color: @primaryColor; text-decoration:none; background: none;}
 			.caret {
 				font-size: 13px;
 				border-top: 4px solid @inverseColor;
@@ -99,8 +103,8 @@
 				> li.active {
 					> a {
 						background: @primaryColor;
-						color: #fff; 
-						font-weight: 600; 
+						color: #fff;
+						font-weight: 600;
 						i:before { color: #fff; }
 
 						&:hover,
@@ -139,24 +143,24 @@
 					display: block;
 					right: 3px;
 				}
-	          	li { 
+	          	li {
 		          	text-align: left;
 		          	border-bottom: 1px solid #efefef;
 		          	a {
 		          		color:#000;
-		          		font-weight: 300;	
+		          		font-weight: 300;
 		          		padding: 6px 5px 6px 15px;
 		          		&.glyphicons {
 		          			padding-left: 35px;
 		          			i:before {
-		          				color: darken(#efefef,5%); 
-		          				font-size:15px; 
-		          				top:8px; 
+		          				color: darken(#efefef,5%);
+		          				font-size:15px;
+		          				top:8px;
 		          				left:13px;
 							}
 						}
-		          		&:hover { 
-		          			background-color: lighten(#efefef,3%); 
+		          		&:hover {
+		          			background-color: lighten(#efefef,3%);
 		          			color: #797979;
 							&.glyphicons i:before {color:#cfcfcf;}
 		          		}
@@ -169,7 +173,7 @@
 	          	}
 			}
 		}
-			
+
 		/* Notifications Dropdowns */
 		&.notif {
 			a.dropdown-toggle {
@@ -199,21 +203,21 @@
 								h5.media-heading { margin-left:0; margin-bottom: 0px; line-height: 20px; font-weight: bold; }
 								p { font-size:13px; }
 							}
-						}	
+						}
 						&:last-of-type { border:none; }
 					}
 				}
 
 				&.alerts {
 					text-align: left;
-					li { 
+					li {
 						padding: 6px 10px;
 						border-bottom: 1px solid #efefef;
 						height: 34px;
 						small {font-style: italic; color: lighten(#000,70%);}
 						a {
-							display: inline; 
-							font-size: 13px;	
+							display: inline;
+							font-size: 13px;
 							color:@inverseColor;
 							&:hover { color:@infoColor; }
 							padding:0;
@@ -229,9 +233,9 @@
 							padding: 0;
 							margin-bottom: 0;
 							height:30px;
-							a { 
-								display: block; 
-								height:30px;	
+							a {
+								display: block;
+								height:30px;
 								line-height: 30px;
 								color:#797979;
 								&, &:hover { background: none; }
@@ -260,8 +264,8 @@
 					}
 					li { border-bottom: 1px solid #efefef; font-size: 13px;}
 				 	a.more {
-						display: inline; 
-						font-size: 13px;	
+						display: inline;
+						font-size: 13px;
 						color:@inverseColor;
 						&:hover { background-color:#fff; color:@infoColor;}
 						padding:0;
@@ -277,10 +281,10 @@
 						}
 					}
 				}
-				.btn.btn-primary { 
-					.rounded(); 
+				.btn.btn-primary {
+					.rounded();
 					color: #fff;
-					font-weight: bold;	
+					font-weight: bold;
 					&:hover { background-color: darken(@primaryColor, 5%); }
 				}
 			}
@@ -300,7 +304,7 @@
 			padding: 0;
 			border-right: 1px solid #efefef;
 			&:first-of-type {border-left:none;}
-			&:hover, &.open { 
+			&:hover, &.open {
 				background: #efefef;
 				a.notif-block.fa { color: @inverseColor; }
 			}
@@ -344,8 +348,8 @@
 			.dropdown.open .dropdown-menu {
 				float: none !important;
 				margin: 0;
-				> li > a { 
-					padding: 6px 15px 6px 15px; 
+				> li > a {
+					padding: 6px 15px 6px 15px;
 					&.glyphicons { padding-left: 35px; }
 				}
 			}

@@ -271,7 +271,7 @@ class TratamientoOdontologia
      */
     public function abonoMinimo()
     {
-        return round($this->costo / $this->mensualidades, 2);
+        return round(($this->costo / $this->mensualidades), 2);
     }
 
     /**

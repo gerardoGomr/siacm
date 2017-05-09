@@ -158,13 +158,12 @@ $(document).ready(function() {
 
                 if (respuesta.estatus === 'OK') {
                     bootbox.alert('Consulta cobrada con éxito. Imprima el recibo de pago.', function () {
-                        // abrir recibo de pago
-                        window.open('/pacientes/consulta/recibo/' + $('#consultaId').val());
-
                         $('#cobros').addClass('hide');
-
                         // rebuscar consultas
                         buscarConsultas();
+
+                        // abrir recibo de pago
+                        window.open('/pacientes/consulta/recibo/' + $('#consultaId').val());
                     });
                 }
 

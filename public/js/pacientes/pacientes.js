@@ -359,11 +359,16 @@ $(document).ready(function () {
 			type:       'post',
 			dataType:   'json',
 			beforeSend: function() {
+                $('#modalLoading').modal('show');
+
 				if (!$('#' + form).valid()) {
+                    $('#modalLoading').modal('hide');
 					return false;
 				}
 			},
 			success: function(respuesta) {
+                $('#modalLoading').modal('hide');
+
 				if(respuesta.estatus === 'fail') {
 					var mensaje = respuesta.mensaje !== '' ? respuesta.mensaje : '';
 
@@ -385,6 +390,7 @@ $(document).ready(function () {
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
+                $('#modalLoading').modal('hide');
 				console.log(textStatus + ': ' + errorThrown);
 				bootbox.alert('Ocurrió un error al agregar el anexo. Intente de nuevo');
 			}

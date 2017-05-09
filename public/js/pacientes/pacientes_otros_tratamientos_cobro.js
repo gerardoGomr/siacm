@@ -8,11 +8,11 @@ $('#dvDetalles').on('click', 'button.pagoOtroTratamiento', function(event) {
     abono                    = $(this).data('abono');
     tratamientoOdontologiaId = $(this).data('id');
 
-    $('#formCobroOtroTratamiento').validate();
-    agregaValidacionesElementos($('#formCobroOtroTratamiento'));
+    $formCobroOtroTratamiento.validate();
+    agregaValidacionesElementos($formCobroOtroTratamiento);
 
     $('#saldo').text('$' + saldo);
-    $('#otroTratamientoId').val(tratamientoOdontologiaId);
+    $('#otroTratamientoIdCobro').val(tratamientoOdontologiaId);
     $('#dvCobroOtroTratamiento').appendTo('body').modal('show');
 });
 

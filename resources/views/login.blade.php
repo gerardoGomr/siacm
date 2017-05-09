@@ -10,7 +10,7 @@
 						<div class="col-app col-unscrollable">
 							<div class="col-app">
 								<div class="login">
-									<div class="placeholder text-center"><img src="{{ asset('img/boka.jpg') }}" width="100">&nbsp;<img src="{{ asset('img/orl.jpg') }}" width="150"></div>
+									<div class="placeholder text-center"><img src="{{ elixir('img/boka.jpg') }}" width="200">&nbsp;<img src="{{ elixir('img/orl.jpg') }}" width="200"></div>
 									<div class="panel panel-default col-sm-6 col-sm-offset-3">
 
 										<div class="panel-body">

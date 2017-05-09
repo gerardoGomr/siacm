@@ -66,7 +66,7 @@
                     <div class="col-md-9 col-md-offset-3">
                         <input type="button" id="registrarPagoOtroTratamiento" class="btn btn-primary" value="Guardar pago&raquo;">
                         <input type="hidden" name="expedienteId" id="expedienteId" value="{{ $expediente->getId() }}">
-                        <input type="hidden" name="otroTratamientoId" id="otroTratamientoId" value="">
+                        <input type="hidden" name="otroTratamientoId" id="otroTratamientoIdCobro" value="">
                     </div>
                 </div>
                 {!! Form::close() !!}

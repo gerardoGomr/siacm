@@ -1688,6 +1688,8 @@ div[class*="col-lg-"] {
 .navbar .badge.badge-primary,
 .navbar img {
   border: none;
+  width: 100px;
+  position: relative;
 }
 .navbar .user-action {
   height: 59px;
@@ -3246,7 +3248,6 @@ html.app .loginWrapper #content {
   height: 29px;
   line-height: 29px;
   background-image: none !important;
-  -webkit-filter: none !important;
   filter: none !important;
   border-radius: 0 0 0 0;
   background: #f4f4f4;
@@ -3804,7 +3805,6 @@ html.app .loginWrapper #content {
   border: none;
   background: none;
   background-image: none !important;
-  -webkit-filter: none !important;
   filter: none !important;
   padding: 0 0 5px;
   height: 25px;
@@ -4008,7 +4008,6 @@ div.glyphicons.glyphicon-regular i:before {
 .datepicker table tr td.active.disabled,
 .datepicker table tr td.active.disabled:hover {
   background-image: none !important;
-  -webkit-filter: none !important;
   filter: none !important;
   background: #48BECE !important;
 }
@@ -4017,7 +4016,6 @@ div.glyphicons.glyphicon-regular i:before {
 .datepicker table tr td span.active.disabled,
 .datepicker table tr td span.active.disabled:hover {
   background-image: none !important;
-  -webkit-filter: none !important;
   filter: none !important;
   background: #48BECE !important;
 }
@@ -4055,12 +4053,10 @@ div.glyphicons.glyphicon-regular i:before {
 }
 .has-switch span {
   background-image: none !important;
-  -webkit-filter: none !important;
   filter: none !important;
 }
 .has-switch label {
   background-image: none !important;
-  -webkit-filter: none !important;
   filter: none !important;
   background: #fff;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);

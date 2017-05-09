@@ -9,7 +9,7 @@
                         <div class="col-app col-unscrollable">
                             <div class="col-app">
                                 <div class="jumbotron margin-none bg-white">
-                                    <p>SISTEMA INTEGRAL PARA LA ADMINISTRACIÓN DEL CONSULTORIO MÉDICO.</p>
+                                    <p>SISTEMA INTEGRAL DE ADMINISTRACIÓN MÉDICA.</p>
 
                                     <div id="grafica" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                                 </div>

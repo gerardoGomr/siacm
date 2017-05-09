@@ -4,15 +4,10 @@ use Siacme\Dominio\Usuarios\Usuario;
 <div id="menu" class="hidden-print hidden-xs sidebar-blue sidebar-brand-primary">
 	<div id="sidebar-fusion-wrapper">
 		<div id="brandWrapper">
-			<a href="{{ url('/') }}" class="display-block-inline pull-left logo">
-				<img src="{{ asset('img/BokaOto.jpg') }}">
-			</a>
-			<a href="{{ url('/') }}"><span class="text">SIACME</span></a>
+			<a href="{{ url('/') }}"><span class="text">SIAMED</span></a>
 		</div>
 		<div id="logoWrapper">
-			<div id="logo">
-				<a href="{{ url('/') }}" class="btn btn-sm btn-inverse"><i class="fa fa-fw icon-home-fill-1"></i></a>
-			</div>
+
 		</div>
 
 		<!-- SIDEBAR MENU -->

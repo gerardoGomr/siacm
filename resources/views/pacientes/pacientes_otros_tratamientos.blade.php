@@ -23,7 +23,7 @@
                         <td><span class="label {{ $tratamientoOdontologia->atendido() ? 'label-success' : 'label-danger' }}">{{ $tratamientoOdontologia->atendido() ? 'Atendido' : 'Activo' }}</span></td>
                         <td>
                             @if (!$tratamientoOdontologia->pagado())
-                                <button type="button" class="btn btn-primary btn-sm pagoOtroTratamiento" data-toggle="tooltip" data-original-title="Pagar/abonar" data-saldo="{{ $tratamientoOdontologia->obtenerSaldo() }}" data-abono="{{ $tratamientoOdontologia->abonoMinimo() }}" data-id="{{ $tratamientoOdontologia->getId() }}"><i class="fa fa-dollar"></i></button>
+                                <button type="button" class="btn btn-primary btn-sm pagoOtroTratamiento" data-toggle="tooltip" title="Pagar/abonar" data-saldo="{{ $tratamientoOdontologia->obtenerSaldo() }}" data-abono="{{ $tratamientoOdontologia->abonoMinimo() }}" data-id="{{ $tratamientoOdontologia->getId() }}"><i class="fa fa-dollar"></i></button>
                             @endif
 							<button type="button" class="btn btn-warning btn-sm editar" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></button>
 							<a class="btn btn-success btn-sm" href="/pacientes/tratamientos/otros/pdf/{{ base64_encode($tratamientoOdontologia->getId()) }}" data-toggle="tooltip" title="Abrir PDF" target="_blank"><i class="fa fa-file"></i></a>

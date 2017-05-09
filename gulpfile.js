@@ -34,7 +34,7 @@ elixir(function(mix) {
 			'components/core/js/core.init.js',
 			'components/core/js/animations.init.js',
 			'components/core/js/hack768-1024.js',
-			'components/core/js/ajaxHeaders.js',
+			'components/core/js/ajaxHeader.js',
 			'components/common/forms/validator/assets/lib/jquery-validation/dist/jquery.validate.min.js',
 			'components/common/forms/validator/assets/lib/jquery-validation/dist/additional-methods.min.js',
 			'components/common/forms/validator/assets/lib/jquery-validation/dist/jquery.form.js',
@@ -44,7 +44,7 @@ elixir(function(mix) {
 			'components/common/forms/elements/select2/assets/lib/js/select2.js',
 			'components/common/forms/elements/fuelux-radio/fuelux-radio.js',
 			'components/common/forms/elements/fuelux-checkbox/fuelux-checkbox.js',
-			'components/modules/admin/modals/assets/js/jquery.fancybox.js',
+			'components/modules/admin/modals/assets/js/source/jquery.fancybox.js',
 			'components/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js',
 			'components/modules/admin/calendar/assets/lib/js/fullcalendar.min.js',
 			'components/common/gallery/image-crop/assets/lib/js/jquery.Jcrop.js',
@@ -55,7 +55,7 @@ elixir(function(mix) {
 		], 'public/js/base-scripts.js', 'resources/assets')
 		.styles([
 			'components/library/bootstrap/css/bootstrap.min.css',
-			'components/modules/admin/modals/assets/css/jquery.fancybox.css',
+			'components/modules/admin/modals/assets/js/source/jquery.fancybox.css',
 			'components/library/icons/fontawesome/assets/css/font-awesome.min.css',
 			'components/library/icons/glyphicons/assets/css/glyphicons_filetypes.css',
 			'components/library/icons/glyphicons/assets/css/glyphicons_regular.css',
@@ -70,7 +70,7 @@ elixir(function(mix) {
 			'components/common/forms/elements/bootstrap-datepicker/assets/lib/css/bootstrap-datepicker.css',
 			'components/common/forms/elements/select2/assets/lib/css/select2.css',
 			'components/modules/admin/calendar/assets/lib/css/fullcalendar.css',
-			'components/common/gallery/image-crop/assets/lib/css/jquery.JCrop.css',
+			'components/common/gallery/image-crop/assets/lib/css/jquery.Jcrop.css',
 			'components/library/icons/pictoicons/css/picto.css',
 			'components/library/icons/pictoicons/css/picto-foundry-general.css',
 			], 'public/css/base-styles.css', 'resources/assets')
@@ -78,12 +78,15 @@ elixir(function(mix) {
 			'resources/assets/components/library/icons/fontawesome/assets/fonts',
 			'resources/assets/components/library/icons/glyphicons/assets/fonts',
 			'resources/assets/components/library/icons/pictoicons/fonts',
-			'resources/assets/components/core/fonts/'
+			'resources/assets/components/core/fonts/',
 		], 'public/fonts')
 		.copy([
 			'resources/assets/components/common/gallery/image-crop/assets/lib/css/Jcrop.gif',
 			'resources/assets/components/common/forms/elements/select2/assets/lib/css/select2.png',
 			'resources/assets/components/common/forms/elements/select2/assets/lib/css/select2-spinner.gif',
 			'resources/assets/components/common/forms/elements/select2/assets/lib/css/select2x2.png'
-		], 'public/css');
+		], 'public/css')
+		.copy([
+			'resources/assets/img/'
+		], 'public/img');
 });

@@ -124,7 +124,10 @@ $(document).ready(function($) {
 
             if (resultado.estatus === 'OK') {
                 $('#citaDetalle').html(resultado.html);
-                bootbox.alert('El estatus de la cita se actualizó exitosamente.');
+                bootbox.alert('El estatus de la cita se actualizó exitosamente.', function () {
+                    // refetch events on calendar
+                    $('#calendario').fullCalendar('refetchEvents');
+                });
             }
 
         }) .fail(function(XMLHttpRequest, textStatus, errorThrown) {
