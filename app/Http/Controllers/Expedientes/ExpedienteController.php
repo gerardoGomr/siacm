@@ -233,7 +233,6 @@ class ExpedienteController extends Controller
 	{
 		$pacienteId = base64_decode($pacienteId);
 		$medicoId   = base64_decode($medicoId);
-		$citaId     = base64_decode($citaId);
 
 		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
 		$medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
@@ -241,6 +240,7 @@ class ExpedienteController extends Controller
 
 		// guardar la cita en sesión para su posterior procesamiento
 		if (!is_null($citaId)) {
+			$citaId = base64_decode($citaId);
 			request()->session()->put('citaId', $citaId);
 		}
 
