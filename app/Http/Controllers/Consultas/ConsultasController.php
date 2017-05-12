@@ -506,6 +506,7 @@ class ConsultasController extends Controller
         $temperatura                    = $request->get('temperatura');
         $tensionArterial                = $request->get('tension');
         $notaMedica                     = $request->get('nota');
+        $aRealizarEnProximaCita         = $request->get('aRealizarEnProximaCita');
         $comportamientoFranklId         = (int)$request->get('comportamientoFrankl');
         $costoConsulta                  = (double)$request->get('costoAsignadoConsulta');
         $comportamiento                 = $comportamientosFranklRepositorio->obtenerPorId($comportamientoFranklId);
@@ -517,7 +518,7 @@ class ConsultasController extends Controller
 
         // objetos de consulta
         $exploracion = new ExploracionFisica($peso, $talla, $pulso, $temperatura, $tensionArterial);
-        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, new DateTime(), new ColeccionArray(), $medico);
+        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, $aRealizarEnProximaCita, new DateTime(), new ColeccionArray(), $medico);
 
         // atender cita
         $cita->atender();

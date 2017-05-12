@@ -11,7 +11,7 @@ use Siacme\Dominio\Citas\CitaEstatus;
 	@if(!is_null($expediente))
 		@if($expediente->getExpedienteEspecialidad()->primeraVez())
 			@if(!$expediente->firmado())
-				<a href="{{ url('expedientes/ver/' . base64_encode($cita->getPaciente()->getId())) . '/' . base64_encode($cita->getMedico()->getId()) }}" class="btn btn-success btn-block"><i class="fa fa-search"></i> Ver el expediente</a>
+				<a href="{{ url('expedientes/ver/' . base64_encode($cita->getPaciente()->getId()) . '/' . base64_encode($cita->getMedico()->getId()) . '/' . base64_encode($cita->getId())) }}" class="btn btn-success btn-block"><i class="fa fa-search"></i> Ver el expediente</a>
 			@endif
 		@else
 			<button type="button" class="btn btn-success btn-block registrarLlegada" data-accion="{{ CitaEstatus::EN_ESPERA_CONSULTA  }}"><i class="fa fa-male"></i> Registrar llegada de paciente</button>

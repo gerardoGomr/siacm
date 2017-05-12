@@ -69,7 +69,7 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       nullable: true
       column: OcupacionMadre
     fechaUltimoExamenBucal:
-      type: datetime
+      type: date
       nullable: true
       column: FechaUltimoExamenBucal
     motivoVisitaDentista:

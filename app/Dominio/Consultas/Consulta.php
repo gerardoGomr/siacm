@@ -105,6 +105,11 @@ class Consulta
     private $otrosCostos;
 
     /**
+     * @var string
+     */
+    private $aRealizarEnProximaCita;
+
+    /**
      * Consulta constructor.
      * @param string $padecimientoActual
      * @param string $interrogatorioAparatosSistemas
@@ -116,7 +121,7 @@ class Consulta
      * @param IColeccion $costos
      * @param Usuario $medico
      */
-    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $fecha, IColeccion $costos, Usuario $medico)
+    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $aRealizarEnProximaCita, DateTime $fecha, IColeccion $costos, Usuario $medico)
     {
         $this->padecimientoActual             = $padecimientoActual;
         $this->interrogatorioAparatosSistemas = $interrogatorioAparatosSistemas;
@@ -124,6 +129,7 @@ class Consulta
         $this->notaMedica                     = $notaMedica;
         $this->comportamientoFrankl           = $comportamientoFrankl;
         $this->costo                          = $costo;
+        $this->aRealizarEnProximaCita         = $aRealizarEnProximaCita;
         $this->fecha                          = $fecha;
         $this->costos                         = $costos;
         $this->medico                         = $medico;
@@ -419,5 +425,13 @@ class Consulta
     public function getOtrosCostos()
     {
         return nl2br($this->otrosCostos);
+    }
+
+    /**
+     * @return string
+     */
+    public function getARealizarEnProximaCita()
+    {
+        return $this->aRealizarEnProximaCita;
     }
 }

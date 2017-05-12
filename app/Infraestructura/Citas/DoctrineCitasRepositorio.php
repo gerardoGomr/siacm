@@ -90,10 +90,11 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 		try {
 
 			if (!is_null($fecha)) {
-				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id AND c.fecha = :fecha AND c.estatus != 5")
-                    ->setParameter('id', $medico->getId())->setParameter('fecha', $fecha);
+				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id AND c.fecha = :fecha AND c.estatus != 5 ORDER BY c.fecha, c.hora")
+                    ->setParameter('id', $medico->getId())
+                    ->setParameter('fecha', $fecha);
 			} else {
-				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id AND c.estatus != 5")
+				$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE m.id = :id AND c.estatus != 5 ORDER BY c.fecha, c.hora")
                     ->setParameter('id', $medico->getId());
 			}
 

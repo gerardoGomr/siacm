@@ -16,6 +16,11 @@
                         @endforeach
                     </select>
                 </div>
+                @if($expediente->esAlergico())
+                    <div class="form-group">
+                        <p class="form-control-static text-danger">Es alérgico a {{ $expediente->getAQueMedicamentoEsAlergico() }}</p>
+                    </div>
+                @endif
                 <div class="form-group">
                     <label for="cuerpoReceta" class="control-label">Descripción:</label>
                     <textarea name="cuerpoReceta" id="cuerpoReceta" class="form-control" rows="15"></textarea>

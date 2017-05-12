@@ -35,6 +35,11 @@ Siacme\Dominio\Consultas\Consulta:
     pagada:
       type: boolean
       column: Pagada
+    aRealizarEnProximaCita:
+      type: string
+      length: 250
+      nullable: true
+      column: ARealizarEnProximaCita
     otrosCostos:
       type: string
       column: OtrosCostos

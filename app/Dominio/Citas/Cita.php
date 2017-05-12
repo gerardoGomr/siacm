@@ -117,7 +117,8 @@ class Cita
 	}
 
 	/**
-	 * calcular el fin de la cita en base a la fecha y hora
+	 * calcular el fin de la cita en base a la fecha y hora. Cada 15 minutos
+	 *
 	 * @return string
 	 */
 	public function getFinCita()
@@ -125,13 +126,13 @@ class Cita
 		//calcular la duracion de la cita
 		list($hora, $minuto, $segundo) = explode(":", $this->hora);
 		//sumar 30 mun por default
-		$finCita = mktime($hora, $minuto + 30, $segundo, 0 ,0 ,0);
+		$finCita = mktime($hora, $minuto + 15, $segundo, 0 ,0 ,0);
 		return $this->fecha." ".date("H", $finCita).":".date("i",$finCita).":".date("s",$finCita);
 	}
 
 
     /**
-     * verficiar fecha de cita
+     * verficar fecha de cita
 	 * @return string
      */
     public static function verificaFechaCita($fecha)
@@ -268,11 +269,11 @@ class Cita
 
 		switch ($this->estatus) {
 			case CitaEstatus::AGENDADA:
-				$color = '#34B9F7';
+				$color = '#A0E1FF';
 				break;
 
 			case CitaEstatus::CONFIRMADA:
-				$color = '#CAC008';
+				$color = '#F8F7A1';
 				break;
 
 			case CitaEstatus::CANCELADA:
@@ -280,11 +281,11 @@ class Cita
 				break;
 
 			case CitaEstatus::EN_ESPERA_CONSULTA:
-				$color = '#47BA3A';
+				$color = '#F8C1A1';
 				break;
 
 			case CitaEstatus::ATENDIDA:
-				$color = '#9008CA';
+				$color = '#AAEAB1';
 				break;
 		}
 

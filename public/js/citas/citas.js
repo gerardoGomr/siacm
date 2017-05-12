@@ -33,7 +33,7 @@ $(document).ready(function($) {
         maxTime:         21,
         slotMinutes:     15,
         selectable:      true,
-        editable:        true,
+        editable:        false,
         events:          rutaCitas,
 		allDaySlot:      false,
 		dayClick: function(date, allDay, jsEvent, view) {
@@ -154,7 +154,11 @@ $(document).ready(function($) {
 		recargarCitasPorDia();
 	});
 
-	generarLinkALista();
+	// on load event for button
+	setTimeout(function () {
+		activarDesactivarLinkALista();
+		generarLinkALista();
+	}, 500);
 
 	/**
 	 * responde al evento click de dia anterior o siguiente

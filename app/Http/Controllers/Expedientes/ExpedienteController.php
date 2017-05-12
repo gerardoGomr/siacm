@@ -72,7 +72,7 @@ class ExpedienteController extends Controller
 		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
 
 		// guardar la cita en sesión para su posterior procesamiento
-		if (!request()->session()->has('citaId')) {
+		if (!is_null($citaId)) {
 			request()->session()->put('citaId', $citaId);
 		}
 
@@ -226,16 +226,23 @@ class ExpedienteController extends Controller
 	 * mostrar la vista de detalle del expediente
 	 * @param string $pacienteId
 	 * @param string $medicoId
+	 * @param string|null $citaId
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
 	 */
-	public function ver($pacienteId, $medicoId)
+	public function ver($pacienteId, $medicoId, $citaId = null)
 	{
 		$pacienteId = base64_decode($pacienteId);
 		$medicoId   = base64_decode($medicoId);
+		$citaId     = base64_decode($citaId);
 
 		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
 		$medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
 		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+
+		// guardar la cita en sesión para su posterior procesamiento
+		if (!is_null($citaId)) {
+			request()->session()->put('citaId', $citaId);
+		}
 
 		return VistasExpedientesMostrarFactory::make($medico, $expediente);
 	}
@@ -265,7 +272,7 @@ class ExpedienteController extends Controller
 		}
 
 		// actualizar la cita
-		$citaId = $request->session()->get('citaId');
+		$citaId = session('citaId');
 		$cita   = $citasRepositorio->obtenerPorId($citaId);
 		$cita->enEsperaDeConsulta();
 		$citasRepositorio->actualizar($cita);

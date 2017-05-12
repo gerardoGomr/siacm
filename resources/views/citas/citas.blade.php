@@ -14,19 +14,19 @@
 									<table>
 										<tr>
 											<td class="strong">Agendada:</td>
-											<td style="background: #34B9F7; width: 10px;"></td>
+											<td style="background: #A0E1FF; width: 10px;"></td>
 										</tr>
 										<tr>
 											<td class="strong">Confirmada:</td>
-											<td style="background: #CAC008; width: 10px;"></td>
+											<td style="background: #F8F7A1; width: 10px;"></td>
 										</tr>
 										<tr>
 											<td class="strong">En espera de consulta:</td>
-											<td style="background: #47BA3A; width: 10px;"></td>
+											<td style="background: #F8C1A1; width: 10px;"></td>
 										</tr>
 										<tr>
 											<td class="strong">Atendida:</td>
-											<td style="background: #9008CA; width: 10px;"></td>
+											<td style="background: #AAEAB1; width: 10px;"></td>
 										</tr>
 									</table>
 								</div>

@@ -79,6 +79,13 @@
 					</div>
 
 					<div class="form-group">
+						<label class="control-label col-md-3" for="nota">A realizar en próxima cita:</label>
+						<div class="col-md-8">
+							<textarea name="aRealizarEnProximaCita" id="aRealizarEnProximaCita" class="form-control" rows="5"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
 						<label class="control-label col-md-3">Comportamiento Frankl</label>
 						<div class="col-md-3">
 							@foreach ($comportamientosFrankl as $comportamientoFrankl)
