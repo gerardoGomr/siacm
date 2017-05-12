@@ -159,9 +159,7 @@ class ConsultasController extends Controller
         $expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
 
         // guardar la cita en sesión para su posterior procesamiento
-        if (!request()->session()->has('citaId')) {
-            request()->session()->put('citaId', $citaId);
-        }
+        request()->session()->put('citaId', $citaId);
 
         return VistasConsultasFactory::make($paciente, $medico, $expediente);
     }
