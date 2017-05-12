@@ -7,7 +7,7 @@
                     <th class="col-md-2">Padecimiento</th>
                     <th class="col-md-3">Nota médica</th>
                     <th class="col-md-3">Comentario</th>
-                    <th class="col-md-3">Comentario</th>
+                    <th class="col-md-3">En próxima cita</th>
                     <th class="col-md-2">&nbsp;</th>
                 </tr>
             </thead>
