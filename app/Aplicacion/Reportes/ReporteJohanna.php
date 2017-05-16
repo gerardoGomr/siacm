@@ -28,7 +28,7 @@ abstract class ReporteJohanna extends TCPDF
         // imagen
         //$this->Image(asset('img/boka2.jpg'), 10, 10, 30);
         //$this->Image(asset('img/mascota.jpg'), 10, 25, 20);
-        $this->Line(10, 50, 200, 50);
+        //$this->Line(10, 50, 200, 50);
         $this->Ln(25);
     }
 

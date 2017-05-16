@@ -57,7 +57,7 @@ class InterconsultaJohanna extends ReporteJohanna
 
         $this->Ln(10);
 
-        $this->MultiCell(0, 5, utf8_encode($this->interconsulta->getReferencia()), false, 'J');
+        $this->WriteHTML('<p style="text-align: justify">' . $this->interconsulta->getReferencia() . '</p>', true);;
 
         $this->Ln(15);
 

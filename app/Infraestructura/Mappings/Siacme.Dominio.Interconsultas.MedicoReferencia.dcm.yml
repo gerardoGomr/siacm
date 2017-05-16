@@ -6,6 +6,11 @@ Siacme\Dominio\Interconsultas\MedicoReferencia:
     id:
       type: integer
       column: id
+  fields:
+    direccion:
+      type: string
+      length: 150
+      nullable: true
   oneToOne:
     especialidad:
       targetEntity: Siacme\Dominio\Usuarios\Especialidad

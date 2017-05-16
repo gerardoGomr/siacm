@@ -7,7 +7,6 @@ $(document).ready(function() {
 		$numHermanosFinados    = $('#numHermanosFinados'),
 		$adjuntarFoto          = $('#adjuntarFoto'),
 		$fotografia            = $('#fotografiaAgregada'),
-		fechaActual            = new Date(),
 		_token                 = $('input[name="_token"]').val();
 
 	// inicializar la cámara
@@ -35,27 +34,23 @@ $(document).ready(function() {
 	});
 
 	// calcular edad
-	$('#fechaNacimiento').datepicker().on('changeDate', function (fechaElegida) {
-		var years  = fechaActual.getFullYear() - fechaElegida.date.getFullYear(),
-		    months = fechaActual.getMonth() - fechaElegida.date.getMonth(),
-		    days   = fechaActual.getDate() - fechaElegida.date.getDate();
+	$('#fechaNacimiento').datepicker()
+		.on('changeDate', function (fechaElegida) {
 
-		if (months < 0 || (months === 0 && days === 0)) {
-			years--;
-		}
+			var now          = moment(),
+				fechaElegida = moment(fechaElegida.date),
+		  	 	years        = now.diff(fechaElegida, 'years');
 
-		if (months < 0) {
-			months += 12;
-		}
+			now.add(-years, 'years');
 
-		if (days < 0) {
-			fechaElegida.date.setMonth(fechaElegida.date.getMonth() + 1);
-			days = fechaElegida.date.getDate() - fechaElegida.date.getDate() + fechaActual.getDate();
-			--months;
-		}
+			var	months = now.diff(fechaElegida, 'months');
 
-		$('#edadAnios').val(years);
-		$('#edadMeses').val(months);
+			now.add(-months, 'months');
+
+		 	var days = now.diff(fechaElegida, 'days');
+
+			$('#edadAnios').val(years);
+			$('#edadMeses').val(months);
 	});
 
 	// inicializar validaciones

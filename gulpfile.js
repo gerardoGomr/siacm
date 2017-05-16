@@ -25,6 +25,7 @@ elixir(function(mix) {
 			'components/plugins/ajaxify/davis.min.js',
 			'components/plugins/ajaxify/jquery.lazyjaxdavis.min.js',
 			'components/plugins/preload/pace/pace.min.js',
+			'components/plugins/moment/moment.js',
 			'components/modules/admin/modals/assets/js/bootbox.min.js',
 			'components/plugins/less-js/less.min.js',
 			'components/core/js/preload.pace.init.js',

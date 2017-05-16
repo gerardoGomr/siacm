@@ -42,6 +42,7 @@ class RecetaJohanna extends ReporteJohanna
      */
     public function generar()
     {
+        $peso  = $this->expediente->tieneConsultas() ? $this->expediente->getConsultas()->last()->getExploracionFisica()->getPeso() : '--';
         $fecha = (new DateTime())->format('Y-m-d');
         // TODO: Implement generar() method.
         $this->SetTitle('Receta');
@@ -52,13 +53,13 @@ class RecetaJohanna extends ReporteJohanna
 
         $html = '<p><strong>Nombre:</strong> ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>
                 <p><strong>Edad:</strong> ' . $this->expediente->getPaciente()->edadCompleta() . '</p>
-                <p><strong>Peso:</strong> ' . $this->expediente->tieneConsultas() ? $this->expediente->getConsultas()->last()->getExploracionFisica()->getPeso() : '' . ' Kg.</p><hr>';
+                <p><strong>Peso:</strong> ' . $peso . ' Kg.</p><hr>';
 
         $this->WriteHTML($html, true);
 
         $this->Ln(5);
         $this->WriteHTML('<p><b>Indicaciones:</b></p>', true);
-        $this->MultiCell(0, 5, utf8_encode($this->receta->getCuerpo()), false, 'J');
+        $this->MultiCell(0, 5, ($this->receta->getCuerpo()), false, 'J');
         $this->Ln(5);
 
         $this->Output('Receta médica', 'I');

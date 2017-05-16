@@ -6,7 +6,7 @@
             </div>
             <div class="modal-body">
                 <button type="button" id="btnAceptar" class="btn btn-success"><i class="fa fa-check"></i> Aceptar</button>
-                <a href="{{ url('consultas/plan/pdf/' . base64_encode($paciente->getId())) }}" id="generarPlan" class="btn btn-success" target="_blank"><i class="fa fa-print"></i> Generar PDF</a>
+                <a href="{{ url('consultas/plan/pdf/' . base64_encode($paciente->getId())) }}" id="generarPlan" class="btn btn-success hide" target="_blank"><i class="fa fa-print"></i> Generar PDF</a>
                 <div class="separator"></div>
                 <div class="form-group">
                     <label for="" class="control-label">Dirigido a:</label>
@@ -26,8 +26,8 @@
                                 <div class="input-group-btn">
                                     <button type="button" data-url="{{ url('consultas/plan/tratamientos/otros/agregar') }}" class="btn btn-primary btn-small" id="btnAgregarOtroTratamiento"><i class="fa fa-plus"></i> Agregar a plan</button>
                                 </div>
-                            </div>  
-                        </div>    
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="innerAll" id="dvPlanTratamiento">
