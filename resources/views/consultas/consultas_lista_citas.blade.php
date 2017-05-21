@@ -1,5 +1,5 @@
 @if(!is_null($citas))
-	<ul class="list-group list-group-1 borders-none margin-none">
+	<ul class="list-group list-group-1 borders-none">
 		<?php
 		$i = 0;
 		?>
