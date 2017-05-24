@@ -235,4 +235,10 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
     // ruta para buscar no pagadas
     Route::post('consultas/buscar/no-pagadas', 'Pagos\ConsultasPagosController@buscarNoPagadas');
+
+    // reportes
+    Route::get('reportes/cobro-consultas/{medicoId?}', 'Reportes\ReportesController@vistaCobroConsultas');
+
+    // consultas del dia
+    Route::post('reportes/cobro-consultas', 'Reportes\ReportesController@cobroConsultas');
 });

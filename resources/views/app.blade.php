@@ -47,7 +47,7 @@
 			<!-- Footer -->
 			<div id="footer" class="hidden-print">
 				<!--  Copyright Line -->
-				<div class="copy">&copy; {{ date('Y') }} - <a href="#">SIACME v1.0</a> - Sistema Integral para la Administración del Consultorio Médico</div>
+				<div class="copy">&copy; {{ date('Y') }} - <a href="#">SIAMED v1.0</a> - Sistema Integral De Administración Médica</div>
 				<!--  End Copyright Line -->
 			</div>
 			<!-- Footer END -->

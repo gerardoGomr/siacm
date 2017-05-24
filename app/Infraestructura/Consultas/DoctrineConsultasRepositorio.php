@@ -2,12 +2,13 @@
 namespace Siacme\Infraestructura\Consultas;
 
 use DateTime;
-use Siacme\Dominio\Consultas\Consulta;
-use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
 use Doctrine\ORM\EntityManager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PDOException;
+use Siacme\Dominio\Consultas\Consulta;
+use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
+use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Exceptions\SiacmeLogger;
 
 /**
@@ -118,6 +119,31 @@ class DoctrineConsultasRepositorio implements ConsultasRepositorio
             $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
             $pdoLogger->log($e);
             return false;
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function obtenerPorFechaYMedico($fecha, Usuario $medico)
+    {
+        // TODO: Implement obtenerPorFechaYMedico() method.
+        try {
+            $consultas = $this->entityManager->createQuery('SELECT c, e, p FROM Consultas:Consulta c JOIN c.expediente e JOIN e.paciente p JOIN c.medico m WHERE c.fecha = :fecha AND m.id = :medicoId')
+                ->setParameter('fecha', $fecha)
+                ->setParameter('medicoId', $medico->getId())
+                ->getResult();
+
+            if (count($consultas) === 0) {
+                return null;
+            }
+
+            return $consultas;
+
+        } catch (PDOException $e) {
+            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+            $pdoLogger->log($e);
+            return null;
         }
     }
 }

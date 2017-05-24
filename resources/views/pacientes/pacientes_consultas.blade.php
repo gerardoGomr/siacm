@@ -6,7 +6,6 @@
                     <th class="col-md-2">Fecha</th>
                     <th class="col-md-2">Padecimiento</th>
                     <th class="col-md-3">Nota médica</th>
-                    <th class="col-md-3">Comentario</th>
                     <th class="col-md-3">En próxima cita</th>
                     <th class="col-md-2">&nbsp;</th>
                 </tr>
@@ -17,7 +16,6 @@
                     <td>{{ Siacme\Aplicacion\Fecha::convertir($consulta->getFecha()) }}</td>
                     <td>{{ $consulta->getPadecimientoActual() }}</td>
                     <td>{{ $consulta->getNotaMedica() }}</td>
-                    <td>{{ strlen($consulta->getComentario()) > 0 ? $consulta->getComentario() : '----' }}</td>
                     <td>{{ strlen($consulta->getARealizarEnProximaCita()) > 0 ? $consulta->getARealizarEnProximaCita() : '----' }}</td>
                     <td>
                         <div class="btn-group" role="group">

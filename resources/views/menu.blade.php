@@ -19,6 +19,12 @@ use Siacme\Dominio\Usuarios\Usuario;
 					<li><a href="{{ url('consultas/' . base64_encode(Usuario::JOHANNA)) }}" class="glyphicons hospital"><i></i><span> Consultas</span></a></li>
 					<li><a href="{{ url('consultas/pago/' . base64_encode(Usuario::JOHANNA)) }}" class="glyphicons usd"><i></i><span> Pago Consultas</span></a></li>
 					<li><a href="{{ url('pacientes/' . base64_encode(Usuario::JOHANNA)) }}" class="glyphicons nameplate_alt"><i></i><span>Expedientes</span></a></li>
+					<li class="menu hasSubmenu">
+						<a href="#reportesJohanna" data-toggle="collapse" class="glyphicons file"><i></i> Reportes</a>
+						<ul class="collapse menu" id="reportesJohanna">
+							<li><a href="{{ url('reportes/cobro-consultas/' . base64_encode(Usuario::JOHANNA)) }}" class="glyphicons usd"><i></i> Cobro consultas</a></li>
+						</ul>
+					</li>
 				</ul>
 			</li>
 			<li>
