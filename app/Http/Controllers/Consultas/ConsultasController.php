@@ -400,7 +400,7 @@ class ConsultasController extends Controller
     public function agregarReceta(Request $request)
     {
         //$recetaId = (int)$request->get('recetaId'); // id
-        $receta   = utf8_decode(base64_decode($request->get('receta'))); // cuerpo de la receta
+        $receta   = (base64_decode($request->get('receta'))); // cuerpo de la receta
 
         $receta = new RecetaConsulta($receta);
         $request->session()->put('receta', $receta);
@@ -441,7 +441,7 @@ class ConsultasController extends Controller
     public function agregarInterconsulta(Request $request, MedicosReferenciaRepositorio $medicosReferenciaRepositorio)
     {
         $medicoId         = (int)$request->get('medicoId');
-        $referencia       = utf8_encode(base64_decode($request->get('referencia')));
+        $referencia       = (base64_decode($request->get('referencia')));
         $medicoReferencia = $medicosReferenciaRepositorio->obtenerPorId($medicoId);
         $interconsulta    = new Interconsulta($medicoReferencia, $referencia);
 
