@@ -49,11 +49,11 @@ class ReporteTratamientoOdontologia extends ReporteJohanna
         $this->WriteHTML($html);
         $this->Ln(10);
         $this->SetFont('helvetica', '', 12);
-        $this->WriteHTML($this->tratamientoOdontologia->getDx());
+        $this->MultiCell(0, 5, $this->tratamientoOdontologia->getDx());
         $this->Ln(10);
-        $this->WriteHTML($this->tratamientoOdontologia->getObservaciones());
+        $this->MultiCell(0, 5, $this->tratamientoOdontologia->getObservaciones());
         $this->Ln(10);
-        $this->WriteHTML($this->tratamientoOdontologia->getTx());
+        $this->MultiCell(0, 5, $this->tratamientoOdontologia->getTx());
         $this->Ln(10);
         $html = '<b>Tiempo aproximado de uso:</b> ' . $this->tratamientoOdontologia->getDuracion() . ' años';
         $this->WriteHTML($html);
