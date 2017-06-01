@@ -59,7 +59,7 @@ class RecetaJohanna extends ReporteJohanna
 
         $this->Ln(5);
         $this->WriteHTML('<p><b>Indicaciones:</b></p>', true);
-        $this->MultiCell(0, 5, ($this->receta->getCuerpo()), false, 'J');
+        $this->MultiCell(0, 5, ($this->receta->getCuerpo() . "\n"));
         $this->Ln(5);
 
         $this->Output('Receta médica', 'I');
