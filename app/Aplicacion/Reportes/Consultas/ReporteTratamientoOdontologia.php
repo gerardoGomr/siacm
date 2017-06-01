@@ -61,7 +61,7 @@ class ReporteTratamientoOdontologia extends ReporteJohanna
         $this->WriteHTML($html);
         $this->MultiCell(0, 5, $this->tratamientoOdontologia->getTx() . "\n");
         $this->Ln(10);
-        $html = '<b>Tiempo aproximado de uso:</b> ' . $this->tratamientoOdontologia->getFechaInicio()->format('Y-m-d') . ' - ' . $this->tratamientoOdontologia->getFechaFin()->format('Y-m-d');
+        $html = '<b>Tiempo aproximado de uso:</b> ' . $this->tratamientoOdontologia->getFechaInicio()->format('Y-m-d') . ' - ' . $this->tratamientoOdontologia->getFechaTermino()->format('Y-m-d');
         $this->WriteHTML($html);
         $this->Ln(10);
         $html = '<b>Costo del tratamiento ortopédico:</b> $' . number_format($this->tratamientoOdontologia->getCosto(), 2);
