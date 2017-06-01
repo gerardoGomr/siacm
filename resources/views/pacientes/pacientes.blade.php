@@ -9,8 +9,8 @@
 					<div class="innerAll bg-gray border-bottom margin-none">
 						{!! Form::open(['url' => url('pacientes/buscar'), 'id' => 'formPaciente']) !!}
 	                        <div class="form-group">
-	                            <label for="paciente" class="control-label">Nombre de paciente:</label>
-	                            <input type="text" name="paciente" id="paciente" value="" placeholder="Escriba nombre o apellidos" class="form-control">
+	                            <label for="paciente" class="control-label">Dato de paciente:</label>
+	                            <input type="text" name="paciente" id="paciente" value="" placeholder="Escriba nombres o núm. de expediente" class="form-control">
 	                            <input type="hidden" name="medicoId" id="medicoId" value="{{ base64_encode($medico->getId()) }}">
 	                        </div>
 						{!! Form::close() !!}

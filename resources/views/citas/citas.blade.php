@@ -28,6 +28,10 @@
 											<td class="strong">Atendida:</td>
 											<td style="background: #AAEAB1; width: 10px;"></td>
 										</tr>
+										<tr>
+											<td class="strong">Inasistencia:</td>
+											<td style="background: #CBA7D0; width: 10px;"></td>
+										</tr>
 									</table>
 								</div>
 								<div class="col-table-row">
@@ -92,5 +96,4 @@
 @section('js')
 	<script src="{{ asset('js/citas/citas.js') }}"></script>
 	<script src="{{ asset('js/citas/citas_agregar.js') }}"></script>
-	<script src="{{ asset('js/citas/citas_detalle.js') }}"></script>
 @stop

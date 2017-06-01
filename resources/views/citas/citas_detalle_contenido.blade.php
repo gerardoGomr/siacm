@@ -47,3 +47,5 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('js/citas/citas_detalle.js') }}"></script>

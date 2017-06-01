@@ -19,7 +19,7 @@
 						<td>{{ $tratamientoOdontologia->getDX() }}</td>
 						<td>{{ $tratamientoOdontologia->costo() }}</td>
                         <td>{{ $tratamientoOdontologia->saldoFormateado() }}</td>
-                        <td>{{ $tratamientoOdontologia->getDuracion() }} años</td>
+                        <td>{{ $tratamientoOdontologia->getFechaInicio()->format('Y-m-d') }} - {{ $tratamientoOdontologia->getFechaTermino()->format('Y-m-d') }}</td>
                         <td><span class="label {{ $tratamientoOdontologia->atendido() ? 'label-success' : 'label-danger' }}">{{ $tratamientoOdontologia->atendido() ? 'Atendido' : 'Activo' }}</span></td>
                         <td>
                             @if (!$tratamientoOdontologia->pagado())
@@ -34,7 +34,8 @@
 							<input type="hidden" class="observaciones" value="{{ $tratamientoOdontologia->getObservaciones() }}">
 							<input type="hidden" class="tx" value="{{ $tratamientoOdontologia->getTX() }}">
 							<input type="hidden" class="costo" value="{{ $tratamientoOdontologia->getCosto() }}">
-							<input type="hidden" class="duracion" value="{{ $tratamientoOdontologia->getDuracion() }}">
+							<input type="hidden" class="fechaInicio" value="{{ $tratamientoOdontologia->getFechaInicio()->format('Y-m-d') }}">
+                            <input type="hidden" class="fechaTermino" value="{{ $tratamientoOdontologia->getFechaTermino()->format('Y-m-d') }}">
 							<input type="hidden" class="mensualidades" value="{{ $tratamientoOdontologia->getMensualidades() }}">
                         </td>
 					</tr>

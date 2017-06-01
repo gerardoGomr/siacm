@@ -113,7 +113,8 @@ $(document).ready(function () {
         $('#observaciones').val('');
         $('#tx').val('');
         $('#costo').val('');
-        $('#duracion').val('');
+        $('#fechaInicio').val('');
+        $('#fechaTermino').val('');
         $('#mensualidades').val('');
         $('#otroTratamientoId').val('');
         $('#dvOtroTratamiento').appendTo('body').modal('show');
@@ -131,7 +132,8 @@ $(document).ready(function () {
             observaciones:     $(this).siblings('input.observaciones').val(),
             tx:                $(this).siblings('input.tx').val(),
             costo:             $(this).siblings('input.costo').val(),
-            duracion:          $(this).siblings('input.duracion').val(),
+            fechaInicio:       $(this).siblings('input.fechaInicio').val(),
+            fechaTermino:      $(this).siblings('input.fechaTermino').val(),
             mensualidades:     $(this).siblings('input.mensualidades').val(),
         };
 
@@ -147,7 +149,8 @@ $(document).ready(function () {
         $('#observaciones').val(data.observaciones);
         $('#tx').val(data.tx);
         $('#costo').val(data.costo);
-        $('#duracion').val(data.duracion);
+        $('#fechaInicio').val(data.fechaInicio);
+        $('#fechaTermino').val(data.fechaTermino);
         $('#mensualidades').val(data.mensualidades);
         $('#otroTratamientoId').val(data.otroTratamientoId);
 

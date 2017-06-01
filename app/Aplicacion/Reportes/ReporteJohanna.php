@@ -5,9 +5,10 @@ use TCPDF;
 
 /**
  * Class ReporteJohanna
+ *
  * @package Siacme\Aplicacion\Reportes
+ * @category Reporte
  * @author  Gerardo Adrián Gómez Ruiz
- * @version 1.0
  */
 abstract class ReporteJohanna extends TCPDF
 {

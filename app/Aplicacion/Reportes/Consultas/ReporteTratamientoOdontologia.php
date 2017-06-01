@@ -49,11 +49,11 @@ class ReporteTratamientoOdontologia extends ReporteJohanna
         $this->WriteHTML($html);
         $this->Ln(10);
         $this->SetFont('helvetica', '', 12);
-        $this->MultiCell(0, 5, $this->tratamientoOdontologia->getDx(), 0, 'J');
+        $this->WriteHTML($this->tratamientoOdontologia->getDx());
         $this->Ln(10);
-        $this->MultiCell(0, 5, $this->tratamientoOdontologia->getObservaciones(), 0, 'J');
+        $this->WriteHTML($this->tratamientoOdontologia->getObservaciones());
         $this->Ln(10);
-        $this->MultiCell(0, 5, $this->tratamientoOdontologia->getTx(), 0, 'J');
+        $this->WriteHTML($this->tratamientoOdontologia->getTx());
         $this->Ln(10);
         $html = '<b>Tiempo aproximado de uso:</b> ' . $this->tratamientoOdontologia->getDuracion() . ' años';
         $this->WriteHTML($html);
@@ -62,6 +62,9 @@ class ReporteTratamientoOdontologia extends ReporteJohanna
         $this->WriteHTML($html);
         $this->Ln(10);
         $html = '<b>Mensualidades:</b> $' . number_format($this->tratamientoOdontologia->getMensualidades());
+        $this->WriteHTML($html);
+        $this->Ln(15);
+        $html = '<b>Forma de Pago:</b> 50% Toma de impresión o colocación de brackets, 50% 1er mes';
         $this->WriteHTML($html);
         $this->Output('Tratamiento de odontología', 'I');
     }

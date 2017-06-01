@@ -176,7 +176,8 @@ class PacientesController extends Controller
     }
 
     /**
-     * anexar un nuevo tratamiento de odontología
+     * anexar un nuevo tratamiento de odontología (ortopedia, ortodoncia o ambos)
+     *
      * @param Request $request
      * @param ExpedientesRepositorio $expedientesRepositorio
      * @return \Illuminate\Http\JsonResponse
@@ -189,8 +190,20 @@ class PacientesController extends Controller
         $tx            = $request->get('tx');
         $expedienteId  = (int)base64_decode($request->get('expedienteId'));
         $expediente    = $expedientesRepositorio->obtenerPorId($expedienteId);
+        $fechaInicio   = DateTime::createFromFormat('Y-m-d', $request->get('fechaInicio'));
+        $fechaTermino  = DateTime::createFromFormat('Y-m-d', $request->get('fechaTermino'));
 
-        $tratamiento = new TratamientoOdontologia($request->get('dx'), $tx, $observaciones, (double)$request->get('costo'), (int)$request->get('duracion'), (int)$request->get('mensualidades'), $expediente->getExpedienteEspecialidad(), new ColeccionArray());
+        $tratamiento = new TratamientoOdontologia($request->get('dx'),
+            $tx,
+            $observaciones,
+            (double)$request->get('costo'),
+            $fechaInicio,
+            $fechaTermino,
+            (int)$request->get('mensualidades'),
+            $expediente->getExpedienteEspecialidad(),
+            new ColeccionArray()
+        );
+
         $tratamiento->generarTratamientos($ortopedia, $ortodoncia);
 
         if (is_null($expediente->getExpedienteEspecialidad()->getOtrosTratamientos())) {

@@ -187,6 +187,10 @@ class Cita
             case CitaEstatus::ATENDIDA:
                 $estatus = 'Atendida';
                 break;
+
+            case CitaEstatus::CANCELADA_INASISTENCIA:
+                $estatus = 'Inasistencia';
+                break;
 		}
 
 		return $estatus;
@@ -249,6 +253,10 @@ class Cita
             case CitaEstatus::EN_ESPERA_CONSULTA:
                 $this->enEsperaDeConsulta();
                 break;
+
+            case CitaEstatus::CANCELADA_INASISTENCIA:
+            	$this->inasistencia();
+            	break;
         }
     }
 
@@ -280,6 +288,10 @@ class Cita
 				$color = '#B0263B';
 				break;
 
+			case CitaEstatus::CANCELADA_INASISTENCIA:
+				$color = '#CBA7D0';
+				break;
+
 			case CitaEstatus::EN_ESPERA_CONSULTA:
 				$color = '#F8C1A1';
 				break;
@@ -298,5 +310,15 @@ class Cita
 	public function atender()
 	{
 		$this->estatus = CitaEstatus::ATENDIDA;
+	}
+
+	/**
+	 * marcar como inasistencia
+	 *
+	 * @return void
+	 */
+	public function inasistencia()
+	{
+		$this->estatus = CitaEstatus::CANCELADA_INASISTENCIA;
 	}
 }

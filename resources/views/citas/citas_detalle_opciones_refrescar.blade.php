@@ -22,3 +22,7 @@ use Siacme\Dominio\Citas\CitaEstatus;
 	<button type="button" class="btn btn-danger btn-block cancelar" data-accion="{{ CitaEstatus::CANCELADA  }}"><i class="fa fa-times-circle"></i> Cancelar Cita</button>
 	<button type="button" class="btn btn-warning btn-block reprogramar"><i class="fa fa-calendar"></i> Reprogramar Cita</button>
 @endif
+
+@if ($cita->getEstatus() !== CitaEstatus::CANCELADA_INASISTENCIA && $cita->getEstatus() !== CitaEstatus::CANCELADA)
+	<button type="button" class="btn btn-default btn-block inasistencia" data-accion="{{ CitaEstatus::CANCELADA_INASISTENCIA }}"><i class="fa fa-times"></i> Cancelada por inasistencia</button>
+@endif

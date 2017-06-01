@@ -86,6 +86,20 @@
 					</div>
 
 					<div class="form-group">
+						<label class="control-label col-md-3">Fecha tentativa próxima cita:</label>
+						<div class="col-md-8">
+							<input type="text" name="fechaTentativa" id="fechaTentativa" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-md-3">Duración aproximada próxima cita:</label>
+						<div class="col-md-8">
+							<input type="text" name="duracionAproximada" id="duracionAproximada" class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
 						<label class="control-label col-md-3">Comportamiento Frankl</label>
 						<div class="col-md-3">
 							@foreach ($comportamientosFrankl as $comportamientoFrankl)

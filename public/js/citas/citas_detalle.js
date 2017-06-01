@@ -1,62 +1,68 @@
-$(document).ready(function($) {
+'use strict';
+
+// $(document).ready(function($) {
+    const opciones = {
+        url:    $('#citaDetalle').find('#urlEstatus').val(),
+        citaId: $('#citaDetalle').find('#citaId').val()
+    };
+
 	// confirmar cita
     $('#citaDetalle').on('click', 'button.confirmar', function(event) {
-        var accion = $(this).data('accion'),
-            url    = $('#citaDetalle').find('#urlEstatus').val(),
-            citaId = $('#citaDetalle').find('#citaId').val(),
-            _token = $('#citaDetalle').find('#_token').val();
+        var accion = $(this).data('accion');
 
         bootbox.confirm('Se actualizará la cita a confirmada, ¿desea continuar?', function(eleccion) {
             if(eleccion) {
                 // actualizar
-                actualizarCitas(url, citaId, _token, accion);
+                actualizarCitas(opciones, accion);
             }
         });
     });
 
     // cancelar cita
     $('#citaDetalle').on('click', 'button.cancelar', function(event) {
-        var accion = $(this).data('accion'),
-            url    = $('#citaDetalle').find('#urlEstatus').val(),
-            citaId = $('#citaDetalle').find('#citaId').val(),
-            _token = $('#citaDetalle').find('#_token').val();
+        var accion = $(this).data('accion');
 
         bootbox.confirm('Se cancelará la cita actual, ¿desea continuar?', function(eleccion) {
             if(eleccion) {
                 // actualizar
-                actualizarCitas(url, citaId, _token, accion);
+                actualizarCitas(opciones, accion);
+            }
+        });
+    });
+
+    // inasistencia
+    $('#citaDetalle').on('click', 'button.inasistencia', function(event) {
+        var accion = $(this).data('accion');
+
+        bootbox.confirm('Se marcará la cita actual como inasistencia, ¿desea continuar?', function(eleccion) {
+            if(eleccion) {
+                // actualizar
+                actualizarCitas(opciones, accion);
             }
         });
     });
 
     // registrar llegada
     $('#citaDetalle').on('click', 'button.registrarLlegada', function () {
-        var accion = $(this).data('accion'),
-            url    = $('#citaDetalle').find('#urlEstatus').val(),
-            citaId = $('#citaDetalle').find('#citaId').val(),
-            _token = $('#citaDetalle').find('#_token').val();
+        var accion = $(this).data('accion');
 
         bootbox.confirm('Se registrará la llegada del paciente, ¿desea continuar?', function(eleccion) {
             if(eleccion) {
                 // actualizar
-                actualizarCitas(url, citaId, _token, accion);
+                actualizarCitas(opciones, accion);
             }
         });
     });
 
     // reprogramar cita
     $('#citaDetalle').on('click', 'button.reprogramar', function(event) {
-        var url    = $('#citaDetalle').find('#urlReprogramar').val(),
-            citaId = $('#citaDetalle').find('#citaId').val(),
-            _token = $('#citaDetalle').find('#_token').val();
-
         bootbox.confirm('¿Desea reprogramar la cita actual?', function(event) {
             if(event === true) {
                 $.ajax({
-                    url:      url,
-                    type:     'post',
+                    url:      opciones.url,
+                    type:     'POST',
                     dataType: 'json',
-                    data:	  { citaId: citaId, _token:_token },
+                    data:	  { citaId: opciones.citaId },
                     beforeSend: function () {
                         $('#modalLoading').modal('show');
                     }
@@ -98,17 +104,15 @@ $(document).ready(function($) {
 
     /**
      * actualizar estatus de cita
-     * @param url
-     * @param citaId
-     * @param _token
+     * @param opciones
      * @param accion
      */
-    function actualizarCitas(url, citaId, _token, accion) {
+    function actualizarCitas(opciones, accion) {
         $.ajax({
-            url:      url,
-            type:     'post',
+            url:      opciones.url,
+            type:     'POST',
             dataType: 'json',
-            data:	  { citaId: citaId, accion: accion, _token:_token },
+            data:	  { citaId: opciones.citaId, accion: accion },
             beforeSend: function () {
                 $('#modalLoading').modal('show');
             }
@@ -136,4 +140,4 @@ $(document).ready(function($) {
             bootbox.alert('Ocurrió un error actualizando el estatus de la cita. Intente de nuevo');
         });
     }
-});
+// });

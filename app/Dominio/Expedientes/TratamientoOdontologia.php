@@ -1,6 +1,7 @@
 <?php
 namespace Siacme\Dominio\Expedientes;
 
+use DateTime;
 use Exception;
 use Siacme\Dominio\Cobros\Cobro;
 use Siacme\Dominio\Listas\IColeccion;
@@ -39,9 +40,14 @@ class TratamientoOdontologia
     private $costo;
 
     /**
-     * @var int
+     * @var DateTime
      */
-    private $duracion;
+    private $fechaInicio;
+
+    /**
+     * @var DateTime
+     */
+    private $fechaTermino;
 
     /**
      * @var int
@@ -90,18 +96,20 @@ class TratamientoOdontologia
      * @param string $tx
      * @param string $observaciones
      * @param string $costo
-     * @param string $duracion
+     * @param DateTime $fechaInicio
+     * @param DateTime $fechaTermino
      * @param int $mensualidades
      * @param ExpedienteJohanna $expedienteEspecialidad
      * @param IColeccion $pagos
      */
-    public function __construct($dx, $tx, $observaciones, $costo, $duracion, $mensualidades, ExpedienteJohanna $expedienteEspecialidad, IColeccion $pagos)
+    public function __construct($dx, $tx, $observaciones, $costo, DateTime $fechaInicio, DateTime $fechaTermino, $mensualidades, ExpedienteJohanna $expedienteEspecialidad, IColeccion $pagos)
     {
         $this->dx                     = $dx;
         $this->observaciones          = $observaciones;
         $this->tx                     = $tx;
         $this->costo                  = $costo;
-        $this->duracion               = $duracion;
+        $this->fechaInicio            = $fechaInicio;
+        $this->fechaTermino           = $fechaTermino;
         $this->mensualidades          = $mensualidades;
         $this->atendido               = false;
         $this->expedienteEspecialidad = $expedienteEspecialidad;
@@ -165,7 +173,23 @@ class TratamientoOdontologia
      */
     public function getDuracion()
     {
-        return $this->duracion;
+        //return $this->duracion;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getFechaInicio(): DateTime
+    {
+        return $this->fechaInicio;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getFechaTermino(): DateTime
+    {
+        return $this->fechaTermino;
     }
 
     /**

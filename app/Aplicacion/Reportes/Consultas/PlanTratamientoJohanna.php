@@ -91,6 +91,16 @@ class PlanTratamientoJohanna extends ReporteJohanna
     }
 
     /**
+     * override parents header
+     *
+     * @return void
+     */
+    public function Header()
+    {
+        # code...
+    }
+
+    /**
      * generar Plan de Tratamiento en PDF
      *
      * @return void

@@ -1,6 +1,6 @@
 <div id="dvOtroTratamiento" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 800px;">
             <div class="modal-header">
                 <h4 class="modal-title">Capturar tratamiento</h4>
                 <button class="close" aria-hidden="true" data-dismiss="modal" type="button">x</button>
@@ -28,21 +28,21 @@
                 <div class="form-group">
                     <label for="dx" class="control-label col-md-3">DX:</label>
                     <div class="col-md-9">
-                        <textarea name="dx" id="dx" class="form-control required" rows="10"></textarea>
+                        <textarea name="dx" id="dx" class="form-control required" rows="5"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="observaciones" class="control-label col-md-3">Observaciones:</label>
                     <div class="col-md-9">
-                        <textarea name="observaciones" id="observaciones" class="form-control required" rows="10"></textarea>
+                        <textarea name="observaciones" id="observaciones" class="form-control required" rows="5"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="tx" class="control-label col-md-3">Descripción TX:</label>
                     <div class="col-md-9">
-                        <textarea name="tx" id="tx" class="form-control required" rows="10"></textarea>
+                        <textarea name="tx" id="tx" class="form-control required" rows="5"></textarea>
                     </div>
                 </div>
 
@@ -59,10 +59,10 @@
                 <div class="form-group">
                     <label for="duracion" class="control-label col-md-3">Duración aproximada:</label>
                     <div class="col-md-3">
-                        <div class="input-group">
-                            <input type="text" name="duracion" id="duracion" class="form-control required numerosEnteros">
-                            <span class="input-group-addon">Años</span>
-                        </div>
+                        <input type="text" name="fechaInicio" id="fechaInicio" class="form-control required fecha" placeholder="Fecha Inicio" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="fechaTermino" id="fechaTermino" class="form-control required fecha" placeholder="Fecha Término" readonly>
                     </div>
                 </div>
 
@@ -78,7 +78,7 @@
 
                 <div class="form-group">
                     <div class="col-md-9 col-md-offset-3">
-                        <input type="button" id="guardarFormOtros" class="btn btn-primary" value="Generar tratamiento">
+                        <button type="button" id="guardarFormOtros" class="btn btn-primary"><i class="fa fa-save"></i> Generar tratamiento</button>
                         <input type="hidden" name="expedienteId" value="{{ base64_encode($expediente->getId()) }}">
                         <input type="hidden" name="otroTratamientoId" id="otroTratamientoId">
                     </div>

@@ -28,9 +28,12 @@ Siacme\Dominio\Expedientes\TratamientoOdontologia:
     saldo:
       type: float
       column: Saldo
-    duracion:
-      type: integer
-      column: Duracion
+    fechaInicio:
+      type: date
+      column: FechaInicio
+    fechaTermino:
+      type: date
+      column: FechaTermino
     mensualidades:
       type: integer
       column: Mensualidades
