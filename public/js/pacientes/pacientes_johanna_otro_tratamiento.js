@@ -46,7 +46,7 @@ $('#formOtroTratamiento').on('click', '#guardarFormOtros', function () {
 
                     var datos = {
                             medicoId:      $('#medicoId').val(),
-                            expedienteId:  $('#resultadoPacientes').find('li.paciente').first().data('id')
+                            expedienteId:  $('#resultadoPacientes').find('li.active').data('id')
                         };
 
                     mostrarExpediente(datos);

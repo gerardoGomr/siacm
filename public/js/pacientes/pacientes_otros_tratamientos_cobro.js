@@ -1,7 +1,10 @@
+'use strict';
+
 var saldo,
     abono,
     tratamientoOdontologiaId,
     $formCobroOtroTratamiento = $('#formCobroOtroTratamiento');
+
 // pagar otro tratamiento
 $('#dvDetalles').on('click', 'button.pagoOtroTratamiento', function(event) {
     saldo                    = $(this).data('saldo');
@@ -17,12 +20,12 @@ $('#dvDetalles').on('click', 'button.pagoOtroTratamiento', function(event) {
 });
 
 // on keyup de abono
-$('#dvDetalles').on('keyup', '#abono', function () {
-    var abono = $(this).val();
+$('#abono').on('keyup', function () {
+    var abonoActual = $(this).val();
     $('#pagoOtroTratamiento').rules('add', {
-        min: abono,
+        min: abonoActual,
         messages: {
-            min: 'El pago mínimo es ' + abono
+            min: 'El pago mínimo es ' + abonoActual
         }
     });
 });
@@ -81,7 +84,7 @@ $('#registrarPagoOtroTratamiento').on('click', function () {
     if ($formCobroOtroTratamiento.valid()) {
         $.ajax({
             url:      $formCobroOtroTratamiento.attr('action'),
-            type:     'post',
+            type:     'POST',
             dataType: 'json',
             data:     $formCobroOtroTratamiento.serialize(),
             beforeSend: function () {
@@ -98,7 +101,14 @@ $('#registrarPagoOtroTratamiento').on('click', function () {
 
                 case 'OK':
                     bootbox.alert('El cobro del tratamiento fue registrado con éxito. Imprima el recibo al paciente.', function () {
-                        window.open();
+                        //window.open();
+
+                        var datos = {
+                            medicoId:      $('#medicoId').val(),
+                            expedienteId:  $('#resultadoPacientes').find('li.active').data('id')
+                        };
+
+                        mostrarExpediente(datos);
                     });
 
                     $('#dvCobroOtroTratamiento').modal('hide');
@@ -112,3 +122,89 @@ $('#registrarPagoOtroTratamiento').on('click', function () {
         });
     }
 });
+
+/**
+ * funcion para mostrar el detall del expediente
+ *
+ * @param datos
+ */
+function mostrarExpediente(datos) {
+    $.ajax({
+        url:        '/pacientes/detalle',
+        type:       'POST',
+        dataType:   'json',
+        data:       datos,
+        beforeSend: function () {
+            $('#modalLoading').modal('show');
+        }
+
+    }).done(function (respuesta) {
+        $('#modalLoading').modal('hide');
+
+        $('#dvDetalles').html(respuesta.html);
+
+        // validación básica
+        $('#formAnexo').validate();
+
+        // validar formulario
+        agregaValidacionesElementos($('#formAnexo'));
+
+        // generar ajax form
+        generarAjaxForm('formAnexo');
+
+    }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        $('#modalLoading').modal('hide');
+        console.log(textStatus + ': ' + errorThrown);
+        bootbox.alert('Ocurrió un error al mostrar los detalles del paciente.');
+    });
+}
+
+/**
+ * funcion para generar un formulario ajax
+ * @param form
+ */
+function generarAjaxForm(form) {
+    var opciones = {
+        url:        $('#' + form).attr('action'),
+        type:       'POST',
+        dataType:   'json',
+        beforeSend: function() {
+            $('#modalLoading').modal('show');
+
+            if (!$('#' + form).valid()) {
+                $('#modalLoading').modal('hide');
+                return false;
+            }
+        },
+        success: function(respuesta) {
+            $('#modalLoading').modal('hide');
+
+            if(respuesta.estatus === 'fail') {
+                var mensaje = respuesta.mensaje !== '' ? respuesta.mensaje : '';
+
+                bootbox.alert('Ocurrió un error al agregar el anexo. Intente de nuevo. ' + mensaje);
+                return false;
+            }
+
+            if (respuesta.estatus === 'OK') {
+                bootbox.alert('Anexo agregado con éxito', function () {
+                    var url   = $('#resultadoPacientes').data('url'),
+                        datos = {
+                            expedienteId: $('#' + form).find('input[name="expedienteId"]').val(),
+                            medicoId:     $('#medicoId').val(),
+                            _token:       $formPaciente.find('input[name="_token"]').val()
+                        };
+
+                    mostrarExpediente(url, datos);
+                });
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            $('#modalLoading').modal('hide');
+            console.log(textStatus + ': ' + errorThrown);
+            bootbox.alert('Ocurrió un error al agregar el anexo. Intente de nuevo');
+        }
+    };
+
+    $('#' + form).ajaxForm(opciones);
+}

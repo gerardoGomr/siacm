@@ -4,9 +4,10 @@
 			<thead class="bg-gray">
 				<tr>
 					<th>Tratamiento</th>
-					<th>DX</th>
+					<th class="col-md-3">DX</th>
 					<th>Costo</th>
                     <th>Saldo</th>
+                    <th>Mensualidades</th>
                     <th>Duración</th>
                     <th>Atendido</th>
 					<th>&nbsp;</th>
@@ -16,9 +17,10 @@
 				@foreach ($expediente->getExpedienteEspecialidad()->getOtrosTratamientos() as $tratamientoOdontologia)
 					<tr>
 						<td>{{ $tratamientoOdontologia->descripcionTratamientos() }}</td>
-						<td>{{ $tratamientoOdontologia->getDX() }}</td>
+						<td>{{ substr($tratamientoOdontologia->getDX(), 0, 200) . ' ...' }}</td>
 						<td>{{ $tratamientoOdontologia->costo() }}</td>
                         <td>{{ $tratamientoOdontologia->saldoFormateado() }}</td>
+                        <td>${{ number_format($tratamientoOdontologia->getMensualidades(), 2) }}</td>
                         <td>{{ $tratamientoOdontologia->getFechaInicio()->format('Y-m-d') }} - {{ $tratamientoOdontologia->getFechaTermino()->format('Y-m-d') }}</td>
                         <td><span class="label {{ $tratamientoOdontologia->atendido() ? 'label-success' : 'label-danger' }}">{{ $tratamientoOdontologia->atendido() ? 'Atendido' : 'Activo' }}</span></td>
                         <td>

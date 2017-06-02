@@ -295,7 +295,7 @@ class TratamientoOdontologia
      */
     public function abonoMinimo()
     {
-        return round(($this->costo / $this->mensualidades), 2);
+        return $this->mensualidades;
     }
 
     /**
@@ -372,16 +372,18 @@ class TratamientoOdontologia
      * @param string $tx
      * @param string $observaciones
      * @param float $costo
-     * @param int $duracion
+     * @param DateTime $fechaInicio
+     * @param DateTime $fechaTermino
      * @param int $mensualidades
      */
-    public function actualizar($dx, $observaciones, $tx, $costo, $duracion, $mensualidades)
+    public function actualizar($dx, $observaciones, $tx, $costo, $fechaInicio, $fechaTermino, $mensualidades)
     {
         $this->dx            = $dx;
         $this->observaciones = $observaciones;
         $this->tx            = $tx;
         $this->costo         = $costo;
-        $this->duracion      = $duracion;
+        $this->fechaInicio   = $fechaInicio;
+        $this->fechaTermino  = $fechaTermino;
         $this->mensualidades = $mensualidades;
     }
 }

@@ -1,6 +1,6 @@
 <div class="tab-pane" id="interconsultas">
 	@if($expediente->tieneInterconsultas())
-		<table class="table table-bordered">
+		<table class="table table-bordered table-striped text-small">
 			<thead>
 				<tr>
 					<th>Fecha</th>

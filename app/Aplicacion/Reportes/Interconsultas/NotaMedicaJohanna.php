@@ -52,7 +52,7 @@ class NotaMedicaJohanna extends ReporteJohanna
 
         $this->Ln(10);
 
-        $this->MultiCell(0, 5, ($this->consulta->getNotaMedica()), false, 'J');
+        $this->MultiCell(0, 5, ($this->consulta->getNotaMedica() . "\n"), false, 'J');
 
         $this->Ln(15);
 

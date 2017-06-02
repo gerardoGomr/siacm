@@ -226,9 +226,11 @@ class PacientesController extends Controller
         $ortodoncia    = $request->get('ortodoncia') ? true : false;
         $observaciones = $request->get('observaciones');
         $tx            = $request->get('tx');
+        $fechaInicio   = DateTime::createFromFormat('Y-m-d', $request->get('fechaInicio'));
+        $fechaTermino  = DateTime::createFromFormat('Y-m-d', $request->get('fechaTermino'));
 
         $tratamientoOdontologia = $tratamientosOdontologiaRepositorio->obtenerPorId((int) $request->get('otroTratamientoId'));
-        $tratamientoOdontologia->actualizar($request->get('dx'), $observaciones, $tx, (double)$request->get('costo'), (int)$request->get('duracion'), (int)$request->get('mensualidades'));
+        $tratamientoOdontologia->actualizar($request->get('dx'), $observaciones, $tx, (double)$request->get('costo'), $fechaInicio, $fechaTermino, (int)$request->get('mensualidades'));
         $tratamientoOdontologia->generarTratamientos($ortopedia, $ortodoncia);
 
         if (!$tratamientosOdontologiaRepositorio->persistir($tratamientoOdontologia)) {
