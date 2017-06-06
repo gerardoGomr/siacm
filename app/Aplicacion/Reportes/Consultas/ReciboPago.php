@@ -73,6 +73,14 @@ class ReciboPago extends ReporteJohanna
                 <td>' . $this->consulta->getCobroConsulta()->formaPago() . '</td>
             </tr>
             <tr>
+                <td><strong>Pago:</strong></td>
+                <td>$' . number_format($this->consulta->getCobroConsulta()->getPago(), 2) . '</td>
+            </tr>
+            <tr>
+                <td><strong>Cambio:</strong></td>
+                <td>$' . number_format($this->consulta->getCobroConsulta()->getCambio(), 2) . '</td>
+            </tr>
+            <tr>
                 <td><strong>Fecha de pago:</strong></td>
                 <td>' . Fecha::convertir($this->consulta->getCobroConsulta()->getFechaPago()->format('Y-m-d')) . '</td>
             </tr>

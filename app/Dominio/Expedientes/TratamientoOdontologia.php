@@ -255,7 +255,7 @@ class TratamientoOdontologia
      */
     public function pagado()
     {
-        return $this->saldo === 0;
+        return $this->obtenerSaldo() === 0.0;
     }
 
     /**

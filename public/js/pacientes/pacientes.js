@@ -27,7 +27,7 @@ $(document).ready(function () {
 		if (event === 13 || event.which === 13) {
             $.ajax({
                 url:        $formPaciente.attr('action'),
-                type:       'post',
+                type:       'POST',
                 dataType:   'json',
                 data:       $formPaciente.serialize(),
                 beforeSend: function () {

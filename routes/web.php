@@ -202,6 +202,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
     // cobrar otros tratamientos
     Route::post('pacientes/otrosTratamientos/cobrar', 'Pacientes\PacientesController@cobrarOtroTratamiento');
 
+    // ruta para mostrar PDF del cobro de otro tratamiento
+    Route::get('pacientes/otrosTratamientos/recibo/{id}', 'Pacientes\PacientesController@generarReciboPagoOtros');
+
 	/////////////////////////////////////////// USUARIOS /////////////////////////////////////////////////////
     // ruta para mostrar listado de usuarios
 	Route::get('usuarios', 'Usuarios\UsuariosController@index');

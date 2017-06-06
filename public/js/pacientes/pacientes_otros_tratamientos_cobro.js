@@ -101,11 +101,22 @@ $('#registrarPagoOtroTratamiento').on('click', function () {
 
                 case 'OK':
                     bootbox.alert('El cobro del tratamiento fue registrado con éxito. Imprima el recibo al paciente.', function () {
-                        //window.open();
+                        window.open('/pacientes/otrosTratamientos/recibo/' + respuesta.id);
+
+                        var totalResultados = $('#totalResultados').val(),
+                            expedienteId    = null;
+
+                        if (totalResultados === '1') {
+                            expedienteId = $('#resultadoPacientes').find('li.paciente')
+                                .first()
+                                .data('id');
+                        } else {
+                            expedienteId = $('#resultadoPacientes').find('li.active').data('id');
+                        }
 
                         var datos = {
-                            medicoId:      $('#medicoId').val(),
-                            expedienteId:  $('#resultadoPacientes').find('li.active').data('id')
+                            medicoId:     $('#medicoId').val(),
+                            expedienteId: expedienteId
                         };
 
                         mostrarExpediente(datos);

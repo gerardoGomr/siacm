@@ -9,7 +9,7 @@
                     <th>Saldo</th>
                     <th>Mensualidades</th>
                     <th>Duración</th>
-                    <th>Atendido</th>
+                    <th>Estatus</th>
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
@@ -22,7 +22,11 @@
                         <td>{{ $tratamientoOdontologia->saldoFormateado() }}</td>
                         <td>${{ number_format($tratamientoOdontologia->getMensualidades(), 2) }}</td>
                         <td>{{ $tratamientoOdontologia->getFechaInicio()->format('Y-m-d') }} - {{ $tratamientoOdontologia->getFechaTermino()->format('Y-m-d') }}</td>
-                        <td><span class="label {{ $tratamientoOdontologia->atendido() ? 'label-success' : 'label-danger' }}">{{ $tratamientoOdontologia->atendido() ? 'Atendido' : 'Activo' }}</span></td>
+                        <td>
+                            <span class="label {{ $tratamientoOdontologia->atendido() ? 'label-success' : 'label-danger' }}">{{ $tratamientoOdontologia->atendido() ? 'Atendido' : 'Activo' }}</span>
+                            <br><br>
+                            <span class="label {{ $tratamientoOdontologia->pagado() ? 'label-success' : 'label-danger' }}">{{ $tratamientoOdontologia->pagado() ? 'Pagado' : 'Con adeudo' }}</span>
+                        </td>
                         <td>
                             @if (!$tratamientoOdontologia->pagado())
                                 <button type="button" class="btn btn-primary btn-sm pagoOtroTratamiento" data-toggle="tooltip" title="Pagar/abonar" data-saldo="{{ $tratamientoOdontologia->obtenerSaldo() }}" data-abono="{{ $tratamientoOdontologia->abonoMinimo() }}" data-id="{{ $tratamientoOdontologia->getId() }}"><i class="fa fa-dollar"></i></button>

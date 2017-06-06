@@ -5,29 +5,32 @@ use DateTime;
 use Exception;
 use File;
 use Illuminate\Http\Request;
+use LaravelDoctrine\ORM\Facades\EntityManager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Response;
+use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Aplicacion\Factories\PacientesVistaFactory;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\ReciboPago;
+use Siacme\Aplicacion\Reportes\Expedientes\TratamientosOdontologia\ReciboPago as ReciboPagoOtros;
 use Siacme\Aplicacion\Reportes\Consultas\ReporteTratamientoOdontologia;
 use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
+use Siacme\Aplicacion\Servicios\Expedientes\AnexosUploader;
 use Siacme\Dominio\Cobros\CobroTratamientoOdontologia;
 use Siacme\Dominio\Consultas\CobroConsulta;
 use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
 use Siacme\Dominio\Consultas\Repositorios\RecetasRepositorio;
+use Siacme\Dominio\Expedientes\Anexo;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\TratamientosOdontologiaRepositorio;
 use Siacme\Dominio\Expedientes\TratamientoOdontologia;
 use Siacme\Dominio\Interconsultas\Repositorios\InterconsultasRepositorio;
-use Siacme\Dominio\Expedientes\Anexo;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Siacme\Exceptions\SiacmeLogger;
 use Siacme\Http\Controllers\Controller;
-use Siacme\Aplicacion\Servicios\Expedientes\AnexosUploader;
-use Siacme\Aplicacion\ColeccionArray;
+
 
 /**
  * @package Siacme\Http\Controllers\Pacientes;
@@ -429,6 +432,24 @@ class PacientesController extends Controller
             $respuesta['estatus'] = 'fail';
         }
 
+        $respuesta['id'] = $cobroOtroTratamiento->getId();
         return response()->json($respuesta);
+    }
+
+    /**
+     * generar PDF de cobro de otros tratamientos
+     *
+     * @param string $cobroOtroTratamientoId
+     * @return mixed
+     */
+    public function generarReciboPagoOtros($cobroOtroTratamientoId)
+    {
+        $cobroOtroTratamiento = EntityManager::getRepository(CobroTratamientoOdontologia::class)->find((int) $cobroOtroTratamientoId);
+
+        $reporte = new ReciboPagoOtros($cobroOtroTratamiento);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
     }
 }
