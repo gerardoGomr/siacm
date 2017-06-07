@@ -322,9 +322,9 @@ class PacientesController extends Controller
             }
         }
 
-        $reporte->SetHeaderMargin(10);
+        $reporte->SetHeaderMargin(0);
         $reporte->SetAutoPageBreak(true, 20);
-        $reporte->SetMargins(15, 60);
+        $reporte->SetMargins(15, 5);
         $reporte->generar();
     }
 

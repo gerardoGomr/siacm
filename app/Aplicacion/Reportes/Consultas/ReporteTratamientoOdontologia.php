@@ -40,7 +40,7 @@ class ReporteTratamientoOdontologia extends ReporteJohanna
         // TODO: Implement generar() method.
         $this->SetTitle('Tratamiento de ortopedia / ortodoncia');
         $this->AddPage();
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', '', 12);
         $this->Cell(0, 10, Fecha::convertir($fecha), 0, 1, 'R');
         $this->Ln(5);
 
@@ -48,7 +48,7 @@ class ReporteTratamientoOdontologia extends ReporteJohanna
                 <p><strong>Edad:</strong> ' . $this->tratamientoOdontologia->getExpedienteEspecialidad()->getExpediente()->getPaciente()->edadCompleta() . '</p>';
         $this->WriteHTML($html);
         $this->Ln(10);
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', '', 12);
         $html = '<b>DX:</b> ';
         $this->WriteHTML($html);
         $this->MultiCell(0, 5, $this->tratamientoOdontologia->getDx() . "\n");

@@ -47,7 +47,7 @@ class RecetaJohanna extends ReporteJohanna
         // TODO: Implement generar() method.
         $this->SetTitle('Receta');
         $this->AddPage();
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', '', 12);
         $this->Cell(0, 10, Fecha::convertir($fecha), 0, 1, 'R');
         $this->Ln(5);
 

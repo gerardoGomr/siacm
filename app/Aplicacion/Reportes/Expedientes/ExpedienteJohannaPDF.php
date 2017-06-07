@@ -41,7 +41,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
         $html = '';
         $this->SetTitle('Expediente');
         $this->AddPage();
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', '', 12);
 
         // sección superior para la foto y nombre del paciente
         if($this->expediente->tieneFoto()) {
@@ -54,7 +54,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
         $this->WriteHTML($html, true);
         $this->Ln(20);
 
-        $this->SetFont('helvetica', '', 10);
+        $this->SetFont('dejavusans', '', 10);
 
         // sección datos personales
         $html = $this->generarDatosPersonales();
@@ -93,7 +93,7 @@ class ExpedienteJohannaPDF extends ReporteJohanna
         }
 
         $this->Ln(5);
-        $this->SetFont('helvetica', 'B', 12);
+        $this->SetFont('dejavusans', 'B', 12);
         $this->Cell(0, 5, 'Certifico la veracidad de los datos aportados.', false, true);
         $this->Cell(0, 5, 'Nombre y firma del padre o tutor:  ___________________________', false, true);
 

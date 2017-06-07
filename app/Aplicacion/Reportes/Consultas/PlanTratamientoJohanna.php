@@ -91,13 +91,29 @@ class PlanTratamientoJohanna extends ReporteJohanna
     }
 
     /**
-     * override parents header
+     * override parent's header
      *
      * @return void
      */
     public function Header()
     {
-        # code...
+        $this->Image(asset('img/boka.jpg'), 140, 2, 55);
+    }
+
+    /**
+     * override parent's footer
+     */
+    public function Footer()
+    {
+        $this->SetFont('dejavusans', '', 8);
+        $this->Line(25, 275, 95, 275);
+        $this->Line(115, 275, 185, 275);
+
+        $this->SetXY(30, 278);
+        $this->WriteHTML('<b>Nombre y firma del padre o tutor</b>');
+
+        $this->SetXY(117, 278);
+        $this->WriteHTML('<b>E. OP. Johanna Joselyn Vázquez Hernández</b>');
     }
 
     /**
@@ -110,17 +126,19 @@ class PlanTratamientoJohanna extends ReporteJohanna
         // TODO: Implement generar() method.
         $this->SetTitle('Plan de tratamiento');
         $this->AddPage();
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', 'B', 12);
         $this->SetFillColor(178, 178, 178);
-        $this->Cell(0, 10, 'Plan de tratamiento', 0, 1, '',1);
+        $this->Cell(100, 10, 'Plan de tratamiento', 0, 1, '', 1);
+        $this->SetFont('dejavusans', '', 10);
         $this->Ln(5);
-        $this->Cell(0, 5, 'Yo, '. $this->odontograma->dirigidoA(), 0, 1);
-        $this->Cell(0, 5, 'Legal o familiar del niño (a): '. $this->expediente->getPaciente()->nombreCompleto(), 0, 1);
+        $this->WriteHTML('Yo, <b>'. $this->odontograma->dirigidoA() . '</b>');
+        $this->Ln(3);
+        $this->WriteHTML('Legal o familiar del niño (a): <b>'. $this->expediente->getPaciente()->nombreCompleto() . '</b>');
         $this->Ln(5);
-        $this->SetFont('helvetica', '', 10);
-        $this->writeHTML('<style>#declaro { background: #cccccc; padding: 3px; margin: 3px; }</style><p id="declaro">DECLARO: Que la E. OP Johanna Joselyn Vázquez Hernández me ha explicado que necesito los siguientes tratamientos especificados en la historia clínica y su respectivo costo</p>');
+        $this->SetFont('dejavusans', '', 10);
+        $this->WriteHTML('<p style="text-align: justify"><b>DECLARO</b>: Que la <b>E. OP Johanna Joselyn Vázquez Hernández</b> me ha explicado que necesito los siguientes tratamientos especificados en la historia clínica y su respectivo costo.</p>');
         $this->Ln(5);
-        $this->SetFont('helvetica', '', 8);
+        $this->SetFont('dejavusans', '', 7);
 
         $html = '
             <style>
@@ -133,26 +151,30 @@ class PlanTratamientoJohanna extends ReporteJohanna
                 padding: 3px;
                 text-align: center;
             }
+
+            table th {
+                font-weight: bold;
+            }
             </style>
             <table>
                 <thead>
                     <tr style="text-align: center">
-                        <th bgcolor="gray" color="white">Región permanente</th>
-                        <th bgcolor="gray" color="white">Región temporal</th>
-                        <th bgcolor="gray" color="white">Diagnóstico</th>
-                        <th bgcolor="gray" color="white">Tratamientos</th>
-                        <th bgcolor="gray" color="white">Costo</th>
+                        <th bgcolor="gray" color="white" width="55">Región permanente</th>
+                        <th bgcolor="gray" color="white" width="55">Región temporal</th>
+                        <th bgcolor="gray" color="white" width="175">Diagnóstico</th>
+                        <th bgcolor="gray" color="white" width="175">Tratamientos</th>
+                        <th bgcolor="gray" color="white" width="50">Costo</th>
                     </tr>
                 </thead>
                 <tbody>';
 
         // primer renglón superior vacío
         $html .= '<tr>
-            <td bgcolor="#dcdcdc">&nbsp;</td>
-            <td bgcolor="#2f4f4f">&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td bgcolor="#dcdcdc" width="55">&nbsp;</td>
+            <td bgcolor="#2f4f4f" width="55">&nbsp;</td>
+            <td width="175">&nbsp;</td>
+            <td width="175">&nbsp;</td>
+            <td width="50">&nbsp;</td>
         </tr>';
 
         foreach (static::$ordenRows as $row) {
@@ -186,8 +208,9 @@ class PlanTratamientoJohanna extends ReporteJohanna
             $otrosTratamientos .= $otroTratamiento->getOtroTratamiento()->getTratamiento() . '(' . $otroTratamiento->getOtroTratamiento()->costo() . ') - ';
         }
 
-        $html .= '</tbody></table><br><br><p style="font-size: 13pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
+        $html .= '</tbody></table><br><p style="font-size: 10pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
 
+        $html .= '<p style="font-size: 8pt;"><strong>CONSIENTO:</strong> el plan de tratamiento, acepto el presupuesto otorgado* y me comprometo a cubrir el costo de los tratamientos que me interesan para bien de la salud de mi hijo(a). (*El costo de los tratamientos serán respetados únicamente por 6 meses a partir de esta fecha). Estoy de acuerdo en que el diagnóstico y el plan de tratamiento pueden cambiar con el tiempo por el transcurso de la patología.</p>';
         $this->writeHTML($html, true, 0, true, 0);
 
         $this->Output('Plan de tratamiento', 'I');

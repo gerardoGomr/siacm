@@ -49,12 +49,12 @@ class ListaCitas extends ReporteJohanna
         $this->SetTitle('Lista de Citas');
         $this->AddPage();
         $this->Ln(30);
-        $this->SetFont('helvetica', 'B', 12);
+        $this->SetFont('dejavusans', 'B', 12);
         $this->SetTextColor(72, 190, 206);
         $this->Cell(0, 10, 'REPORTE DE PACIENTES CITADOS.- ' . strtoupper(Fecha::convertir($this->fecha)), 0, true);
         $this->SetTextColor(0);
         $this->Ln(5);
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', '', 12);
         $this->generaTabla();
         $this->writeHTML($this->html, true, false, false);
         $this->Output('Lista de Citas', 'I');

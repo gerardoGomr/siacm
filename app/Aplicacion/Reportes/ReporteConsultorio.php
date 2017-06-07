@@ -16,11 +16,11 @@ abstract class ReporteConsultorio extends TCPDF
      */
     public function Header() {
         // Set font
-        $this->SetFont('helvetica', 'BI', 20);
+        $this->SetFont('dejavusans', 'BI', 20);
         $this->SetTextColor(72, 190, 206);
         $this->Cell(0, 10, 'Dra. Johanna Joselyn Vázquez Hernández', false, true, 'R');
         $this->Cell(0, 10, 'Dr. Rigoberto García López', false, true, 'R');
-        $this->SetFont('helvetica', 'I', 12);
+        $this->SetFont('dejavusans', 'I', 12);
         $this->Cell(0, 10, '16 poniente norte, Médica Diamante', false, true, 'R');
 
         // imagen
@@ -37,7 +37,7 @@ abstract class ReporteConsultorio extends TCPDF
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
-        $this->SetFont('helvetica', 'I', 8);
+        $this->SetFont('dejavusans', 'I', 8);
         // Page number
         $this->Cell(0, 10, 'Página '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }

@@ -40,7 +40,7 @@ class ReciboPago extends ReporteJohanna
         // TODO: Implement generar() method.
         $this->SetTitle('Recibo de pago');
         $this->AddPage();
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', '', 12);
 
         $html = '
         <style>
@@ -90,7 +90,7 @@ class ReciboPago extends ReporteJohanna
 
         if (strlen($this->consulta->getComentario())) {
             $this->Ln(4);
-            $this->SetFont('helvetica', 'I', 8);
+            $this->SetFont('dejavusans', 'I', 8);
             $this->Cell(0, 4, $this->consulta->getComentario(), '');
         }
 

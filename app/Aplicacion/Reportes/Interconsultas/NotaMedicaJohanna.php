@@ -42,7 +42,7 @@ class NotaMedicaJohanna extends ReporteJohanna
         // TODO: Implement generar() method.
         $this->SetTitle('Nota médica');
         $this->AddPage();
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', '', 12);
         $this->Cell(0, 10, Fecha::convertir($this->consulta->getFecha()), 0, 1, 'R');
         $this->Ln(5);
         $html = '<p style="text-align: right;"><strong>Nombre:</strong> ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>
@@ -56,7 +56,7 @@ class NotaMedicaJohanna extends ReporteJohanna
 
         $this->Ln(15);
 
-        $this->SetFont('helvetica', 'B', 12);
+        $this->SetFont('dejavusans', 'B', 12);
         $this->Cell(0, 5, ('Dra. Johanna Joselyn Vázquez Hernández'), 0, 1, 'C');
         $this->Cell(0, 5, 'Odontopediatra', 0, 1, 'C');
 

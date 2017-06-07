@@ -17,13 +17,13 @@ abstract class ReporteJohanna extends TCPDF
      */
     public function Header() {
         // Set font
-        //$this->SetFont('helvetica', 'BI', 20);
+        //$this->SetFont('dejavusans', 'BI', 20);
         //$this->SetTextColor(72, 190, 206);
         //$this->Cell(0, 10, 'Dra. Johanna Joselyn Vázquez Hernández', false, true, 'R');
-        //$this->SetFont('helvetica', 'BI', 18);
+        //$this->SetFont('dejavusans', 'BI', 18);
         //$this->SetTextColor(153, 162, 163);
         //$this->Cell(0, 10, 'Odontopediatría', false, true, 'R');
-        //$this->SetFont('helvetica', 'I', 12);
+        //$this->SetFont('dejavusans', 'I', 12);
         //$this->Cell(0, 10, '16 poniente norte, Médica Diamante', false, true, 'R');
 
         // imagen
@@ -36,11 +36,12 @@ abstract class ReporteJohanna extends TCPDF
     /**
      * pie de reporte, mostrar numero de hojas
      */
-    public function Footer() {
+    public function Footer()
+    {
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
-        $this->SetFont('helvetica', 'I', 8);
+        $this->SetFont('dejavusans', 'I', 8);
         // Page number
         $this->Cell(0, 10, 'Página '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
     }

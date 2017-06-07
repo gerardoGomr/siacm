@@ -42,7 +42,7 @@ class ReciboPago extends ReporteJohanna
         // TODO: Implement generar() method.
         $this->SetTitle('Recibo de pago');
         $this->AddPage();
-        $this->SetFont('helvetica', '', 12);
+        $this->SetFont('dejavusans', '', 12);
 
         $html = '
         <style>
