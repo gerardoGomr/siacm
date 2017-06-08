@@ -13,8 +13,7 @@ $(document).ready(function() {
 	Webcam.set({
 		fps:         45,
 		crop_width:  200,
-		crop_height: 200,
-		force_flash: true
+		crop_height: 200
 	});
 
 	// abrir modal para fotos
