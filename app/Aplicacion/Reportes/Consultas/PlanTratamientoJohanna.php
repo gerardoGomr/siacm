@@ -131,39 +131,39 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $this->Cell(100, 10, 'Plan de tratamiento', 0, 1, '', 1);
         $this->SetFont('dejavusans', '', 10);
         $this->Ln(5);
+        $this->WriteHTML('<b></b>');
         $this->WriteHTML('Yo, <b>'. $this->odontograma->dirigidoA() . '</b>');
-        $this->Ln(3);
+        $this->Ln(5);
         $this->WriteHTML('Legal o familiar del niño (a): <b>'. $this->expediente->getPaciente()->nombreCompleto() . '</b>');
         $this->Ln(5);
-        $this->SetFont('dejavusans', '', 10);
         $this->WriteHTML('<p style="text-align: justify"><b>DECLARO</b>: Que la <b>E. OP Johanna Joselyn Vázquez Hernández</b> me ha explicado que necesito los siguientes tratamientos especificados en la historia clínica y su respectivo costo.</p>');
         $this->Ln(5);
         $this->SetFont('dejavusans', '', 7);
 
         $html = '
             <style>
-            table {
-                border-collapse: collapse;
-            }
+                table {
+                    border-collapse: collapse;
+                }
 
-            table, td, th {
-                border: 1px solid black;
-                padding: 3px;
-                text-align: center;
-            }
+                table, td, th {
+                    border: 1px solid black;
+                    padding: 2px;
+                    text-align: center;
+                }
 
-            table th {
-                font-weight: bold;
-            }
+                table th {
+                    font-weight: bold;
+                }
             </style>
             <table>
                 <thead>
                     <tr style="text-align: center">
                         <th bgcolor="gray" color="white" width="55">Región permanente</th>
                         <th bgcolor="gray" color="white" width="55">Región temporal</th>
-                        <th bgcolor="gray" color="white" width="175">Diagnóstico</th>
-                        <th bgcolor="gray" color="white" width="175">Tratamientos</th>
-                        <th bgcolor="gray" color="white" width="50">Costo</th>
+                        <th bgcolor="gray" color="white" width="160">Diagnóstico</th>
+                        <th bgcolor="gray" color="white" width="160">Tratamientos</th>
+                        <th bgcolor="gray" color="white" width="80">Costo</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -171,14 +171,14 @@ class PlanTratamientoJohanna extends ReporteJohanna
         // primer renglón superior vacío
         $html .= '<tr>
             <td bgcolor="#dcdcdc" width="55">&nbsp;</td>
-            <td bgcolor="#2f4f4f" width="55">&nbsp;</td>
-            <td width="175">&nbsp;</td>
-            <td width="175">&nbsp;</td>
-            <td width="50">&nbsp;</td>
+            <td bgcolor="#D0F7FB" width="55">&nbsp;</td>
+            <td width="160">&nbsp;</td>
+            <td width="160">&nbsp;</td>
+            <td width="80">&nbsp;</td>
         </tr>';
 
         foreach (static::$ordenRows as $row) {
-            $bgColorTemporal = '#2f4f4f';
+            $bgColorTemporal = '#D0F7FB';
 
             $odontogramaDiente = $this->odontograma->getOdontogramaDiente($row[0]);
             if (is_null($odontogramaDiente)) {
@@ -211,6 +211,8 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $html .= '</tbody></table><br><p style="font-size: 10pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
 
         $html .= '<p style="font-size: 8pt;"><strong>CONSIENTO:</strong> el plan de tratamiento, acepto el presupuesto otorgado* y me comprometo a cubrir el costo de los tratamientos que me interesan para bien de la salud de mi hijo(a). (*El costo de los tratamientos serán respetados únicamente por 6 meses a partir de esta fecha). Estoy de acuerdo en que el diagnóstico y el plan de tratamiento pueden cambiar con el tiempo por el transcurso de la patología.</p>';
+
+        $this->setListIndentWidth(2);
         $this->writeHTML($html, true, 0, true, 0);
 
         $this->Output('Plan de tratamiento', 'I');
@@ -230,7 +232,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $numeroDientePermanente = '';
 
         if ($odontogramaDiente->getDiente()->esTemporal()) {
-            $bgColorTemporal        = '#2f4f4f';
+            $bgColorTemporal        = '#D0F7FB';
             $numeroDienteTemporal   = $odontogramaDiente->getDiente()->getNumero();
         }
 
@@ -259,10 +261,10 @@ class PlanTratamientoJohanna extends ReporteJohanna
      */
     private function dibujarPadecimientos($padecimientos)
     {
-        $html     = '<ul>';
+        $html     = '<ul style="list-style-type: none;">';
 
         foreach ($padecimientos as $padecimiento) {
-            $html .= '<li>' . $padecimiento->getNombre() . '</li>';
+            $html .= '<li style="padding: 0px; margin: 0px;">' . $padecimiento->getNombre() . '</li>';
         }
 
         $html .= '</ul>';
@@ -282,7 +284,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
             return '';
         }
 
-        $html = '<ul>';
+        $html = '<ul style="list-style-type: none;">';
 
         foreach ($tratamientos as $dientePlan) {
             $html .= '<li>' . $dientePlan->getDienteTratamiento()->getTratamiento() . '</li>';
@@ -305,7 +307,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
             return '';
         }
 
-        $html = '<ul>';
+        $html = '<ul style="list-style-type: none;">';
 
         foreach ($tratamientos as $dientePlan) {
             $html .= '<li>$' . (string) number_format($dientePlan->getDienteTratamiento()->getCosto(), 2) . '</li>';
