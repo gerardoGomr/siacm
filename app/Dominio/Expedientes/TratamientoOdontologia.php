@@ -340,9 +340,9 @@ class TratamientoOdontologia
     public function registrarPago(Cobro $cobroTratamientoOdontologia)
     {
         try {
-            if ($cobroTratamientoOdontologia->getAbono() < $this->abonoMinimo()) {
+            /*if ($cobroTratamientoOdontologia->getAbono() < $this->abonoMinimo()) {
                 throw new AbonoATratamientoDeOdontologiaEsMenorAlAbonoMinimoException('El abono mínimo a realizar al tratamiento es de ' . $this->abonoMinimo());
-            }
+            }*/
 
             $cobroTratamientoOdontologia->registrarPago();
 

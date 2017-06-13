@@ -33,7 +33,8 @@
                             @endif
 							<button type="button" class="btn btn-warning btn-sm editar" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></button>
 							<a class="btn btn-success btn-sm" href="/pacientes/tratamientos/otros/pdf/{{ base64_encode($tratamientoOdontologia->getId()) }}" data-toggle="tooltip" title="Abrir PDF" target="_blank"><i class="fa fa-file"></i></a>
-							<input type="hidden" class="otroTratamientoId" value="{{ $tratamientoOdontologia->getId() }}">
+							<input type="hidden" class="expedienteId" value="{{ $expediente->getId() }}">
+                            <input type="hidden" class="otroTratamientoId" value="{{ $tratamientoOdontologia->getId() }}">
 							<input type="hidden" class="ortopedia" value="{{ $tratamientoOdontologia->ortopedia() ? '1' : '0' }}">
 							<input type="hidden" class="ortodoncia" value="{{ $tratamientoOdontologia->ortodoncia() ? '1' : '0' }}">
 							<input type="hidden" class="dx" value="{{ $tratamientoOdontologia->getDX() }}">

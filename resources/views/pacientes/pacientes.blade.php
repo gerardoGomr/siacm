@@ -46,11 +46,14 @@
 			</div>
 		</div>
 	</div>
+
+	@include('modal_loading')
+	@include('pacientes.pacientes_johanna_otro_tratamiento')
+	@include('pacientes.pacientes_otros_tratamientos_cobro')
 @stop
 
-@include('pacientes.pacientes_cobro_consulta')
-@include('modal_loading')
-
 @section('js')
-	<script type="text/javascript" src="{{ asset('js/pacientes/pacientes.js') }}"></script>
+	<script src="{{ asset('js/pacientes/pacientes.js') }}"></script>
+	<script src="{{ asset('js/pacientes/pacientes_johanna_otro_tratamiento.js') }}"></script>
+	<script src="{{ asset('js/pacientes/pacientes_otros_tratamientos_cobro.js') }}"></script>
 @stop

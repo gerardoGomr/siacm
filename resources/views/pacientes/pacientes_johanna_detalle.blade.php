@@ -13,7 +13,7 @@
                         <button type="button" class="btn btn-primary btn-md" id="generarOtroTratamiento"> Generar tratamiento ortopedia / ortodoncia</button>
                     @endif
                 @else
-                    <button type="button" class="btn btn-primary btn-md" id="generarOtroTratamiento"> Generar tratamiento ortopedia / ortodoncia</button>
+                    <button type="button" class="btn btn-primary btn-md" id="generarOtroTratamiento" data-id="{{ $expediente->getId() }}"> Generar tratamiento ortopedia / ortodoncia</button>
                 @endif
             @endif
         </div>
@@ -41,8 +41,3 @@
 		</div>
 	</div>
 </div>
-
-@include('pacientes.pacientes_johanna_otro_tratamiento')
-@include('pacientes.pacientes_otros_tratamientos_cobro')
-<script src="{{ asset('js/pacientes/pacientes_johanna_otro_tratamiento.js') }}"></script>
-<script src="{{ asset('js/pacientes/pacientes_otros_tratamientos_cobro.js') }}"></script>

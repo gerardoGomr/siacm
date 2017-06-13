@@ -191,7 +191,7 @@ class PacientesController extends Controller
         $ortodoncia    = $request->get('ortodoncia') ? true : false;
         $observaciones = $request->get('observaciones');
         $tx            = $request->get('tx');
-        $expedienteId  = (int)base64_decode($request->get('expedienteId'));
+        $expedienteId  = (int)$request->get('expedienteId');
         $expediente    = $expedientesRepositorio->obtenerPorId($expedienteId);
         $fechaInicio   = DateTime::createFromFormat('Y-m-d', $request->get('fechaInicio'));
         $fechaTermino  = DateTime::createFromFormat('Y-m-d', $request->get('fechaTermino'));

@@ -79,7 +79,7 @@
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
                             <button type="button" id="guardarFormOtros" class="btn btn-primary"><i class="fa fa-save"></i> Generar tratamiento</button>
-                            <input type="hidden" name="expedienteId" value="{{ base64_encode($expediente->getId()) }}">
+                            <input type="hidden" name="expedienteId" id="expId" value="">
                             <input type="hidden" name="otroTratamientoId" id="otroTratamientoId">
                         </div>
                     </div>
