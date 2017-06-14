@@ -375,8 +375,7 @@ function generarAjaxForm(form) {
                 bootbox.alert('Anexo agregado con éxito', function () {
                     var datos = {
                             expedienteId: $('#' + form).find('input[name="expedienteId"]').val(),
-                            medicoId:     $('#medicoId').val(),
-                            _token:       $formPaciente.find('input[name="_token"]').val()
+                            medicoId:     $('#medicoId').val()
                         };
 
                     mostrarExpediente(datos);
