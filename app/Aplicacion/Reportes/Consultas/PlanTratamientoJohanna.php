@@ -126,10 +126,10 @@ class PlanTratamientoJohanna extends ReporteJohanna
         // TODO: Implement generar() method.
         $this->SetTitle('Plan de tratamiento');
         $this->AddPage();
-        $this->SetFont('dejavusans', 'B', 12);
+        $this->SetFont('dejavusans', 'B', 10);
         $this->SetFillColor(178, 178, 178);
         $this->Cell(100, 10, 'Plan de tratamiento', 0, 1, '', 1);
-        $this->SetFont('dejavusans', '', 10);
+        $this->SetFont('dejavusans', '', 7);
         $this->Ln(5);
         $this->WriteHTML('<b></b>');
         $this->WriteHTML('Yo, <b>'. $this->odontograma->dirigidoA() . '</b>');
@@ -138,8 +138,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $this->Ln(5);
         $this->WriteHTML('<p style="text-align: justify"><b>DECLARO</b>: Que la <b>E. OP Johanna Joselyn Vázquez Hernández</b> me ha explicado que necesito los siguientes tratamientos especificados en la historia clínica y su respectivo costo.</p>');
         $this->Ln(5);
-        $this->SetFont('dejavusans', '', 7);
-
+        $this->SetFont('dejavusans', '', 6);
         $html = '
             <style>
                 table {
@@ -208,7 +207,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
             $otrosTratamientos .= $otroTratamiento->getOtroTratamiento()->getTratamiento() . '(' . $otroTratamiento->getOtroTratamiento()->costo() . ') - ';
         }
 
-        $html .= '</tbody></table><br><p style="font-size: 10pt;"><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
+        $html .= '</tbody></table><br><p><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
 
         $html .= '<p style="font-size: 8pt;"><strong>CONSIENTO:</strong> el plan de tratamiento, acepto el presupuesto otorgado* y me comprometo a cubrir el costo de los tratamientos que me interesan para bien de la salud de mi hijo(a). (*El costo de los tratamientos serán respetados únicamente por 6 meses a partir de esta fecha). Estoy de acuerdo en que el diagnóstico y el plan de tratamiento pueden cambiar con el tiempo por el transcurso de la patología.</p>';
 

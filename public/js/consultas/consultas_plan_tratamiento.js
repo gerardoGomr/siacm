@@ -207,6 +207,12 @@ $(function() {
 
 	// cerrar el modal
 	$('#btnAceptar').on('click', function() {
+		if ($('#dirigidoA').val() === '') {
+			bootbox.alert('Por favor, especifique a quien va a ir dirigido el plan de tratamiento.');
+			return false;
+		}
+
+		$('#dirigido').val($('#dirigidoA').val());
 		$('#planDeTratamiento').modal('hide');
 	});
 
@@ -219,7 +225,6 @@ $(function() {
 
 			// colocar la bandera de plan generado en 1
 			$('#generoPlan').val('0');
-			$('#dirigido').val($('#dirigidoA').val());
 		}
 	}
 
