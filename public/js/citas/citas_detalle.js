@@ -1,68 +1,69 @@
 'use strict';
 
-// $(document).ready(function($) {
-    const opciones = {
-        url:    $('#citaDetalle').find('#urlEstatus').val(),
-        citaId: $('#citaDetalle').find('#citaId').val()
-    };
-
-	// confirmar cita
+$(document).ready(function($) {
+    // confirmar cita
     $('#citaDetalle').on('click', 'button.confirmar', function(event) {
-        var accion = $(this).data('accion');
+        var accion = $(this).data('accion'),
+            citaId = $('#citaDetalle').find('#citaId').val();
 
         bootbox.confirm('Se actualizará la cita a confirmada, ¿desea continuar?', function(eleccion) {
             if(eleccion) {
                 // actualizar
-                actualizarCitas(opciones, accion);
+                actualizarCitas(citaId, accion);
             }
         });
     });
 
     // cancelar cita
     $('#citaDetalle').on('click', 'button.cancelar', function(event) {
-        var accion = $(this).data('accion');
+        var accion = $(this).data('accion'),
+            citaId = $('#citaDetalle').find('#citaId').val();
 
         bootbox.confirm('Se cancelará la cita actual, ¿desea continuar?', function(eleccion) {
             if(eleccion) {
                 // actualizar
-                actualizarCitas(opciones, accion);
+                actualizarCitas(citaId, accion);
             }
         });
     });
 
     // inasistencia
     $('#citaDetalle').on('click', 'button.inasistencia', function(event) {
-        var accion = $(this).data('accion');
+        var accion = $(this).data('accion'),
+            citaId = $('#citaDetalle').find('#citaId').val();
 
         bootbox.confirm('Se marcará la cita actual como inasistencia, ¿desea continuar?', function(eleccion) {
             if(eleccion) {
                 // actualizar
-                actualizarCitas(opciones, accion);
+                actualizarCitas(citaId, accion);
             }
         });
     });
 
     // registrar llegada
     $('#citaDetalle').on('click', 'button.registrarLlegada', function () {
-        var accion = $(this).data('accion');
+        var accion = $(this).data('accion'),
+            citaId = $('#citaDetalle').find('#citaId').val();
 
         bootbox.confirm('Se registrará la llegada del paciente, ¿desea continuar?', function(eleccion) {
             if(eleccion) {
                 // actualizar
-                actualizarCitas(opciones, accion);
+                actualizarCitas(citaId, accion);
             }
         });
     });
 
     // reprogramar cita
     $('#citaDetalle').on('click', 'button.reprogramar', function(event) {
+        var citaId = $('#citaDetalle').find('#citaId').val();
+
         bootbox.confirm('¿Desea reprogramar la cita actual?', function(event) {
             if(event === true) {
                 $.ajax({
-                    url:      opciones.url,
+                    url:      '/citas/estatus',
                     type:     'POST',
                     dataType: 'json',
-                    data:	  { citaId: opciones.citaId },
+                    data:	  { citaId: citaId },
                     beforeSend: function () {
                         $('#modalLoading').modal('show');
                     }
@@ -107,12 +108,12 @@
      * @param opciones
      * @param accion
      */
-    function actualizarCitas(opciones, accion) {
+    function actualizarCitas(citaId, accion) {
         $.ajax({
-            url:      opciones.url,
+            url:      '/citas/estatus',
             type:     'POST',
             dataType: 'json',
-            data:	  { citaId: opciones.citaId, accion: accion },
+            data:	  { citaId: citaId, accion: accion },
             beforeSend: function () {
                 $('#modalLoading').modal('show');
             }
@@ -140,4 +141,4 @@
             bootbox.alert('Ocurrió un error actualizando el estatus de la cita. Intente de nuevo');
         });
     }
-// });
+});

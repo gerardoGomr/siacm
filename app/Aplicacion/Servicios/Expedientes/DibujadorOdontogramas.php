@@ -19,12 +19,18 @@ class DibujadorOdontogramas implements DibujadorInterface
 	protected $odontograma;
 
 	/**
+	 * @var int
+	 */
+	protected $totalConPadecimientos;
+
+	/**
 	 * constructor, recibe un odontograma para dibujar
 	 * @param Odontograma $odontograma
 	 */
 	public function __construct(Odontograma $odontograma)
 	{
-		$this->odontograma = $odontograma;
+		$this->odontograma 		     = $odontograma;
+		$this->totalConPadecimientos = 0;
 	}
 
 	/**
@@ -89,7 +95,7 @@ class DibujadorOdontogramas implements DibujadorInterface
 		$html .= $this->dibujarImagenDientes(48, 41);
 		$html .= $this->dibujarImagenDientes(31, 38);
 
-		$html .= '</tr></table>';
+		$html .= '</tr></table><input type="hidden" id="totalConPadecimientos" value="' . $this->totalConPadecimientos . '">';
 
 		return $html;
 	}
@@ -122,32 +128,43 @@ class DibujadorOdontogramas implements DibujadorInterface
 
 		if($inicio > $fin) {
 			for ($i = $inicio; $i >= $fin; $i--) {
-                $strImagen = '';
+                $strImagen       = '';
+                $strButtonDelete = '';
                 if ($this->odontograma->getOdontogramaDiente($i)->tienePadecimientos()) {
                     foreach ($this->odontograma->getOdontogramaDiente($i)->getPadecimientos()->getValues() as $dientePadecimiento) {
                         $strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
                     }
+
+                    $strButtonDelete .= '&nbsp;&nbsp;<button type="button" class="btn btn-red btn-xs removerPadecimientosDiente" data-toggle="tooltip" title="Remover padecimientos" data-diente="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '"><i class="fa fa-times"></i></button>';
+
+                    $this->totalConPadecimientos++;
+
                 } else {
                     $strImagen .= '<img src="' . asset('img/dientes/x.png') . '" />';
                 }
 
-                $html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal" data-id="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '"></a></td>';
+                $html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal" data-id="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '"></a>' . $strButtonDelete . '</td>';
 
 			}
 
 		} else {
 
 			for ($i = $inicio; $i <= $fin; $i++) {
-                $strImagen = '';
+                $strImagen       = '';
+                $strButtonDelete = '';
                 if ($this->odontograma->getOdontogramaDiente($i)->tienePadecimientos()) {
                     foreach ($this->odontograma->getOdontogramaDiente($i)->getPadecimientos()->getValues() as $dientePadecimiento) {
                         $strImagen .= '<img src="' . asset($dientePadecimiento->getImagen()) . '" />';
                     }
+
+                    $strButtonDelete .= '&nbsp;&nbsp;<button type="button" class="btn btn-red btn-xs removerPadecimientosDiente" data-toggle="tooltip" title="Remover padecimientos" data-diente="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '"><i class="fa fa-times"></i></button>';
+
+                    $this->totalConPadecimientos++;
                 } else {
                     $strImagen .= '<img src="' . asset('img/dientes/x.png') . '" />';
                 }
 
-                $html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal" data-id="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '"></a></td>';
+                $html .= '<td><a href="#dvPadecimientosDentales" class="diente" data-toggle="modal" data-id="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '">' . $strImagen . '<input type="hidden" name="valor" value="' . $this->odontograma->getOdontogramaDiente($i)->getDiente()->getNumero() . '"></a>' . $strButtonDelete . '</td>';
 
 			}
 		}

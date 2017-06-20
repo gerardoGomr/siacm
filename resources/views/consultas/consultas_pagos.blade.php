@@ -9,7 +9,7 @@
                     {!! Form::open(['url' => url('consultas/buscar/no-pagadas'), 'id' => 'formConsultas']) !!}
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="text" name="fecha" id="fecha" value="" placeholder="Elija la fecha de la cita" class="form-control" readonly>
+                            <input type="text" name="fecha" id="fecha" value="{{ (new \DateTime())->format('Y-m-d') }}" placeholder="Elija la fecha de la cita" class="form-control" readonly>
                             <span class="input-group-addon"><i class="fa fa-th"></i></span>
                         </div>
                         <input type="hidden" name="medicoId" value="{{ base64_encode($medico->getId()) }}">

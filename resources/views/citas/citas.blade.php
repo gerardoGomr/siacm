@@ -96,4 +96,5 @@
 @section('js')
 	<script src="{{ asset('js/citas/citas.js') }}"></script>
 	<script src="{{ asset('js/citas/citas_agregar.js') }}"></script>
+	<script src="{{ asset('js/citas/citas_detalle.js') }}"></script>
 @stop

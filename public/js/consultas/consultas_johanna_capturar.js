@@ -27,6 +27,46 @@ $(function() {
 		$('#diente').val($(this).children('input[name="valor"]').val());
 	});
 
+	// remover padecimientos de diente
+	$('#dvOdontograma').on('click', 'button.removerPadecimientosDiente', function () {
+		let diente = $(this).data('diente');
+
+		$.ajax({
+			url:      '/consultas/diente-padecimientos/remover',
+			type:     'POST',
+			dataType: 'json',
+			data:     {diente: diente},
+			beforeSend: function() {
+				$('#modalLoading').modal('show');
+			}
+		})
+		.done(function(resultado) {
+			$('#modalLoading').modal('hide');
+			console.log(resultado);
+
+			if(resultado.estatus === 'fail') {
+				bootbox.alert('Ocurrió un error al remover los padecimientos del diente seleccionado. Por favor, intente de nuevo');
+			}
+
+			if (resultado.estatus === 'OK') {
+				bootbox.alert('Padecimientos removidos con éxito.', function () {
+					$('#dvOdontograma').html(resultado.html);
+
+					let totalConPadecimientos = Number($('#totalConPadecimientos').val());
+
+					if (totalConPadecimientos === 0) {
+						$('#btnGenerarPlan').attr('disabled', true);
+					}
+				});
+			}
+		})
+		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			console.log(textStatus + ': ' + errorThrown);
+			$('#modalLoading').modal('hide');
+			bootbox.alert('Ocurrió un error al remover los padecimientos del diente seleccionado. Por favor, intente de nuevo');
+		});
+	});
+
 	/**
 	 * verificar cuantos padecimientos han sido seleccionados
 	 * agregar todos los padecimientos al arreglo

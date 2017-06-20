@@ -112,12 +112,12 @@
 			</div>
 		</div>
 	</div>
-@stop
 
-@include('modal_loading')
-@include('consultas.consultas_plan_tratamiento')
-@include('consultas.consultas_johanna_receta')
-@include('consultas.consultas_johanna_interconsulta')
+    @include('modal_loading')
+    @include('consultas.consultas_plan_tratamiento')
+    @include('consultas.consultas_johanna_receta')
+    @include('consultas.consultas_johanna_interconsulta')
+@stop
 
 @section('js')
 	<script src="{{ asset('js/consultas/consultas_plan_tratamiento.js') }}"></script>

@@ -120,6 +120,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 		'uses' => 'Consultas\ConsultasController@agregaDientePadecimiento'
 	]);
 
+    // remover padecimientos al diente
+    Route::post('consultas/diente-padecimientos/remover', 'Consultas\ConsultasController@removerDientePadecimiento');
+
 	// generar plan de tratamiento
 	Route::post('consultas/plan/agregar', [
 		'as'   => 'dibujar-plan-tratamiento',

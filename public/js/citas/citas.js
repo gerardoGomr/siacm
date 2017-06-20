@@ -116,9 +116,9 @@ $(document).ready(function($) {
         eventClick: function(calEvent, jsEvent, view){
 			$.ajax({
 				url:      $('#rutaCitas').val() + '/detalle',
-				type:     'post',
+				type:     'POST',
 				dataType: 'json',
-				data:	  { citaId: btoa(calEvent.id), _token: $('#_token').val() },
+				data:	  { citaId: btoa(calEvent.id) },
 				beforeSend: function () {
 					$('#modalLoading').modal('show');
 				}
@@ -233,6 +233,11 @@ $(document).ready(function($) {
 			return false;
 		};
 	}
+
+	// al cerrar modal de detalle
+	$('#modalDetalleCita').on('hidden.bs.modal', function () {
+	    $('#citaDetalle').empty();
+	});
 });
 
 // recargar eventos del calendario

@@ -210,6 +210,27 @@ class ConsultasController extends Controller
     }
 
     /**
+     * remover padecimientos al diente seleccionado
+     *
+     * @param Request $request
+     * @return Illuminate\Response\JsonResponse
+     */
+    public function removerDientePadecimiento(Request $request)
+    {
+        $numeroDiente = (int)$request->get('diente');
+        $odontograma  = $request->session()->get('odontograma');
+        $respuesta    = [];
+
+        $odontograma->removerPadecimientosADiente($numeroDiente);
+        $dibujadorOdontograma = new DibujadorOdontogramas($odontograma);
+
+        $respuesta['estatus'] = 'OK';
+        $respuesta['html']    = $dibujadorOdontograma->dibujar();
+
+        return response()->json($respuesta);
+    }
+
+    /**
      * construir el plan de tratamiento
      * @param Request $request
      * @param OtrosTratamientosRepositorio $otrosTratamientosRepositorio
