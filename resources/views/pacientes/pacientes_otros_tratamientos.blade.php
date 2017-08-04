@@ -28,11 +28,14 @@
                             <span class="label {{ $tratamientoOdontologia->pagado() ? 'label-success' : 'label-danger' }}">{{ $tratamientoOdontologia->pagado() ? 'Pagado' : 'Con adeudo' }}</span>
                         </td>
                         <td>
-                            @if (!$tratamientoOdontologia->pagado())
-                                <button type="button" class="btn btn-primary btn-sm pagoOtroTratamiento" data-toggle="tooltip" title="Pagar/abonar" data-saldo="{{ $tratamientoOdontologia->obtenerSaldo() }}" data-abono="{{ $tratamientoOdontologia->abonoMinimo() }}" data-id="{{ $tratamientoOdontologia->getId() }}"><i class="fa fa-dollar"></i></button>
-                            @endif
-							<button type="button" class="btn btn-warning btn-sm editar" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></button>
-							<a class="btn btn-success btn-sm" href="/pacientes/tratamientos/otros/pdf/{{ base64_encode($tratamientoOdontologia->getId()) }}" data-toggle="tooltip" title="Abrir PDF" target="_blank"><i class="fa fa-file"></i></a>
+                            <div class="btn-group btn-group-sm">
+                                @if (!$tratamientoOdontologia->pagado())
+                                    <button type="button" class="btn btn-primary pagoOtroTratamiento" data-toggle="tooltip" title="Pagar/abonar" data-saldo="{{ $tratamientoOdontologia->obtenerSaldo() }}" data-abono="{{ $tratamientoOdontologia->abonoMinimo() }}" data-id="{{ $tratamientoOdontologia->getId() }}"><i class="fa fa-dollar"></i></button>
+                                @endif
+    							<button type="button" class="btn btn-warning editar" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></button>
+    							<a class="btn btn-success" href="/pacientes/tratamientos/otros/pdf/{{ base64_encode($tratamientoOdontologia->getId()) }}" data-toggle="tooltip" title="Abrir PDF" target="_blank"><i class="fa fa-file"></i></a>
+                                <a class="btn btn-danger" href="/pacientes/tratamientos/otros/{{ base64_encode($tratamientoOdontologia->getId()) }}/pagos" data-toggle="tooltip" title="Ver reporte de pagos" target="_blank"><i class="fa fa-eye"></i></a>
+                            </div>
 							<input type="hidden" class="expedienteId" value="{{ $expediente->getId() }}">
                             <input type="hidden" class="otroTratamientoId" value="{{ $tratamientoOdontologia->getId() }}">
 							<input type="hidden" class="ortopedia" value="{{ $tratamientoOdontologia->ortopedia() ? '1' : '0' }}">

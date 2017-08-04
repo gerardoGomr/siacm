@@ -2,8 +2,11 @@
 namespace Siacme\Http\Controllers\Reportes;
 
 use Illuminate\Http\Request;
+use LaravelDoctrine\ORM\Facades\EntityManager;
+use Siacme\Aplicacion\Reportes\TratamientosOdontologia\ReporteCobrosOtrosTratamientos;
 use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
+use Siacme\Dominio\Expedientes\TratamientoOdontologia;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Siacme\Http\Controllers\Controller;
 
@@ -51,6 +54,14 @@ class ReportesController extends Controller
         return view('reportes.cobro_consultas', compact('medico'));
     }
 
+    /**
+     * genera reporte de cobros de consultas
+     *
+     * @param Request $request
+     * @param ConsultasRepositorio $consultasRepositorio
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cobroConsultas(Request $request, ConsultasRepositorio $consultasRepositorio)
     {
         $response = ['estatus' => 'success'];
@@ -61,5 +72,23 @@ class ReportesController extends Controller
         $response['view'] = view('reportes.cobro_consultas_resultados', compact('consultas', 'fecha'))->render();
 
         return response()->json($response);
+    }
+
+    /**
+     * genera reporte de pagos de otro tratamiento
+     *
+     * @param string $id
+     *
+     * @return void
+     */
+    public function pagosOtrosTratamientos($id)
+    {
+        $tratamientoOdontologia = EntityManager::getRepository(TratamientoOdontologia::class)->find((int) base64_decode($id));
+
+        $reporte = new ReporteCobrosOtrosTratamientos($tratamientoOdontologia);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
     }
 }

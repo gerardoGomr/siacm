@@ -184,7 +184,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// editar tratamientos ortopedia - ortodoncia
     Route::post('pacientes/tratamiento/otros/editar', 'Pacientes\PacientesController@editarTratamiento');
 
-    // tratamientos ortopedia - ortodoncia
+    // tratamientos ortopedia - ortodoncia en PDF
     Route::get('pacientes/tratamientos/otros/pdf/{tratamientoId?}', 'Pacientes\PacientesController@otroTratamientoPdf');
 
 	// generar receta en PDF
@@ -207,6 +207,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
     // ruta para mostrar PDF del cobro de otro tratamiento
     Route::get('pacientes/otrosTratamientos/recibo/{id}', 'Pacientes\PacientesController@generarReciboPagoOtros');
+
+    // ruta para generar reporte de pagos de otros tratamientos
+    Route::get('pacientes/tratamientos/otros/{id}/pagos', 'Reportes\ReportesController@pagosOtrosTratamientos');
 
 	/////////////////////////////////////////// USUARIOS /////////////////////////////////////////////////////
     // ruta para mostrar listado de usuarios
