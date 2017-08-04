@@ -3,9 +3,9 @@
 namespace Siacme\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use Siacme\Http\Requests;
+use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Http\Controllers\Controller;
+use Siacme\Http\Requests;
 
 /**
  * Class PrincipalController
@@ -21,7 +21,22 @@ class PrincipalController extends Controller
      */
     public function index()
     {
-        // print_r($request->session()->all());exit;
-        return view('principal');
+        $user = session('Usuario');
+
+        if (is_null($user->getRol())) {
+            return view('principal');
+        }
+
+        if ($user->getRol() === 1) {
+            return redirect('consultas/' . base64_encode(Usuario::JOHANNA));
+        }
+
+        if ($user->getRol() === 2) {
+            return redirect('consultas/' . base64_encode(Usuario::JOHANNA));
+        }
+
+        if ($user->getRol() === 3) {
+            return redirect('citas/' . base64_encode(Usuario::JOHANNA));
+        }
     }
 }

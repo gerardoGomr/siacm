@@ -14,11 +14,11 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
 
-		<link rel="shortcut icon" href="{{ elixir('img/logo.ico') }}">
+		<link rel="shortcut icon" href="{{ asset('img/logo.ico') }}">
 
 		<!-- CSS DEFINITION -->
-		<link rel="stylesheet" type="text/css" href="{{ elixir('css/base-styles.css') }}" />
-		<link rel="stylesheet" type="text/css" href="{{ elixir('css/admin.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ mix('css/base-styles.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ mix('css/admin.css') }}" />
 		@yield('css')
 
 		<script>
@@ -72,7 +72,7 @@
 			var themerPrimaryColor = primaryColor;
 		</script>
 
-		<script src="{{ elixir('js/base-scripts.js') }}"></script>
+		<script src="{{ mix('js/base-scripts.js') }}"></script>
 		@yield('js')
 	</body>
 </html>

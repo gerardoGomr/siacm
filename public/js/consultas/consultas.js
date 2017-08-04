@@ -50,8 +50,23 @@ $(document).ready(function() {
 
     // click en lista y cargar contenido derecho
     $('#resultadoCitas').on('click', 'li.paciente', function() {
+        let hasClass = $(this).hasClass('bg-success');
+
         $(this).addClass('active');
-        $(this).siblings('li.active').removeClass('active');
+
+        if (hasClass) {
+            $(this).removeClass('bg-success');
+        }
+        $(this).siblings('li.active')
+            .removeClass('active');
+
+        $.each($(this).siblings('li'), function () {
+            let data = $(this).data('estatus');console.log(data);
+
+            if (data === 1) {
+                $(this).addClass('bg-success');
+            }
+        });
 
         var url   = $('#resultadoCitas').data('url'),
             datos = {

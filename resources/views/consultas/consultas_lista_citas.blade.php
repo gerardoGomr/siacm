@@ -1,13 +1,13 @@
 @if(!is_null($citas))
 	<ul class="list-group list-group-1 borders-none">
-		<?php
-		$i = 0;
-		?>
+		@php
+			$i = 0;
+		@endphp
 		@foreach($citas as $cita)
-			<li class="list-group-item animated fadeInUp paciente" data-id="{{ base64_encode($cita->getId()) }}">
+			<li class="list-group-item animated fadeInUp paciente {{ $cita->atendida() ? 'bg-success' : '' }}" data-id="{{ base64_encode($cita->getId()) }}" data-estatus="{{ $cita->atendida() ? '1' : '0' }}">
 				<div class="media innerAll">
 					<div class="media-body">
-						<h4 class="media-heading strong text-primary">{{ $cita->getPaciente()->nombreCompleto() }}</h4>
+						<h4 class="media-heading strong">{{ $cita->getPaciente()->nombreCompleto() }}</h4>
 						<p>{{ $cita->getPaciente()->edadCompleta() }}</p>
 						<ul class="list-unstyled">
 							<li><i class="fa fa-phone"></i> {{ !empty($cita->getPaciente()->getTelefono()) ? $cita->getPaciente()->getTelefono(): '--' }}</li>

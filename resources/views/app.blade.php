@@ -15,9 +15,9 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		<!-- CSS DEFINITION -->
-		<link rel="shortcut icon" href="{{ elixir('img/logo.ico') }}">
-		<link rel="stylesheet" href="{{ elixir('css/base-styles.css') }}" />
-		<link rel="stylesheet" href="{{ elixir('css/admin.css') }}" />
+		<link rel="shortcut icon" href="{{ asset('img/logo.ico') }}">
+		<link rel="stylesheet" href="{{ mix('css/base-styles.css') }}" />
+		<link rel="stylesheet" href="{{ mix('css/admin.css') }}" />
 
 		@yield('css')
 
@@ -70,7 +70,7 @@
 				themerPrimaryColor = primaryColor;
 		</script>
 
-		<script src="{{ elixir('js/base-scripts.js') }}"></script>
+		<script src="{{ mix('js/base-scripts.js') }}"></script>
 		@yield('js')
 	</body>
 </html>
