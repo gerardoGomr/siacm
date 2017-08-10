@@ -123,7 +123,7 @@ class OdontogramaDiente
     public function estaSano()
     {
         foreach ($this->padecimientos as $padecimiento) {
-            if ($padecimiento->getNombre() === 'Sano') {
+            if ($padecimiento->getNombre() === 'Sano' || $padecimiento->getNombre() === 'En erupción') {
                 return true;
             }
         }

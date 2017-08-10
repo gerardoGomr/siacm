@@ -61,6 +61,8 @@
 												<li>
 													<a href="#consultas" data-toggle="tab"><i class="fa fa-stethoscope"></i> Historial de consultas</a>
 												</li>
+												<li><a href="#interconsultas" data-toggle="tab"><i class="fa fa-search"></i> Interconsultas</a></li>
+												<li><a href="#otros" data-toggle="tab"><i class="fa fa-list"></i> Otros tratamientos</a></li>
 											</ul>
 										</div>
 										<div class="widget-body">
@@ -91,6 +93,8 @@
                                                     @endif
 
 													@include('consultas.pacientes_consultas')
+													@include('pacientes.pacientes_interconsultas')
+													@include('pacientes.pacientes_otros_tratamientos')
 												</div>
 												<input type="hidden" name="medicoId" id="medicoId" value="{{ base64_encode($medico->getId()) }}">
 												<input type="hidden" name="pacienteId" id="pacienteId" value="{{ base64_encode($paciente->getId()) }}">

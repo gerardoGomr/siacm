@@ -150,6 +150,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         LaravelDoctrine\ORM\DoctrineServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Elibyy\TCPDF\ServiceProvider::class,
 
         /*
          * Application Service Providers...

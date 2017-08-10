@@ -13,6 +13,8 @@ use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
 use Siacme\Aplicacion\Reportes\Interconsultas\NotaMedicaJohanna;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
+use Siacme\Aplicacion\Servicios\Expedientes\DibujadorPlanTratamiento;
+use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Consultas\ExploracionFisica;
 use Siacme\Dominio\Consultas\RecetaConsulta;
@@ -22,20 +24,18 @@ use Siacme\Dominio\Expedientes\Odontograma;
 use Siacme\Dominio\Expedientes\OdontogramaOtroTratamiento;
 use Siacme\Dominio\Expedientes\Repositorios\ComportamientosFranklRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\DientePadecimientosRepositorio;
-use Siacme\Dominio\Expedientes\Repositorios\DientesRepositorio;
-use Siacme\Dominio\Interconsultas\Interconsulta;
 use Siacme\Dominio\Expedientes\Repositorios\DienteTratamientosRepositorio;
+use Siacme\Dominio\Expedientes\Repositorios\DientesRepositorio;
+use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\OtrosTratamientosRepositorio;
+use Siacme\Dominio\Interconsultas\Interconsulta;
+use Siacme\Dominio\Interconsultas\Repositorios\MedicosReferenciaRepositorio;
 use Siacme\Dominio\Pacientes\Repositorios\PacientesRepositorio;
+use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Siacme\Exceptions\OtroTratamientoNoExisteEnPlanActualException;
 use Siacme\Exceptions\OtroTratamientoYaHaSidoAgregadoAPlanActualException;
-use Siacme\Http\Requests;
 use Siacme\Http\Controllers\Controller;
-use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
-use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
-use Siacme\Dominio\Interconsultas\Repositorios\MedicosReferenciaRepositorio;
-use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
-use Siacme\Aplicacion\Servicios\Expedientes\DibujadorPlanTratamiento;
+use Siacme\Http\Requests;
 use Siacme\Http\Requests\RegistrarConsultaRequest;
 
 /**
@@ -187,10 +187,13 @@ class ConsultasController extends Controller
 
                 $odontogramaDiente = $odontograma->obtenerOdontogramaDiente($numeroDiente);
 
-                if ($padecimiento->getNombre() === 'Sano') {
-                    $odontogramaDiente->removerPadecimientos();
-                    // agregando sano nuevamente
-                    $odontograma->agregarPadecimientoADiente($numeroDiente, $padecimiento);
+                foreach ($odontogramaDiente->getPadecimientos() as $padecimientoActual) {
+                    if ($padecimientoActual->getNombre() === 'Sano' || $padecimientoActual->getNombre() === 'En erupción') {
+                        $odontogramaDiente->removerPadecimientos();
+                        $padecimiento = $padecimientoActual;
+                        // agregando sano nuevamente
+                        $odontograma->agregarPadecimientoADiente($numeroDiente, $padecimiento);
+                    }
                 }
 
             } catch (Exception $e) {
@@ -600,6 +603,7 @@ class ConsultasController extends Controller
 
     /**
      * generar la nota médica en PDF
+     * 
      * @param string $consultaId
      * @param string $expedienteId
      */
@@ -609,7 +613,7 @@ class ConsultasController extends Controller
         $consulta   = $expediente->obtenerConsulta((int)base64_decode($consultaId));
 
         $reporte = new NotaMedicaJohanna($consulta, $expediente);
-        $reporte->SetHeaderMargin(10);
+        $reporte->SetHeaderMargin(0);
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 50);
         $reporte->generar();
