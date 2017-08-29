@@ -17,10 +17,12 @@ $(document).ready(function() {
 
         $('input.formaPagoOtroTratamiento').attr('checked', false);
 
+        let $parent = $(this).parent('div');
+
         saldo                    = $(this).data('saldo');
         abono                    = $(this).data('abono');
         tratamientoOdontologiaId = $(this).data('id');
-        expedienteId             = $(this).siblings('input.expedienteId').val();
+        expedienteId             = $parent.siblings('input.expedienteId').val();
 
         $formCobroOtroTratamiento.validate();
         agregaValidacionesElementos($formCobroOtroTratamiento);

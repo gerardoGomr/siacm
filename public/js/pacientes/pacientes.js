@@ -123,20 +123,22 @@ $(document).ready(function () {
 
     // editar otro tratamiento
     $('#dvDetalles').on('click', 'button.editar', function () {
+        console.log('clic');
         $('#formOtroTratamiento').attr('action', '/pacientes/tratamiento/otros/editar');
 
-        var data = {
-            expedienteId:      $(this).siblings('input.expedienteId').val(),
-            otroTratamientoId: $(this).siblings('input.otroTratamientoId').val(),
-            ortopedia:         $(this).siblings('input.ortopedia').val(),
-            ortodoncia:        $(this).siblings('input.ortodoncia').val(),
-            dx:                $(this).siblings('input.dx').val(),
-            observaciones:     $(this).siblings('input.observaciones').val(),
-            tx:                $(this).siblings('input.tx').val(),
-            costo:             $(this).siblings('input.costo').val(),
-            fechaInicio:       $(this).siblings('input.fechaInicio').val(),
-            fechaTermino:      $(this).siblings('input.fechaTermino').val(),
-            mensualidades:     $(this).siblings('input.mensualidades').val(),
+        let $parent = $(this).parent('div')
+            data    = {
+            expedienteId:      $parent.siblings('input.expedienteId').val(),
+            otroTratamientoId: $parent.siblings('input.otroTratamientoId').val(),
+            ortopedia:         $parent.siblings('input.ortopedia').val(),
+            ortodoncia:        $parent.siblings('input.ortodoncia').val(),
+            dx:                $parent.siblings('input.dx').val(),
+            observaciones:     $parent.siblings('input.observaciones').val(),
+            tx:                $parent.siblings('input.tx').val(),
+            costo:             $parent.siblings('input.costo').val(),
+            fechaInicio:       $parent.siblings('input.fechaInicio').val(),
+            fechaTermino:      $parent.siblings('input.fechaTermino').val(),
+            mensualidades:     $parent.siblings('input.mensualidades').val(),
         };
 
         if (data.ortopedia === '1') {
