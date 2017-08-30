@@ -305,6 +305,7 @@ class PacientesController extends Controller
 
     /**
      * generar Odontograma en PDF
+     * 
      * @param string $odontogramaId
      * @param string $expedienteId
      * @param ExpedientesRepositorio $expedientesRepositorio
@@ -322,9 +323,9 @@ class PacientesController extends Controller
             }
         }
 
-        $reporte->SetHeaderMargin(0);
+        //$reporte->SetHeaderMargin(0);
         $reporte->SetAutoPageBreak(true, 20);
-        $reporte->SetMargins(15, 5);
+        $reporte->SetMargins(15, 38.2);
         $reporte->generar();
     }
 
@@ -338,13 +339,14 @@ class PacientesController extends Controller
     public function cobrarConsulta(Request $request, ConsultasRepositorio $consultasRepositorio)
     {
         $respuesta    = [];
-        $consultaId   = (int)base64_decode($request->get('consultaId'));
-        $formaPago    = (int)$request->get('formaPago');
-        $pago         = (double)$request->get('pago');
+        $consultaId   = (int) base64_decode($request->input('consultaId'));
+        $formaPago    = (int) $request->input('formaPago');
+        $abono        = (double) $request->input('abono');
+        $pago         = (double) $request->input('pago');
 
         $consulta = $consultasRepositorio->obtenerPorId($consultaId);
 
-        $cobroConsulta = new CobroConsulta($consulta->getCosto(), $pago, $formaPago, new DateTime());
+        $cobroConsulta = new CobroConsulta($abono, $pago, $formaPago, new DateTime, $consulta);
 
         try {
             $consulta->registrarPago($cobroConsulta);
@@ -368,24 +370,25 @@ class PacientesController extends Controller
             $respuesta['mensaje'] = 'Ocurrió un error al persistir en la base de datos';
         }
 
+        $respuesta['cobroConsultaId'] = $cobroConsulta->getId();
+
         return response()->json($respuesta);
     }
 
     /**
      * genera el recibo de pago en PDF
      *
-     * @param string $consultaId
+     * @param string $cobroConsultaId
      * @param string $expedienteId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function generarReciboPago($consultaId = null, ConsultasRepositorio $consultasRepositorio)
+    public function generarReciboPago($cobroConsultaId = null, ConsultasRepositorio $consultasRepositorio)
     {
-        $this->validarQueryString($consultaId);
+        $this->validarQueryString($cobroConsultaId);
 
-        $consultaId = (int)base64_decode($consultaId);
-        $consulta   = $consultasRepositorio->obtenerPorId($consultaId);
+        $cobroOtroTratamiento = EntityManager::getRepository(CobroConsulta::class)->find((int) $cobroConsultaId);
 
-        $reporte = new ReciboPago($consulta);
+        $reporte = new ReciboPago($cobroOtroTratamiento);
         $reporte->SetHeaderMargin(10);
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 60);

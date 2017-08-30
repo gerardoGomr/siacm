@@ -83,10 +83,10 @@ class DoctrineConsultasRepositorio implements ConsultasRepositorio
     {
         // TODO: Implement obtenerConsultasNoPagadasDelDia() method.
         try {
-            $consultas = $this->entityManager->createQuery("SELECT c, e FROM Consultas:Consulta c JOIN c.expediente e WHERE c.pagada = 0 AND c.fecha = :fecha ORDER BY c.fecha")
+            $consultas = $this->entityManager->createQuery("SELECT c, e FROM Consultas:Consulta c JOIN c.expediente e WHERE c.pagada = false AND c.fecha = :fecha ORDER BY c.fecha")
                 ->setParameter('fecha', $fecha->format('Y-m-d'))
                 ->getResult();
-
+                
             if (count($consultas) === 0) {
                 return null;
             }

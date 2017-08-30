@@ -22,6 +22,8 @@
                 <input type="hidden" class="edad" value="{{ $consulta->getExpediente()->getPaciente()->edadCompleta() }}">
                 <input type="hidden" class="fechaConsulta" value="{{ \Siacme\Aplicacion\Fecha::convertir($consulta->getFecha()) }}">
                 <input type="hidden" class="costoConsulta" value="{{ $consulta->getCosto() }}">
+                <input type="hidden" class="saldoConsulta" value="{{ $consulta->obtenerSaldo() }}">
+                <input type="hidden" class="pagoMinimo" value="{{ $consulta->abonoMinimo() }}">   
             </li>
             <?php
             $i++;

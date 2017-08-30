@@ -4,9 +4,6 @@ Siacme\Dominio\Consultas\Consulta:
     exploracionFisica:
       class: ExploracionFisica
       columnPrefix: false
-    cobroConsulta:
-      class: CobroConsulta
-      columnPrefix: false
   table: consulta
   id:
     id:
@@ -81,3 +78,9 @@ Siacme\Dominio\Consultas\Consulta:
           ConsultaCostoId:
             referencedColumnName: id
       cascade: [persist]
+  oneToMany:
+    cobrosConsulta:
+      targetEntity: CobroConsulta
+      mappedBy: consulta
+      cascade: [persist]
+      fetch: EAGER

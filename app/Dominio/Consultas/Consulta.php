@@ -3,9 +3,10 @@ namespace Siacme\Dominio\Consultas;
 
 use DateTime;
 use Exception;
+use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Dominio\Cobros\Cobro;
-use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ComportamientoFrankl;
+use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Listas\IColeccion;
 use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Exceptions\CostoYaHaSidoAgregadoAConsultaException;
@@ -95,9 +96,11 @@ class Consulta
     private $medico;
 
     /**
-     * @var Cobro
+     * los cobros que se hacen a esta consulta
+     * 
+     * @var IColeccion
      */
-    private $cobroConsulta;
+    private $cobrosConsulta;
 
     /**
      * @var string
@@ -121,7 +124,7 @@ class Consulta
      * @param IColeccion $costos
      * @param Usuario $medico
      */
-    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $aRealizarEnProximaCita, DateTime $fecha, IColeccion $costos, Usuario $medico)
+    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $aRealizarEnProximaCita, DateTime $fecha, IColeccion $costos, Usuario $medico, IColeccion $cobrosConsulta)
     {
         $this->padecimientoActual             = $padecimientoActual;
         $this->interrogatorioAparatosSistemas = $interrogatorioAparatosSistemas;
@@ -134,6 +137,7 @@ class Consulta
         $this->costos                         = $costos;
         $this->medico                         = $medico;
         $this->pagada                         = false;
+        $this->cobrosConsulta                 = $cobrosConsulta;
     }
 
     /**
@@ -359,17 +363,23 @@ class Consulta
 
     /**
      * registrar el pago de la consulta mediante Cobro
-     * se cambia estatus a pagada
+     * 
      * @param Cobro $cobroConsulta
      * @throws Exception
      */
     public function registrarPago(Cobro $cobroConsulta)
     {
-        $this->cobroConsulta = $cobroConsulta;
-        $this->pagada        = true;
-
         try {
-            $this->cobroConsulta->registrarPago();
+            if (is_null($this->cobrosConsulta)) {
+                $this->cobrosConsulta = new ColeccionArray;
+            }
+
+            $cobroConsulta->registrarPago();
+            $this->cobrosConsulta->add($cobroConsulta);
+            
+            if ($this->obtenerSaldo() === 0.0) {
+                $this->pagada = true;
+            }
 
         } catch (Exception $e) {
             throw $e;
@@ -395,11 +405,11 @@ class Consulta
     }
 
     /**
-     * @return Cobro
+     * @return IColeccion
      */
-    public function getCobroConsulta()
+    public function getCobrosConsulta()
     {
-        return $this->cobroConsulta;
+        return $this->cobrosConsulta;
     }
 
     /**
@@ -433,5 +443,35 @@ class Consulta
     public function getARealizarEnProximaCita()
     {
         return $this->aRealizarEnProximaCita;
+    }
+
+    /**
+     * calcula el saldo de la consulta
+     * 
+     * @return float
+     */
+    public function obtenerSaldo()
+    {
+        $saldo = $this->costo;
+
+        foreach ($this->cobrosConsulta as $pago) {
+            $saldo -= $pago->getAbono();
+        }
+
+        return $saldo;
+    }
+
+    /**
+     * obtiene el abono mínimo a realizar
+     * 
+     * @return float
+     */
+    public function abonoMinimo()
+    {
+        if (!is_null($this->cobrosConsulta) && $this->cobrosConsulta->count() > 0) {
+            return $this->obtenerSaldo();
+        }
+
+        return $this->costo;
     }
 }

@@ -7,10 +7,6 @@ Siacme\Dominio\Cobros\CobroTratamientoOdontologia:
       type: integer
       generator:
         strategy: AUTO
-  fields:
-    abono:
-      type: float
-      column: Abono
   manyToOne:
     tratamientoOdontologia:
       targetEntity: Siacme\Dominio\Expedientes\TratamientoOdontologia

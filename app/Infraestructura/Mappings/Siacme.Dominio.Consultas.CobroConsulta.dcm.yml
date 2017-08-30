@@ -1,3 +1,18 @@
 Siacme\Dominio\Consultas\CobroConsulta:
-  type: embeddable
   extends: Cobro
+  type: entity
+  table: cobros_consultas
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  manyToOne:
+    consulta:
+      targetEntity: Consulta
+      inversedBy: cobrosConsulta
+      joinColumn:
+        name: ConsultaId
+        referencedColumnName: id
+      cascade: [persist]
+      fetch: EAGER

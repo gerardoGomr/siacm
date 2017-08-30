@@ -41,71 +41,89 @@
                                 <div class="innerAll hide" id="cobros">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-3">
-                                            <div id="imagen" class="hide">
-                                                <img src="" id="fotoCapturada" class="pull-left"  width="">
-                                            </div>
-                                            <div class="media-body innerAll half">
-                                                <h4 class="media-heading" id="nombreCompleto"></h4>
-                                                <p id="anios"></p>
-                                                <p id="fechaConsulta"></p>
+                                            <div class="box-generic">
+                                                <div id="imagen" class="hide">
+                                                    <img src="" id="fotoCapturada" class="pull-left"  width="">
+                                                </div>
+                                                <div class="media-body innerAll half">
+                                                    <h4 class="media-heading" id="nombreCompleto"></h4>
+                                                    <p id="anios"></p>
+                                                    <p id="fechaConsulta"></p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-9">
-                                            <form action="/pacientes/consultas/cobrar" id="formCobro" class="form-horizontal">
-                                                {{ csrf_field() }}
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Forma de pago:</label>
-                                                    <div class="col-md-9">
-                                                        <div class="radio">
-                                                            <label>
-                                                                <input type="radio" name="formaPago" class="formaPago required" value="1"> Efectivo
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="radio">
-                                                            <label>
-                                                                <input type="radio" name="formaPago" class="formaPago required" value="2"> Tarjeta de crédito / débito
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label">Total a pagar:</label>
-                                                    <div class="col-sm-9">
-                                                        <p class="form-control-static" id="totalPagarTexto"></p>
-                                                        <input type="hidden" id="totalPagar">
-                                                    </div>
-                                                </div>
-
-                                                <div id="efectivo" class="hide">
+                                            <div class="box-generic">
+                                                <form action="/pacientes/consultas/cobrar" id="formCobro" class="form-horizontal">
+                                                    {{ csrf_field() }}
                                                     <div class="form-group">
-                                                        <label for="pago" class="control-label col-md-3">Pago:</label>
+                                                        <label class="col-sm-3 control-label">Costo total:</label>
+                                                        <div class="col-sm-9">
+                                                            <p class="form-control-static" id="costoConsulta"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Saldo:</label>
+                                                        <div class="col-sm-9">
+                                                            <p class="form-control-static" id="totalPagarTexto"></p>
+                                                            <input type="hidden" id="totalPagar">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">Forma de pago:</label>
+                                                        <div class="col-md-9">
+                                                            <div class="radio">
+                                                                <label>
+                                                                    <input type="radio" name="formaPago" class="formaPago required" value="1"> Efectivo
+                                                                </label>
+                                                            </div>
+
+                                                            <div class="radio">
+                                                                <label>
+                                                                    <input type="radio" name="formaPago" class="formaPago required" value="2"> Tarjeta de crédito / débito
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="pago" class="control-label col-md-3">Abono:</label>
                                                         <div class="col-md-3">
                                                             <div class="input-group">
                                                                 <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                                                <input type="text" name="pago" id="pago" class="form-control">
+                                                                <input type="text" name="abono" id="abono" class="form-control required" placeholder="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="efectivo" class="hide">
+                                                        <div class="form-group">
+                                                            <label for="pago" class="control-label col-md-3">Pago:</label>
+                                                            <div class="col-md-3">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                                                    <input type="text" name="pago" id="pago" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="cambio" class="control-label col-md-3">Cambio:</label>
+                                                            <div class="col-md-3">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                                                    <input type="text" name="cambio" id="cambio" class="form-control" readonly>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label for="cambio" class="control-label col-md-3">Cambio:</label>
-                                                        <div class="col-md-3">
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                                                                <input type="text" name="cambio" id="cambio" class="form-control" readonly>
-                                                            </div>
+                                                        <div class="col-md-9 col-md-offset-3">
+                                                            <input type="button" id="cobrarConsulta" class="btn btn-primary" value="Guardar&raquo;">
+                                                            <input type="hidden" name="consultaId" id="consultaId">
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-md-9 col-md-offset-3">
-                                                        <input type="button" id="cobrarConsulta" class="btn btn-primary" value="Guardar&raquo;">
-                                                        <input type="hidden" name="consultaId" id="consultaId">
-                                                    </div>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -116,9 +134,8 @@
             </div>
         </div>
     </div>
+    @include('modal_loading')
 @stop
-
-@include('modal_loading')
 
 @section('js')
     <script src="{{ asset('js/consultas/consultas_pagos.js') }}"></script>

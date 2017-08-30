@@ -14,17 +14,51 @@ use Siacme\Exceptions\PagoConsultaEsMenorATotalException;
 class CobroConsulta extends Cobro
 {
     /**
+     * primary
+     * 
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var Consulta
+     */
+    private $consulta;
+
+    /**
      * CobroConsulta constructor.
-     * @param double $costo
+     * 
+     * @param double $abono
      * @param double $pago
      * @param int $formaPago
      * @param DateTime $fechaPago
+     * @param Consulta $consulta
      */
-    public function __construct($costo, $pago, $formaPago, DateTime $fechaPago)
+    public function __construct($abono, $pago, $formaPago, DateTime $fechaPago, Consulta $consulta)
     {
-        $this->pago = $pago;
+        $this->abono    = $abono;
+        $this->pago     = $pago;
+        $this->consulta = $consulta;
 
-        parent::__construct($costo, $formaPago, $fechaPago);
+        parent::__construct($abono, $formaPago, $fechaPago);
+    }
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * retorna la consulta asociada a este cobro
+     * 
+     * @return Consulta
+     */
+    public function getConsulta()
+    {
+        return $this->consulta;
     }
 
     /**
@@ -34,17 +68,15 @@ class CobroConsulta extends Cobro
     public function registrarPago()
     {
         // TODO: Implement registrarPago() method.
-
         if ($this->enEfectivo()) {
-            if ($this->costo > $this->pago) {
-                throw new PagoConsultaEsMenorATotalException('El monto del pago no puede ser menor que el monto total de la consulta.');
+            if ($this->abono > $this->pago) {
+                throw new PagoConsultaEsMenorATotalException('El monto del pago no puede ser menor que el total del abono.');
             }
 
-            $this->abono  = $this->costo;
-            $this->cambio = $this->pago - $this->costo;
+            $this->cambio = $this->pago - $this->abono;
 
         } else {
-            $this->abono  = $this->costo;
+            $this->pago   = $this->abono;
             $this->cambio = 0;
         }
     }

@@ -1,6 +1,9 @@
 Siacme\Dominio\Cobros\Cobro:
   type: mappedSuperclass
   fields:
+    abono:
+      type: float
+      column: Abono
     pago:
       type: float
       column: Pago

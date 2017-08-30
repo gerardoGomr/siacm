@@ -7,6 +7,7 @@
                     <th class="col-md-2">Padecimiento</th>
                     <th class="col-md-3">Nota médica</th>
                     <th class="col-md-3">En próxima cita</th>
+                    <th class="col-md-1">Costo</th>
                     <th class="col-md-2">&nbsp;</th>
                 </tr>
             </thead>
@@ -17,6 +18,7 @@
                     <td>{{ $consulta->getPadecimientoActual() }}</td>
                     <td>{{ $consulta->getNotaMedica() }}</td>
                     <td>{{ strlen($consulta->getARealizarEnProximaCita()) > 0 ? $consulta->getARealizarEnProximaCita() : '----' }}</td>
+                    <td>${{ number_format($consulta->getCosto(),2) }}</td>
                     <td>
                         <div class="btn-group" role="group">
                         {!! $consulta->tieneReceta() ? '<a href="'. url('pacientes/receta/' . base64_encode($consulta->getReceta()->getId()) . '/' . base64_encode($expediente->getId())) .'" data-toggle="tooltip" data-original-title="Imprimir receta" data-placement="top" target="_blank" class="btn btn-info btn-sm"><i class="fa fa-print"></i></a>' : '-' !!}

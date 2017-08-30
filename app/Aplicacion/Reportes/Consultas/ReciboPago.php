@@ -1,14 +1,15 @@
 <?php
 namespace Siacme\Aplicacion\Reportes\Consultas;
 
+use Siacme\Aplicacion\Fecha;
 use Siacme\Aplicacion\Reportes\ReporteConsultorio;
 use Siacme\Aplicacion\Reportes\ReporteJohanna;
-use Siacme\Dominio\Consultas\Consulta;
+use Siacme\Dominio\Consultas\CobroConsulta;
 use Siacme\Dominio\Expedientes\Expediente;
-use Siacme\Aplicacion\Fecha;
 
 /**
  * Class ReciboPago
+ * 
  * @package Siacme\Aplicacion\Reportes\Consultas
  * @author Gerardo Adrián Gómez Ruiz
  * @version 1.0
@@ -16,18 +17,18 @@ use Siacme\Aplicacion\Fecha;
 class ReciboPago extends ReporteJohanna
 {
     /**
-     * @var Consulta
+     * @var CobroConsulta
      */
-    private $consulta;
+    private $cobroConsulta;
 
     /**
      * ReciboPago constructor.
-     * @param mixed $expediente
-     * @param $consulta
+     * 
+     * @param CobroConsulta $cobroConsulta
      */
-    public function __construct(Consulta $consulta)
+    public function __construct(CobroConsulta $cobroConsulta)
     {
-        $this->consulta   = $consulta;
+        $this->cobroConsulta   = $cobroConsulta;
         parent::__construct(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
     }
 
@@ -58,41 +59,35 @@ class ReciboPago extends ReporteJohanna
             </tr>
             <tr>
                 <td width="100"><strong>Paciente:</strong></td>
-                <td width="410">' . $this->consulta->getExpediente()->getPaciente()->nombreCompleto() . '</td>
-            </tr>
-            <tr>
-                <td><strong>Fecha:</strong></td>
-                <td>' . Fecha::convertir($this->consulta->getFecha()) . '</td>
-            </tr>
-            <tr>
-                <td><strong>Monto a pagar:</strong></td>
-                <td color="#ff0000"><b>' . $this->consulta->costoFormateado() . '</b></td>
-            </tr>
-            <tr>
-                <td><strong>Forma de pago:</strong></td>
-                <td>' . $this->consulta->getCobroConsulta()->formaPago() . '</td>
-            </tr>
-            <tr>
-                <td><strong>Pago:</strong></td>
-                <td>$' . number_format($this->consulta->getCobroConsulta()->getPago(), 2) . '</td>
-            </tr>
-            <tr>
-                <td><strong>Cambio:</strong></td>
-                <td>$' . number_format($this->consulta->getCobroConsulta()->getCambio(), 2) . '</td>
+                <td width="410">' . $this->cobroConsulta->getConsulta()->getExpediente()->getPaciente()->nombreCompleto() . '</td>
             </tr>
             <tr>
                 <td><strong>Fecha de pago:</strong></td>
-                <td>' . Fecha::convertir($this->consulta->getCobroConsulta()->getFechaPago()->format('Y-m-d')) . '</td>
+                <td>' . Fecha::convertir($this->cobroConsulta->getFechaPago()->format('Y-m-d')) . '</td>
+            </tr>
+            <tr>
+                <td><strong>Abono:</strong></td>
+                <td color="#ff0000"><b>$' . number_format($this->cobroConsulta->getAbono(), 2) . '</b></td>
+            </tr>
+            <tr>
+                <td><strong>Forma de pago:</strong></td>
+                <td>' . $this->cobroConsulta->formaPago() . '</td>
+            </tr>
+            <tr>
+                <td><strong>Pago:</strong></td>
+                <td>$' . number_format($this->cobroConsulta->getPago(), 2) . '</td>
+            </tr>
+            <tr>
+                <td><strong>Cambio:</strong></td>
+                <td>$' . number_format($this->cobroConsulta->getCambio(), 2) . '</td>
+            </tr>
+            <tr>
+                <td><strong>Saldo:</strong></td>
+                <td>$' . number_format($this->cobroConsulta->getConsulta()->obtenerSaldo(), 2) . '</td>
             </tr>
         </table>';
 
         $this->WriteHTML($html, true);
-
-        if (strlen($this->consulta->getComentario())) {
-            $this->Ln(4);
-            $this->SetFont('dejavusans', 'I', 8);
-            $this->Cell(0, 4, $this->consulta->getComentario(), '');
-        }
 
         $this->Output('Recibo de pago', 'I');
     }

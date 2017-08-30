@@ -540,7 +540,7 @@ class ConsultasController extends Controller
 
         // objetos de consulta
         $exploracion = new ExploracionFisica($peso, $talla, $pulso, $temperatura, $tensionArterial);
-        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, $aRealizarEnProximaCita, new DateTime(), new ColeccionArray(), $medico);
+        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, $aRealizarEnProximaCita, new DateTime, new ColeccionArray, $medico, new ColeccionArray);
 
         // atender cita
         $cita->atender();

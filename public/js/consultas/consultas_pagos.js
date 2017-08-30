@@ -1,12 +1,19 @@
+'use strict';
+
 $(document).ready(function() {
-    var urlConsultas   = $('#urlConsultas').val(),
+    let urlConsultas   = $('#urlConsultas').val(),
         $formConsultas = $('#formConsultas'),
         $formCobro     = $('#formCobro'),
+        $abono         = $('#abono'),
+        $pago          = $('#pago'),
+        $cambio        = $('#cambio'),
+        $efectivo      = $('#efectivo'),
         costoConsulta  = 0;
 
     init();
     $formCobro.validate();
     agregaValidacionesElementos($formCobro);
+
 
     // buscar citas al seleccionar una fecha
     $('#fecha').datepicker({
@@ -22,19 +29,22 @@ $(document).ready(function() {
         $(this).addClass('active');
         $(this).siblings('li.active').removeClass('active');
 
-        var datos = {
+        let datos = {
             consultaId:     $(this).data('id'),
             imagen:         $(this).children('input.imagen').val(),
             nombreCompleto: $(this).children('input.nombreCompleto').val(),
             edad:           $(this).children('input.edad').val(),
             fechaConsulta:  $(this).children('input.fechaConsulta').val(),
             costoConsulta:  $(this).children('input.costoConsulta').val(),
+            saldo:          $(this).children('input.saldoConsulta').val(),
+            pagoMinimo:     $(this).children('input.pagoMinimo').val()
         };
 
-        costoConsulta = datos.costoConsulta;
+        costoConsulta = datos.saldo;
         rellenarFormCobro(datos);
     });
 
+    // buscar consultas con la fecha
     function buscarConsultas () {
         $.ajax({
             url:        $formConsultas.attr('action'),
@@ -56,9 +66,9 @@ $(document).ready(function() {
                 $('#resultadoConsultas').html(respuesta.html);
 
                 setTimeout(function() {
-                    var totalResultados = $('#totalResultados').val();
+                    let totalResultados = $('#totalResultados').val();
                     if (totalResultados === '1') {
-                        var $consulta = $('#resultadoConsultas').find('li.consulta').first(),
+                        let $consulta = $('#resultadoConsultas').find('li.consulta').first(),
                             datos     = {
                                 consultaId:     $consulta.data('id'),
                                 imagen:         $consulta.children('input.imagen').val(),
@@ -66,9 +76,11 @@ $(document).ready(function() {
                                 edad:           $consulta.children('input.edad').val(),
                                 fechaConsulta:  $consulta.children('input.fechaConsulta').val(),
                                 costoConsulta:  $consulta.children('input.costoConsulta').val(),
+                                saldo:          $consulta.children('input.saldoConsulta').val(),
+                                pagoMinimo:     $consulta.children('input.pagoMinimo').val()
                             };
 
-                        costoConsulta = datos.costoConsulta;
+                        costoConsulta = datos.saldo;
                         rellenarFormCobro(datos);
                     }
                 }, 500);
@@ -91,53 +103,70 @@ $(document).ready(function() {
         $('#nombreCompleto').text(datos.nombreCompleto);
         $('#anios').text(datos.edad);
 
-        $('#totalPagarTexto').text('$' + datos.costoConsulta);
-        $('#totalPagar').text(datos.costoConsulta);
+        $('#costoConsulta').text('$' + datos.costoConsulta);
+        $('#totalPagarTexto').text('$' + datos.saldo);
+        $('#totalPagar').text(datos.saldo);
         $('#consultaId').val(datos.consultaId);
         $('#cobros').removeClass('hide');
+
+        $abono.rules('add', {
+            number:   true,
+            max:      datos.saldo,
+            messages: {
+                number: 'Ingrese solo números',
+                max:    'El máximo a abonar es de $' + datos.saldo
+            }
+        })
     }
 
     // forma pago de consulta
     $formCobro.on('click', 'input.formaPago', function(event) {
         if ($(this).val() === '1') {
             // efectivo
-            $('#efectivo').removeClass('hide');
-            $('#pago').rules('add', {
+            $efectivo.removeClass('hide');
+            $pago.rules('add', {
                 required: true,
-                number: true,
-                min: costoConsulta,
+                number:   true,
                 messages: {
                     required: 'Ingrese el monto del pago',
-                    number: 'Ingrese un número válido',
-                    min: 'El monto mínimo es ' + costoConsulta
+                    number:   'Ingrese un número válido'
                 }
             });
 
-            $('#cambio').rules('add', {
+            $cambio.rules('add', {
                 required: true
             });
         }
 
         if ($(this).val() === '2') {
             // tarjeta de crédito
-            $('#efectivo').addClass('hide');
+            $efectivo.addClass('hide');
 
-            $('#pago').rules('remove');
-            $('#cambio').rules('remove');
+            $pago.rules('remove');
+            $cambio.rules('remove');
         }
-
     });
 
-    // ingresar pago y calcular el cambio
-    $('#pago').on('keyup', function (event) {
-        var cambio = Number($(this).val()) - costoConsulta;
+    // validar minimo pago
+    $abono.on('keyup', function () {
+        $pago.rules('add', {
+            min:      $abono.val(),
+            messages: {
+                min: 'La cantidad mínima a pagar es $' + $abono.val()
+            }
+        })
+    })
 
-        $('#cambio').val(cambio);
+    // ingresar pago y calcular el cambio
+    $pago.on('keyup', function (event) {
+        let cambio = Number($(this).val()) - $abono.val();
+
+        $cambio.val(cambio);
     });
 
     // cobrar consulta
     $('#cobrarConsulta').on('click', function (event) {
-        if ($('#formCobro').valid()) {
+        if ($formCobro.valid()) {
             // guardar mediante ajax
             $.ajax({
                 url:        $formCobro.attr('action'),
@@ -152,19 +181,27 @@ $(document).ready(function() {
                 $('#modalLoading').modal('hide');
 
                 if (respuesta.estatus === 'fail') {
-                    var mensajeError = respuesta.mensaje !== '' ? respuesta.mensaje : '';
+                    let mensajeError = respuesta.mensaje !== '' ? respuesta.mensaje : '';
                     bootbox.alert('Ocurrió un error al cobrar la consulta. Intente de nuevo.' + mensajeError);
                 }
 
                 if (respuesta.estatus === 'OK') {
                     bootbox.alert('Consulta cobrada con éxito. Imprima el recibo de pago.', function () {
+                        // abrir recibo de pago
+                        window.open('/pacientes/consulta/recibo/' + respuesta.cobroConsultaId);
+                    });
+
+                    setTimeout(function () {
                         $('#cobros').addClass('hide');
                         // rebuscar consultas
                         buscarConsultas();
+                        $efectivo.addClass('hide');
 
-                        // abrir recibo de pago
-                        window.open('/pacientes/consulta/recibo/' + $('#consultaId').val());
-                    });
+                        $abono.val('');
+                        $efectivo.find('input[type="text"]').each(function () {
+                            $(this).val('');
+                        });
+                    }, 1000);
                 }
 
             }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
