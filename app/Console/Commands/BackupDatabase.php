@@ -50,7 +50,6 @@ class BackupDatabase extends Command
     {
         try {
             $name = (new DateTime)->format('Y-m-d H:i:s') . '.sql';
-            $name = 'test.sql';
             $dump = new Mysqldump('mysql:host=localhost;dbname=consultorio_diamante', env('DB_USERNAME'), env('DB_PASSWORD'));
             $dump->start('/home/consultorio/' . $name);
 
