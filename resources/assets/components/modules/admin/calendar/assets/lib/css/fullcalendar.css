@@ -168,7 +168,7 @@ html .fc,
 .fc-text-arrow {
 	margin: 0 .1em;
 	font-size: 2em;
-	font-family: "Courier New", Courier, monospace;
+	font-family: "Roboto", Courier, monospace;
 	vertical-align: baseline; /* for IE7 */
 	}
 
@@ -503,8 +503,8 @@ table.fc-border-separate {
 	}
 
 .fc-agenda-slots td div {
-	height: 20px;
-	}
+	height: 30px !important;
+}
 
 .fc-agenda-slots tr.fc-slot0 th,
 .fc-agenda-slots tr.fc-slot0 td {
@@ -543,7 +543,7 @@ table.fc-border-separate {
 
 .fc-event-vert .fc-event-time {
 	white-space: nowrap;
-	font-size: 10px;
+	font-size: 12px;
 	}
 
 .fc-event-vert .fc-event-inner {
