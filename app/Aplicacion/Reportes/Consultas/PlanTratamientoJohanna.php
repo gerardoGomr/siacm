@@ -203,7 +203,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         //$html .= '<p style="font-size: 8pt;"><strong>CONSIENTO:</strong> el plan de tratamiento, acepto el presupuesto otorgado* y me comprometo a cubrir el costo de los tratamientos que me interesan para bien de la salud de mi hijo(a). (*El costo de los tratamientos serán respetados únicamente por 6 meses a partir de esta fecha). Estoy de acuerdo en que el diagnóstico y el plan de tratamiento pueden cambiar con el tiempo por el transcurso de la patología.</p>';
 
         //$this->setListIndentWidth(2);
-        $this->Rect($this->GetX(), $this->GetY(), 180, 75.5);
+        //$this->Rect($this->GetX(), $this->GetY(), 180, 75.5);
         $this->writeHTML($html, true, 0, true, 0);
 
         $this->Output('Plan de tratamiento', 'I');
