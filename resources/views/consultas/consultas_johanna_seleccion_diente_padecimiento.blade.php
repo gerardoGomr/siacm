@@ -18,14 +18,14 @@
                     <div class="row">
                     <div class="col-md-6">
                     @foreach($dientePadecimientos as $dientePadecimiento)
-                        @if($i === 22)
+                        @if($i === 24)
                             </div>
                             <div class="col-md-6">
                         @endif
                                 
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" class="padecimiento" name="padecimiento[]" value="{{ $dientePadecimiento->getId() }}"> {{ $dientePadecimiento->getNombre() }}
+                                <input type="checkbox" class="padecimiento" name="padecimiento[]" {{ $dientePadecimiento->getId() === 2 ? 'checked' : '' }} value="{{ $dientePadecimiento->getId() }}"> {{ $dientePadecimiento->getNombre() }}
                             </label>
                         </div>
                         <?php
