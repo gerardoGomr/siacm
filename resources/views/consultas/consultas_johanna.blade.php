@@ -101,6 +101,7 @@
 
 												<input type="hidden" name="generoReceta" id="generoReceta" value="0">
 												<input type="hidden" name="primeraVez" id="primeraVez" value="{{ $expediente->getExpedienteEspecialidad()->primeraVez() ? '1' : '0' }}">
+												<input type="hidden" name="dadoAlta" id="dadoAlta" value="{{ $expediente->getExpedienteEspecialidad()->dadoDeAlta() ? '1' : '0' }}">
 												<input type="hidden" name="generoPlan" id="generoPlan" value="0">
 
 												<input type="hidden" name="generoInterconsulta" id="generoInterconsulta" value="0">

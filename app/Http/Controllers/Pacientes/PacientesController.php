@@ -14,10 +14,11 @@ use Siacme\Aplicacion\Factories\PacientesVistaFactory;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\ReciboPago;
-use Siacme\Aplicacion\Reportes\Expedientes\TratamientosOdontologia\ReciboPago as ReciboPagoOtros;
 use Siacme\Aplicacion\Reportes\Consultas\ReporteTratamientoOdontologia;
+use Siacme\Aplicacion\Reportes\Expedientes\TratamientosOdontologia\ReciboPago as ReciboPagoOtros;
 use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
 use Siacme\Aplicacion\Servicios\Expedientes\AnexosUploader;
+use Siacme\Aplicacion\Servicios\HttpResponse;
 use Siacme\Dominio\Cobros\CobroTratamientoOdontologia;
 use Siacme\Dominio\Consultas\CobroConsulta;
 use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
@@ -454,5 +455,40 @@ class PacientesController extends Controller
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 60);
         $reporte->generar();
+    }
+
+    /**
+     * marca al odontograma activo del expediente como atendido
+     * 
+     * @param  Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function atenderPlan(Request $request)
+    {
+        $expedienteId = $request->get('expedienteId');
+        $expediente   = $this->expedientesRepositorio->obtenerPorId($expedienteId);
+        $odontograma  = $expediente->getExpedienteEspecialidad()->obtenerOdontogramaActivo();
+
+        $odontograma->atender();
+
+        try {
+            $this->expedientesRepositorio->persistir($expediente);
+        } catch (Exception $e) {
+            if (!isset($logger)) {
+                $logger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/exceptions/exc_' . date('Y-m-d') . '.log', Logger::ERROR));
+            }
+
+            $logger->log($e);
+
+            return response()->json([
+                'status'  => HttpResponse::ERROR,
+                'message' => 'Ocurrió un error'
+            ]);
+        }
+        
+
+        return response()->json([
+            'status' => HttpResponse::SUCCESS
+        ]);
     }
 }

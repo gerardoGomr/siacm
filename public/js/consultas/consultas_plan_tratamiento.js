@@ -1,6 +1,7 @@
 $(function() {
 	var $btnGenerarPlan = $('#btnGenerarPlan'),
-		$formConsulta   = $('#formConsulta');
+		$formConsulta   = $('#formConsulta'),
+		$modalLoading   = $('#modalLoading')
 
 	/**
 	 * abir nueva ventana
@@ -15,11 +16,11 @@ $(function() {
 			dataType: 'json',
 			data:     {_token: $formConsulta.find('input[name="_token"]').val()},
 			beforeSend: function() {
-				$('#modalLoading').modal('show');
+				$modalLoading.modal('show');
 			}
 		})
 		.done(function(resultado) {
-			$('#modalLoading').modal('hide');
+			$modalLoading.modal('hide');
 			console.log(resultado);
 
 			if(resultado.estatus === 'fail') {
@@ -36,7 +37,7 @@ $(function() {
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log(textStatus + ': ' + errorThrown);
-			$('#modalLoading').modal('hide');
+			$modalLoading.modal('hide');
 			bootbox.alert('Ocurrió un error al generar el plan de tratamiento.');
 		});
 	});
@@ -56,11 +57,11 @@ $(function() {
 			dataType: 'json',
 			data:     {_token: $formConsulta.find('input[name="_token"]').val(), otroTratamientoId: $('#otrosTratamientos').val()},
 			beforeSend: function() {
-				$('#modalLoading').modal('show');
+				$modalLoading.modal('show');
 			}
 		})
 		.done(function(resultado) {
-			$('#modalLoading').modal('hide');
+			$modalLoading.modal('hide');
 			console.log(resultado);
 
 			if(resultado.estatus === 'fail') {
@@ -75,7 +76,7 @@ $(function() {
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log(textStatus + ': ' + errorThrown);
-			$('#modalLoading').modal('hide');
+			$modalLoading.modal('hide');
 			bootbox.alert('Ocurrió un error al agregar el tratamiento al plan actual.');
 		});
 	});
@@ -95,11 +96,11 @@ $(function() {
 			dataType: 'json',
 			data:     datos,
 			beforeSend: function() {
-				$('#modalLoading').modal('show');
+				$modalLoading.modal('show');
 			}
 		})
 		.done(function(resultado) {
-			$('#modalLoading').modal('hide');
+			$modalLoading.modal('hide');
 			console.log(resultado);
 
 			if(resultado.estatus === 'fail') {
@@ -113,7 +114,7 @@ $(function() {
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log(textStatus + ': ' + errorThrown);
-			$('#modalLoading').modal('hide');
+			$modalLoading.modal('hide');
 			bootbox.alert('Ocurrió un error al eliminar el tratamiento del plan actual.');
 		});
 	});
@@ -137,11 +138,11 @@ $(function() {
 				dataType: 'json',
 				data:     datos,
 				beforeSend: function() {
-					$('#modalLoading').modal('show');
+					$modalLoading.modal('show');
 				}
 			})
 			.done(function(resultado) {
-				$('#modalLoading').modal('hide');
+				$modalLoading.modal('hide');
 				console.log(resultado);
 
 				if(resultado.estatus === 'fail') {
@@ -157,7 +158,7 @@ $(function() {
 			})
 			.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 				console.log(textStatus + ': ' + errorThrown);
-				$('#modalLoading').modal('hide');
+				$modalLoading.modal('hide');
 				bootbox.alert('Ocurrió un error al agregar el tratamiento al diente seleccionado.');
 			});
 		}
@@ -180,11 +181,11 @@ $(function() {
 			dataType: 'json',
 			data:     datos,
 			beforeSend: function() {
-				$('#modalLoading').modal('show');
+				$modalLoading.modal('show');
 			}
 		})
 		.done(function(resultado) {
-			$('#modalLoading').modal('hide');
+			$modalLoading.modal('hide');
 			console.log(resultado);
 
 			if(resultado.estatus === 'fail') {
@@ -200,8 +201,48 @@ $(function() {
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 			console.log(textStatus + ': ' + errorThrown);
-			$('#modalLoading').modal('hide');
+			$modalLoading.modal('hide');
 			bootbox.alert('Ocurrió un error al eliminar el tratamiento del diente seleccionado.');
+		});
+	});
+
+	// cancelar plan de tratamiento
+	$formConsulta.on('click', 'button.marcar-plan', function() {
+		let expedienteId = $(this).data('id')
+
+		bootbox.confirm('Una vez que se marque a este plan como atendido, no podrá ser editado diréctamente. ¿Desea continuar?', function (r) {
+			if (r === true) {
+				$.ajax({
+					url: 	  '/plan-tratamiento/atender',
+					type: 	  'POST',
+					dataType: 'json',
+					data: 	  {
+						expedienteId: expedienteId
+					},
+					beforeSend: function () {
+						$modalLoading.modal('show')
+					}
+				})
+				.done(function(response) {
+					$modalLoading.modal('hide');
+
+					if (response.status === 'success') {
+						bootbox.alert('El plan de tratamiento actual se ha marcado como atendido.', function () {
+							$formConsulta.submit();
+						});
+						// TODO: refresh form
+						window.location.reload(true)
+					}
+
+					if (response.status === 'error') {
+						bootbox.alert('Ocurrió un error al marcar al tratamiento actual como atendido. Consulte al administrador del sistema.')
+					}
+				})
+				.fail(function(jqXHR, textStatus, errorThrown) {
+					console.log(errorThrown)
+					$modalLoading.modal('hide')
+				});
+			}
 		});
 	});
 

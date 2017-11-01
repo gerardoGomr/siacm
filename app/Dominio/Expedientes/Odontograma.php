@@ -413,4 +413,18 @@ class Odontograma
 
         $this->atendido = true;
     }
+
+    /**
+     * marca a todos los dientes del odontograma como atendidos
+     *     
+     * @return void
+     */
+    public function atender()
+    {
+        foreach ($this->odontogramaDientes as $odontogramaDiente) {
+            $odontogramaDiente->atenderTratamientos();
+        }
+
+        $this->atendido = true;
+    }
 }

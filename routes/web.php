@@ -141,6 +141,8 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// eliminar tratamiento del plan
 	Route::post('consultas/plan/tratamientos/eliminar', 'Consultas\ConsultasController@eliminarTratamiento');
 
+	Route::post('plan-tratamiento/atender', 'Pacientes\PacientesController@atenderPlan');
+
 	// imprimir plan
 	Route::get('consultas/plan/pdf/{pacienteId}', 'Consultas\ConsultasController@planPDF');
 

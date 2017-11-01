@@ -254,7 +254,7 @@ $(function() {
 	//  guardar consulta
 	$btnGuardarConsulta.on('click', function(){
 		if ($formConsulta.valid() === true) {
-			if ($('#primeraVez').val() === '1' || $('#atendido').val() === '1') {
+			if ($('#primeraVez').val() === '1' || $('#dadoAlta').val() === '1') {
 				if ($('#generoPlan').val() === '0') {
 					bootbox.alert('Por favor, genere el plan de tratamiento para el odontograma del paciente');
 					return false;
