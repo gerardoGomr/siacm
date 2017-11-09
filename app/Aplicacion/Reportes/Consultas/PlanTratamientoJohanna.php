@@ -113,22 +113,12 @@ class PlanTratamientoJohanna extends ReporteJohanna
      */
     public function generar()
     {
-        // TODO: Implement generar() method.
         $this->SetTitle('Plan de tratamiento');
         $this->AddPage();
-        // $this->SetFont('dejavusans', 'B', 10);
-        // $this->SetFillColor(178, 178, 178);
-        // $this->Cell(100, 10, 'Plan de tratamiento', 0, 1, '', 1);
-        // $this->SetFont('dejavusans', '', 7);
-        // $this->Ln(5);
-        // $this->WriteHTML('<b></b>');
-        // $this->WriteHTML('Yo, <b>'. $this->odontograma->dirigidoA() . '</b>');
-        // $this->Ln(5);
-        // $this->WriteHTML('Legal o familiar del niño (a): <b>'. $this->expediente->getPaciente()->nombreCompleto() . '</b>');
+        
         $this->Ln(5);
-        // $this->WriteHTML('<p style="text-align: justify"><b>DECLARO</b>: Que la <b>E. OP Johanna Joselyn Vázquez Hernández</b> me ha explicado que necesito los siguientes tratamientos especificados en la historia clínica y su respectivo costo.</p>');
-        // $this->Ln(5);
-        $this->SetFont('dejavusans', '', 5);
+        
+        $this->SetFont('dejavusans', '', 7);
         $html = '
             <style>
                 table {
@@ -165,6 +155,8 @@ class PlanTratamientoJohanna extends ReporteJohanna
             <td width="160">&nbsp;</td>
             <td width="80">&nbsp;</td>
         </tr>';
+        
+        $this->SetFont('dejavusans', '', 5);
 
         foreach (static::$ordenRows as $row) {
             $bgColorTemporal = '#D0F7FB';
@@ -198,12 +190,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         }
 
         $html .= '</tbody></table><br><p><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
-        //echo $html;exit;
-
-        //$html .= '<p style="font-size: 8pt;"><strong>CONSIENTO:</strong> el plan de tratamiento, acepto el presupuesto otorgado* y me comprometo a cubrir el costo de los tratamientos que me interesan para bien de la salud de mi hijo(a). (*El costo de los tratamientos serán respetados únicamente por 6 meses a partir de esta fecha). Estoy de acuerdo en que el diagnóstico y el plan de tratamiento pueden cambiar con el tiempo por el transcurso de la patología.</p>';
-
-        //$this->setListIndentWidth(2);
-        //$this->Rect($this->GetX(), $this->GetY(), 180, 75.5);
+        
         $this->writeHTML($html, true, 0, true, 0);
 
         $this->Output('Plan de tratamiento', 'I');
