@@ -1,0 +1,16 @@
+Siacme\Dominio\Consultas\HigieneDental:
+  type: entity
+  table: higiene_dental
+  id:
+    id:
+      type: integer
+      column: id
+      generator:
+        strategy: AUTO
+  fields:
+    nombre:
+      type: string
+      column: Nombre
+    indicaciones:
+      type: string
+      column: Indicaciones

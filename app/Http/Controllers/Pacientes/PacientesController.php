@@ -11,6 +11,7 @@ use Monolog\Logger;
 use Response;
 use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Aplicacion\Factories\PacientesVistaFactory;
+use Siacme\Aplicacion\Reportes\Consultas\HigieneDentalJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\ReciboPago;
@@ -21,6 +22,7 @@ use Siacme\Aplicacion\Servicios\Expedientes\AnexosUploader;
 use Siacme\Aplicacion\Servicios\HttpResponse;
 use Siacme\Dominio\Cobros\CobroTratamientoOdontologia;
 use Siacme\Dominio\Consultas\CobroConsulta;
+use Siacme\Dominio\Consultas\HigieneDentalConsulta;
 use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
 use Siacme\Dominio\Consultas\Repositorios\RecetasRepositorio;
 use Siacme\Dominio\Expedientes\Anexo;
@@ -380,7 +382,7 @@ class PacientesController extends Controller
      * genera el recibo de pago en PDF
      *
      * @param string $cobroConsultaId
-     * @param string $expedienteId
+     * @param ConsultasRepositorio $consultasRepositorio
      * @return \Illuminate\Http\JsonResponse
      */
     public function generarReciboPago($cobroConsultaId = null, ConsultasRepositorio $consultasRepositorio)
@@ -490,5 +492,20 @@ class PacientesController extends Controller
         return response()->json([
             'status' => HttpResponse::SUCCESS
         ]);
+    }
+
+    public function generarIndicacionesHigieneDental($higieneDentalId, $expedienteId, ExpedientesRepositorio $expedientesRepositorio)
+    {
+        $higieneDentalId = (int)base64_decode($higieneDentalId);
+        $expedienteId    = (int)base64_decode($expedienteId);
+
+        $expediente    = $expedientesRepositorio->obtenerPorId($expedienteId);
+        $higieneDental = EntityManager::getRepository(HigieneDentalConsulta::class)->find($higieneDentalId);
+
+        $reporte = new HigieneDentalJohanna($expediente, $higieneDental);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
     }
 }

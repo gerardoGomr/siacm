@@ -114,6 +114,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// agregar una receta a la consulta
 	Route::post('consultas/receta/agregar', 'Consultas\ConsultasController@agregarReceta');
 
+	// agregar higiene dental
+    Route::post('consultas/higiene/agregar', 'Consultas\ConsultasController@agregarHigieneDental');
+
 	// asignar padecimientos al diente
 	Route::post('consultas/asignar/diente/padecimiento', [
 		'as'   => 'asignar-diente-padecimiento',
@@ -191,6 +194,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
 	// generar receta en PDF
 	Route::get('pacientes/receta/{recetaId}/{expedienteId}', 'Pacientes\PacientesController@generarReceta');
+
+    // generar indicaciones en PDF
+    Route::get('pacientes/higiene/{higieneId}/{expedienteId}', 'Pacientes\PacientesController@generarIndicacionesHigieneDental');
 
 	// generar interconsulta PDF
 	Route::get('pacientes/interconsulta/{interconsultaId}/{expedienteId}', 'Pacientes\PacientesController@generarInterconsulta');

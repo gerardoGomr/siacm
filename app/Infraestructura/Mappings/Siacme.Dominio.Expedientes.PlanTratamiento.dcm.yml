@@ -27,13 +27,3 @@ Siacme\Dominio\Expedientes\PlanTratamiento:
         inverseJoinColumns:
           Numero:
             referencedColumnName: Numero
-    otrosTratamientos:
-      targetEntity: OtroTratamiento
-      joinTable:
-        name: plan_tratamiento_otro
-        joinColumns:
-          PlanTratamientoId:
-            referencedColumnName: id
-        inverseJoinColumns:
-          Numero:
-            referencedColumnName: Numero

@@ -17,6 +17,7 @@ use Siacme\Aplicacion\Servicios\Expedientes\DibujadorPlanTratamiento;
 use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Consultas\ExploracionFisica;
+use Siacme\Dominio\Consultas\HigieneDentalConsulta;
 use Siacme\Dominio\Consultas\RecetaConsulta;
 use Siacme\Dominio\Consultas\Repositorios\ConsultaCostosRepositorio;
 use Siacme\Dominio\Expedientes\DientePlan;
@@ -571,6 +572,12 @@ class ConsultasController extends Controller
             $consulta->agregarReceta($receta);
         }
 
+        // higiene dental
+        if ($request->session()->has('higieneDental')) {
+            $higieneDental = session('higieneDental');
+            $consulta->agregarHigieneDental($higieneDental);
+        }
+
         // agrega un comentario de costo
         $consulta->agregarComentario();
 
@@ -617,5 +624,23 @@ class ConsultasController extends Controller
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 50);
         $reporte->generar();
+    }
+
+    /**
+     * Agregar una indicación de higiene dental
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function agregarHigieneDental(Request $request)
+    {
+        $indicacion    = utf8_encode(base64_decode($request->input('indicacion')));
+        $higieneDental = new HigieneDentalConsulta($indicacion);
+
+        $request->session()->put('higieneDental', $higieneDental);
+
+        return response()->json([
+            'estatus' => 'success'
+        ]);
     }
 }

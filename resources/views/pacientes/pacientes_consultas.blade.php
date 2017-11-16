@@ -22,6 +22,7 @@
                     <td>
                         <div class="btn-group" role="group">
                         {!! $consulta->tieneReceta() ? '<a href="'. url('pacientes/receta/' . base64_encode($consulta->getReceta()->getId()) . '/' . base64_encode($expediente->getId())) .'" data-toggle="tooltip" data-original-title="Imprimir receta" data-placement="top" target="_blank" class="btn btn-info btn-sm"><i class="fa fa-print"></i></a>' : '-' !!}
+                        {!! $consulta->tieneHigieneDental() ? '<a href="'. url('pacientes/higiene/' . base64_encode($consulta->getHigieneDentalConsulta()->getId()) . '/' . base64_encode($expediente->getId())) .'" data-toggle="tooltip" data-original-title="Imprimir indicaciones higiene dental" data-placement="top" target="_blank" class="btn btn-default btn-sm"><i class="fa fa-print"></i></a>' : '-'!!}
                         @if($consulta->pagada())
                             <button class="btn btn-success btn-sm imprimirRecibo" data-toggle="tooltip" data-original-title="Imprimir recibo" data-placement="top" data-id="{{ base64_encode($consulta->getId()) }}" data-expediente="{{ base64_encode($expediente->getId()) }}"><i class="fa fa-dollar"></i></button>
                         @endif

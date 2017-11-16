@@ -3,6 +3,7 @@
 		<button type="button" id="btnGuardarConsulta" class="btn btn-primary btn-small"><i class="fa fa-save"></i> Guardar consulta</button>
 		<a href="#dvRecetas" id="btnReceta" class="btn btn-danger btn-small" data-toggle="modal"><i class="fa fa-edit"></i> Generar receta</a>
 		<a href="#dvInterconsulta" id="btnInterconsulta" class="btn btn-warning btn-small" data-toggle="modal"><i class="fa fa-user-md"></i> Enviar a interconsulta</a>
+		<a href="#dvHigieneDental" id="btnHigieneDental" class="btn btn-info btn-small" data-toggle="modal"><i class="fa fa-user-md"></i> Generar indicaciones higiene dental</a>
 	</div>
 	<div class="separator"></div>
 	<div class="row">

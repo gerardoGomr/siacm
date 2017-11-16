@@ -113,6 +113,11 @@ class Consulta
     private $aRealizarEnProximaCita;
 
     /**
+     * @var HigieneDentalConsulta
+     */
+    private $higieneDentalConsulta;
+
+    /**
      * Consulta constructor.
      * @param string $padecimientoActual
      * @param string $interrogatorioAparatosSistemas
@@ -274,12 +279,30 @@ class Consulta
     }
 
     /**
+     * @return HigieneDentalConsulta
+     */
+    public function getHigieneDentalConsulta()
+    {
+        return $this->higieneDentalConsulta;
+    }
+
+    /**
      * agregar una receta
      * @param RecetaConsulta $receta
      */
     public function agregarReceta(RecetaConsulta $receta)
     {
         $this->receta = $receta;
+    }
+
+    /**
+     * agrega una nueva higiene dental
+     *
+     * @param HigieneDentalConsulta $higieneDental
+     */
+    public function agregarHigieneDental(HigieneDentalConsulta $higieneDental)
+    {
+        $this->higieneDentalConsulta = $higieneDental;
     }
 
     /**
@@ -473,5 +496,15 @@ class Consulta
         }
 
         return $this->costo;
+    }
+
+    /**
+     * Revisa si tiene asignada una indicación de higiene dental
+     *
+     * @return bool
+     */
+    public function tieneHigieneDental()
+    {
+        return !is_null($this->higieneDentalConsulta);
     }
 }

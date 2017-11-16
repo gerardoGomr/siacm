@@ -64,10 +64,10 @@ class TratamientoOdontologia extends \Siacme\Dominio\Expedientes\TratamientoOdon
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'dx', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'observaciones', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'tx', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'duracion', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'mensualidades', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'ortopedia', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'ortodoncia', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'saldo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'expedienteEspecialidad', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'pagos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'pagado'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'dx', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'observaciones', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'tx', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'fechaInicio', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'fechaTermino', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'mensualidades', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'ortopedia', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'ortodoncia', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'saldo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'expedienteEspecialidad', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'pagos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'pagado'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'dx', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'observaciones', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'tx', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'duracion', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'mensualidades', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'ortopedia', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'ortodoncia', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'saldo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'expedienteEspecialidad', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'pagos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'pagado'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'dx', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'observaciones', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'tx', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'fechaInicio', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'fechaTermino', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'mensualidades', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'ortopedia', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'ortodoncia', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'atendido', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'saldo', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'expedienteEspecialidad', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'pagos', '' . "\0" . 'Siacme\\Dominio\\Expedientes\\TratamientoOdontologia' . "\0" . 'pagado'];
     }
 
     /**
@@ -257,6 +257,28 @@ class TratamientoOdontologia extends \Siacme\Dominio\Expedientes\TratamientoOdon
     /**
      * {@inheritDoc}
      */
+    public function getFechaInicio(): \DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFechaInicio', []);
+
+        return parent::getFechaInicio();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFechaTermino(): \DateTime
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getFechaTermino', []);
+
+        return parent::getFechaTermino();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getMensualidades()
     {
 
@@ -433,12 +455,12 @@ class TratamientoOdontologia extends \Siacme\Dominio\Expedientes\TratamientoOdon
     /**
      * {@inheritDoc}
      */
-    public function actualizar($dx, $observaciones, $tx, $costo, $duracion, $mensualidades)
+    public function actualizar($dx, $observaciones, $tx, $costo, $fechaInicio, $fechaTermino, $mensualidades)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'actualizar', [$dx, $observaciones, $tx, $costo, $duracion, $mensualidades]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'actualizar', [$dx, $observaciones, $tx, $costo, $fechaInicio, $fechaTermino, $mensualidades]);
 
-        return parent::actualizar($dx, $observaciones, $tx, $costo, $duracion, $mensualidades);
+        return parent::actualizar($dx, $observaciones, $tx, $costo, $fechaInicio, $fechaTermino, $mensualidades);
     }
 
 }

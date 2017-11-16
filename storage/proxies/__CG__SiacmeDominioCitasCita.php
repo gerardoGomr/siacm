@@ -375,4 +375,15 @@ class Cita extends \Siacme\Dominio\Citas\Cita implements \Doctrine\ORM\Proxy\Pro
         return parent::atender();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function inasistencia()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'inasistencia', []);
+
+        return parent::inasistencia();
+    }
+
 }

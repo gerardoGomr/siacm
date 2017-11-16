@@ -452,4 +452,15 @@ class Odontograma extends \Siacme\Dominio\Expedientes\Odontograma implements \Do
         return parent::verificarSiYaEstaTodoAtendido();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function atender()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'atender', []);
+
+        return parent::atender();
+    }
+
 }

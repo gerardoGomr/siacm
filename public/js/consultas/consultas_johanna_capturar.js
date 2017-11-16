@@ -5,7 +5,8 @@ $(function() {
 		$btnGuardarConsulta 		  = $('#btnGuardarConsulta'),
 		$btnGuardarInterconsulta      = $('#btnGuardarInterconsulta'),
 		$btnGuardarReceta 			  = $('#btnGuardarReceta'),
-		costoTotalConsulta            = 0;
+		$btnGuardarHigieneDental      = $('#btnGuardarHigieneDental'),
+		costoTotalConsulta            = 0
 
 	// inicializar form
 	init();
@@ -349,6 +350,57 @@ $(function() {
 		$('#costoAsignadoConsulta').val(costoTotalConsulta);
 	});
 
+	// cambio a indicaciones dentales
+    $('#indicacion').on('change', function() {
+        let indicacion = atob($('input[name="higieneDental_' + $(this).val() + '"]').val())
+        $('#indicacionDental').val(indicacion)
+    })
+    
+    // guardar higiene dental
+    $btnGuardarHigieneDental.on('click', function () {
+        var datos = {
+                _token:          $formConsulta.find('input[name="_token"]').val(),
+                higieneDentalId: $('#indicacion').val(),
+                indicacion:      btoa($('#indicacionDental').val())
+            },
+            url = '/consultas/higiene/agregar'
+
+        if (datos.indicacion === '') {
+            bootbox.alert('Debe especificar el cuerpo de la indicación dental')
+            return false;
+        }
+
+        $.ajax({
+            url:      url,
+            type:     'post',
+            dataType: 'json',
+            data:     datos,
+            beforeSend: function() {
+                $('#modalLoading').modal('show')
+            }
+        })
+            .done(function(resultado) {
+                $('#modalLoading').modal('hide')
+                console.log(resultado)
+
+                if(resultado.estatus === 'error') {
+                    bootbox.alert('Ocurrió un error al anexar la indicacion de higiene dental a la consulta actual.')
+                }
+
+                if (resultado.estatus === 'success') {
+                    bootbox.alert('Se anexó la indicación de higiene dental a la consulta actual.', function() {
+                        $('#generarHigieneDental').attr('disabled', false)
+                        $('#generoHigieneDental').val('1')
+                    })
+                }
+            })
+            .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log(textStatus + ': ' + errorThrown)
+                $('#modalLoading').modal('hide')
+                bootbox.alert('Ocurrió un error al anexar la receta a la consulta actual.')
+            })
+    })
+    
 	/**
 	 * se ejecuta una sola vez
 	 */

@@ -193,7 +193,7 @@ class CitasController extends Controller
         $expediente = $expedientesRepositorio->obtenerPorPacienteMedico($cita->getPaciente(), $cita->getMedico());
         $respuesta['html']    = view('citas.citas_detalle_contenido', compact('cita', 'expediente'))->render();
         $respuesta['estatus'] = 'OK';
-
+        //dd($expediente->getExpedienteEspecialidad());
         return response()->json($respuesta);
     }
 

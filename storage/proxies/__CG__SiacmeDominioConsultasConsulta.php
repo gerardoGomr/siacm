@@ -64,10 +64,10 @@ class Consulta extends \Siacme\Dominio\Consultas\Consulta implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'padecimientoActual', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'interrogatorioAparatosSistemas', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'exploracionFisica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'notaMedica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comportamientoFrankl', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'pagada', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comentario', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costos', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'receta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'consultaCosto', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'fecha', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'cobroConsulta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'otrosCostos'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'padecimientoActual', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'interrogatorioAparatosSistemas', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'exploracionFisica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'notaMedica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comportamientoFrankl', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'pagada', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comentario', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costos', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'receta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'consultaCosto', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'fecha', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'cobrosConsulta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'otrosCostos', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'aRealizarEnProximaCita', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'higieneDentalConsulta'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'padecimientoActual', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'interrogatorioAparatosSistemas', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'exploracionFisica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'notaMedica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comportamientoFrankl', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'pagada', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comentario', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costos', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'receta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'consultaCosto', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'fecha', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'cobroConsulta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'otrosCostos'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'padecimientoActual', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'interrogatorioAparatosSistemas', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'exploracionFisica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'notaMedica', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comportamientoFrankl', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costo', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'pagada', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'comentario', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'costos', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'receta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'expediente', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'consultaCosto', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'fecha', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'medico', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'cobrosConsulta', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'otrosCostos', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'aRealizarEnProximaCita', '' . "\0" . 'Siacme\\Dominio\\Consultas\\Consulta' . "\0" . 'higieneDentalConsulta'];
     }
 
     /**
@@ -356,12 +356,34 @@ class Consulta extends \Siacme\Dominio\Consultas\Consulta implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
+    public function getHigieneDentalConsulta()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getHigieneDentalConsulta', []);
+
+        return parent::getHigieneDentalConsulta();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function agregarReceta(\Siacme\Dominio\Consultas\RecetaConsulta $receta)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarReceta', [$receta]);
 
         return parent::agregarReceta($receta);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function agregarHigieneDental(\Siacme\Dominio\Consultas\HigieneDentalConsulta $higieneDental)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'agregarHigieneDental', [$higieneDental]);
+
+        return parent::agregarHigieneDental($higieneDental);
     }
 
     /**
@@ -455,12 +477,12 @@ class Consulta extends \Siacme\Dominio\Consultas\Consulta implements \Doctrine\O
     /**
      * {@inheritDoc}
      */
-    public function getCobroConsulta()
+    public function getCobrosConsulta()
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCobroConsulta', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCobrosConsulta', []);
 
-        return parent::getCobroConsulta();
+        return parent::getCobrosConsulta();
     }
 
     /**
@@ -494,6 +516,39 @@ class Consulta extends \Siacme\Dominio\Consultas\Consulta implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getOtrosCostos', []);
 
         return parent::getOtrosCostos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getARealizarEnProximaCita()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getARealizarEnProximaCita', []);
+
+        return parent::getARealizarEnProximaCita();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function obtenerSaldo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'obtenerSaldo', []);
+
+        return parent::obtenerSaldo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function abonoMinimo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'abonoMinimo', []);
+
+        return parent::abonoMinimo();
     }
 
 }

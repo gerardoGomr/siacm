@@ -100,6 +100,7 @@
 												<input type="hidden" name="pacienteId" id="pacienteId" value="{{ base64_encode($paciente->getId()) }}">
 
 												<input type="hidden" name="generoReceta" id="generoReceta" value="0">
+												<input type="hidden" name="generoHigieneDental" id="generoHigieneDental" value="0">
 												<input type="hidden" name="primeraVez" id="primeraVez" value="{{ $expediente->getExpedienteEspecialidad()->primeraVez() ? '1' : '0' }}">
 												<input type="hidden" name="dadoAlta" id="dadoAlta" value="{{ $expediente->getExpedienteEspecialidad()->dadoDeAlta() ? '1' : '0' }}">
 												<input type="hidden" name="generoPlan" id="generoPlan" value="0">
@@ -122,6 +123,7 @@
     @include('consultas.consultas_plan_tratamiento')
     @include('consultas.consultas_johanna_receta')
     @include('consultas.consultas_johanna_interconsulta')
+	@include('consultas.consultas_johanna_higiene_dental')
 @stop
 
 @section('js')
