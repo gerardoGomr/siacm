@@ -158,6 +158,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// imprimir receta
 	Route::get('consultas/receta/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarRecetaEnPDF');
 
+	// imprimir higiene dental
+    Route::get('consultas/higiene/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarHigieneDentalPDF');
+
 	// imprimir interconsulta
 	Route::get('consultas/interconsulta/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarInterconsultaEnPDF');
 

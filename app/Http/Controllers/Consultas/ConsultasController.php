@@ -8,6 +8,7 @@ use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Aplicacion\Factories\ExpedientesAgregarDatosConsultaFactory;
 use Siacme\Aplicacion\Factories\ExpedientesAgregarElementosConsulta;
 use Siacme\Aplicacion\Factories\VistasConsultasFactory;
+use Siacme\Aplicacion\Reportes\Consultas\HigieneDentalJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
@@ -642,5 +643,21 @@ class ConsultasController extends Controller
         return response()->json([
             'estatus' => 'success'
         ]);
+    }
+
+    public function generarHigieneDentalPDF($pacienteId, $medicoId, PacientesRepositorio $pacientesRepositorio)
+    {
+        $pacienteId = (int)base64_decode($pacienteId);
+        $medicoId   = base64_decode($medicoId);
+        $paciente   = $pacientesRepositorio->obtenerPorId($pacienteId);
+        $medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
+        $expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+        $higiene     = request()->session()->get('higieneDental');
+
+        $reporte = new HigieneDentalJohanna($expediente, $higiene);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
     }
 }
