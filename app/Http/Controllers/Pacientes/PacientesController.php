@@ -494,6 +494,15 @@ class PacientesController extends Controller
         ]);
     }
 
+    /**
+     * Genera inidicaciones dentales en PDF
+     *
+     * @param string $higieneDentalId
+     * @param string $expedienteId
+     * @param ExpedientesRepositorio $expedientesRepositorio
+     *
+     * @return 
+     */
     public function generarIndicacionesHigieneDental($higieneDentalId, $expedienteId, ExpedientesRepositorio $expedientesRepositorio)
     {
         $higieneDentalId = (int)base64_decode($higieneDentalId);

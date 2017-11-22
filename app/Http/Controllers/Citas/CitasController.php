@@ -284,16 +284,16 @@ class CitasController extends Controller
      * generar lista citas PDF
      * @param string $medicoId
      * @param string $fecha
+     * @param ExpedientesRepositorio $expedientesRepositorio
      */
-    public function generarLista($medicoId, $fecha)
+    public function generarLista($medicoId, $fecha, ExpedientesRepositorio $expedientesRepositorio)
     {
         $medicoId = (int)base64_decode($medicoId);
         $fecha    = base64_decode($fecha);
-
         $medico = $this->usuariosRepositorio->obtenerPorId($medicoId);
-
         $citas = $this->citasRepositorio->obtenerPorMedico($medico, $fecha);
-        $reporte = new ListaCitas($citas, $fecha);
+
+        $reporte = new ListaCitas($citas, $fecha, $medico, $expedientesRepositorio);
         $reporte->SetHeaderMargin(10);
         $reporte->SetAutoPageBreak(true);
         $reporte->SetMargins(15, 25);
