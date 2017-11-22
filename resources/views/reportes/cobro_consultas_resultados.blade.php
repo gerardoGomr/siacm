@@ -23,8 +23,16 @@
             <td>{{ $consulta->getExpediente()->getPaciente()->nombreCompleto() }}</td>
             <td>${{ number_format($consulta->getCosto(), 2) }}</td>
             <td>{{ $consulta->pagada() ? 'Pagada' : 'Con adeudo' }}</td>
-            <td>{{ $consulta->pagada() ? Siacme\Aplicacion\Fecha::convertir($consulta->getCobroConsulta()->getFechaPago()->format('Y-m-d')) : '-' }}</td>
-            <td>{{ $consulta->pagada() ? $consulta->getCobroConsulta()->formaPago() : '-' }}</td>
+            <td>{{ $consulta->pagada() ? Siacme\Aplicacion\Fecha::convertir($consulta->getCobrosConsulta()->last()->getFechaPago()->format('Y-m-d')) : '-' }}</td>
+            <td>
+                @if ($consulta->pagada())
+                    <ul>
+                    @foreach($consulta->getCobrosConsulta() as $cobro)
+                        <li>{{ $cobro->formaPago() }}</li>
+                    @endforeach
+                    </ul>
+                @endif
+            </td>
         </tr>
     @endforeach
     </tbody>

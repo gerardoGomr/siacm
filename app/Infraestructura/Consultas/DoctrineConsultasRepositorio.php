@@ -129,7 +129,7 @@ class DoctrineConsultasRepositorio implements ConsultasRepositorio
     {
         // TODO: Implement obtenerPorFechaYMedico() method.
         try {
-            $consultas = $this->entityManager->createQuery('SELECT c, e, p FROM Consultas:Consulta c JOIN c.expediente e JOIN e.paciente p JOIN c.medico m WHERE c.fecha = :fecha AND m.id = :medicoId')
+            $consultas = $this->entityManager->createQuery('SELECT c, e, p, cc FROM Consultas:Consulta c JOIN c.expediente e JOIN e.paciente p JOIN c.medico m JOIN c.cobrosConsulta cc WHERE c.fecha = :fecha AND m.id = :medicoId')
                 ->setParameter('fecha', $fecha)
                 ->setParameter('medicoId', $medico->getId())
                 ->getResult();
