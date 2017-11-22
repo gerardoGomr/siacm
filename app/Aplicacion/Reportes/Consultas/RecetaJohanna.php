@@ -58,7 +58,7 @@ class RecetaJohanna extends ReporteJohanna
         $this->WriteHTML($html, true);
 
         $this->Ln(5);
-        $this->WriteHTML('<p><b>Indicaciones:</b></p>', true);
+        $this->SetFont('dejavusans', '', 10);
         $this->MultiCell(0, 5, ($this->receta->getCuerpo() . "\n"));
         $this->Ln(5);
 
