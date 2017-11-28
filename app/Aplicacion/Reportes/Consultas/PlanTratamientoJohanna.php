@@ -93,17 +93,9 @@ class PlanTratamientoJohanna extends ReporteJohanna
     /**
      * override parent's footer
      */
-    public function Footer()
+    public function Header()
     {
-        // $this->SetFont('dejavusans', '', 8);
-        // $this->Line(25, 275, 95, 275);
-        // $this->Line(115, 275, 185, 275);
-
-        // $this->SetXY(30, 278);
-        // $this->WriteHTML('<b>Nombre y firma del padre o tutor</b>');
-
-        // $this->SetXY(117, 278);
-        // $this->WriteHTML('<b>E. OP. Johanna Joselyn Vázquez Hernández</b>');
+        // $this->Rect(0,0,210,48);
     }
 
     /**
@@ -126,7 +118,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
                 }
 
                 table, td, th {
-                    border: 1px solid black;
+                    border: 1px solid #aaa;
                     padding: 1px;
                 }
 
