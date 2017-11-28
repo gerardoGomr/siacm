@@ -69,7 +69,7 @@ class ListaCitas extends ReporteJohanna
         $this->Cell(0, 10, 'REPORTE DE PACIENTES CITADOS.- ' . strtoupper(Fecha::convertir($this->fecha)), 0, true);
         $this->SetTextColor(0);
         $this->Ln(5);
-        $this->SetFont('dejavusans', '', 9);
+        $this->SetFont('dejavusans', '', 8);
         $this->generaTabla();
         $this->writeHTML($this->html, true, false, false);
         $this->Output('Lista de Citas', 'I');
@@ -85,10 +85,11 @@ class ListaCitas extends ReporteJohanna
             <table border="1" style="margin: 5px;"  cellpadding="5">
                 <thead>
                     <tr bgcolor="#48BECE" style="color:#ffffff" align="center">
-                        <th width="50"><strong>Horario</strong></th>
+                        <th width="45"><strong>Horario</strong></th>
                         <th width="150"><strong>Paciente</strong></th>
-                        <th width="100"><strong>Edad</strong></th>
-                        <th width="200"><strong>A Realizar</strong></th>
+                        <th width="80"><strong>Edad</strong></th>
+                        <th width="150"><strong>A Realizar</strong></th>
+                        <th width="60"><strong>Costo</strong></th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -96,12 +97,14 @@ class ListaCitas extends ReporteJohanna
         foreach ($this->citas as $cita) {
             $expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($cita->getPaciente(), $this->medico);
             $aRealizar  = !is_null($expediente) && $expediente->tieneConsultas() ? $expediente->getConsultas()->last()->getARealizarEnProximaCita() : '--';
+            $costo      = !is_null($expediente) && $expediente->tieneConsultas() ? '$' . number_format($expediente->getConsultas()->last()->getCosto(), 2) : '--';
             $this->html .= '
                 <tr>
-                    <td width="50">' . substr($cita->getHora(), 0, 5) . '</td>
+                    <td width="45">' . substr($cita->getHora(), 0, 5) . '</td>
                     <td width="150">' . $cita->getPaciente()->nombreCompleto() . '</td>
-                    <td width="100">' . $cita->getPaciente()->edadCompleta() . '</td>
-                    <td width="200">' . $aRealizar . '</td>
+                    <td width="80">' . $cita->getPaciente()->edadCompleta() . '</td>
+                    <td width="150">' . $aRealizar . '</td>
+                    <td width="60" align="right">' . $costo . '</td>
                 </tr>';
         }
 

@@ -295,7 +295,7 @@ class CitasController extends Controller
 
         $reporte = new ListaCitas($citas, $fecha, $medico, $expedientesRepositorio);
         $reporte->SetHeaderMargin(10);
-        $reporte->SetAutoPageBreak(true);
+        $reporte->SetAutoPageBreak(true, 25);
         $reporte->SetMargins(15, 25);
         $reporte->generar();
     }
