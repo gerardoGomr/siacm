@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="otroTratamientoAtendido"> Marcar el tratamiento como atendido
+                                <input type="checkbox" name="otroTratamientoOdontologiaAtendido"> Marcar el tratamiento como atendido
                             </label>
                         </div>
                     </div>

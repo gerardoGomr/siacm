@@ -72,6 +72,12 @@ Siacme\Dominio\Consultas\Consulta:
         name: HigieneDentalConsultaId
         referencedColumnName: id
       cascade: [persist]
+    indicacionConsulta:
+      targetEntity: Siacme\Dominio\Consultas\IndicacionConsulta
+      joinColumn:
+        name: IndicacionConsultaId
+        referencedColumnName: id
+      cascade: [persist]
   manyToMany:
     costos:
       targetEntity: ConsultaCosto

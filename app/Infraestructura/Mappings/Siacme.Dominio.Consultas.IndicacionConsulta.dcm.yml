@@ -1,0 +1,13 @@
+Siacme\Dominio\Consultas\IndicacionConsulta:
+  type: entity
+  table: indicacion_consulta
+  id:
+    id:
+      type: integer
+      column: id
+      generator:
+        strategy: AUTO
+  fields:
+    cuerpo:
+      type: string
+      column: Cuerpo

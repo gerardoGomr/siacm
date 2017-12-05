@@ -6,19 +6,20 @@ use EntityManager;
 use Siacme\Aplicacion\Servicios\Consultas\DibujadorOdontogramasAtencion;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
 use Siacme\Dominio\Consultas\HigieneDental;
+use Siacme\Dominio\Consultas\Indicacion;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Pacientes\Paciente;
 use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Infraestructura\Consultas\DoctrineConsultaCostosRepositorio;
 use Siacme\Infraestructura\Consultas\DoctrineRecetasRepositorio;
-use Siacme\Infraestructura\Interconsultas\DoctrineMedicosReferenciaRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineAtmsRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineComportamientosFranklRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineConvexividadesFacialesRepositorio;
+use Siacme\Infraestructura\Expedientes\DoctrineDientePadecimientosRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineMorfologiasCraneofacialesRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineMorfologiasFacialesRepositorio;
-use Siacme\Infraestructura\Expedientes\DoctrineDientePadecimientosRepositorio;
 use Siacme\Infraestructura\Expedientes\DoctrineOtrosTratamientosRepositorio;
+use Siacme\Infraestructura\Interconsultas\DoctrineMedicosReferenciaRepositorio;
 
 /**
  * Class VistasConsultasFactory
@@ -62,6 +63,7 @@ class VistasConsultasFactory
                 $recetas                   = $recetasRepositorio->obtenerTodos();
                 $medicosReferencia         = $medicosReferenciaRepositorio->obtenerTodos();
                 $higieneDentalIndicaciones = EntityManager::getRepository(HigieneDental::class)->findAll(); // obtiene la lista de indicaciones
+                $indicaciones = EntityManager::getRepository(Indicacion::class)->findAll();
 
                 if ($expediente->getExpedienteEspecialidad()->primeraVez() || $expediente->getExpedienteEspecialidad()->dadoDeAlta()) {
                     // construir y generar odontograma
@@ -79,7 +81,7 @@ class VistasConsultasFactory
                     !is_null($odontograma) ? $dibujadorOdontograma = new DibujadorOdontogramasAtencion($odontograma) : $dibujadorOdontograma = null;
                 }
 
-                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'dibujadorOdontograma', 'higieneDentalIndicaciones'));
+                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'dibujadorOdontograma', 'higieneDentalIndicaciones', 'indicaciones'));
                 break;
         }
 

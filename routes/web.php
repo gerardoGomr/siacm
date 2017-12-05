@@ -117,6 +117,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// agregar higiene dental
     Route::post('consultas/higiene/agregar', 'Consultas\ConsultasController@agregarHigieneDental');
 
+    // agregar indicacion
+    Route::post('consultas/indicacion/agregar', 'Consultas\ConsultasController@agregarIndicacion');
+
 	// asignar padecimientos al diente
 	Route::post('consultas/asignar/diente/padecimiento', [
 		'as'   => 'asignar-diente-padecimiento',
@@ -161,6 +164,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	// imprimir higiene dental
     Route::get('consultas/higiene/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarHigieneDentalPDF');
 
+    // imprimir indicacion
+    Route::get('consultas/indicacion/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarIndicacionPDF');
+
 	// imprimir interconsulta
 	Route::get('consultas/interconsulta/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@generarInterconsultaEnPDF');
 
@@ -200,6 +206,9 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
     // generar indicaciones en PDF
     Route::get('pacientes/higiene/{higieneId}/{expedienteId}', 'Pacientes\PacientesController@generarIndicacionesHigieneDental');
+
+    // generar indicaciones en PDF
+    Route::get('pacientes/indicacion/{indicacionId}/{expedienteId}', 'Pacientes\PacientesController@generarIndicaciones');
 
 	// generar interconsulta PDF
 	Route::get('pacientes/interconsulta/{interconsultaId}/{expedienteId}', 'Pacientes\PacientesController@generarInterconsulta');

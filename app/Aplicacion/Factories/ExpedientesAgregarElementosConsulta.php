@@ -126,7 +126,7 @@ class ExpedientesAgregarElementosConsulta
                 // se verifica que no tenga otros tratamientos
                 if ($expediente->getExpedienteEspecialidad()->tieneOtrosTratamientos()) {
                     if (!$expediente->getExpedienteEspecialidad()->otrosTratamientosAtendidos()) {
-                        if ($request->has('otroTratamientoAtendido')) {
+                        if ($request->has('otroTratamientoOdontologiaAtendido')) {
                             // marcar al otro tratamiento como atendido
                             $otroTratamiento = $expediente->getExpedienteEspecialidad()->obtenerOtroTratamientoActivo();
 

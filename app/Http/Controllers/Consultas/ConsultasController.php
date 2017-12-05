@@ -9,6 +9,7 @@ use Siacme\Aplicacion\Factories\ExpedientesAgregarDatosConsultaFactory;
 use Siacme\Aplicacion\Factories\ExpedientesAgregarElementosConsulta;
 use Siacme\Aplicacion\Factories\VistasConsultasFactory;
 use Siacme\Aplicacion\Reportes\Consultas\HigieneDentalJohanna;
+use Siacme\Aplicacion\Reportes\Consultas\IndicacionJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Interconsultas\InterconsultaJohanna;
@@ -19,6 +20,7 @@ use Siacme\Dominio\Citas\Repositorios\CitasRepositorio;
 use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Consultas\ExploracionFisica;
 use Siacme\Dominio\Consultas\HigieneDentalConsulta;
+use Siacme\Dominio\Consultas\IndicacionConsulta;
 use Siacme\Dominio\Consultas\RecetaConsulta;
 use Siacme\Dominio\Consultas\Repositorios\ConsultaCostosRepositorio;
 use Siacme\Dominio\Expedientes\DientePlan;
@@ -579,6 +581,12 @@ class ConsultasController extends Controller
             $consulta->agregarHigieneDental($higieneDental);
         }
 
+        // indicaciones
+        if ($request->session()->has('indicacion')) {
+            $indicacion = session('indicacion');
+            $consulta->agregarIndicacionConsulta($indicacion);
+        }
+
         // agrega un comentario de costo
         $consulta->agregarComentario();
 
@@ -645,6 +653,15 @@ class ConsultasController extends Controller
         ]);
     }
 
+    /**
+     * Generar Higiene Dental en PDF
+     *
+     * @param string $pacienteId
+     * @param string $medicoId
+     * @param PacientesRepositorio $pacientesRepositorio
+     *
+     * @return
+     */
     public function generarHigieneDentalPDF($pacienteId, $medicoId, PacientesRepositorio $pacientesRepositorio)
     {
         $pacienteId = (int)base64_decode($pacienteId);
@@ -655,6 +672,50 @@ class ConsultasController extends Controller
         $higiene     = request()->session()->get('higieneDental');
 
         $reporte = new HigieneDentalJohanna($expediente, $higiene);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
+    }
+
+    /**
+     * Agregar una indicacion dental a consulta
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonRequest
+     */
+    public function agregarIndicacion(Request $request)
+    {
+        $indicacion = utf8_encode(base64_decode($request->input('indicacionCuerpo')));
+        $indicacion = new IndicacionConsulta($indicacion);
+
+        $request->session()->put('indicacion', $indicacion);
+
+        return response()->json([
+            'estatus' => 'success'
+        ]);
+    }
+
+    /**
+     * Generar Indicación en PDF
+     *
+     * @param string $pacienteId
+     * @param string $medicoId
+     * @param PacientesRepositorio $pacientesRepositorio
+     *
+     * @return
+     */
+    public function generarIndicacionPDF($pacienteId, $medicoId, PacientesRepositorio $pacientesRepositorio)
+    {
+        $pacienteId = (int)base64_decode($pacienteId);
+        $medicoId   = base64_decode($medicoId);
+        $paciente   = $pacientesRepositorio->obtenerPorId($pacienteId);
+        $medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
+        $expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+        $indicacion = request()->session()->get('indicacion');
+
+        $reporte = new IndicacionJohanna($expediente, $indicacion);
         $reporte->SetHeaderMargin(10);
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 60);

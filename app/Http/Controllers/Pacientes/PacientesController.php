@@ -12,6 +12,7 @@ use Response;
 use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Aplicacion\Factories\PacientesVistaFactory;
 use Siacme\Aplicacion\Reportes\Consultas\HigieneDentalJohanna;
+use Siacme\Aplicacion\Reportes\Consultas\IndicacionJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\PlanTratamientoJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\RecetaJohanna;
 use Siacme\Aplicacion\Reportes\Consultas\ReciboPago;
@@ -23,6 +24,7 @@ use Siacme\Aplicacion\Servicios\HttpResponse;
 use Siacme\Dominio\Cobros\CobroTratamientoOdontologia;
 use Siacme\Dominio\Consultas\CobroConsulta;
 use Siacme\Dominio\Consultas\HigieneDentalConsulta;
+use Siacme\Dominio\Consultas\IndicacionConsulta;
 use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
 use Siacme\Dominio\Consultas\Repositorios\RecetasRepositorio;
 use Siacme\Dominio\Expedientes\Anexo;
@@ -512,6 +514,21 @@ class PacientesController extends Controller
         $higieneDental = EntityManager::getRepository(HigieneDentalConsulta::class)->find($higieneDentalId);
 
         $reporte = new HigieneDentalJohanna($expediente, $higieneDental);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
+    }
+
+    public function generarIndicaciones($indicacionId, $expedienteId, ExpedientesRepositorio $expedientesRepositorio)
+    {
+        $indicacionId = (int)base64_decode($indicacionId);
+        $expedienteId = (int)base64_decode($expedienteId);
+
+        $expediente = $expedientesRepositorio->obtenerPorId($expedienteId);
+        $indicacion = EntityManager::getRepository(IndicacionConsulta::class)->find($indicacionId);
+
+        $reporte = new IndicacionJohanna($expediente, $indicacion);
         $reporte->SetHeaderMargin(10);
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 60);

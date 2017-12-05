@@ -2,14 +2,15 @@
 namespace Siacme\Dominio\Consultas;
 
 /**
+ * Class IndicacionConsulta
  *
  * @package Siacme\Dominio\Consultas
- * @category Entity Class
- * @author Gerardo Adrián Gómez Ruiz
+ * @category Domain class
+ * @author Gerardo Gomez <gerardo.gomr@gmail.com>
  */
-class Indicacion
+class IndicacionConsulta
 {
-	/**
+    /**
      * @var int
      */
     private $id;
@@ -17,22 +18,15 @@ class Indicacion
     /**
      * @var string
      */
-    private $nombre;
-
-    /**
-     * @var string
-     */
     private $cuerpo;
 
     /**
-     * Indicacion constructor.
+     * IndicacionConsulta constructor.
      *
      * @param string $cuerpo
-     * @param string $nombre
      */
-    public function __construct($cuerpo, $nombre = '')
+    public function __construct($cuerpo)
     {
-        $this->nombre = $nombre;
         $this->cuerpo = $cuerpo;
     }
 
@@ -42,14 +36,6 @@ class Indicacion
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
     }
 
     /**

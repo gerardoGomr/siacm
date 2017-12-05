@@ -64,10 +64,10 @@ class HigieneDentalConsulta extends \Siacme\Dominio\Consultas\HigieneDentalConsu
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__'];
+            return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\HigieneDentalConsulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\HigieneDentalConsulta' . "\0" . 'nombre', '' . "\0" . 'Siacme\\Dominio\\Consultas\\HigieneDentalConsulta' . "\0" . 'indicaciones'];
         }
 
-        return ['__isInitialized__'];
+        return ['__isInitialized__', '' . "\0" . 'Siacme\\Dominio\\Consultas\\HigieneDentalConsulta' . "\0" . 'id', '' . "\0" . 'Siacme\\Dominio\\Consultas\\HigieneDentalConsulta' . "\0" . 'nombre', '' . "\0" . 'Siacme\\Dominio\\Consultas\\HigieneDentalConsulta' . "\0" . 'indicaciones'];
     }
 
     /**
