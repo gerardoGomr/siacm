@@ -39,6 +39,11 @@
                                                         <a href="#odontograma" data-toggle="tab"><i class="fa fa-search"></i> Odontograma</a>
                                                     </li>
 												@else
+													@if (!$expediente->getExpedienteEspecialidad()->tieneOdontogramas())
+														<li>
+                                                            <a href="#odontograma" data-toggle="tab"><i class="fa fa-search"></i> Odontograma</a>
+                                                        </li>
+													@endif
                                                     @if($expediente->getExpedienteEspecialidad()->dadoDeAlta())
                                                         <li>
                                                             <a href="#odontograma" data-toggle="tab"><i class="fa fa-search"></i> Odontograma</a>
@@ -79,6 +84,10 @@
 														@include('consultas.consultas_johanna_expediente_agregar')
                                                         @include('consultas.consultas_johanna_odontograma')
                                                     @else
+                                                    	@if (!$expediente->getExpedienteEspecialidad()->tieneOdontogramas())
+                                                    		@include('consultas.consultas_johanna_odontograma')
+                                                    	@endif
+
                                                         @if($expediente->getExpedienteEspecialidad()->dadoDeAlta())
                                                             @include('consultas.consultas_johanna_odontograma')
                                                         @else

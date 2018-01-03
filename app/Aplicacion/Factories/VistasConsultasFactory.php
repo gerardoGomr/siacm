@@ -65,7 +65,7 @@ class VistasConsultasFactory
                 $higieneDentalIndicaciones = EntityManager::getRepository(HigieneDental::class)->findAll(); // obtiene la lista de indicaciones
                 $indicaciones = EntityManager::getRepository(Indicacion::class)->findAll();
 
-                if ($expediente->getExpedienteEspecialidad()->primeraVez() || $expediente->getExpedienteEspecialidad()->dadoDeAlta()) {
+                if ($expediente->getExpedienteEspecialidad()->primeraVez() || $expediente->getExpedienteEspecialidad()->dadoDeAlta() || !$expediente->getExpedienteEspecialidad()->tieneOdontogramas()) {
                     // construir y generar odontograma
                     $odontograma = OdontogramaFactory::crear();
 
