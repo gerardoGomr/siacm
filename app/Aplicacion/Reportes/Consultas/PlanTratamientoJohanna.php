@@ -108,7 +108,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $this->SetTitle('Plan de tratamiento');
         $this->AddPage();
         
-        $this->Ln(5);
+        $this->Ln(10);
         
         $this->SetFont('dejavusans', '', 7);
         $html = '
