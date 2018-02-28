@@ -29,12 +29,11 @@ class LoginController extends Controller
     {
         // crear la logica del logueado
         $username = $request->get('username');
-        $passwd   = $request->get('password'); //dd(Usuario::encryptaPassword($passwd));
+        $passwd   = $request->get('password');
 
         $usuario = $usuariosRepositorio->obtenerPorUsername($username);
 
         if(is_null($usuario)) {
-            // no existe
             return $this->generaVistaConError();
         }
 

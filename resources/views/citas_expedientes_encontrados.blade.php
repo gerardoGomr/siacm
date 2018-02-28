@@ -1,4 +1,4 @@
-<!-- cargar resultados de expedientes encontrados -->
+<button class="btn btn-default paciente-nuevo" type="button">Paciente Nuevo</button>
 <h4 class="innerAll bg-gray border-bottom"><i class="fa fa-check"></i> Coincidencias</h4>
 <table class="table table-striped" style="font-size:8pt;">
     <thead>
