@@ -173,4 +173,24 @@ abstract class Persona
         $this->celular  = $celular;
         $this->email    = $email;
     }
+
+    /**
+     * Revisa si la persona tiene un teléfono
+     * 
+     * @return bool
+     */
+    public function tieneTelefono()
+    {
+        return strlen($this->telefono) > 0;
+    }
+
+    /**
+     * Revisa si la persona tiene un celular
+     * 
+     * @return bool
+     */
+    public function tieneCelular()
+    {
+        return strlen($this->celular) > 0;
+    }
 }

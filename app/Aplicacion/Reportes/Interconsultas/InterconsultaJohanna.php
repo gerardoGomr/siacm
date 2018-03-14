@@ -35,20 +35,39 @@ class InterconsultaJohanna extends ReporteJohanna
         parent::__construct(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
     }
 
+    /**
+     * Generar el cuerpo de la interconsulta
+     * 
+     * @return void
+     */
     public function generar()
     {
-        // TODO: Implement generar() method.
+        $telefono = $celular = $dato = '';
+        if ($this->interconsulta->getMedico()->tieneTelefono())
+            $telefono = $this->interconsulta->getMedico()->getTelefono();
+
+        if ($this->interconsulta->getMedico()->tieneCelular())
+            $celular = $this->interconsulta->getMedico()->getCelular();
+
+        if (strlen($telefono) && strlen($celular))
+            $dato = "$telefono | $celular";
+        elseif (strlen($telefono))
+            $dato = $telefono;
+        elseif (strlen($celular))
+            $dato = $celular;
+
         $this->SetTitle('Interconsulta');
         $this->AddPage();
         $this->SetFont('dejavusans', '', 12);
         $this->Cell(0, 10, $this->interconsulta->getFechaInterconsulta(date('Y-m-d')), 0, 1, 'R');
         $this->Ln(5);
         $html = '<p><strong>Nombre:</strong> ' . $this->interconsulta->getMedico()->nombreCompleto() . '</p>
-                <p><strong>Dirección:</strong> ' . $this->interconsulta->getMedico()->getDireccion() . '</p>';
+                <p><strong>Dirección:</strong> ' . $this->interconsulta->getMedico()->getDireccion() . '</p>
+                <p><strong>Teléfono(s):</strong> ' . $dato . '</p>';
 
         $this->WriteHTML($html, true);
 
-        $this->Ln(5);
+        $this->Ln(20);
 
         $html = '<p style="text-align: right;"><strong>Nombre:</strong> ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>
                 <p style="text-align: right;"><strong>Edad:</strong> ' . $this->expediente->getPaciente()->edadCompleta() . '</p>';
