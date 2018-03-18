@@ -25,13 +25,11 @@ $(document).ready(function() {
             }
 
             if (respuesta.estatus === 'success') {
-                // mostrar tabla
                 $('#dvDetalles').html(respuesta.view);
             }
 
         }).fail(function(jqXHR, textStatus, errorThrown) {
             $('#modalLoading').modal('hide');
-            console.log(textStatus + ': ' + errorThrown);
             bootbox.alert('Ocurrió un error al realizar la búsqueda. Intente de nuevo');
         });
     });

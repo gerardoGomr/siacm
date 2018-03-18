@@ -21,7 +21,9 @@
                                         </div>
                                     </form>
                                 </div>
+                                <div class="clearfix"></div>
                                 <div class="separator"></div>
+                                <hr>
                                 <div class="innerAll">
                                     <div id="dvDetalles"></div>
                                 </div>

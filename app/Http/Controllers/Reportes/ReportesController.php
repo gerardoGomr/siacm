@@ -2,6 +2,7 @@
 namespace Siacme\Http\Controllers\Reportes;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 use Siacme\Aplicacion\Reportes\TratamientosOdontologia\ReporteCobrosOtrosTratamientos;
 use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
@@ -64,14 +65,57 @@ class ReportesController extends Controller
      */
     public function cobroConsultas(Request $request, ConsultasRepositorio $consultasRepositorio)
     {
-        $response = ['estatus' => 'success'];
-        $medico = $this->usuariosRepositorio->obtenerPorId((int)base64_decode($request->get('medicoId')));
+        // $response = ['estatus' => 'success'];
+        // $medico = $this->usuariosRepositorio->obtenerPorId((int)base64_decode($request->get('medicoId')));
         $fecha  = $request->get('fecha');
 
-        $consultas        = $consultasRepositorio->obtenerPorFechaYMedico($fecha, $medico);
-        $response['view'] = view('reportes.cobro_consultas_resultados', compact('consultas', 'fecha'))->render();
-
-        return response()->json($response);
+        // $consultas        = $consultasRepositorio->obtenerPorFechaYMedico($fecha, $medico);
+        $consultas = DB::select("
+            SELECT
+            C.id,
+            CONCAT(P.Nombre, ' ', P.Paterno, ' ', P.Materno) Paciente,
+            DATE_FORMAT(C.Fecha,'%Y-%m-%d') Fecha,
+            C.Costo,
+            IF(C.Pagada, 'Pagada', 'Adeudo') Pagada,
+            (
+                SELECT 
+                    SUM(Abono) Total
+                FROM 
+                    cobros_consultas 
+                WHERE 
+                    ConsultaId = C.Id
+                    AND FormaPago = 1
+            ) AS Efectivo,
+            (
+                SELECT 
+                    SUM(Abono) Total
+                FROM 
+                    cobros_consultas 
+                WHERE 
+                    ConsultaId = C.Id
+                    AND FormaPago = 2
+            ) AS Tarjeta,
+            (
+                SELECT 
+                    DATE_FORMAT(MAX(FechaPago),'%Y-%m-%d')
+                FROM 
+                    cobros_consultas 
+                WHERE 
+                    ConsultaId = C.Id
+            ) AS FechaPago
+        FROM
+            consulta C
+            INNER JOIN expediente E ON E.id = c.ExpedienteId
+            INNER JOIN paciente P ON P.id = E.PacienteId
+        WHERE
+            C.Fecha = ?
+            AND C.UsuarioId = ?
+        ORDER BY P.Nombre, P.Paterno, P.Materno", [$fecha, (int)base64_decode($request->get('medicoId'))]);
+                
+        return response()->json([
+            'estatus' => 'success',
+            'view'    => view('reportes.cobro_consultas_resultados', compact('consultas', 'fecha'))->render()
+        ]);
     }
 
     /**
