@@ -110,7 +110,7 @@ class PlanTratamientoJohanna extends ReporteJohanna
         
         $this->Ln(10);
         
-        $this->SetFont('dejavusans', '', 7);
+        $this->SetFont('dejavusans', '', 9);
         $html = '
             <style>
                 table {
@@ -126,7 +126,28 @@ class PlanTratamientoJohanna extends ReporteJohanna
                     font-weight: bold;
                     text-align: center;
                 }
+                p.principal {
+                    font-size: 8px;
+                }
+                td.principal {
+                    font-size: 8px;
+                }
+                td#parrafoDeclaro {
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    background-color: #cccccc;
+                }
             </style>
+            <p class="principal"><b>Yo,</b> &nbsp;&nbsp; ' . $this->odontograma->dirigidoA() . '</p>
+            <p class="principal"><b>Legal o familiar del niño(a):</b> &nbsp;&nbsp; ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>
+            <table cellpadding="5">
+                <tr>
+                    <td id="parrafoDeclaro" class="principal"><b>DECLARO: </b>Que la E. OP Johanna Joselyn Vázquez Hernández; especialista en Odontopediatría, me ha explicado que el paciente necesita los siguientes tratamientos especificados en la historia clínica y su respectivo costo.</td>
+                </tr>
+            </table>
+            <br><br>
             <table>
                 <thead>
                     <tr style="text-align: center">
@@ -181,9 +202,19 @@ class PlanTratamientoJohanna extends ReporteJohanna
             $otrosTratamientos .= $otroTratamiento->getOtroTratamiento()->getTratamiento() . '(' . $otroTratamiento->getOtroTratamiento()->costo() . ') - ';
         }
 
-        $html .= '</tbody></table><br><p><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
+        $html .= '</tbody></table><p><strong>Otros:</strong> <em>' . $otrosTratamientos . '</em></p>';
         
         $this->writeHTML($html, true, 0, true, 0);
+
+        $this->SetFont('dejavusans', 'B', 8);
+        $this->Rect(175, 52, 20, 4);
+        $this->SetXY(177, 52);
+        $this->writeHTML('Exp. No.', true, 0, true, 0);
+
+        $this->SetFont('dejavusans', '', 8);
+        $this->Rect(175, 52, 20, 10);
+        $this->SetXY(180, 57);
+        $this->writeHTML($this->expediente->getExpedienteEspecialidad()->getId(), true, 0, true, 0);
 
         $this->Output('Plan de tratamiento', 'I');
     }
