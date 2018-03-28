@@ -105,7 +105,7 @@ class ReportesController extends Controller
             ) AS FechaPago
         FROM
             consulta C
-            INNER JOIN expediente E ON E.id = c.ExpedienteId
+            INNER JOIN expediente E ON E.id = C.ExpedienteId
             INNER JOIN paciente P ON P.id = E.PacienteId
         WHERE
             C.Fecha = ?
