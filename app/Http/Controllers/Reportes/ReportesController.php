@@ -4,7 +4,7 @@ namespace Siacme\Http\Controllers\Reportes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use LaravelDoctrine\ORM\Facades\EntityManager;
-use Siacme\Aplicacion\Reportes\TratamientosOdontologia\ReporteCobrosOtrosTratamientos;
+use Siacme\Aplicacion\Reportes\Expedientes\TratamientosOdontologia\ReporteCobrosOtrosTratamientos;
 use Siacme\Dominio\Consultas\Repositorios\ConsultasRepositorio;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Expedientes\TratamientoOdontologia;
