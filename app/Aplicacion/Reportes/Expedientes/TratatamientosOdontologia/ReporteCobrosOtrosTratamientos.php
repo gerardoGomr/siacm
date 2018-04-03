@@ -1,5 +1,5 @@
 <?php
-namespace Siacme\Aplicacion\Reportes\TratamientosOdontologia;
+namespace Siacme\Aplicacion\Reportes\Expedientes\TratamientosOdontologia;
 
 use DateTime;
 use Siacme\Aplicacion\Fecha;
