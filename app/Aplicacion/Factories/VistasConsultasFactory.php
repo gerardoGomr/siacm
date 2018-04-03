@@ -3,6 +3,8 @@ namespace Siacme\Aplicacion\Factories;
 
 use App;
 use EntityManager;
+use Siacme\Aplicacion\ColeccionArray;
+use Siacme\Aplicacion\Servicios\Expedientes\AnexosUploader;
 use Siacme\Aplicacion\Servicios\Consultas\DibujadorOdontogramasAtencion;
 use Siacme\Aplicacion\Servicios\Expedientes\DibujadorOdontogramas;
 use Siacme\Dominio\Consultas\HigieneDental;
@@ -39,6 +41,8 @@ class VistasConsultasFactory
     public static function make(Paciente $paciente, Usuario $medico, Expediente $expediente)
     {
         $vista = null;
+        $anexoUploader = new AnexosUploader((string)$expediente->getId());
+        $expediente->asignarAnexos($anexoUploader->asignar(), new ColeccionArray());
 
         switch($medico->getId()) {
             // johanna
@@ -81,7 +85,7 @@ class VistasConsultasFactory
                     !is_null($odontograma) ? $dibujadorOdontograma = new DibujadorOdontogramasAtencion($odontograma) : $dibujadorOdontograma = null;
                 }
 
-                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'dibujadorOdontograma', 'higieneDentalIndicaciones', 'indicaciones'));
+                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'dibujadorOdontograma', 'higieneDentalIndicaciones', 'indicaciones', 'anexoUploader'));
                 break;
         }
 
