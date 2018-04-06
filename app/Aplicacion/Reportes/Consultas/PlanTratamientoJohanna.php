@@ -108,8 +108,6 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $this->SetTitle('Plan de tratamiento');
         $this->AddPage();
         
-        $this->Ln(10);
-        
         $this->SetFont('dejavusans', '', 9);
         $html = '
             <style>
@@ -137,11 +135,10 @@ class PlanTratamientoJohanna extends ReporteJohanna
                     padding-bottom: 5px;
                     padding-left: 5px;
                     padding-right: 5px;
-                    background-color: #cccccc;
                 }
             </style>
             <p class="principal"><b>Yo,</b> &nbsp;&nbsp; ' . $this->odontograma->dirigidoA() . '</p>
-            <p class="principal"><b>Legal o familiar del niño(a):</b> &nbsp;&nbsp; ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>
+            <p class="principal"><b>Representante legal o familiar del niño(a):</b> &nbsp;&nbsp; ' . $this->expediente->getPaciente()->nombreCompleto() . '</p>
             <table cellpadding="5">
                 <tr>
                     <td id="parrafoDeclaro" class="principal"><b>DECLARO: </b>Que la E. OP Johanna Joselyn Vázquez Hernández; especialista en Odontopediatría, me ha explicado que el paciente necesita los siguientes tratamientos especificados en la historia clínica y su respectivo costo.</td>
@@ -207,13 +204,13 @@ class PlanTratamientoJohanna extends ReporteJohanna
         $this->writeHTML($html, true, 0, true, 0);
 
         $this->SetFont('dejavusans', 'B', 8);
-        $this->Rect(175, 52, 20, 4);
-        $this->SetXY(177, 52);
+        $this->Rect(175, 30, 20, 4);
+        $this->SetXY(177, 30);
         $this->writeHTML('Exp. No.', true, 0, true, 0);
 
         $this->SetFont('dejavusans', '', 8);
-        $this->Rect(175, 52, 20, 10);
-        $this->SetXY(180, 57);
+        $this->Rect(175, 30, 20, 10);
+        $this->SetXY(180, 35);
         $this->writeHTML($this->expediente->getExpedienteEspecialidad()->getId(), true, 0, true, 0);
 
         $this->Output('Plan de tratamiento', 'I');
