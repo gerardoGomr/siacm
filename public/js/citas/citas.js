@@ -30,7 +30,7 @@ $(document).ready(function($) {
         defaultView:     'agendaDay',
         defaultDate:     d,
         minTime:         7,
-        maxTime:         19,
+        maxTime:         20,
         slotMinutes:     15,
         selectable:      true,
         editable:        false,
