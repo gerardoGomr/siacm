@@ -28,10 +28,14 @@ class VistasExpedientesMostrarFactory
         switch($medico->getId()) {
             // johanna
             case Usuario::JOHANNA:
-                $vista = view('expedientes.expediente_johanna_ver', compact('expediente', 'medico'));
+                $vista = 'expedientes.expediente_johanna_ver';
+                break;
+
+            case Usuario::RIGOBERTO:
+                $vista = 'expedientes.expediente_rigoberto_ver';
                 break;
         }
 
-        return $vista;
+        return view($vista, compact('expediente', 'medico'));
     }
 }

@@ -1,0 +1,31 @@
+Siacme\Dominio\Consultas\ExploracionOtorrino:
+  type: embeddable
+  fields:
+    conductoDerecho:
+      type: string
+      column: ConductoAuditivoDerecho
+    conductoIzquierdo:
+      type: string
+      column: ConductoAuditivoIzquierdo
+    membranaDerecha:
+      type: string
+      column: MembranaTimpanicaDerecha
+    membranaIzquierda:
+      type: string
+      column: MembranaTimpanicaIzquierda
+    piramideNasal:
+      type: string
+      column: PiramideNasal
+    septumNasal:
+      type: string
+      column: SeptumNasal
+    cornetes:
+      type: string
+      column: CornetesNasales
+    amigdalas:
+      type: string
+      column: amigdalas
+    paredOrofaringe:
+      type: string
+      column: ParedOrofaringe
+      

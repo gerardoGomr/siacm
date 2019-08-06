@@ -29,6 +29,12 @@ abstract class AbstractExpediente
      */
     protected $expediente;
 
+    public function __construct()
+    {
+        $this->primeraVez = true;
+        $this->revisado   = false;
+    }
+
     /**
      * @return int
      */
@@ -106,4 +112,6 @@ abstract class AbstractExpediente
     {
         return $this->expediente;
     }
+
+    public abstract function dadoDeAlta();
 }

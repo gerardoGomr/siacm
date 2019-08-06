@@ -25,6 +25,7 @@ mix.less('resources/assets/less/admin/admin.less', 'public/css/admin.css')
         'resources/assets/components/plugins/ajaxify/jquery.lazyjaxdavis.min.js',
         'resources/assets/components/plugins/preload/pace/pace.min.js',
         'resources/assets/components/plugins/moment/moment.js',
+        'resources/assets/components/plugins/moment/moment-with-locales.js',
         'resources/assets/components/modules/admin/modals/assets/js/bootbox.min.js',
         'resources/assets/components/plugins/less-js/less.min.js',
         'resources/assets/components/core/js/preload.pace.init.js',

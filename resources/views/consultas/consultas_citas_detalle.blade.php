@@ -9,7 +9,7 @@
                     </tr>
                     <tr>
                         <td><strong>Hora:</strong></td>
-                        <td>{{ $cita->getHora() }}</td>
+                        <td>{{ substr($cita->getHora(), 0, -3) }}</td>
                     </tr>
                     <tr>
                         <td><strong>Estatus:</strong></td>

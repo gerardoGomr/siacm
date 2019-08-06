@@ -35,7 +35,7 @@ use Siacme\Dominio\Interconsultas\Repositorios\InterconsultasRepositorio;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
 use Siacme\Exceptions\SiacmeLogger;
 use Siacme\Http\Controllers\Controller;
-
+use Siacme\Aplicacion\Reportes\PlanCirugia;
 
 /**
  * @package Siacme\Http\Controllers\Pacientes;
@@ -76,7 +76,9 @@ class PacientesController extends Controller
             return view('error');
         }
 
-        return view('pacientes.pacientes', compact('medico'));
+        $cirugias = \Siacme\Cirugia::where('Activo', 1)->get();
+
+        return view('pacientes.pacientes', compact('medico', 'cirugias'));
     }
 
     /**
@@ -89,7 +91,7 @@ class PacientesController extends Controller
         $medicoId = (int)base64_decode($request->get('medicoId'));
 
         $medico      = $this->usuariosRepositorio->obtenerPorId($medicoId);
-        $expedientes = $this->expedientesRepositorio->obtenerPor(['dato' => $dato]);
+        $expedientes = $this->expedientesRepositorio->obtenerPor(['dato' => $dato], $medico);
 
         return response()->json([
             'html' => view('pacientes.pacientes_lista', compact('expedientes'))->render()
@@ -107,12 +109,22 @@ class PacientesController extends Controller
         $expedienteId = (int)base64_decode($request->get('expedienteId'));
         $medico       = $this->usuariosRepositorio->obtenerPorId($medicoId);
         $expediente   = $this->expedientesRepositorio->obtenerPorId($expedienteId);
+        $anexos       = [];
 
-        $anexoUploader = new AnexosUploader((string)$expediente->getId());
+        $anexoUploader = new AnexosUploader((string)$expedienteId, (string)$medicoId);
         $expediente->asignarAnexos($anexoUploader->asignar(), new ColeccionArray());
 
+        foreach ($expediente->anexos() as $anexoActual) {
+            $nombre = explode('.', $anexoActual->nombreFormal());
+            $anexoDB  = \Siacme\Anexo::with('categoria')
+                ->where('Nombre', $nombre[0])
+                ->first();
+
+            $anexos[] = $anexoDB;
+        }
+
         return response()->json([
-            'html' => PacientesVistaFactory::make($medico, $expediente, $anexoUploader)->render()
+            'html' => PacientesVistaFactory::make($medico, $expediente, $anexoUploader, $anexos)->render()
         ]);
     }
 
@@ -125,10 +137,22 @@ class PacientesController extends Controller
     {
         $respuesta     = [];
         $anexo         = new Anexo($request->get('nombreAnexo'));
-        $anexoUploader = new AnexosUploader(base64_decode($request->get('expedienteId')));
+        $expedienteId  = base64_decode($request->input('expedienteId'));
+        $medicoId      = base64_decode($request->input('medicoId'));
+        $anexoUploader = new AnexosUploader($expedienteId, $medicoId);
+        $anexoDB       = new \Siacme\Anexo;
+
+        $anexoDB->fill([
+            'Nombre'         => $request->input('nombreAnexo'),
+            'FechaDocumento' => $request->input('fechaDocumento'),
+            'CategoriaId'    => $request->input('categoria'),
+            'UsuarioId'      => (int)$medicoId,
+            'ExpedienteId'   => (int)$expedienteId
+        ]);
 
         try {
             $anexoUploader->guardar($request->file('anexo')->getPathName(), $anexo);
+            $anexoDB->save();
             $respuesta['estatus'] = 'OK';
 
         } catch (Exception $e) {
@@ -150,17 +174,22 @@ class PacientesController extends Controller
      */
     public function eliminarAnexo(Request $request)
     {
-        $expedienteId = (int)base64_decode($request->get('expedienteId'));
-        $anexo        = base64_decode($request->get('anexo'));
+        $expedienteId = (int)base64_decode($request->input('expedienteId'));
+        $medicoId     = base64_decode($request->input('medicoId'));
+        $anexo        = base64_decode($request->input('anexo'));
+        $nombre       = explode('.', $anexo);
+        $anexoDB      = \Siacme\Anexo::where('Nombre', $nombre[0])->first();
 
-        $anexoUploader = new AnexosUploader($expedienteId);
+        $anexoUploader = new AnexosUploader($expedienteId, $medicoId);
 
         if(!$anexoUploader->eliminar(new Anexo($anexo))) {
+
             return response()->json([
                 'estatus' => 'fail'
             ]);
         }
 
+        $anexoDB->delete();
         return response()->json([
             'estatus' => 'OK'
         ]);
@@ -169,13 +198,14 @@ class PacientesController extends Controller
     /**
      * ver el anexo en el browser
      * @param $expedienteId
+     * @param $medicoId
      * @param $nombre
      * @return \Illuminate\Http\Response
      */
-    public function verAnexo($expedienteId, $nombre)
+    public function verAnexo($expedienteId, $medicoId, $nombre)
     {
-        $anexoUploader = new AnexosUploader($expedienteId);
-        $archivo       = File::get($anexoUploader->rutaBase() . $nombre);
+        $anexoUploader = new AnexosUploader($expedienteId, $medicoId);
+        $archivo       = File::get($anexoUploader->rutaBase() . $nombre . '.pdf');
         $response      = Response::make($archivo, 200);
 
         $response->header('Content-Type', 'application/pdf');
@@ -390,6 +420,8 @@ class PacientesController extends Controller
     public function generarReciboPago($cobroConsultaId = null, ConsultasRepositorio $consultasRepositorio)
     {
         $this->validarQueryString($cobroConsultaId);
+        
+        $cobroConsultaId = is_numeric($cobroConsultaId) ? $cobroConsultaId : base64_decode($cobroConsultaId);
 
         $cobroOtroTratamiento = EntityManager::getRepository(CobroConsulta::class)->find((int) $cobroConsultaId);
 
@@ -529,6 +561,79 @@ class PacientesController extends Controller
         $indicacion = EntityManager::getRepository(IndicacionConsulta::class)->find($indicacionId);
 
         $reporte = new IndicacionJohanna($expediente, $indicacion);
+        $reporte->SetHeaderMargin(10);
+        $reporte->SetAutoPageBreak(true, 20);
+        $reporte->SetMargins(15, 60);
+        $reporte->generar();
+    }
+
+    /**
+     * Guardar la modificación de un anexo
+     * 
+     * @param Request $request
+     */
+    public function editarAnexo(Request $request)
+    {
+        $anexoDB       = \Siacme\Anexo::find($request->input('anexoId'));
+        $expedienteId  = base64_decode($request->input('expedienteId'));
+        $medicoId      = base64_decode($request->input('medicoId'));
+        $anexoUploader = new AnexosUploader($expedienteId, $medicoId);
+        $oldName = $anexoDB->Nombre . '.pdf';
+
+        $anexoDB->fill([
+            'Nombre'         => $request->input('nombreAnexo'),
+            'FechaDocumento' => $request->input('fechaDocumento'),
+            'CategoriaId'    => $request->input('categoria')
+        ]);
+        
+        $anexoUploader->actualizar($oldName, $anexoDB->Nombre . '.pdf');
+        $anexoDB->save();
+
+        return response()->json([
+            'status' => HttpResponse::SUCCESS
+        ]);
+    }
+
+    /**
+     * Guardar un plan de cirugía
+     * 
+     * @param Request $request
+     */
+    public function guardarPlanCirugia(Request $request)
+    {
+        $cirugiaId = $request->input('planCirugiaId');
+        $planCirugia = null;
+
+        if ($cirugiaId <= 0) {
+            $planCirugia = new \Siacme\PlanCirugia;
+        }
+        else {
+            $planCirugia = \Siacme\PlanCirugia::find($cirugiaId);
+        }
+        
+        $planCirugia->fill([
+            'CirugiaId' => $request->input('cirugiaId'),
+            'ExpedienteRigobertoId' => base64_decode($request->input('expedienteId')),
+            'HonorariosMedicos' => $request->input('honorarios'),
+            'EquipoAdicional' => $request->input('equipoAdicional'),
+            'HospitalSugerido' => $request->input('hospitalSugerido'),
+            'DiasHospitalizacion' => $request->input('diasHospitalizacion'),
+            'MontoHospitalizacion' => $request->input('montoHospitalizacion')
+        ]);
+        $planCirugia->save();
+
+        return response()->json([
+            'status' => HttpResponse::SUCCESS
+        ]);
+    }
+
+    public function planCirugiaPdf($planId, $expedienteId,  ExpedientesRepositorio $expedientesRepositorio)
+    {
+        $planCirugia  = \Siacme\PlanCirugia::find(base64_decode($planId));
+        $expedienteId = (int)base64_decode($expedienteId);
+        $expediente   = $expedientesRepositorio->obtenerPorId($expedienteId);
+        $reporte      = new PlanCirugia($expediente, $planCirugia);
+
         $reporte->SetHeaderMargin(10);
         $reporte->SetAutoPageBreak(true, 20);
         $reporte->SetMargins(15, 60);

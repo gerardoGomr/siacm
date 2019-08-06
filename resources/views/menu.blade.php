@@ -28,7 +28,7 @@ use Siacme\Dominio\Usuarios\Usuario;
 				</ul>
 			</li>
 			<li class="hasSubmenu">
-				<a href="#ulRigo" data-toggle="collapse" class="glyphicons girl"><i></i><span>Dr. Rigoberto García</span></a>
+				<a href="#ulRigo" data-toggle="collapse" class="glyphicons boy"><i></i><span>Dr. Rigoberto García</span></a>
 				<ul class="collapse" id="ulRigo">
 					<li><a href="{{ url('citas/' . base64_encode(Usuario::RIGOBERTO)) }}" class="glyphicons calendar"><i></i><span> Citas</span></a></li>
 					<li><a href="{{ url('consultas/' . base64_encode(Usuario::RIGOBERTO)) }}" class="glyphicons hospital"><i></i><span> Consultas</span></a></li>

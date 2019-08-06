@@ -96,7 +96,7 @@ class CitasController extends Controller
      * @param PacientesRepositorio $pacientesRepositorio
      * @return \Illuminate\Http\JsonResponse
      */
-    public function agendar(Request $request,PacientesRepositorio $pacientesRepositorio)
+    public function agendar(Request $request, PacientesRepositorio $pacientesRepositorio)
     {
         // post variables
         $nombre     = $request->get('nombre');
@@ -183,17 +183,17 @@ class CitasController extends Controller
      */
     public function verDetalle(Request $request, ExpedientesRepositorio $expedientesRepositorio)
     {
-        //$medico = base64_decode();
-        $citaId    = (int)base64_decode($request->get('citaId'));
-        $respuesta = [];
-        // cargar datos por id
-        $cita = $this->citasRepositorio->obtenerPorId($citaId);
+        $citaId     = (int)base64_decode($request->get('citaId'));
+        $respuesta  = [];
+        $cita       = $this->citasRepositorio->obtenerPorId($citaId);
+        $expediente = $expedientesRepositorio->obtenerPorPacienteMedico($cita->getPaciente(), $cita->getMedico());
+
+        //dd($cita->getMedico());
 
         // obtener el expediente
-        $expediente = $expedientesRepositorio->obtenerPorPacienteMedico($cita->getPaciente(), $cita->getMedico());
         $respuesta['html']    = view('citas.citas_detalle_contenido', compact('cita', 'expediente'))->render();
         $respuesta['estatus'] = 'OK';
-        //dd($expediente->getExpedienteEspecialidad());
+        
         return response()->json($respuesta);
     }
 

@@ -2,6 +2,7 @@
 namespace Siacme\Aplicacion\Factories;
 
 use Siacme\Aplicacion\Reportes\Expedientes\ExpedienteJohannaPDF;
+use Siacme\Aplicacion\Reportes\Expedientes\ExpedienteRigobertoPDF;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Usuarios\Usuario;
 
@@ -27,6 +28,10 @@ class ExpedientesPDFFactoy
             // johanna
             case Usuario::JOHANNA:
                 $expedientePDF = new ExpedienteJohannaPDF($expediente);
+                break;
+
+            case Usuario::RIGOBERTO:
+                $expedientePDF = new ExpedienteRigobertoPDF($expediente);
                 break;
         }
 

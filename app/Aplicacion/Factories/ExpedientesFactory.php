@@ -7,6 +7,7 @@ use LaravelDoctrine\ORM\Facades\EntityManager;
 use Siacme\Aplicacion\ColeccionArray;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ExpedienteJohanna;
+use Siacme\Dominio\Expedientes\ExpedienteRigoberto;
 use Siacme\Dominio\Expedientes\Padecimiento;
 use Siacme\Dominio\Pacientes\Domicilio;
 use Siacme\Dominio\Pacientes\Paciente;
@@ -30,14 +31,14 @@ class ExpedientesFactory
      */
     public static function create(Usuario $medico, Paciente $paciente, Request $request)
     {
-        $expediente = self::crearExpediente($request, $paciente);
+        $expediente     = self::crearExpediente($request, $paciente);
+        $nombrePadre    = $request->get('nombrePadre');
+        $nombreMadre    = $request->get('nombreMadre');
+        $ocupacionPadre = $request->get('ocupacionPadre');
+        $ocupacionMadre = $request->get('ocupacionMadre');
 
         switch ($medico->getId()) {
             case Usuario::JOHANNA:
-                $nombrePadre               = $request->get('nombrePadre');
-                $nombreMadre               = $request->get('nombreMadre');
-                $ocupacionPadre            = $request->get('ocupacionPadre');
-                $ocupacionMadre            = $request->get('ocupacionMadre');
                 $dolorBoca                 = !is_null($request->get('dolorBoca')) ? true : false;
                 $sangradoEncias            = !is_null($request->get('sangradoEncias')) ? true : false;
                 $malOlor                   = !is_null($request->get('malOlor')) ? true : false;
@@ -81,12 +82,32 @@ class ExpedientesFactory
                 $expedienteJohanna->agregarHabitosOrales($succionDigital, $succionLingual, $biberon, $bruxismo, $succionLabial, $respiracionBucal, $onicofagia, $chupon, $otroHabito, $especifiqueHabito);
                 $expediente->generarPara($expedienteJohanna);
                 break;
+
+            case Usuario::RIGOBERTO:
+                $perioricidadBanio     = strlen($request->input('perioricidadBanio')) ? $request->input('perioricidadBanio') : null; 
+                $perioricidadAseoBucal = strlen($request->input('perioricidadAseoBucal')) ? $request->input('perioricidadAseoBucal') : null;
+                $perioricidadLavaManos = strlen($request->input('perioricidadLavaManos')) ? $request->input('perioricidadLavaManos') : null;
+                $frecuenciaCambiaRopa  = strlen($request->input('frecuenciaCambiaRopa')) ? $request->input('frecuenciaCambiaRopa') : null;
+                $vecesComeDia          = strlen($request->input('vecesComeDia')) ? $request->input('vecesComeDia') : null;
+                $tiempoEntreComidas    = strlen($request->input('tiempoEntreComidas')) ? $request->input('tiempoEntreComidas') : null;
+                $regimenAlimenticio    = $request->has('regimenAlimenticio') && $request->get('regimenAlimenticio') === 'on';
+                $especifiqueRegimen    = $request->input('especifiqueRegimen');
+                $horasDuerme           = strlen($request->input('horasDuerme')) ? $request->input('horasDuerme') : null;
+                $frecuenciaEjercicio   = $request->input('frecuenciaEjercicio');
+
+                $expedienteRigoberto = new ExpedienteRigoberto();
+                $expedienteRigoberto->agregarDatosPersonales($nombrePadre, $ocupacionPadre, $nombreMadre, $ocupacionMadre);
+                $expedienteRigoberto->agregarDatosNoPatologicos($perioricidadBanio, $perioricidadAseoBucal, $perioricidadLavaManos, $frecuenciaCambiaRopa, $vecesComeDia, $tiempoEntreComidas, $regimenAlimenticio, $especifiqueRegimen, $horasDuerme, $frecuenciaEjercicio);
+                $expediente->generarParaDr($expedienteRigoberto);
+                break;
         }
 
         return $expediente;
     }
 
     /**
+     * Crear datos general del expediente
+     * 
      * @param Request $request
      * @param Paciente $paciente
      * @return mixed|Expediente

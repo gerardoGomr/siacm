@@ -43,7 +43,7 @@
             <input type="hidden" id="urlVerExpediente" value="{{ url('expedientes/ver/') }}" />
             <input type="hidden" id="urlReprogramar" value="{{ url('citas/reprogramar/asignar') }}" />
             <input type="hidden" id="urlExpediente" value="{{ url('expedientes/agregar/') }}" />
-            <input type="hidden" id="_token" value="{{ csrf_token() }}" />
+            {{ csrf_field() }}
         </div>
     </div>
 </div>

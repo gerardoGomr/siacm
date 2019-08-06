@@ -64,10 +64,10 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'numero', 'firma', 'expedienteEspecialidad', 'paciente', 'fechaCreacion', 'fotografia', 'nombrePediatra', 'nombreRecomienda', 'seHaAutomedicado', 'esAlergico', 'viveMadre', 'vivePadre', 'numHermanos', 'numHermanosVivos', 'numHermanosFinados', 'nombresEdadesHermanos', 'seLeHacenMoretones', 'haRequeridoTransfusion', 'haTenidoFracturas', 'haSidoIntervenido', 'haSidoHospitalizado', 'exFumador', 'exAlcoholico', 'exAdicto', 'estaBajoTratamiento', 'conQueSeHaAutomedicado', 'aQueMedicamentoEsAlergico', 'causaMuerteMadre', 'enfermedadesMadre', 'causaMuertePadre', 'enfermedadesPadre', 'causaMuerteHermanos', 'enfermedadesHermanos', 'enfermedadesAbuelosPaternos', 'enfermedadesAbuelosMaternos', 'especifiqueFracturas', 'especifiqueIntervencion', 'especifiqueHospitalizacion', 'especifiqueTratamiento', 'nombreRepresentante', 'nombreTutor', 'ocupacionTutor', 'motivoConsulta', 'historiaEnfermedad', 'estadoCivil', 'religion', 'escolaridad', 'institucionMedica', 'consultas', 'interconsultas', 'anexos', 'padecimientos'];
+            return ['__isInitialized__', 'id', 'numero', 'firma', 'expedienteEspecialidad', 'expedienteRigoberto', 'paciente', 'fechaCreacion', 'fotografia', 'nombrePediatra', 'nombreRecomienda', 'seHaAutomedicado', 'esAlergico', 'viveMadre', 'vivePadre', 'numHermanos', 'numHermanosVivos', 'numHermanosFinados', 'nombresEdadesHermanos', 'seLeHacenMoretones', 'haRequeridoTransfusion', 'haTenidoFracturas', 'haSidoIntervenido', 'haSidoHospitalizado', 'exFumador', 'exAlcoholico', 'exAdicto', 'estaBajoTratamiento', 'conQueSeHaAutomedicado', 'aQueMedicamentoEsAlergico', 'causaMuerteMadre', 'enfermedadesMadre', 'causaMuertePadre', 'enfermedadesPadre', 'causaMuerteHermanos', 'enfermedadesHermanos', 'enfermedadesAbuelosPaternos', 'enfermedadesAbuelosMaternos', 'especifiqueFracturas', 'especifiqueIntervencion', 'especifiqueHospitalizacion', 'especifiqueTratamiento', 'nombreRepresentante', 'nombreTutor', 'ocupacionTutor', 'motivoConsulta', 'historiaEnfermedad', 'estadoCivil', 'religion', 'escolaridad', 'institucionMedica', 'consultas', 'interconsultas', 'anexos', 'padecimientos'];
         }
 
-        return ['__isInitialized__', 'id', 'numero', 'firma', 'expedienteEspecialidad', 'paciente', 'fechaCreacion', 'fotografia', 'nombrePediatra', 'nombreRecomienda', 'seHaAutomedicado', 'esAlergico', 'viveMadre', 'vivePadre', 'numHermanos', 'numHermanosVivos', 'numHermanosFinados', 'nombresEdadesHermanos', 'seLeHacenMoretones', 'haRequeridoTransfusion', 'haTenidoFracturas', 'haSidoIntervenido', 'haSidoHospitalizado', 'exFumador', 'exAlcoholico', 'exAdicto', 'estaBajoTratamiento', 'conQueSeHaAutomedicado', 'aQueMedicamentoEsAlergico', 'causaMuerteMadre', 'enfermedadesMadre', 'causaMuertePadre', 'enfermedadesPadre', 'causaMuerteHermanos', 'enfermedadesHermanos', 'enfermedadesAbuelosPaternos', 'enfermedadesAbuelosMaternos', 'especifiqueFracturas', 'especifiqueIntervencion', 'especifiqueHospitalizacion', 'especifiqueTratamiento', 'nombreRepresentante', 'nombreTutor', 'ocupacionTutor', 'motivoConsulta', 'historiaEnfermedad', 'estadoCivil', 'religion', 'escolaridad', 'institucionMedica', 'consultas', 'interconsultas', 'anexos', 'padecimientos'];
+        return ['__isInitialized__', 'id', 'numero', 'firma', 'expedienteEspecialidad', 'expedienteRigoberto', 'paciente', 'fechaCreacion', 'fotografia', 'nombrePediatra', 'nombreRecomienda', 'seHaAutomedicado', 'esAlergico', 'viveMadre', 'vivePadre', 'numHermanos', 'numHermanosVivos', 'numHermanosFinados', 'nombresEdadesHermanos', 'seLeHacenMoretones', 'haRequeridoTransfusion', 'haTenidoFracturas', 'haSidoIntervenido', 'haSidoHospitalizado', 'exFumador', 'exAlcoholico', 'exAdicto', 'estaBajoTratamiento', 'conQueSeHaAutomedicado', 'aQueMedicamentoEsAlergico', 'causaMuerteMadre', 'enfermedadesMadre', 'causaMuertePadre', 'enfermedadesPadre', 'causaMuerteHermanos', 'enfermedadesHermanos', 'enfermedadesAbuelosPaternos', 'enfermedadesAbuelosMaternos', 'especifiqueFracturas', 'especifiqueIntervencion', 'especifiqueHospitalizacion', 'especifiqueTratamiento', 'nombreRepresentante', 'nombreTutor', 'ocupacionTutor', 'motivoConsulta', 'historiaEnfermedad', 'estadoCivil', 'religion', 'escolaridad', 'institucionMedica', 'consultas', 'interconsultas', 'anexos', 'padecimientos'];
     }
 
     /**
@@ -719,12 +719,12 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
     /**
      * {@inheritDoc}
      */
-    public function getConsultas()
+    public function getConsultas(\Siacme\Dominio\Usuarios\Usuario $medico = NULL)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getConsultas', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getConsultas', [$medico]);
 
-        return parent::getConsultas();
+        return parent::getConsultas($medico);
     }
 
     /**
@@ -736,6 +736,17 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getInterconsultas', []);
 
         return parent::getInterconsultas();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getExpedienteRigoberto()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getExpedienteRigoberto', []);
+
+        return parent::getExpedienteRigoberto();
     }
 
     /**
@@ -829,6 +840,17 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
     /**
      * {@inheritDoc}
      */
+    public function generarParaDr(\Siacme\Dominio\Expedientes\AbstractExpediente $expediente)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'generarParaDr', [$expediente]);
+
+        return parent::generarParaDr($expediente);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function revisadoPorPaciente()
     {
 
@@ -873,12 +895,12 @@ class Expediente extends \Siacme\Dominio\Expedientes\Expediente implements \Doct
     /**
      * {@inheritDoc}
      */
-    public function tieneConsultas()
+    public function tieneConsultas(\Siacme\Dominio\Usuarios\Usuario $medico = NULL)
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneConsultas', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'tieneConsultas', [$medico]);
 
-        return parent::tieneConsultas();
+        return parent::tieneConsultas($medico);
     }
 
     /**

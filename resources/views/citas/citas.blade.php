@@ -11,25 +11,25 @@
 								<h3 class="innerAll border-bottom margin-none">Agenda del Dr(a). {{ $medico->nombreCompleto() }}</h3>
 								<div class="col-separator-h"></div>
 								<div class="innerAll">
-									<table>
+									<table class="text-small">
 										<tr>
-											<td class="strong">Agendada:</td>
+											<td class="strong">Agendada:&nbsp;&nbsp;</td>
 											<td style="background: #A0E1FF; width: 10px;"></td>
 										</tr>
 										<tr>
-											<td class="strong">Confirmada:</td>
+											<td class="strong">Confirmada:&nbsp;&nbsp;</td>
 											<td style="background: #F8F7A1; width: 10px;"></td>
 										</tr>
 										<tr>
-											<td class="strong">En espera de consulta:</td>
+											<td class="strong">En espera de consulta:&nbsp;&nbsp;</td>
 											<td style="background: #F8C1A1; width: 10px;"></td>
 										</tr>
 										<tr>
-											<td class="strong">Atendida:</td>
+											<td class="strong">Atendida:&nbsp;&nbsp;</td>
 											<td style="background: #AAEAB1; width: 10px;"></td>
 										</tr>
 										<tr>
-											<td class="strong">Inasistencia:</td>
+											<td class="strong">Inasistencia:&nbsp;&nbsp;</td>
 											<td style="background: #CBA7D0; width: 10px;"></td>
 										</tr>
 									</table>

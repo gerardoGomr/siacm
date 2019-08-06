@@ -32,11 +32,10 @@ $(document).ready(function($) {
 				})
 				.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 					$('#modalLoading').modal('hide');
-					bootbox.alert('Ocurrió un error marcar el expediente como revisado. Intente de nuevo.');
+					bootbox.alert('Ocurrió un error al marcar el expediente como revisado. Intente de nuevo.');
 					console.log(textStatus + ': ' + errorThrown);
 				});
 			}
 		});
 	});
-
 });

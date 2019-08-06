@@ -123,6 +123,11 @@ class Consulta
     private $indicacionConsulta;
 
     /**
+     * @var ExploracionOtorrino
+     */
+    private $exploracionOtorrino;
+
+    /**
      * Consulta constructor.
      * @param string $padecimientoActual
      * @param string $interrogatorioAparatosSistemas
@@ -134,7 +139,7 @@ class Consulta
      * @param IColeccion $costos
      * @param Usuario $medico
      */
-    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, ComportamientoFrankl $comportamientoFrankl, $costo, $aRealizarEnProximaCita, DateTime $fecha, IColeccion $costos, Usuario $medico, IColeccion $cobrosConsulta)
+    public function __construct($padecimientoActual, $interrogatorioAparatosSistemas, ExploracionFisica $exploracionFisica, $notaMedica, $costo, $aRealizarEnProximaCita, DateTime $fecha, IColeccion $costos, Usuario $medico, IColeccion $cobrosConsulta, ComportamientoFrankl $comportamientoFrankl = null)
     {
         $this->padecimientoActual             = $padecimientoActual;
         $this->interrogatorioAparatosSistemas = $interrogatorioAparatosSistemas;
@@ -541,5 +546,13 @@ class Consulta
     public function tieneIndicacion()
     {
         return !is_null($this->indicacionConsulta);
+    }
+
+    /**
+     * Agrega la exploración por otorrino
+     */
+    public function addExploracionOtorrino(ExploracionOtorrino $exploracion)
+    {
+        $this->exploracionOtorrino = $exploracion;
     }
 }

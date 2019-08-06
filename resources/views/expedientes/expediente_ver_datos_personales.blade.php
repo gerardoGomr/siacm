@@ -1,5 +1,7 @@
 <?php
 use Siacme\Aplicacion\Fecha;
+
+$expedienteEspecialidad = $expediente->getExpedienteEspecialidad() != null ? $expediente->getExpedienteEspecialidad() : $expediente->getExpedienteRigoberto()
 ?>
 <div class="tab-pane active" id="datosPersonales">
 	<div class="row">
@@ -108,30 +110,39 @@ use Siacme\Aplicacion\Fecha;
 						<p class="form-control-static">{{ $expediente->esAlergico() ? $expediente->getAQueMedicamentoEsAlergico() : '-' }}</p>
 					</div>
 				</div>
-				<div class="form-group">
-					{!! Form::label('nombrePadre', 'Nombre del padre:', ['class' => 'control-label col-md-4']) !!}
-					<div class="col-md-7">
-						<p class="form-control-static">{{ $expediente->getExpedienteEspecialidad()->getNombrePadre() }}</p>
+				@if (!is_null($expediente->getExpedienteEspecialidad()))
+					<div class="form-group">
+						{!! Form::label('nombrePadre', 'Nombre del padre:', ['class' => 'control-label col-md-4']) !!}
+						<div class="col-md-7">
+							<p class="form-control-static">{{ $expedienteEspecialidad->getNombrePadre() }}</p>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					{!! Form::label('ocupacionPadre', 'Ocupación:', ['class' => 'control-label col-md-4']) !!}
-					<div class="col-md-7">
-						<p class="form-control-static">{{ $expediente->getExpedienteEspecialidad()->getOcupacionPadre() }}</p>
+					<div class="form-group">
+						{!! Form::label('ocupacionPadre', 'Ocupación:', ['class' => 'control-label col-md-4']) !!}
+						<div class="col-md-7">
+							<p class="form-control-static">{{ $expedienteEspecialidad->getOcupacionPadre() }}</p>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					{!! Form::label('nombreMadre', 'Nombre de la madre:', ['class' => 'control-label col-md-4']) !!}
-					<div class="col-md-7">
-						<p class="form-control-static">{{ $expediente->getExpedienteEspecialidad()->getNombreMadre() }}</p>
+					<div class="form-group">
+						{!! Form::label('nombreMadre', 'Nombre de la madre:', ['class' => 'control-label col-md-4']) !!}
+						<div class="col-md-7">
+							<p class="form-control-static">{{ $expedienteEspecialidad->getNombreMadre() }}</p>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					{!! Form::label('ocupacionMadre', 'Ocupación:', ['class' => 'control-label col-md-4']) !!}
-					<div class="col-md-7">
-						<p class="form-control-static">{{ $expediente->getExpedienteEspecialidad()->getOcupacionMadre() }}</p>
+					<div class="form-group">
+						{!! Form::label('ocupacionMadre', 'Ocupación:', ['class' => 'control-label col-md-4']) !!}
+						<div class="col-md-7">
+							<p class="form-control-static">{{ $expedienteEspecialidad->getOcupacionMadre() }}</p>
+						</div>
 					</div>
-				</div>
+				@else
+					<div class="form-group">
+						{!! Form::label('representanteLegal', 'Representante Legal:', ['class' => 'control-label col-md-4']) !!}
+						<div class="col-md-7">
+							<p class="form-control-static">{{ $expedienteEspecialidad->getRepresentanteLegal() }}</p>
+						</div>
+					</div>
+				@endif
 				<div class="form-group">
 					{!! Form::label('pediatra', 'Nombre del pediatra:', ['class' => 'control-label col-md-4']) !!}
 					<div class="col-md-7">
@@ -144,6 +155,7 @@ use Siacme\Aplicacion\Fecha;
 						<p class="form-control-static">{{ $expediente->getNombreRecomienda() ?? '-' }}</p>
 					</div>
 				</div>
+
 				<div class="form-group">
 					{!! Form::label('motivoConsulta', 'Motivo de consulta:', ['class' => 'control-label col-md-4']) !!}
 					<div class="col-md-7">

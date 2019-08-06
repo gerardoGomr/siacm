@@ -1,3 +1,12 @@
+@php
+if ($medico->getId() === \Siacme\Dominio\Usuarios\Usuario::JOHANNA) {
+    $expedienteEspecialidad = !is_null($expediente) ? $expediente->getExpedienteEspecialidad() : null;
+}
+if ($medico->getId() === \Siacme\Dominio\Usuarios\Usuario::RIGOBERTO) {
+    $expedienteEspecialidad = !is_null($expediente) ? $expediente->getExpedienteRigoberto() : null;
+}
+@endphp
+
 @extends('app')
 
 @section('contenido')
@@ -49,23 +58,20 @@
 																		<br>
 																		<span class="text-danger text-small">Los campos marcados con un (*) son obligatorios.</span>
 																	</div>
-																	@if(!isset($expediente))
-																		@include('expedientes.expediente_registrar_datos_personales')
-																		@include('expedientes.expediente_registrar_antecedentes_heredofamiliares')
-																		@include('expedientes.expediente_registrar_antecedentes_patologicos')
+                                                                    @include('expedientes.expediente_editar_datos_personales')
+                                                                    @include('expedientes.expediente_editar_antecedentes_heredofamiliares')
+                                                                    @include('expedientes.expediente_editar_antecedentes_patologicos')
+																	@if(!isset($expediente) || is_null($expediente->getExpedienteEspecialidad()))
 																		@include('expedientes.expediente_johanna_registrar_antecedentes_odontopatologicos')
 																		@include('expedientes.expediente_johanna_registrar_antecedentes_odontalgicos')
 																		@include('expedientes.expediente_johanna_registrar_higiene_bucodental')
 																		@include('expedientes.expediente_johanna_registrar_habitos_orales')
 																	@else
-																		@include('expedientes.expediente_editar_datos_personales')
-																		@include('expedientes.expediente_editar_antecedentes_heredofamiliares')
-																		@include('expedientes.expediente_editar_antecedentes_patologicos')
 																		@include('expedientes.expediente_johanna_editar_antecedentes_odontopatologicos')
 																		@include('expedientes.expediente_johanna_editar_antecedentes_odontalgicos')
 																		@include('expedientes.expediente_johanna_editar_higiene_bucodental')
 																		@include('expedientes.expediente_johanna_editar_habitos_orales')
-                                                                        @if($expediente->tieneConsultas())
+                                                                        @if($expediente->tieneConsultas($medico))
                                                                             @include('consultas.consultas_johanna_expediente_editar')
                                                                         @endif
 																	@endif

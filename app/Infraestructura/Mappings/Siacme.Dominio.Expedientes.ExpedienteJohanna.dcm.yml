@@ -1,5 +1,6 @@
 Siacme\Dominio\Expedientes\ExpedienteJohanna:
   type: entity
+  extends: AbstractExpediente
   embedded:
     examenIntraoral:
       class: ExamenIntraoral
@@ -44,14 +45,6 @@ Siacme\Dominio\Expedientes\ExpedienteJohanna:
       generator:
         strategy: AUTO
   fields:
-    primeraVez:
-      type: boolean
-      column: PrimeraVez
-      nullable: false
-    revisado:
-      type: boolean
-      column: revisado
-      nullable: false
     nombrePadre:
       type: string
       nullable: true

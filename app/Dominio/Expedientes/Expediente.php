@@ -5,6 +5,7 @@ use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Interconsultas\Interconsulta;
 use Siacme\Dominio\Listas\IColeccion;
 use Siacme\Dominio\Pacientes\Paciente;
+use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Exceptions\ConsultaNoEncontradaException;
 
 /**
@@ -34,6 +35,11 @@ class Expediente
      * @var AbstractExpediente
      */
     protected $expedienteEspecialidad;
+
+    /**
+     * @var AbstractExpediente
+     */
+    protected $expedienteRigoberto;
 
 	/**
 	 * @var Paciente
@@ -694,9 +700,19 @@ class Expediente
     /**
      * @return IColeccion
      */
-    public function getConsultas()
+    public function getConsultas(Usuario $medico = null)
     {
-        return $this->consultas;
+        $consultas = [];
+
+        if ($medico == null)
+            return $this->consultas;
+
+        foreach ($this->consultas as $consulta) {
+            if ($consulta->getMedico()->getId() == $medico->getId())
+                $consultas[] = $consulta;
+        }
+
+        return $consultas;
     }
 
     /**
@@ -705,6 +721,11 @@ class Expediente
     public function getInterconsultas()
     {
         return $this->interconsultas;
+    }
+
+    public function getExpedienteRigoberto()
+    {
+        return $this->expedienteRigoberto;
     }
 
     /**
@@ -855,11 +876,24 @@ class Expediente
     }
 
     /**
+     * especificar especialidad
+     * @param AbstractExpediente $expediente
+     */
+    public function generarParaDr(AbstractExpediente $expediente)
+    {
+        $this->expedienteRigoberto = $expediente;
+        $expediente->expediente($this);
+    }
+
+    /**
      * marcar al expediente como revisado
      */
     public function revisadoPorPaciente()
     {
-        $this->expedienteEspecialidad->revisadoPorPaciente();
+        if ($this->expedienteEspecialidad != null) {
+            $this->expedienteEspecialidad->revisadoPorPaciente();
+        }
+        $this->expedienteRigoberto->revisadoPorPaciente();
     }
 
     /**
@@ -895,9 +929,17 @@ class Expediente
      * checa si se han generado consultas
      * @return bool
      */
-    public function tieneConsultas()
+    public function tieneConsultas(Usuario $medico = null)
     {
-        return $this->consultas->count() > 0;
+        if ($medico == null) 
+            return $this->consultas->count() > 0;
+
+        foreach ($this->consultas as $consulta) {
+            if ($consulta->getMedico()->getId() == $medico->getId())
+                return true;
+        }
+
+        return false;
     }
 
     /**

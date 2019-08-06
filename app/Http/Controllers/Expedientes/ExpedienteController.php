@@ -16,6 +16,7 @@ use Siacme\Http\Controllers\Controller;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\Repositorios\ExpedientesRepositorio;
 use Siacme\Dominio\Usuarios\Repositorios\UsuariosRepositorio;
+use Siacme\Dominio\Usuarios\Usuario;
 use Siacme\Http\Requests\RegistrarExpedienteRequest;
 
 /**
@@ -63,16 +64,16 @@ class ExpedienteController extends Controller
 	 */
 	public function registrar($pacienteId, $medicoId, $citaId = null)
 	{
-		$pacienteId = (int)base64_decode($pacienteId);
-		$medicoId   = (int)base64_decode($medicoId);
-		$citaId     = (int)base64_decode($citaId);
-
-		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
+        //dd(session('citaId'));
+        $pacienteId = (int)base64_decode($pacienteId);
+        $medicoId   = (int)base64_decode($medicoId);
+        $paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
 		$medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
 		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
 
 		// guardar la cita en sesión para su posterior procesamiento
 		if (!is_null($citaId)) {
+            $citaId = (int)base64_decode($citaId);
 			request()->session()->put('citaId', $citaId);
 		}
 
@@ -182,16 +183,23 @@ class ExpedienteController extends Controller
 		$paciente   = $this->expedientesRepositorio->obtenerPacientePorId($pacienteId);
 
 		$medicoId = (int)base64_decode($request->get('medicoId'));
-		$medico   = $this->usuariosRepositorio->obtenerPorId($medicoId);
-
-		// intentar obtener el expediente
-		$expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+        $medico   = $this->usuariosRepositorio->obtenerPorId($medicoId);
+        
+        // intentar obtener el expediente
+        $expediente = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
+        
+        if ($medico->getId() === Usuario::JOHANNA) {
+            $expedienteEspecialidad = !is_null($expediente) ? $expediente->getExpedienteEspecialidad() : null;
+        }
+        if ($medico->getId() === Usuario::RIGOBERTO) {
+            $expedienteEspecialidad = !is_null($expediente) ? $expediente->getExpedienteRigoberto() : null;
+        }
 
 		if (!is_null($expediente)) {
             // si existe, actualizar datos
             // actualizar también los otros datos que se capturan en la consulta siempre y cuando el expediente
 			// no sea de primera vez
-            if (!$expediente->getExpedienteEspecialidad()->primeraVez() && $expediente->tieneConsultas()) {
+            if (!is_null($expediente->getExpedienteEspecialidad()) && !$expediente->getExpedienteEspecialidad()->primeraVez() && $expediente->tieneConsultas() && $medico->getId() === Usuario::JOHANNA) {
 				ExpedientesAgregarDatosConsultaFactory::agregar($medico, $expediente, $request);
 			}
 			ExpedientesEditarFactory::update($medico, $expediente, $request);
@@ -231,7 +239,7 @@ class ExpedienteController extends Controller
 	 */
 	public function ver($pacienteId, $medicoId, $citaId = null)
 	{
-		$pacienteId = base64_decode($pacienteId);
+        $pacienteId = base64_decode($pacienteId);
 		$medicoId   = base64_decode($medicoId);
 
 		$paciente   = $this->pacientesRepositorio->obtenerPorId($pacienteId);
@@ -290,8 +298,8 @@ class ExpedienteController extends Controller
     {
         $expedienteId = (int)base64_decode($expedienteId);
         $medicoId     = (int)base64_decode($medicoId);
-        $expediente   = $this->expedientesRepositorio->obtenerPorId($expedienteId);
         $medico       = $this->usuariosRepositorio->obtenerPorId($medicoId);
+        $expediente   = $this->expedientesRepositorio->obtenerPorId($expedienteId);
 
         $reporte = ExpedientesPDFFactoy::make($medico, $expediente);
         $reporte->SetHeaderMargin(10);

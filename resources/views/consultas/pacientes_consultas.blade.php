@@ -1,5 +1,5 @@
 <div class="tab-pane" id="consultas" data-url="{{ url('pacientes/consulta/recibo') }}">
-    @if($expediente->tieneConsultas())
+    @if($expediente->tieneConsultas($medico))
         <table class="table table-bordered table-striped text-small">
             <thead>
                 <tr>
@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach($expediente->getConsultas() as $consulta)
+            @foreach($expediente->getConsultas($medico) as $consulta)
                 <tr>
                     <td>{{ Siacme\Aplicacion\Fecha::convertir($consulta->getFecha()) }}</td>
                     <td>{{ $consulta->getPadecimientoActual() }}</td>

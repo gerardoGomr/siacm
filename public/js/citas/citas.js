@@ -9,6 +9,8 @@ $(document).ready(function($) {
 		rutaCitas         = $('#rutaCitas').val() + '/ver/' + medicoId + '/' + btoa(fecha),
 		$modalAgendarCita = $('#modalAgendarCita')
 
+	moment.locale('es')
+
     // configuración del calendario
 	$calendario.fullCalendar({
 		header: {
@@ -96,7 +98,7 @@ $(document).ready(function($) {
 				})
           	} else {
           		$modalAgendarCita.find('.fecha').val(selectedDate.format('YYYY-MM-DD'))
-				$modalAgendarCita.find('.fecha').text(selectedDate.format('YYYY-MM-DD'))
+				$modalAgendarCita.find('.fecha').text(selectedDate.format('D MMMM YYYY'))
 				$modalAgendarCita.find('.hora').val(selectedDate.format('HH:mm'))
 				$modalAgendarCita.find('.hora').text(selectedDate.format('HH:mm'))
 				$modalAgendarCita.modal('show')
@@ -115,7 +117,8 @@ $(document).ready(function($) {
 					$('#modalLoading').modal('show')
 				}
 
-			}).done(function(resultado) {
+			})
+			.done(function(resultado) {
 				$('#modalLoading').modal('hide')
 				console.log(resultado.estatus)
 
@@ -130,7 +133,8 @@ $(document).ready(function($) {
 					$('#modalDetalleCita').modal('show')
 				}
 
-			}) .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			})
+			.fail(function(XMLHttpRequest, textStatus, errorThrown) {
 				console.log(textStatus + ': ' + errorThrown)
 				$('#modalLoading').modal('hide')
 				bootbox.alert('Error al visualizar la cita. Intente de nuevo')

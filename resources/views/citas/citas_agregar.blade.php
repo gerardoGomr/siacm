@@ -11,11 +11,11 @@
 				<div class="innerAll bg-gray border-bottom">
 					<table>
 						<tr>
-							<td class="strong">Fecha:</td>
+							<td class="strong">Fecha:&nbsp;</td>
 							<td class="fecha"></td>
 						</tr>
 						<tr>
-							<td class="strong">Hora:</td>
+							<td class="strong">Hora:&nbsp;</td>
 							<td class="hora"></td>
 						</tr>
 					</table>
