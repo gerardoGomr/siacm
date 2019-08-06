@@ -30,14 +30,13 @@ class VistasExpedientesGenerarFactory
     public static function make(Paciente $paciente, Usuario $medico, Expediente $expediente = null)
     {
         $vista = null;
+        $padecimientoRepositorio = new DoctrinePadecimientosRepositorio(App::getInstance()['em']);
+        $padecimientos = $padecimientoRepositorio->obtenerTodos();
 
         switch($medico->getId()) {
             // johanna
             case Usuario::JOHANNA:
-                $padecimientoRepositorio = new DoctrinePadecimientosRepositorio(App::getInstance()['em']);
-                $padecimientos = $padecimientoRepositorio->obtenerTodos();
-
-                if (isset($expediente) && $expediente->tieneConsultas()) {
+                if ($expediente !== null && $expediente->tieneConsultas()) {
                     $morfologiasCraneofacialesRepositorio = new DoctrineMorfologiasCraneofacialesRepositorio(App::getInstance()['em']);
                     $morfologiasFacialesRepositorio       = new DoctrineMorfologiasFacialesRepositorio(App::getInstance()['em']);
                     $convexividadesFacialesRepositorio    = new DoctrineConvexividadesFacialesRepositorio(App::getInstance()['em']);
@@ -53,6 +52,11 @@ class VistasExpedientesGenerarFactory
                 } else {
                     $vista = view('expedientes.expediente_johanna_registrar', compact('paciente', 'medico', 'padecimientos', 'expediente'));
                 }
+
+                break;
+
+            case Usuario::RIGOBERTO:
+                $vista = view('expedientes.expediente_rigoberto_registrar', compact('paciente', 'medico', 'padecimientos', 'expediente'));
 
                 break;
         }

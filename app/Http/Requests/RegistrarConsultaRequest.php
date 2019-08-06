@@ -22,7 +22,6 @@ class RegistrarConsultaRequest extends Request
         'padecimiento'          => 'required',
         'interrogatorio'        => 'required',
         'nota'                  => 'required',
-        'comportamientoFrankl'  => 'required',
         'costoAsignadoConsulta' => 'required'
     ];
 

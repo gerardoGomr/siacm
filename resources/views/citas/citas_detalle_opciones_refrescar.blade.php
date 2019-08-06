@@ -1,5 +1,12 @@
 <?php
 use Siacme\Dominio\Citas\CitaEstatus;
+
+if ($cita->getMedico()->getId() === \Siacme\Dominio\Usuarios\Usuario::JOHANNA) {
+    $expedienteEspecialidad = !is_null($expediente) ? $expediente->getExpedienteEspecialidad() : null;
+}
+if ($cita->getMedico()->getId() === \Siacme\Dominio\Usuarios\Usuario::RIGOBERTO) {
+    $expedienteEspecialidad = !is_null($expediente) ? $expediente->getExpedienteRigoberto() : null;
+}
 ?>
 @if($cita->getEstatus() === CitaEstatus::AGENDADA)
 	<button type="button" class="btn btn-success btn-block confirmar" data-accion="{{ CitaEstatus::CONFIRMADA  }}"><i class="fa fa-check"></i> Confirmar Cita</button>
@@ -8,9 +15,9 @@ use Siacme\Dominio\Citas\CitaEstatus;
 @endif
 
 @if($cita->getEstatus() === CitaEstatus::CONFIRMADA)
-	@if(!is_null($expediente))
-		@if($expediente->getExpedienteEspecialidad()->primeraVez())
-			@if(!$expediente->firmado())
+	@if(!is_null($expediente) && !is_null($expedienteEspecialidad))
+		@if($expedienteEspecialidad->primeraVez())
+			@if(!$expediente->revisado())
 				<a href="{{ url('expedientes/ver/' . base64_encode($cita->getPaciente()->getId()) . '/' . base64_encode($cita->getMedico()->getId()) . '/' . base64_encode($cita->getId())) }}" class="btn btn-success btn-block"><i class="fa fa-search"></i> Ver el expediente</a>
 			@endif
 		@else

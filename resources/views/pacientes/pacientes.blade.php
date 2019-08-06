@@ -49,11 +49,14 @@
 
 	@include('modal_loading')
 	@include('pacientes.pacientes_johanna_otro_tratamiento')
-	@include('pacientes.pacientes_otros_tratamientos_cobro')
+    @include('pacientes.pacientes_otros_tratamientos_cobro')
+    @include('pacientes.pacientes_anexos_editar')
+    @include('pacientes.pacientes_rigoberto_plan_cirugia')
 @stop
 
 @section('js')
 	<script src="{{ asset('js/pacientes/pacientes.js') }}"></script>
 	<script src="{{ asset('js/pacientes/pacientes_johanna_otro_tratamiento.js') }}"></script>
 	<script src="{{ asset('js/pacientes/pacientes_otros_tratamientos_cobro.js') }}"></script>
+    <script src="{{ asset('js/pacientes/pacientes_rigoberto_plan_cirugia.js') }}"></script>
 @stop

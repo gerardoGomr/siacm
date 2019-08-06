@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 use Siacme\Dominio\Expedientes\Expediente;
 use Siacme\Dominio\Expedientes\ExpedienteJohanna;
+use Siacme\Dominio\Expedientes\ExpedienteRigoberto;
 use Siacme\Dominio\Expedientes\Padecimiento;
 use Siacme\Dominio\Pacientes\Domicilio;
 use Siacme\Dominio\Usuarios\Usuario;
+use Siacme\Aplicacion\ColeccionArray;
 
 /**
  * Class ExpedientesEditarFactory
@@ -29,6 +31,10 @@ class ExpedientesEditarFactory
     public static function update(Usuario $medico, Expediente $expediente, Request $request)
     {
         self::updateBasicData($request, $expediente);
+        $nombrePadre    = $request->get('nombrePadre');
+        $nombreMadre    = $request->get('nombreMadre');
+        $ocupacionPadre = $request->get('ocupacionPadre');
+        $ocupacionMadre = $request->get('ocupacionMadre');
 
         switch ($medico->getId()) {
             case Usuario::JOHANNA:
@@ -42,10 +48,6 @@ class ExpedientesEditarFactory
                     }
                 }
 
-                $nombrePadre               = $request->get('nombrePadre');
-                $nombreMadre               = $request->get('nombreMadre');
-                $ocupacionPadre            = $request->get('ocupacionPadre');
-                $ocupacionMadre            = $request->get('ocupacionMadre');
                 $dolorBoca                 = !is_null($request->get('dolorBoca')) ? true : false;
                 $sangradoEncias            = !is_null($request->get('sangradoEncias')) ? true : false;
                 $malOlor                   = !is_null($request->get('malOlor')) ? true : false;
@@ -80,11 +82,37 @@ class ExpedientesEditarFactory
                 $especifiqueHabito         = $request->get('especifiqueHabito');
 
                 // crear expediente y detalle
-                $expediente->getExpedienteEspecialidad()->agregarDatosPersonales($nombrePadre, $ocupacionPadre, $nombreMadre, $ocupacionMadre);
-                $expediente->getExpedienteEspecialidad()->agregarAntecedentesOdontopatologicos($dolorBoca, $sangradoEncias, $malOlor, $dienteFlojo);
-                $expediente->getExpedienteEspecialidad()->agregarAntecedentesNoPatologicos($primeraVisita, $fechaUltimoExamen, $motivoUltimoExamen, $anestesico, $malaReaccion, $queReaccion, $traumatismo);
-                $expediente->getExpedienteEspecialidad()->agregarHigieneBucodental($tipoCepillo, $marcaPasta, $vecesCepilla, $edadErupcionaPrimerDiente, $ayudaAlCepillarse, $vecesCome, $hiloDental, $enjuagueBucal, $limpiadorLingual, $tabletasReveladoras, $otroAuxiliar, $especifiqueAuxiliar);
-                $expediente->getExpedienteEspecialidad()->agregarHabitosOrales($succionDigital, $succionLingual, $biberon, $bruxismo, $succionLabial, $respiracionBucal, $onicofagia, $chupon, $otroHabito, $especifiqueHabito);
+                $expedienteJohanna = $expediente->getExpedienteEspecialidad() ?? new ExpedienteJohanna(new ColeccionArray(), new ColeccionArray());
+                $expedienteJohanna->agregarDatosPersonales($nombrePadre, $ocupacionPadre, $nombreMadre, $ocupacionMadre);
+                $expedienteJohanna->agregarAntecedentesOdontopatologicos($dolorBoca, $sangradoEncias, $malOlor, $dienteFlojo);
+                $expedienteJohanna->agregarAntecedentesNoPatologicos($primeraVisita, $fechaUltimoExamen, $motivoUltimoExamen, $anestesico, $malaReaccion, $queReaccion, $traumatismo);
+                $expedienteJohanna->agregarHigieneBucodental($tipoCepillo, $marcaPasta, $vecesCepilla, $edadErupcionaPrimerDiente, $ayudaAlCepillarse, $vecesCome, $hiloDental, $enjuagueBucal, $limpiadorLingual, $tabletasReveladoras, $otroAuxiliar, $especifiqueAuxiliar);
+                $expedienteJohanna->agregarHabitosOrales($succionDigital, $succionLingual, $biberon, $bruxismo, $succionLabial, $respiracionBucal, $onicofagia, $chupon, $otroHabito, $especifiqueHabito);
+
+                if (is_null($expediente->getExpedienteEspecialidad())) {
+                    $expediente->generarPara($expedienteJohanna);                    
+                }
+                break;
+
+            case Usuario::RIGOBERTO:
+                $perioricidadBanio     = strlen($request->input('perioricidadBanio')) > 0 ? $request->input('perioricidadBanio') : null;
+                $perioricidadAseoBucal = strlen($request->input('perioricidadAseoBucal')) > 0 ? $request->input('perioricidadAseoBucal') : null;
+                $perioricidadLavaManos = strlen($request->input('perioricidadLavaManos')) > 0 ? $request->input('perioricidadLavaManos') : null;
+                $frecuenciaCambiaRopa  = strlen($request->input('frecuenciaCambiaRopa')) > 0 ? $request->input('frecuenciaCambiaRopa') : null;
+                $vecesComeDia          = strlen($request->input('vecesComeDia')) > 0 ? $request->input('vecesComeDia') : null;
+                $tiempoEntreComidas    = strlen($request->input('tiempoEntreComidas')) > 0 ? $request->input('tiempoEntreComidas') : null;
+                $regimenAlimenticio    = $request->has('regimenAlimenticio') && $request->get('regimenAlimenticio') === 'on';
+                $especifiqueRegimen    = $request->input('especifiqueRegimen');
+                $horasDuerme           = strlen($request->input('horasDuerme')) > 0 ? $request->input('horasDuerme') : null;
+                $frecuenciaEjercicio   = $request->input('frecuenciaEjercicio');
+                
+                $expedienteRigoberto = $expediente->getExpedienteRigoberto() ?? new ExpedienteRigoberto();
+                $expedienteRigoberto->agregarDatosNoPatologicos($perioricidadBanio, $perioricidadAseoBucal, $perioricidadLavaManos, $frecuenciaCambiaRopa, $vecesComeDia, $tiempoEntreComidas, $regimenAlimenticio, $especifiqueRegimen, $horasDuerme, $frecuenciaEjercicio);
+
+                if (is_null($expediente->getExpedienteRigoberto())) {
+                    $expedienteRigoberto->agregarDatosPersonales($nombrePadre, $ocupacionPadre, $nombreMadre, $ocupacionMadre);
+                    $expediente->generarParaDr($expedienteRigoberto);
+                }
                 break;
         }
     }

@@ -5,7 +5,7 @@ use Siacme\Aplicacion\Fecha;
 use Siacme\Aplicacion\Reportes\ReporteJohanna;
 use Siacme\Dominio\Consultas\Consulta;
 use Siacme\Dominio\Expedientes\Expediente;
-
+use Siacme\Dominio\Usuarios\Usuario;
 
 /**
  * Class NotaMedicaJohanna
@@ -124,8 +124,16 @@ EOD;
         $this->Ln(15);
 
         $this->SetFont('dejavusans', 'B', 12);
-        $this->Cell(0, 5, ('Dra. Johanna Joselyn Vázquez Hernández'), 0, 1, 'C');
-        $this->Cell(0, 5, 'Odontopediatra', 0, 1, 'C');
+
+        if ($this->consulta->getMedico()->getId() == Usuario::JOHANNA) {
+            $this->Cell(0, 5, ('Dra. Johanna Joselyn Vázquez Hernández'), 0, 1, 'C');
+            $this->Cell(0, 5, 'Odontopediatra', 0, 1, 'C');
+        }
+
+        if ($this->consulta->getMedico()->getId() == Usuario::RIGOBERTO) {
+            $this->Cell(0, 5, ('Dr. Rigoberto García López'), 0, 1, 'C');
+            $this->Cell(0, 5, 'Otorrinolaringología y Neuro-Otología', 0, 1, 'C');
+        }
 
         $this->Output('Nota médica', 'I');
     }

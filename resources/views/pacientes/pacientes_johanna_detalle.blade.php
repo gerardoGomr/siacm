@@ -5,9 +5,9 @@
         @endif
         <div class="media-body innerAll half">
             <h4 class="media-heading">{{ $expediente->getPaciente()->nombreCompleto() }}</h4>
-            <p>{{ $expediente->getPaciente()->edadCompleta() }} años<br/>Vive en: {{ $expediente->getPaciente()->getLugarNacimiento() }}<br/>Expediente {{ $expediente->getExpedienteEspecialidad()->numero() }}</p>
+            <p>{{ $expediente->getPaciente()->edadCompleta() }} años<br/>Vive en: {{ $expediente->getPaciente()->getLugarNacimiento() }}<br/>Expediente {{ !is_null($expediente->getExpedienteEspecialidad()) ? $expediente->getExpedienteEspecialidad()->numero() : '--' }}</p>
             <a href="{{ url('expedientes/ver/' . base64_encode($expediente->getPaciente()->getId()) . '/' . base64_encode($medico->getId())) }}" class="btn btn-success btn-md" target="_blank"><i class="fa fa-eye"></i> Ver expediente completo</a>
-            @if(!$expediente->getExpedienteEspecialidad()->primeraVez())
+            @if(!is_null($expediente->getExpedienteEspecialidad()) && !$expediente->getExpedienteEspecialidad()->primeraVez())
                 @if($expediente->getExpedienteEspecialidad()->tieneOtrosTratamientos())
                     @if($expediente->getExpedienteEspecialidad()->otrosTratamientosAtendidos())
                         <button type="button" class="btn btn-primary btn-md" id="generarOtroTratamiento"> Generar tratamiento ortopedia / ortodoncia</button>

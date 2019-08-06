@@ -37,7 +37,6 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 	 */
 	public function obtenerPorUsername($username)
 	{
-		// TODO: Implement obtenerPorUsername() method.
 		try {
             $usuario = $this->entityManager->createQuery('SELECT u, e FROM Usuarios:Usuario u JOIN u.especialidad e WHERE u.username = :username')
 				->setParameter('username', $username)
@@ -50,8 +49,7 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
 			return null;
 
 		} catch (PDOException $e) {
-            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
-            $pdoLogger->log($e);
+            $this->saveLog($e);
             return null;
         }
 	}
@@ -101,8 +99,7 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
             return null;
 
         } catch (PDOException $e) {
-            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
-            $pdoLogger->log($e);
+            $this->saveLog($e);
             return null;
         }
 	}
@@ -126,9 +123,21 @@ class DoctrineUsuariosRepositorio implements UsuariosRepositorio
             return true;
 
         } catch (PDOException $e) {
-            $pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
-            $pdoLogger->log($e);
+            $this->saveLog($e);
             return false;
         }
+    }
+
+    /**
+     * Guardar log de error
+     *
+     * @param PDOException $e
+     *
+     * @return void
+     */
+    private function saveLog(PDOException $e)
+    {
+    	$pdoLogger = new SiacmeLogger(new Logger('pdo_exception'), new StreamHandler(storage_path() . '/logs/pdo/sqlsrv_' . date('Y-m-d') . '.log', Logger::ERROR));
+    	$pdoLogger->log($e);
     }
 }

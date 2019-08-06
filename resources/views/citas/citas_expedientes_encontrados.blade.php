@@ -4,7 +4,8 @@
         cursor: pointer;
     }
 </style>
-<h4 class="innerAll bg-gray border-bottom">Coincidencias</h4>
+<button type="button" class="btn btn-default paciente-nuevo"><i class="fa fa-plus"></i> Paciente Nuevo</button>
+<br><br>
 <table class="table table-hover table-bordered text-small">
     <thead>
         <tr class="bg-primary">

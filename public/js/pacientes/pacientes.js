@@ -1,20 +1,19 @@
 $(document).ready(function () {
-	var $paciente            = $('#paciente'),
-		$formPaciente        = $('#formPaciente'),
-		$formOtroTratamiento = $('#formOtroTratamiento'),
-        costoConsulta        = 0,
-		idForm               = '';
+    var $paciente = $('#paciente'),
+        $formPaciente = $('#formPaciente'),
+        $formOtroTratamiento = $('#formOtroTratamiento'),
+        costoConsulta = 0;
 
-	setTimeout(function(){
-		$paciente.focus();
-	}, 500);
+    setTimeout(function () {
+        $paciente.focus();
+    }, 500);
 
-	// prevenir submit normal
-	$paciente.on('keypress', function(event) {
-		if (event === 13 || event.which === 13) {
-			return false;
-		}
-	});
+    // prevenir submit normal
+    $paciente.on('keypress', function (event) {
+        if (event === 13 || event.which === 13) {
+            return false;
+        }
+    });
 
     init();
 
@@ -22,14 +21,14 @@ $(document).ready(function () {
     $('#formCobro').validate();
     agregaValidacionesElementos($('#formCobro'));
 
-	// buscar pacientes
-	$paciente.on('keyup', function(event) {
-		if (event === 13 || event.which === 13) {
+    // buscar pacientes
+    $paciente.on('keyup', function (event) {
+        if (event === 13 || event.which === 13) {
             $.ajax({
-                url:        $formPaciente.attr('action'),
-                type:       'POST',
-                dataType:   'json',
-                data:       $formPaciente.serialize(),
+                url: $formPaciente.attr('action'),
+                type: 'POST',
+                dataType: 'json',
+                data: $formPaciente.serialize(),
                 beforeSend: function () {
                     $('#modalLoading').modal('show');
                 }
@@ -39,14 +38,14 @@ $(document).ready(function () {
 
                 $('#resultadoPacientes').html(respuesta.html);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     var totalResultados = $('#totalResultados').val();
                     if (totalResultados === '1') {
                         var datos = {
-                                medicoId:      $('#medicoId').val(),
-                                expedienteId:  $('#resultadoPacientes').find('li.paciente').first().data('id'),
-                                _token:        $formPaciente.find('input[name="_token"]').val()
-                            };
+                            medicoId: $('#medicoId').val(),
+                            expedienteId: $('#resultadoPacientes').find('li.paciente').first().data('id'),
+                            _token: $formPaciente.find('input[name="_token"]').val()
+                        };
 
                         mostrarExpediente(datos);
                     }
@@ -57,19 +56,19 @@ $(document).ready(function () {
                 console.log(textStatus + ': ' + errorThrown);
                 bootbox.alert('Ocurrió un error al buscar a paciente');
             });
-		}
-	});
+        }
+    });
 
-	// detalles de un paciente
-	$('#resultadoPacientes').on('click', 'li.paciente', function(event) {
+    // detalles de un paciente
+    $('#resultadoPacientes').on('click', 'li.paciente', function (event) {
         $(this).addClass('active');
         $(this).siblings('li.active').removeClass('active');
 
-		var datos = {
-                expedienteId: $(this).data('id'),
-                medicoId:     $('#medicoId').val(),
-                _token:       $formPaciente.find('input[name="_token"]').val()
-			};
+        var datos = {
+            expedienteId: $(this).data('id'),
+            medicoId: $('#medicoId').val(),
+            _token: $formPaciente.find('input[name="_token"]').val()
+        };
 
         mostrarExpediente(datos);
 
@@ -81,10 +80,10 @@ $(document).ready(function () {
 
         // generar ajax form
         generarAjaxForm('formAnexo');
-	});
+    });
 
     // cobrar consulta
-    $('#dvDetalles').on('click', 'button.cobrar', function(event) {
+    $('#dvDetalles').on('click', 'button.cobrar', function (event) {
         $('#desgloseCosto').html('');
         $('#desgloseCosto').html($(this).siblings('input.desgloseCosto').val());
         $('#totalPagarTexto').text('$' + $(this).data('costo'));
@@ -98,7 +97,7 @@ $(document).ready(function () {
     });
 
     // abrir recibo de pago
-    $('#dvDetalles').on('click', 'button.imprimirRecibo', function(event) {
+    $('#dvDetalles').on('click', 'button.imprimirRecibo', function (event) {
         window.open($('#consultas').data('url') + '/' + $(this).data('id'));
     });
 
@@ -123,22 +122,21 @@ $(document).ready(function () {
 
     // editar otro tratamiento
     $('#dvDetalles').on('click', 'button.editar', function () {
-        console.log('clic');
         $('#formOtroTratamiento').attr('action', '/pacientes/tratamiento/otros/editar');
 
         let $parent = $(this).parent('div')
-            data    = {
-            expedienteId:      $parent.siblings('input.expedienteId').val(),
+        data = {
+            expedienteId: $parent.siblings('input.expedienteId').val(),
             otroTratamientoId: $parent.siblings('input.otroTratamientoId').val(),
-            ortopedia:         $parent.siblings('input.ortopedia').val(),
-            ortodoncia:        $parent.siblings('input.ortodoncia').val(),
-            dx:                $parent.siblings('input.dx').val(),
-            observaciones:     $parent.siblings('input.observaciones').val(),
-            tx:                $parent.siblings('input.tx').val(),
-            costo:             $parent.siblings('input.costo').val(),
-            fechaInicio:       $parent.siblings('input.fechaInicio').val(),
-            fechaTermino:      $parent.siblings('input.fechaTermino').val(),
-            mensualidades:     $parent.siblings('input.mensualidades').val(),
+            ortopedia: $parent.siblings('input.ortopedia').val(),
+            ortodoncia: $parent.siblings('input.ortodoncia').val(),
+            dx: $parent.siblings('input.dx').val(),
+            observaciones: $parent.siblings('input.observaciones').val(),
+            tx: $parent.siblings('input.tx').val(),
+            costo: $parent.siblings('input.costo').val(),
+            fechaInicio: $parent.siblings('input.fechaInicio').val(),
+            fechaTermino: $parent.siblings('input.fechaTermino').val(),
+            mensualidades: $parent.siblings('input.mensualidades').val(),
         };
 
         if (data.ortopedia === '1') {
@@ -163,7 +161,7 @@ $(document).ready(function () {
     });
 
     // forma pago de consulta
-    $('#dvCobroConsulta').on('click', 'input.formaPago', function(event) {
+    $('#dvCobroConsulta').on('click', 'input.formaPago', function (event) {
         if ($(this).val() === '1') {
             // efectivo
             $('#efectivo').removeClass('hide');
@@ -205,10 +203,10 @@ $(document).ready(function () {
         if ($('#formCobro').valid()) {
             // guardar mediante ajax
             $.ajax({
-                url:        $('#formCobro').attr('action'),
-                type:       'post',
-                dataType:   'json',
-                data:       $('#formCobro').serialize(),
+                url: $('#formCobro').attr('action'),
+                type: 'post',
+                dataType: 'json',
+                data: $('#formCobro').serialize(),
                 beforeSend: function () {
                     $('#modalLoading').modal('show');
                 }
@@ -224,14 +222,14 @@ $(document).ready(function () {
                 if (respuesta.estatus === 'OK') {
                     bootbox.alert('Consulta cobrada con éxito. Imprima el recibo de pago.', function () {
 
-                        var url   = $('#resultadoPacientes').data('url'),
+                        var url = $('#resultadoPacientes').data('url'),
                             datos = {
                                 expedienteId: $('#expedienteId').val(),
-                                medicoId:     $('#medicoId').val(),
-                                _token:       $formPaciente.find('input[name="_token"]').val()
+                                medicoId: $('#medicoId').val(),
+                                _token: $formPaciente.find('input[name="_token"]').val()
                             };
 
-                        mostrarExpediente(url, datos);
+                        mostrarExpediente(datos);
 
                         // abrir recibo de pago
                         window.open($('#consultas').data('url') + '/' + $('#consultaId').val() + '/' + datos.expedienteId);
@@ -248,26 +246,28 @@ $(document).ready(function () {
         }
     });
 
-	// borrar anexos
-	$('#dvDetalles').on('click', 'button.eliminarAnexo', function(event){
-        var url   = $(this).data('url'),
+    // borrar anexos
+    $('#dvDetalles').on('click', 'button.eliminarAnexo', function (event) {
+        var url = $(this).data('url'),
             anexo = $(this).data('id');
 
         bootbox.confirm('¿Desea eliminar el anexo seleccionado?', function (respuesta) {
             if (respuesta) {
-                var formId       = $('#dvDetalles').find('form').attr('id'),
+                var formId = $('#dvDetalles').find('form').attr('id'),
                     expedienteId = $('#' + formId).find('input[name="expedienteId"]').val(),
-                    datos        = {
+                    medicoId = $('#' + formId).find('input[name="medicoId"]').val(),
+                    datos = {
                         expedienteId: expedienteId,
-                        anexo:        anexo,
-                        _token:       $formPaciente.find('input[name="_token"]').val()
+                        anexo: anexo,
+                        medicoId: medicoId,
+                        _token: $formPaciente.find('input[name="_token"]').val()
                     };
 
                 $.ajax({
-                    url:        url,
-                    type:       'post',
-                    dataType:   'json',
-                    data:       datos,
+                    url: url,
+                    type: 'post',
+                    dataType: 'json',
+                    data: datos,
                     beforeSend: function () {
                         $('#modalLoading').modal('show');
                     }
@@ -282,10 +282,10 @@ $(document).ready(function () {
                     if (respuesta.estatus === 'OK') {
                         bootbox.alert('Anexo eliminado con éxito.', function () {
                             var datos = {
-                                    expedienteId: expedienteId,
-                                    medicoId:     $('#medicoId').val(),
-                                    _token:       $formPaciente.find('input[name="_token"]').val()
-                                };
+                                expedienteId: expedienteId,
+                                medicoId: $('#medicoId').val(),
+                                _token: $formPaciente.find('input[name="_token"]').val()
+                            };
 
                             mostrarExpediente(datos);
                         });
@@ -299,17 +299,86 @@ $(document).ready(function () {
                 });
             }
         });
-	});
+    });
 
-	// inicializar form validación
-	init();
+    // inicializar form validación
+    init();
 
-	// validación vacía
-	$formOtroTratamiento.validate();
+    // validación vacía
+    $formOtroTratamiento.validate();
+    $('#formEditarAnexo').validate()
+    $('#formPlanCirugia').validate()
 
-	// validar formulario de otros tratamientos
-	agregaValidacionesElementos($formOtroTratamiento);
-});
+    // validar formulario de otros tratamientos
+    agregaValidacionesElementos($formOtroTratamiento);
+    agregaValidacionesElementos($('#formEditarAnexo'))
+    agregaValidacionesElementos($('#formPlanCirugia'))
+
+    // editar anexo - pop up
+    $('#dvDetalles').on('click', 'button.editarAnexo', function (event) {
+        let fecha       = $(this).data('fecha'),
+            nombre      = $(this).data('nombre'),
+            categoriaId = $(this).data('categoria'),
+            id          = $(this).data('id'),
+            formId      = $('#dvDetalles').find('form').attr('id'),
+            expedienteId = $('#' + formId).find('input[name="expedienteId"]').val()
+
+        $('#dvEditarAnexo').modal('show')
+        $('#dvEditarAnexo').find('input[name="nombreAnexo"]').val(nombre)
+        $('#dvEditarAnexo').find('input[name="fechaDocumento"]').val(fecha)
+        $('#dvEditarAnexo').find('input[name="anexoId"]').val(id)
+        $('#dvEditarAnexo').find('input[name="medicoId"]').val($('#medicoId').val())
+        $('#dvEditarAnexo').find('input[name="expedienteId"]').val(expedienteId)
+        $('#dvEditarAnexo').find('select[name="categoria"] option[value="' + categoriaId + '"]').attr('selected', true)
+    })
+
+    // modificar anexo
+    $('#modificarAnexo').on('click', function () {
+        if (!$('#formEditarAnexo').valid())
+            return
+        
+        $.ajax({
+            url:      $('#formEditarAnexo').attr('action'),
+            type:     'post',
+            dataType: 'json',
+            data:     $('#formEditarAnexo').serialize(),
+            beforeSend: function () {
+                $('#modalLoading').modal('show')
+            }
+
+        }).done(function (respuesta) {
+            $('#modalLoading').modal('hide')
+
+            if (respuesta.status === 'fail') {
+                var mensajeError = respuesta.mensaje !== '' ? respuesta.mensaje : ''
+                bootbox.alert('Ocurrió un error al editar el anexo. Intente de nuevo.' + mensajeError)
+            }
+
+            if (respuesta.status === 'success') {
+                bootbox.alert('Anexo editado.', function () {
+
+                    var formId       = $('#dvDetalles').find('form').attr('id'),
+                        expedienteId = $('#' + formId).find('input[name="expedienteId"]').val(),
+                        medicoId     = $('#' + formId).find('input[name="medicoId"]').val()
+                        datos        = {
+                            expedienteId: expedienteId,
+                            medicoId:     medicoId,
+                            _token:       $formPaciente.find('input[name="_token"]').val()
+                        }
+
+                    mostrarExpediente(datos);
+
+                    $('#dvEditarAnexo').modal('hide')
+                })
+            }
+
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            $('#modalLoading').modal('hide')
+            console.log(textStatus + ': ' + errorThrown)
+            bootbox.alert('Ocurrió un error al editar el anexo. Intente de nuevo')
+        })
+    })
+})
 
 /**
  * funcion para mostrar el detall del expediente
@@ -317,10 +386,10 @@ $(document).ready(function () {
  */
 function mostrarExpediente(datos) {
     $.ajax({
-        url:        '/pacientes/detalle',
-        type:       'POST',
-        dataType:   'json',
-        data:       datos,
+        url: '/pacientes/detalle',
+        type: 'POST',
+        dataType: 'json',
+        data: datos,
         beforeSend: function () {
             $('#modalLoading').modal('show');
         }
@@ -339,6 +408,19 @@ function mostrarExpediente(datos) {
         // generar ajax form
         generarAjaxForm('formAnexo');
 
+        $('#dvDetalles').find('#fechaDocumento')
+            .datepicker({
+                autoclose: true,
+                language: 'es',
+                format: 'dd/mm/yyyy'
+            })
+        
+        $('#dvEditarAnexo').find('select[name="categoria"]').html('')
+        select = $('#formAnexo').find('select[name="categoria"] option')
+        select.each(function () {
+            $('#dvEditarAnexo').find('select[name="categoria"]').append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>')
+        })
+
     }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
         $('#modalLoading').modal('hide');
         console.log(textStatus + ': ' + errorThrown);
@@ -352,10 +434,10 @@ function mostrarExpediente(datos) {
  */
 function generarAjaxForm(form) {
     var opciones = {
-        url:        $('#' + form).attr('action'),
-        type:       'post',
-        dataType:   'json',
-        beforeSend: function() {
+        url: $('#' + form).attr('action'),
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function () {
             $('#modalLoading').modal('show');
 
             if (!$('#' + form).valid()) {
@@ -363,10 +445,10 @@ function generarAjaxForm(form) {
                 return false;
             }
         },
-        success: function(respuesta) {
+        success: function (respuesta) {
             $('#modalLoading').modal('hide');
 
-            if(respuesta.estatus === 'fail') {
+            if (respuesta.estatus === 'fail') {
                 var mensaje = respuesta.mensaje !== '' ? respuesta.mensaje : '';
 
                 bootbox.alert('Ocurrió un error al agregar el anexo. Intente de nuevo. ' + mensaje);
@@ -376,15 +458,15 @@ function generarAjaxForm(form) {
             if (respuesta.estatus === 'OK') {
                 bootbox.alert('Anexo agregado con éxito', function () {
                     var datos = {
-                            expedienteId: $('#' + form).find('input[name="expedienteId"]').val(),
-                            medicoId:     $('#medicoId').val()
-                        };
+                        expedienteId: $('#' + form).find('input[name="expedienteId"]').val(),
+                        medicoId: $('#medicoId').val()
+                    };
 
                     mostrarExpediente(datos);
                 });
             }
         },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
             $('#modalLoading').modal('hide');
             console.log(textStatus + ': ' + errorThrown);
             bootbox.alert('Ocurrió un error al agregar el anexo. Intente de nuevo');

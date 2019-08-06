@@ -53,7 +53,7 @@
 													@include('expedientes.expediente_johanna_ver_antecedentes_odontalgicos')
 													@include('expedientes.expediente_johanna_ver_higiene_bucodental')
 													@include('expedientes.expediente_johanna_ver_habitos_orales')
-                                                    @if($expediente->tieneConsultas())
+                                                    @if($expediente->tieneConsultas($medico))
                                                         @include('consultas.consultas_johanna_expediente_ver')
                                                     @endif
 												</div>

@@ -35,10 +35,14 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	 */
 	public function obtenerPorPacienteMedico(Paciente $paciente, Usuario $medico = null)
 	{
-		// TODO: Implement obtenerPorPacienteMedico() method.
 		try {
+			$stringQuery = '';
+			if ($medico->getId() === Usuario::JOHANNA)
+				$stringQuery = "SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.expedienteEspecialidad ee WHERE p.id = :pacienteId";
+			if ($medico->getId() === Usuario::RIGOBERTO)
+				$stringQuery = "SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.expedienteRigoberto ee WHERE p.id = :pacienteId";
 
-			$query = $this->entityManager->createQuery("SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.expedienteEspecialidad ee WHERE p.id = :pacienteId")
+			$query = $this->entityManager->createQuery($stringQuery)
 				->setParameter('pacienteId', $paciente->getId());
 
 			$expediente = $query->getResult();
@@ -62,10 +66,11 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	 */
 	public function obtenerPorId($id)
 	{
-		// TODO: Implement obtenerPorId() method.
 		try {
-
-			$query = $this->entityManager->createQuery("SELECT e, p, d, c, ee, o, oo, t, ta, hdc FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN p.domicilio d LEFT JOIN e.consultas c LEFT JOIN e.expedienteEspecialidad ee LEFT JOIN ee.odontogramas o LEFT JOIN o.odontogramaDientes oo LEFT JOIN oo.padecimientos pa LEFT JOIN oo.tratamientos t LEFT JOIN t.dienteTratamiento ta LEFT JOIN c.higieneDentalConsulta hdc WHERE e.id = :id")
+            
+            $stringQuery = "SELECT e, p, d, c, ee, o, oo, t, ta, hdc, m FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN p.domicilio d LEFT JOIN e.consultas c LEFT JOIN e.expedienteEspecialidad ee LEFT JOIN ee.odontogramas o LEFT JOIN o.odontogramaDientes oo LEFT JOIN oo.padecimientos pa LEFT JOIN oo.tratamientos t LEFT JOIN t.dienteTratamiento ta LEFT JOIN c.higieneDentalConsulta hdc LEFT JOIN c.medico m LEFT JOIN e.expedienteRigoberto er WHERE e.id = :id";
+                
+			$query = $this->entityManager->createQuery($stringQuery)
                 ->setParameter('id', $id);
 
 			$expediente = $query->getResult();
@@ -88,17 +93,21 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
      * @param array $dato
      * @return array|null
      */
-    public function obtenerPor(array $dato)
+    public function obtenerPor(array $dato, Usuario $medico)
     {
         $subquery = '';
 
         if (array_key_exists('dato', $dato)) {
-            //$dato['dato'] = str_replace(' ', '', $dato['dato']);
             $subquery .= " AND (CONCAT(p.nombre, p.paterno, p.materno) LIKE :dato OR CONCAT(p.paterno, p.materno, p.nombre) = :dato) OR p.nombre LIKE :dato OR ee.id LIKE :dato";
         }
 
+        if ($medico->getId() === Usuario::JOHANNA)
+            $stringQuery = "SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p JOIN e.expedienteEspecialidad ee WHERE 1 = 1";
+        if ($medico->getId() === Usuario::RIGOBERTO)
+            $stringQuery = "SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p JOIN e.expedienteRigoberto ee WHERE 1 = 1";
+
         try {
-            $query = $this->entityManager->createQuery("SELECT e, p, ee FROM Expedientes:Expediente e JOIN e.paciente p LEFT JOIN e.expedienteEspecialidad ee WHERE e.id IS NOT NULL" . $subquery);
+            $query = $this->entityManager->createQuery($stringQuery . $subquery);
             if (array_key_exists('dato', $dato)) {
                 $query->setParameter('dato', '%' . $dato['dato'] . '%');
             }
@@ -132,7 +141,6 @@ class DoctrineExpedientesRepositorio implements ExpedientesRepositorio
 	 */
 	public function persistir(Expediente $expediente)
 	{
-		// TODO: Implement persistir() method.
 		try {
 
 			if (is_null($expediente->getId())) {

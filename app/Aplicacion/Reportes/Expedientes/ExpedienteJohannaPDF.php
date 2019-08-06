@@ -37,7 +37,6 @@ class ExpedienteJohannaPDF extends ReporteJohanna
      */
     public function generar()
     {
-        // TODO: Implement generar() method.
         $html = '';
         $this->SetTitle('Expediente');
         $this->AddPage();

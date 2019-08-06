@@ -40,9 +40,9 @@ class VistasConsultasFactory
      */
     public static function make(Paciente $paciente, Usuario $medico, Expediente $expediente)
     {
-        $vista = null;
-        $anexoUploader = new AnexosUploader((string)$expediente->getId());
-        $expediente->asignarAnexos($anexoUploader->asignar(), new ColeccionArray());
+        $vista                        = null;
+        $medicosReferenciaRepositorio = new DoctrineMedicosReferenciaRepositorio(App::getInstance()['em']);
+        $medicosReferencia            = $medicosReferenciaRepositorio->obtenerTodos();
 
         switch($medico->getId()) {
             // johanna
@@ -55,7 +55,6 @@ class VistasConsultasFactory
                 $dientePadecimientosRepositorio       = new DoctrineDientePadecimientosRepositorio(App::getInstance()['em']);
                 $otrosTratamientosRepositorio         = new DoctrineOtrosTratamientosRepositorio(App::getInstance()['em']);
                 $recetasRepositorio                   = new DoctrineRecetasRepositorio(App::getInstance()['em']);
-                $medicosReferenciaRepositorio         = new DoctrineMedicosReferenciaRepositorio(App::getInstance()['em']);
 
                 $comportamientosFrankl     = $comportamientosFranklRepositorio->obtenerTodos();
                 $morfologiasCraneofaciales = $morfologiasCraneofacialesRepositorio->obtenerTodos();
@@ -65,9 +64,8 @@ class VistasConsultasFactory
                 $dientePadecimientos       = $dientePadecimientosRepositorio->obtenerTodos();
                 $otrosTratamientos         = $otrosTratamientosRepositorio->obtenerTodos();
                 $recetas                   = $recetasRepositorio->obtenerTodos();
-                $medicosReferencia         = $medicosReferenciaRepositorio->obtenerTodos();
                 $higieneDentalIndicaciones = EntityManager::getRepository(HigieneDental::class)->findAll(); // obtiene la lista de indicaciones
-                $indicaciones = EntityManager::getRepository(Indicacion::class)->findAll();
+                $indicaciones              = EntityManager::getRepository(Indicacion::class)->findAll();
 
                 if ($expediente->getExpedienteEspecialidad()->primeraVez() || $expediente->getExpedienteEspecialidad()->dadoDeAlta() || !$expediente->getExpedienteEspecialidad()->tieneOdontogramas()) {
                     // construir y generar odontograma
@@ -86,6 +84,10 @@ class VistasConsultasFactory
                 }
 
                 $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'dibujadorOdontograma', 'higieneDentalIndicaciones', 'indicaciones', 'anexoUploader'));
+                break;
+
+            case Usuario::RIGOBERTO:
+                $vista = view('consultas.consultas_rigoberto', compact('paciente', 'medico', 'expediente', 'medicosReferencia'));
                 break;
         }
 

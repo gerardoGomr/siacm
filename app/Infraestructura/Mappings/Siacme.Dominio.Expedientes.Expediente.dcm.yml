@@ -180,7 +180,7 @@ Siacme\Dominio\Expedientes\Expediente:
       type: string
       nullable: true
       column: MotivoConsulta
-  oneToOne:
+  manyToOne:
     paciente:
       targetEntity: Siacme\Dominio\Pacientes\Paciente
       joinColumn:
@@ -211,8 +211,13 @@ Siacme\Dominio\Expedientes\Expediente:
         name: ReligionId
         referencedColumnName: id
       cascade: [persist]
+  oneToOne:
     expedienteEspecialidad:
       targetEntity: ExpedienteJohanna
+      mappedBy: expediente
+      cascade: [persist]
+    expedienteRigoberto:
+      targetEntity: ExpedienteRigoberto
       mappedBy: expediente
       cascade: [persist]
   oneToMany:

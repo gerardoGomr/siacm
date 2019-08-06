@@ -37,7 +37,6 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 	 */
 	public function obtenerPorId($id)
 	{
-		// TODO: Implement obtenerPorId() method.
 		try {
 
 			$query = $this->entityManager->createQuery("SELECT c, p, m FROM Citas:Cita c JOIN c.paciente p JOIN c.medico m WHERE c.id = :id")->setParameter('id', $id);
@@ -64,7 +63,6 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 	 */
 	public function persistir(Cita $cita)
 	{
-		// TODO: Implement persistir() method.
 		try {
 			$this->entityManager->persist($cita);
 			$this->entityManager->flush();
@@ -86,7 +84,6 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 	 */
 	public function obtenerPorMedico(Usuario $medico, $fecha = null)
 	{
-		// TODO: Implement obtenerPorMedico() method.
 		try {
 
 			if (!is_null($fecha)) {
@@ -120,7 +117,6 @@ class DoctrineCitasRepositorio implements CitasRepositorio
 	 */
 	public function actualizar(Cita $cita)
 	{
-		// TODO: Implement actualizar() method.
 		try {
 			$this->entityManager->flush();
 			return true;

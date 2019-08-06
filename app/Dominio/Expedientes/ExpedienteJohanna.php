@@ -376,7 +376,7 @@ class ExpedienteJohanna extends AbstractExpediente
     {
         $this->odontogramas      = $odontogramas;
         $this->planesTratamiento = $planesTratamiento;
-        $this->primeraVez        = true;
+        parent::__construct();
     }
 
     /**

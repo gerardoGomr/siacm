@@ -403,14 +403,16 @@ class ConsultasController extends Controller
     /**
      * generar el plan de tratamiento en PDF
      * @param string $pacienteId
+     * @param string $medicoId
      * @param PacientesRepositorio $pacientesRepositorio
      */
-    public function planPDF($pacienteId, PacientesRepositorio $pacientesRepositorio)
+    public function planPDF($pacienteId, $medicoId, PacientesRepositorio $pacientesRepositorio)
     {
-        $pacienteId = (int)base64_decode($pacienteId);
-
+        $pacienteId  = (int)base64_decode($pacienteId);
+        $medicoId    = (int)base64_decode($medicoId);
+        $medico      = $this->usuariosRepositorio->obtenerPorId($medicoId);
         $paciente    = $pacientesRepositorio->obtenerPorId($pacienteId);
-        $expediente  = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente);
+        $expediente  = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
         $odontograma = request()->session()->get('odontograma');
 
         $reporte = new PlanTratamientoJohanna($odontograma, $expediente);
@@ -538,13 +540,13 @@ class ConsultasController extends Controller
         $comportamiento                 = $comportamientosFranklRepositorio->obtenerPorId($comportamientoFranklId);
         $medico                         = $this->usuariosRepositorio->obtenerPorId($medicoId);
         $paciente                       = $pacientesRepositorio->obtenerPorId($pacienteId);
-        $expediente                     = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente);
+        $expediente                     = $this->expedientesRepositorio->obtenerPorPacienteMedico($paciente, $medico);
         $citaId                         = $request->session()->get('citaId');
         $cita                           = $this->citasRepositorio->obtenerPorId($citaId);
 
         // objetos de consulta
         $exploracion = new ExploracionFisica($peso, $talla, $pulso, $temperatura, $tensionArterial);
-        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $comportamiento, $costoConsulta, $aRealizarEnProximaCita, new DateTime, new ColeccionArray, $medico, new ColeccionArray);
+        $consulta    = new Consulta($padecimientoActual, $interrogatorioAparatosSistemas, $exploracion, $notaMedica, $costoConsulta, $aRealizarEnProximaCita, new DateTime, new ColeccionArray, $medico, new ColeccionArray, $comportamiento);
 
         // atender cita
         $cita->atender();
@@ -613,6 +615,10 @@ class ConsultasController extends Controller
         }
 
         $request->session()->forget('citaId');
+        $request->session()->forget('interconsulta');
+        $request->session()->forget('receta');
+        $request->session()->forget('higieneDental');
+        $request->session()->forget('indicacion');
 
         return response()->json($respuesta);
     }

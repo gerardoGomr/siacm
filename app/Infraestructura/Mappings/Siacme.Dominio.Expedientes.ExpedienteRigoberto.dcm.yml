@@ -1,0 +1,61 @@
+Siacme\Dominio\Expedientes\ExpedienteRigoberto:
+  type: entity
+  extends: AbstractExpediente
+  table: expediente_rigoberto
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    representanteLegal:
+      type: string
+      nullable: true
+      column: RepresentanteLegal
+    perioricidadBanio:
+      type: integer
+      nullable: true
+      column: PerioricidadBanio
+    perioricidadHigieneBucal:
+      type: integer
+      nullable: true
+      column: PerioricidadHigieneBucal
+    perioricidadLavaManos:
+      type: integer
+      nullable: true
+      column: PerioricidadLavaManos
+    frecuenciaCambioRopa:
+      type: integer
+      nullable: true
+      column: FrecuenciaCambioRopa
+    vecesComeDia:
+      type: integer
+      nullable: true
+      column: VecesComeDia
+    tiempoEntreComidas:
+      type: integer
+      nullable: true
+      column: TiempoEntreComidas
+    horasDuerme:
+      type: integer
+      nullable: true
+      column: HorasDuerme
+    frecuenciaEjercicio:
+      type: string
+      nullable: true
+      column: FrecuenciaEjercicio
+    regimenAlimenticio:
+      type: integer
+      nullable: true
+      column: regimenAlimenticio
+    descripcionRegimen:
+      type: string
+      nullable: true
+      column: DescripcionRegimenAlimenticio
+  oneToOne:
+    expediente:
+      targetEntity: Expediente
+      inversedBy: expedienteRigoberto
+      joinColumn:
+        name: ExpedienteId
+        referencedColumnName: id

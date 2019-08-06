@@ -30,7 +30,8 @@ $(document).ready(function() {
 	$formExpediente.find('input.fecha').datepicker({
 		autoclose: true,
 		language:  'es',
-		format:    'yyyy-mm-dd'
+		format:    'yyyy-mm-dd',
+		endDate:   '+0d'
 	});
 
 	// calcular edad
@@ -426,6 +427,15 @@ $(document).ready(function() {
             $('#' + idInputText).val('');
         }
     });
+
+    $formExpediente.find('input.regimenAlimenticio').on('click', function () {
+    	if ($(this).is(':checked')) {
+    		$('#especifiqueRegimen').attr('readonly', false)
+    	} else {
+    		$('#especifiqueRegimen').attr('readonly', false)
+    		$('#especifiqueRegimen').val('')
+    	}
+    })
 });
 
 /**

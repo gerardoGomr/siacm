@@ -150,7 +150,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	Route::post('plan-tratamiento/atender', 'Pacientes\PacientesController@atenderPlan');
 
 	// imprimir plan
-	Route::get('consultas/plan/pdf/{pacienteId}', 'Consultas\ConsultasController@planPDF');
+	Route::get('consultas/plan/pdf/{pacienteId}/{medicoId}', 'Consultas\ConsultasController@planPDF');
 
 	// agregar interconsulta
 	Route::post('consultas/interconsulta/agregar', 'Consultas\ConsultasController@agregarInterconsulta');
@@ -187,7 +187,7 @@ Route::group(['middleware' => 'checaLogin'], function() {
 	Route::post('pacientes/anexos/agregar', 'Pacientes\PacientesController@agregarAnexo');
 
     // ver anexo
-    Route::get('pacientes/anexos/ver/{expedienteId}/{nombre}', 'Pacientes\PacientesController@verAnexo');
+    Route::get('pacientes/anexos/ver/{expedienteId}/{medicoId}/{nombre}', 'Pacientes\PacientesController@verAnexo');
 
 	// borrar anexos
 	Route::post('pacientes/anexos/eliminar', 'Pacientes\PacientesController@eliminarAnexo');
@@ -270,4 +270,13 @@ Route::group(['middleware' => 'checaLogin'], function() {
 
     // consultas del dia
     Route::post('reportes/cobro-consultas', 'Reportes\ReportesController@cobroConsultas');
+    
+    // editar anexos
+    Route::post('pacientes/anexos/editar', 'Pacientes\PacientesController@editarAnexo');
+
+    // guardar plan cirugía
+    Route::post('pacientes/cirugias/agregar', 'Pacientes\PacientesController@guardarPlanCirugia');
+    
+    // abrir pdf plan
+    Route::get('pacientes/cirugias/pdf/{id}/{expId}', 'Pacientes\PacientesController@planCirugiaPdf');
 });

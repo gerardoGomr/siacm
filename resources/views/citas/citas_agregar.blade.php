@@ -1,5 +1,5 @@
-<div class="modal fade" id="modalAgendarCita">
-	<div class="modal-dialog">
+<div class="modal fade modal-lg" id="modalAgendarCita" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<!-- Modal heading -->
 			<div class="modal-header">
@@ -11,18 +11,18 @@
 				<div class="innerAll bg-gray border-bottom">
 					<table>
 						<tr>
-							<td class="strong">Fecha:</td>
+							<td class="strong">Fecha:&nbsp;</td>
 							<td class="fecha"></td>
 						</tr>
 						<tr>
-							<td class="strong">Hora:</td>
+							<td class="strong">Hora:&nbsp;</td>
 							<td class="hora"></td>
 						</tr>
 					</table>
 				</div>
 				<div class="separator"></div>
 				<form id="formNuevaCita" action="{{ url('citas/agendar') }}" class="form-horizontal">
-					{!! csrf_field() !!}
+					{{ csrf_field() }}
 					<button type="button" id="seguirCapturando" class="btn btn-default hide pull-right"><i class="fa fa-arrow-right"></i> Cancelar búsqueda</button>
 					<div class="clearfix"></div>
 					<div class="separator"></div>
@@ -37,7 +37,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="dvResultados"></div>
+					<div id="dvResultados" style="max-height: 500px; overflow: auto;"></div>
 					<div id="datos" class="hide">
 						<button type="button" id="buscarDeNuevo" class="btn btn-default pull-right"><i class="fa fa-arrow-left"></i> Buscar de nuevo</button>
 						<div class="clearfix"></div>
@@ -91,7 +91,7 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="button" id="agendarCita" class="btn btn-primary"><i class="fa fa-plus"></i> Agendar cita</button>
+				<button type="button" id="agendarCita" class="btn btn-primary" disabled><i class="fa fa-plus"></i> Agendar cita</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 			</div>
 		</div>

@@ -4,6 +4,9 @@ Siacme\Dominio\Consultas\Consulta:
     exploracionFisica:
       class: ExploracionFisica
       columnPrefix: false
+    exploracionOtorrino:
+      class: ExploracionOtorrino
+      columnPrefix: false
   table: consulta
   id:
     id:
