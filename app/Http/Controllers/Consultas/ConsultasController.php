@@ -41,6 +41,7 @@ use Siacme\Exceptions\OtroTratamientoYaHaSidoAgregadoAPlanActualException;
 use Siacme\Http\Controllers\Controller;
 use Siacme\Http\Requests;
 use Siacme\Http\Requests\RegistrarConsultaRequest;
+use Siacme\Aplicacion\Servicios\Expedientes\AnexosUploader;
 
 /**
  * Class ConsultasController
@@ -157,6 +158,7 @@ class ConsultasController extends Controller
         $pacienteId = (int)base64_decode($pacienteId);
         $medicoId   = (int)base64_decode($medicoId);
         $citaId     = (int)base64_decode($citaId);
+        $anexos     = [];
 
         $paciente   = $pacientesRepositorio->obtenerPorId($pacienteId);
         $medico     = $this->usuariosRepositorio->obtenerPorId($medicoId);
@@ -165,7 +167,19 @@ class ConsultasController extends Controller
         // guardar la cita en sesión para su posterior procesamiento
         request()->session()->put('citaId', $citaId);
 
-        return VistasConsultasFactory::make($paciente, $medico, $expediente);
+        $anexoUploader = new AnexosUploader((string)$expediente->getId(), (string)$medicoId);
+        $expediente->asignarAnexos($anexoUploader->asignar(), new ColeccionArray());
+
+        foreach ($expediente->anexos() as $anexoActual) {
+            $nombre = explode('.', $anexoActual->nombreFormal());
+            $anexoDB  = \Siacme\Anexo::with('categoria')
+                ->where('Nombre', $nombre[0])
+                ->first();
+
+            $anexos[] = $anexoDB;
+        }
+
+        return VistasConsultasFactory::make($paciente, $medico, $expediente, $anexos);
     }
 
     /**

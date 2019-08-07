@@ -38,7 +38,7 @@ class VistasConsultasFactory
      * @param Expediente $expediente
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|null
      */
-    public static function make(Paciente $paciente, Usuario $medico, Expediente $expediente)
+    public static function make(Paciente $paciente, Usuario $medico, Expediente $expediente, $anexos)
     {
         $vista                        = null;
         $medicosReferenciaRepositorio = new DoctrineMedicosReferenciaRepositorio(App::getInstance()['em']);
@@ -83,7 +83,7 @@ class VistasConsultasFactory
                     !is_null($odontograma) ? $dibujadorOdontograma = new DibujadorOdontogramasAtencion($odontograma) : $dibujadorOdontograma = null;
                 }
 
-                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'dibujadorOdontograma', 'higieneDentalIndicaciones', 'indicaciones', 'anexoUploader'));
+                $vista = view('consultas.consultas_johanna', compact('paciente', 'medico', 'expediente', 'comportamientosFrankl', 'morfologiasCraneofaciales', 'morfologiasFaciales', 'convexividadesFaciales', 'atms', 'dientePadecimientos', 'dibujadorOdontograma', 'otrosTratamientos', 'recetas', 'medicosReferencia', 'dibujadorOdontograma', 'higieneDentalIndicaciones', 'indicaciones', 'anexoUploader', 'anexos'));
                 break;
 
             case Usuario::RIGOBERTO:

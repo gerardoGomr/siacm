@@ -46,7 +46,7 @@ class ExpedientesAgregarElementosConsulta
         }
     }
 
-    private static function addDetallesJohanna(DientePadecimientosRepositorio $dientePadecimientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DientesRepositorio $dientesRepositorio, Consulta $consulta = null)
+    private static function addDetallesJohanna(Expediente $expediente, Request $request, DientePadecimientosRepositorio $dientePadecimientosRepositorio, DienteTratamientosRepositorio $dienteTratamientosRepositorio, OtrosTratamientosRepositorio $otrosTratamientosRepositorio, DientesRepositorio $dientesRepositorio, Consulta $consulta = null)
     {
         if(is_null($expediente->getExpedienteEspecialidad()->obtenerOdontogramaActivo())) {
             // odontograma y plan de tratamiento

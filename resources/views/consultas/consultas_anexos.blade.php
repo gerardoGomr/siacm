@@ -9,11 +9,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($expediente->anexos() as $anexo)
+                        @foreach ($anexos as $anexo)
                             <tr>
-                                <td>{!! $anexo->nombreFormal() !!}</td>
+                                <td>{!! $anexo->Nombre !!}</td>
                                 <td>
-                                    <a href="{{ url('pacientes/anexos/ver/' . $expediente->getId() . '/' . $anexo->nombre()) }}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-original-title="Ver anexo"><i class="fa fa-search"></i></a>
+                                    <a href="{{ url('pacientes/anexos/ver/' . $expediente->getId() . '/' . str_replace(' ', '_', $anexo->Nombre)) }}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-original-title="Ver anexo"><i class="fa fa-search"></i></a>
                                 </td>
                             </tr>
                         @endforeach
