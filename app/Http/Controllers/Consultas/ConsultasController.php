@@ -169,16 +169,16 @@ class ConsultasController extends Controller
 
         $anexoUploader = new AnexosUploader((string)$expediente->getId(), (string)$medicoId);
         $expediente->asignarAnexos($anexoUploader->asignar(), new ColeccionArray());
-
+        
         foreach ($expediente->anexos() as $anexoActual) {
-            $nombre = explode('.', $anexoActual->nombreFormal());
+            $nombre = substr($anexoActual->nombreFormal(), 0, -4);
             $anexoDB  = \Siacme\Anexo::with('categoria')
-                ->where('Nombre', $nombre[0])
+                ->where('Nombre', $nombre)
                 ->first();
 
             $anexos[] = $anexoDB;
         }
-
+        
         return VistasConsultasFactory::make($paciente, $medico, $expediente, $anexos);
     }
 
