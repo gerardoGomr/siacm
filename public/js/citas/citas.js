@@ -48,7 +48,7 @@ $(document).ready(function($) {
 				today 		 = moment()
 
 			//prevenir la seleccion en el horario de comida
-            if(selectedDate.hour() >= 14 && selectedDate.getHours() < 17) {
+            if(selectedDate.hour() >= 14 && selectedDate.hour() < 17) {
 				bootbox.alert('No se puede agendar una cita en este horario.')
                 return false
             }
