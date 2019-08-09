@@ -892,8 +892,9 @@ class Expediente
     {
         if ($this->expedienteEspecialidad != null) {
             $this->expedienteEspecialidad->revisadoPorPaciente();
+        } else {
+            $this->expedienteRigoberto->revisadoPorPaciente();
         }
-        $this->expedienteRigoberto->revisadoPorPaciente();
     }
 
     /**

@@ -17,7 +17,7 @@ if ($cita->getMedico()->getId() === \Siacme\Dominio\Usuarios\Usuario::RIGOBERTO)
 @if($cita->getEstatus() === CitaEstatus::CONFIRMADA)
 	@if(!is_null($expediente) && !is_null($expedienteEspecialidad))
 		@if($expedienteEspecialidad->primeraVez())
-			@if(!$expediente->revisado())
+			@if(!$expediente->revisadoPorPaciente())
 				<a href="{{ url('expedientes/ver/' . base64_encode($cita->getPaciente()->getId()) . '/' . base64_encode($cita->getMedico()->getId()) . '/' . base64_encode($cita->getId())) }}" class="btn btn-success btn-block"><i class="fa fa-search"></i> Ver el expediente</a>
 			@endif
 		@else
