@@ -1,4 +1,7 @@
 $(document).ready(function($) {
+    // reset window
+    reiniciarForm()
+
 	// inicializar validaciones
 	init()
 
@@ -111,10 +114,8 @@ $(document).ready(function($) {
 		}).done(function(resultado) {
 			$('#modalLoading').modal('hide')
 			$('#busquedaPacienteRealizada').val('1')
-			console.log(resultado.estatus)
 
 			if(resultado.estatus === 'fail') {
-				console.log(resultado.mensaje)
 				bootbox.alert('No se encontraron coincidencias para ' + dato + '. Por favor, captúre sus datos para registrar su cita.', function () {
 					$('#buscadorPacientes').addClass('hide')
 					$('#datos').removeClass('hide')
@@ -184,7 +185,13 @@ $(document).ready(function($) {
 		$('#buscadorPacientes').removeClass('hide')
 		$('#datos').addClass('hide')
 		$('#nombreBusqueda').focus()
-		$('#seguirCapturando').addClass('hide')
+        $('#seguirCapturando').addClass('hide')
+        $('#dvResultados').html('')
+        $('#opcion').val('1')
+        $('#busquedaPacienteRealizada').val('0')
+        $('#fecha').val('')
+        $('#hora').val('')
+        $('#pacienteId').val('0')
 	}
 
 	// recargar eventos del calendario
@@ -204,5 +211,5 @@ $(document).ready(function($) {
 		} else {
 			$('#generarLista').attr('disabled', true)
 		}
-	}
+    }
 })
