@@ -569,4 +569,9 @@ class Consulta
 
         $this->duracionAproximada = $duracion;
     }
+
+    public function getDuracionAproximada()
+    {
+        return $this->duracionAproximada;
+    }
 }
