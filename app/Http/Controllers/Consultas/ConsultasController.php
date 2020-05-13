@@ -605,6 +605,7 @@ class ConsultasController extends Controller
 
         // agrega un comentario de costo
         $consulta->agregarComentario();
+        $consulta->agregarDuracion($request->input("duracionAproximada"));
 
         // si es de primera vez se debe considerar la creación del complemento al expediente
         // dependiendo del médico

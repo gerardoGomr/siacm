@@ -128,6 +128,11 @@ class Consulta
     private $exploracionOtorrino;
 
     /**
+     * @var string
+     */
+    private $duracionAproximada;
+
+    /**
      * Consulta constructor.
      * @param string $padecimientoActual
      * @param string $interrogatorioAparatosSistemas
@@ -554,5 +559,14 @@ class Consulta
     public function addExploracionOtorrino(ExploracionOtorrino $exploracion)
     {
         $this->exploracionOtorrino = $exploracion;
+    }
+
+    public function agregarDuracion($duracion)
+    {
+        if (!\is_numeric($duracion)) {
+            throw new Exception("La duración debe ser un dato numérico");
+        }
+
+        $this->duracionAproximada = $duracion;
     }
 }

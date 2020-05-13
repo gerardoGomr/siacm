@@ -43,6 +43,9 @@ Siacme\Dominio\Consultas\Consulta:
     otrosCostos:
       type: string
       column: OtrosCostos
+    duracionAproximada:
+      type: string
+      column: DuracionAproximada
   oneToOne:
     comportamientoFrankl:
       targetEntity: Siacme\Dominio\Expedientes\ComportamientoFrankl
