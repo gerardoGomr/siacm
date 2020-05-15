@@ -158,7 +158,10 @@
 					<div class="form-group">
 						<label class="control-label col-md-3">Duración aproximada próxima cita:</label>
 						<div class="col-md-4">
-							<input type="number" name="duracionAproximada" id="duracionAproximada" class="form-control">
+                            <div class="input-group">
+                                <input type="number" name="duracionAproximada" id="duracionAproximada" class="form-control">
+                                <span class="input-group-addon">min.</span>
+                            </div>
 						</div>
 					</div>
 
