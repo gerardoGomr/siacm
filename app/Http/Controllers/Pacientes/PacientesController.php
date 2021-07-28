@@ -118,11 +118,12 @@ class PacientesController extends Controller
             $nombre = substr($anexoActual->nombreFormal(), 0, -4);
             $anexoDB  = \Siacme\Anexo::with('categoria')
                 ->where('Nombre', $nombre)
+                ->where('ExpedienteId', $expedienteId)
                 ->first();
 
             $anexos[] = $anexoDB;
         }
-
+        
         return response()->json([
             'html' => PacientesVistaFactory::make($medico, $expediente, $anexoUploader, $anexos)->render()
         ]);
@@ -141,9 +142,10 @@ class PacientesController extends Controller
         $medicoId      = base64_decode($request->input('medicoId'));
         $anexoUploader = new AnexosUploader($expedienteId, $medicoId);
         $anexoDB       = new \Siacme\Anexo;
-
+        $nombre = str_replace('/', ' ', $request->get('nombreAnexo'));
+        
         $anexoDB->fill([
-            'Nombre'         => $request->input('nombreAnexo'),
+            'Nombre'         => $nombre,
             'FechaDocumento' => $request->input('fechaDocumento'),
             'CategoriaId'    => $request->input('categoria'),
             'UsuarioId'      => (int)$medicoId,
